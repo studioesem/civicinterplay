@@ -8,8 +8,8 @@
 :root {
   --bg: #f8f8f8;
   --text: #1c1917;
-  --text-dim: rgba(28, 25, 23, 0.65);
-  --text-faint: rgba(28, 25, 23, 0.4);
+  --text-dim: rgba(28, 25, 23, 0.78);
+  --text-faint: rgba(28, 25, 23, 0.55);
   --border: #333;
   --border-light: rgba(28, 25, 23, 0.1);
 
@@ -196,9 +196,9 @@ section:nth-child(4) { animation-delay: 0.60s; }
 
 .nav-links a {
   font-family: var(--heading);
-  font-size: 0.9rem;
-  font-weight: 400;
-  color: var(--text-dim);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
   position: relative;
 }
 
@@ -275,7 +275,7 @@ section:nth-child(4) { animation-delay: 0.60s; }
 /* --- Sections + section heading ---------------------------------------- */
 
 .sections {
-  padding-top: clamp(6rem, 10vw, 8rem);
+  padding-top: clamp(8rem, 12vw, 10rem);
 }
 
 .section-heading {
@@ -410,9 +410,9 @@ section:nth-child(4) { animation-delay: 0.60s; }
 }
 
 .post-content {
-  font-size: 1rem;
+  font-size: 1.05rem;
   line-height: 1.8;
-  color: var(--text-dim);
+  color: var(--text);
   animation: fadeIn 0.8s ease 0.15s both;
 }
 
