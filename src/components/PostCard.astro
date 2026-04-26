@@ -1,0 +1,129 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  excerpt?: string;
+  category?: 'introduction' | 'training-grounds' | 'the-guides' | 'work-sheets' | 'the-portals' | null;
+  categoryLabel?: string;
+  image?: string;
+  imageAlt?: string;
+  fallbackGradient?: string;
+}
+
+const {
+  href,
+  title,
+  excerpt,
+  category,
+  categoryLabel,
+  image,
+  imageAlt = '',
+  fallbackGradient,
+} = Astro.props;
+
+const catClass = category ? `cat-${category}` : '';
+
+// Default gradient pairs per category, used when there's no feature image.
+const gradientByCategory: Record<string, string> = {
+  introduction: 'linear-gradient(135deg, var(--purple), #5a3890)',
+  'training-grounds': 'linear-gradient(135deg, var(--terracotta), #a85540)',
+  'the-guides': 'linear-gradient(135deg, var(--periwinkle), #6670b8)',
+  'work-sheets': 'linear-gradient(135deg, var(--forest), #2d332b)',
+  'the-portals': 'linear-gradient(135deg, var(--pink), #b850b2)',
+};
+
+const placeholderBg =
+  fallbackGradient ?? (category ? gradientByCategory[category] : 'linear-gradient(135deg, var(--sand), #b8a99a)');
+---
+<a href={href} class={`post-card ${catClass}`.trim()}>
+  {image ? (
+    <img src={image} alt={imageAlt} class="post-card-image" loading="lazy" decoding="async" />
+  ) : (
+    <div class="img-placeholder" style={`background: ${placeholderBg};`}></div>
+  )}
+  {categoryLabel && <div class="post-card-tag">{categoryLabel}</div>}
+  <h3>{title}</h3>
+  {excerpt && <p class="post-card-excerpt">{excerpt}</p>}
+</a>
+
+<style>
+  .post-card {
+    background: var(--card-bg, transparent);
+    border: 1px solid rgba(28, 25, 23, 0.08);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    border-top: 4px solid var(--border-light);
+  }
+
+  .post-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  }
+
+  .post-card.cat-introduction { border-top-color: var(--purple); }
+  .post-card.cat-training-grounds { border-top-color: var(--terracotta); }
+  .post-card.cat-the-guides { border-top-color: var(--periwinkle); }
+  .post-card.cat-work-sheets { border-top-color: var(--forest); }
+  .post-card.cat-the-portals { border-top-color: var(--pink); }
+
+  .img-placeholder,
+  .post-card-image {
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    transition: transform 0.3s;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .post-card:hover .img-placeholder,
+  .post-card:hover .post-card-image {
+    transform: scale(1.03);
+  }
+
+  .post-card-tag {
+    font-family: var(--heading);
+    font-size: 0.62rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    color: var(--text-dim);
+  }
+
+  .post-card.cat-introduction .post-card-tag { color: var(--purple); }
+  .post-card.cat-training-grounds .post-card-tag { color: var(--terracotta); }
+  .post-card.cat-the-guides .post-card-tag { color: var(--periwinkle); }
+  .post-card.cat-work-sheets .post-card-tag { color: var(--forest); }
+  .post-card.cat-the-portals .post-card-tag { color: var(--pink); }
+
+  .post-card h3 {
+    font-family: var(--heading);
+    font-size: 1.15rem;
+    font-weight: 500;
+    line-height: 1.35;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s;
+  }
+
+  .post-card:hover h3 {
+    color: var(--purple);
+  }
+
+  .post-card-excerpt {
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: var(--text-dim);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

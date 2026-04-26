@@ -1,0 +1,210 @@
+---
+// Callout-style block that links to another page on the site.
+//
+// Two usage modes:
+//
+// 1. Slug mode — auto-populates from the content collection:
+//      <LinkCallout slug="at-de-ceuvel" eyebrow="Read next" />
+//
+// 2. Explicit mode — pass href + title + optional excerpt/category:
+//      <LinkCallout
+//        href="/doing/"
+//        eyebrow="Take with you"
+//        title="Sightings & other tools"
+//        excerpt="The Do half of Civic Interplay."
+//        category="introduction"
+//      />
+//
+// Explicit props override anything fetched from a slug.
+
+import { getEntry } from 'astro:content';
+import { CATEGORY_LABEL, CATEGORIES } from '../content/config';
+
+type CategorySlug = (typeof CATEGORIES)[number];
+
+interface Props {
+  slug?: string;
+  href?: string;
+  title?: string;
+  eyebrow?: string;
+  excerpt?: string;
+  category?: CategorySlug;
+}
+
+const {
+  slug,
+  href: hrefProp,
+  title: titleProp,
+  eyebrow = 'Read next',
+  excerpt: excerptProp,
+  category: categoryProp,
+} = Astro.props;
+
+let entry;
+if (slug) {
+  try {
+    entry = await getEntry('posts', slug);
+  } catch (err) {
+    console.warn(`<LinkCallout slug="${slug}"> — entry not found.`, err);
+  }
+}
+
+const href = hrefProp ?? (entry ? `/${entry.slug}/` : '#');
+const title = titleProp ?? entry?.data.title ?? '(missing title)';
+const excerpt = excerptProp ?? entry?.data.excerpt;
+const category = categoryProp ?? entry?.data.primaryCategory ?? null;
+const categoryLabel = category ? CATEGORY_LABEL[category] : null;
+const isExternal = href.startsWith('http://') || href.startsWith('https://');
+---
+<a
+  href={href}
+  class={`link-callout ${category ? `cat-${category}` : ''}`}
+  rel={isExternal ? 'external' : undefined}
+  target={isExternal ? '_blank' : undefined}
+>
+  <div class="link-callout-inner">
+    <div class="link-callout-meta">
+      <span class="link-callout-eyebrow">{eyebrow}</span>
+      {categoryLabel && <span class="link-callout-cat">{categoryLabel}</span>}
+    </div>
+
+    <h3 class="link-callout-title">{title}</h3>
+
+    {excerpt && <p class="link-callout-excerpt">{excerpt}</p>}
+  </div>
+
+  <span class="link-callout-arrow" aria-hidden="true">→</span>
+</a>
+
+<style>
+  .link-callout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1.25rem;
+    background: #f8f8f8;
+    border: 2px solid var(--border);
+    border-left: 8px solid var(--purple);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.6rem;
+    margin: 2rem 0;
+    box-shadow: 4px 4px 0 var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  /* Match the rotating-palette rhythm used by Callout, when no category is set. */
+  .link-callout:nth-of-type(3n + 2):not([class*='cat-']) { border-left-color: var(--periwinkle); }
+  .link-callout:nth-of-type(3n + 3):not([class*='cat-']) { border-left-color: var(--terracotta); }
+  .link-callout:nth-of-type(5n + 4):not([class*='cat-']) { border-left-color: var(--pink); }
+  .link-callout:nth-of-type(7n + 5):not([class*='cat-']) { border-left-color: var(--forest); }
+
+  /* Tie the border colour to the destination's category when known. */
+  .link-callout.cat-introduction { border-left-color: var(--purple); }
+  .link-callout.cat-training-grounds { border-left-color: var(--terracotta); }
+  .link-callout.cat-the-guides { border-left-color: var(--periwinkle); }
+  .link-callout.cat-work-sheets { border-left-color: var(--forest); }
+  .link-callout.cat-the-portals { border-left-color: var(--pink); }
+
+  .link-callout:hover {
+    box-shadow: 6px 6px 0 var(--border);
+    transform: translateY(-2px);
+  }
+
+  .link-callout-inner {
+    min-width: 0;
+  }
+
+  .link-callout-meta {
+    display: flex;
+    gap: 0.8rem;
+    align-items: baseline;
+    flex-wrap: wrap;
+    margin-bottom: 0.45rem;
+  }
+
+  .link-callout-eyebrow {
+    font-family: var(--heading);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .link-callout-cat {
+    font-family: var(--heading);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .link-callout.cat-introduction .link-callout-cat { color: var(--purple); }
+  .link-callout.cat-training-grounds .link-callout-cat { color: var(--terracotta); }
+  .link-callout.cat-the-guides .link-callout-cat { color: var(--periwinkle); }
+  .link-callout.cat-work-sheets .link-callout-cat { color: var(--forest); }
+  .link-callout.cat-the-portals .link-callout-cat { color: var(--pink); }
+
+  .link-callout-title {
+    font-family: var(--heading);
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--text);
+    margin: 0;
+    transition: color 0.25s ease;
+  }
+
+  .link-callout:hover .link-callout-title {
+    color: var(--purple);
+  }
+
+  .link-callout-excerpt {
+    font-family: var(--body);
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.55;
+    color: var(--text-dim);
+    margin: 0.4rem 0 0;
+    max-width: 60ch;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .link-callout-arrow {
+    font-family: var(--heading);
+    font-size: 1.4rem;
+    color: var(--text-dim);
+    transition: transform 0.25s ease, color 0.25s ease;
+  }
+
+  .link-callout:hover .link-callout-arrow {
+    color: var(--purple);
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 540px) {
+    .link-callout {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    .link-callout-arrow {
+      justify-self: end;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .link-callout,
+    .link-callout-title,
+    .link-callout-arrow,
+    .link-callout:hover {
+      transition: none;
+      transform: none;
+    }
+  }
+</style>

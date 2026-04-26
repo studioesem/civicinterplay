@@ -1,0 +1,87 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CATEGORY_LABEL } from '../content/config';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', (p) => !p.data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const categoryColours: Record<string, string> = {
+  introduction: 'var(--purple)',
+  'training-grounds': 'var(--terracotta)',
+  'the-guides': 'var(--periwinkle)',
+  'work-sheets': 'var(--forest)',
+  'the-portals': 'var(--pink)',
+};
+
+const tagColour = post.data.primaryCategory
+  ? categoryColours[post.data.primaryCategory]
+  : 'var(--text-dim)';
+
+const categoryLabel =
+  post.data.primaryCategory ? CATEGORY_LABEL[post.data.primaryCategory] : '';
+
+const formattedDate = post.data.publishedAt.toLocaleDateString('en-AU', {
+  year: 'numeric',
+  month: 'long',
+});
+---
+<BaseLayout
+  title={post.data.title}
+  description={post.data.excerpt}
+  ogImage={post.data.featureImage}
+>
+  <article>
+    <div class="narrow">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Civic Interplay</a>
+        <span class="breadcrumb-sep" aria-hidden="true">›</span>
+        <a href="/reading/">Reading</a>
+        {categoryLabel && (
+          <>
+            <span class="breadcrumb-sep" aria-hidden="true">›</span>
+            <span class="breadcrumb-current">{categoryLabel}</span>
+          </>
+        )}
+      </nav>
+
+      <div class="post-header">
+        {categoryLabel && (
+          <div class="post-tag" style={`color: ${tagColour}`}>{categoryLabel}</div>
+        )}
+        <h1>{post.data.title}</h1>
+        <div class="post-meta">{formattedDate}</div>
+      </div>
+
+      {post.data.featureImage && (
+        <img
+          src={post.data.featureImage}
+          alt={post.data.featureImageAlt ?? ''}
+          class="post-feature-image"
+          loading="eager"
+          decoding="async"
+        />
+      )}
+
+      <div class="post-content">
+        <Content />
+      </div>
+
+      <div class="back-link">
+        <a href="/reading/">Reading</a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

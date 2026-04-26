@@ -1,0 +1,161 @@
+---
+// Embed a video file (e.g. served from Cloudflare R2 or any direct URL).
+// For platform-hosted players (YouTube, Vimeo) use an iframe-based component.
+//
+// Usage:
+//   <VideoEmbed src="https://media.civicinterplay.io/clip.mp4" caption="..." />
+//
+//   <VideoEmbed
+//     src="https://media.civicinterplay.io/clip.mp4"
+//     webm="https://media.civicinterplay.io/clip.webm"
+//     poster="/images/clip-poster.jpg"
+//     caption="Test field, August 2025"
+//     aspectRatio="16/9"
+//   />
+
+interface Props {
+  /** Primary video file URL (typically MP4/H.264 for broad compatibility). */
+  src: string;
+  /** Optional WebM source for browsers that prefer it. Served first. */
+  webm?: string;
+  /** Optional poster image shown before playback. */
+  poster?: string;
+  /** Optional caption rendered as a figcaption beneath the video. */
+  caption?: string;
+  /** CSS aspect-ratio value. Defaults to 16/9. Set to "auto" for native ratio. */
+  aspectRatio?: string;
+  /** Loop the video. Defaults to false. */
+  loop?: boolean;
+  /** Autoplay. Defaults to false. Always paired with muted + playsinline. */
+  autoplay?: boolean;
+  /** Mute by default. Defaults to false unless autoplay is true. */
+  muted?: boolean;
+  /** Hide the native controls. Useful for ambient/background loops. */
+  hideControls?: boolean;
+  /** Optional accessible title for the video. */
+  title?: string;
+}
+
+const {
+  src,
+  webm,
+  poster,
+  caption,
+  aspectRatio = '16/9',
+  loop = false,
+  autoplay = false,
+  muted = autoplay,
+  hideControls = false,
+  title,
+} = Astro.props;
+
+const useNativeRatio = aspectRatio === 'auto';
+const ratioStyle = useNativeRatio ? '' : `--video-aspect: ${aspectRatio};`;
+---
+<figure class="video-embed" style={ratioStyle} data-native-ratio={useNativeRatio ? 'true' : undefined}>
+  <div class="video-embed-frame">
+    <video
+      controls={!hideControls}
+      preload="metadata"
+      playsinline
+      loop={loop}
+      autoplay={autoplay}
+      muted={muted}
+      poster={poster}
+      title={title}
+    >
+      {webm && <source src={webm} type="video/webm" />}
+      <source src={src} type="video/mp4" />
+      <p class="video-embed-fallback">
+        Your browser can't play this video.
+        <a href={src} download>Download it</a> instead.
+      </p>
+    </video>
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .video-embed {
+    margin: 2rem 0;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 4px 4px 0 var(--border);
+    overflow: hidden;
+    background: #000;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .video-embed:hover {
+    box-shadow: 6px 6px 0 var(--border);
+    transform: translateY(-2px);
+  }
+
+  .video-embed-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: var(--video-aspect, 16 / 9);
+    background: #000;
+  }
+
+  .video-embed[data-native-ratio] .video-embed-frame {
+    aspect-ratio: auto;
+    height: auto;
+  }
+
+  .video-embed-frame video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    background: #000;
+  }
+
+  .video-embed[data-native-ratio] .video-embed-frame video {
+    height: auto;
+  }
+
+  .video-embed figcaption {
+    font-family: var(--heading);
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: var(--text-faint);
+    background: #f8f8f8;
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid var(--border-light);
+    text-align: left;
+  }
+
+  .video-embed-fallback {
+    color: #fff;
+    padding: 2rem;
+    font-family: var(--body);
+    text-align: center;
+  }
+
+  .video-embed-fallback a {
+    color: var(--pink);
+    text-decoration: underline;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .video-embed,
+    .video-embed:hover {
+      transition: none;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  // Belt-and-braces: if a user prefers reduced motion, force-pause autoplaying videos
+  // and hide any motion that wasn't user-initiated. Native autoplay+muted is generally
+  // benign, but respecting the system pref is the right default.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.video-embed video[autoplay]').forEach((el) => {
+      const v = el as HTMLVideoElement;
+      v.removeAttribute('autoplay');
+      v.pause();
+    });
+  }
+</script>

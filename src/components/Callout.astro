@@ -1,0 +1,81 @@
+---
+// Callout component. Deliberately uses an 8px coloured left border —
+// see .impeccable.md "Skill Overrides". This is a load-bearing visual feature,
+// not a dashboard alert. Future skill passes must not "fix" it.
+---
+<div class="callout">
+  <slot />
+</div>
+
+<style is:global>
+  .callout {
+    background: #f8f8f8;
+    border: 2px solid var(--border);
+    border-left: 8px solid var(--purple);
+    border-radius: var(--radius);
+    padding: 1.8rem 2rem;
+    margin: 2rem 0;
+    box-shadow: 4px 4px 0 var(--border);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
+  }
+
+  .callout.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .callout:hover {
+    box-shadow: 6px 6px 0 var(--border);
+    transform: translateY(-2px);
+  }
+
+  .callout.visible:hover {
+    transform: translateY(-2px);
+  }
+
+  .callout p {
+    font-family: var(--body);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+  }
+
+  .callout p:last-child {
+    margin-bottom: 0;
+  }
+
+  .callout strong {
+    font-weight: 700;
+  }
+
+  .callout em {
+    font-style: italic;
+  }
+
+  .callout a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Rotate the left-border colour through the palette so a stack of callouts
+     reads like a printed manifesto, not a dashboard. */
+  .callout:nth-child(3n + 2) { border-left-color: var(--periwinkle); }
+  .callout:nth-child(3n + 3) { border-left-color: var(--terracotta); }
+  .callout:nth-child(5n + 4) { border-left-color: var(--pink); }
+  .callout:nth-child(7n + 5) { border-left-color: var(--forest); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .callout {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .callout:hover,
+    .callout.visible:hover {
+      transform: none;
+    }
+  }
+</style>

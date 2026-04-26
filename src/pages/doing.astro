@@ -1,0 +1,242 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolEmbed from '../components/ToolEmbed.astro';
+---
+<BaseLayout
+  title="Doing"
+  description="The Do half of Civic Interplay. Tools and practices for noticing, mapping, and making — first drafts of things you can use."
+>
+  <main class="container doing">
+
+    <header class="doing-header">
+      <p class="doing-eyebrow">Civic Interplay / Do</p>
+      <h1>Doing</h1>
+      <p class="doing-intro">
+        Reading is half of it. The other half is doing. These are tools, practices,
+        and (soon) workshops for noticing, mapping, and making in the planetary age.
+        First drafts of things you can use &mdash; bring your scepticism.
+      </p>
+    </header>
+
+    <section class="doing-tool" id="sightings">
+      <div class="doing-tool-meta">
+        <p class="doing-eyebrow">Tool 01</p>
+        <h2>Sightings</h2>
+        <p class="doing-tool-summary">
+          A tool for civic noticing. <em>[Draft framing &mdash; Sarah, replace with
+          your own description of what Sightings is and the work it's doing.]</em>
+          Bring your phone, your camera, your senses. What can you see when you
+          slow down enough to notice the interfaces, infrastructures, and
+          intelligences shaping the place you are in?
+        </p>
+      </div>
+
+      <ToolEmbed
+        title="Sightings"
+        src="https://sightings.civicinterplay.io/"
+        openLabel="Open Sightings in a new tab"
+        height="780px"
+      />
+
+      <p class="doing-tool-note">
+        If the embed above is blank, your browser may be blocking the cross-domain
+        iframe &mdash; use the <a href="https://sightings.civicinterplay.io/" target="_blank" rel="noopener external">open in a new tab</a> link to launch it directly.
+      </p>
+    </section>
+
+    <section class="doing-coming-soon">
+      <h2>Coming soon</h2>
+      <p>
+        Workshops, worksheets, and more tools are in development. If you're a
+        practitioner, student, or researcher who'd like to be involved, reach out.
+      </p>
+
+      <ul class="doing-future-grid">
+        <li class="doing-future-card">
+          <p class="doing-future-eyebrow">In development</p>
+          <h3>Worksheets</h3>
+          <p>Printable and interactive prompts for practising civic interplay in your own context.</p>
+        </li>
+        <li class="doing-future-card">
+          <p class="doing-future-eyebrow">In development</p>
+          <h3>Workshops</h3>
+          <p>Facilitated sessions for groups exploring planetary citizenship and AI sovereignty.</p>
+        </li>
+        <li class="doing-future-card">
+          <p class="doing-future-eyebrow">In development</p>
+          <h3>Field tools</h3>
+          <p>More instruments for noticing and mapping the civic interfaces around you.</p>
+        </li>
+      </ul>
+    </section>
+
+  </main>
+
+  <style>
+    .doing {
+      padding: 3rem 2rem 4rem;
+      max-width: 880px;
+    }
+
+    .doing-header {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .doing-eyebrow {
+      font-family: var(--heading);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.6rem;
+    }
+
+    .doing-header h1 {
+      font-family: var(--heading);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .doing-intro {
+      font-family: var(--body);
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--text-dim);
+      max-width: 60ch;
+    }
+
+    .doing-tool {
+      margin-bottom: 4rem;
+    }
+
+    .doing-tool-meta {
+      margin-bottom: 1.5rem;
+    }
+
+    .doing-tool-meta h2 {
+      font-family: var(--heading);
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.8rem;
+    }
+
+    .doing-tool-summary {
+      font-family: var(--body);
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text);
+      max-width: 65ch;
+    }
+
+    .doing-tool-summary em {
+      color: var(--text-faint);
+      font-style: italic;
+    }
+
+    .doing-tool-note {
+      font-family: var(--heading);
+      font-size: 0.78rem;
+      color: var(--text-faint);
+      margin-top: 1rem;
+      max-width: 65ch;
+    }
+
+    .doing-tool-note a {
+      color: var(--text-dim);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .doing-tool-note a:hover {
+      color: var(--purple);
+    }
+
+    .doing-coming-soon {
+      padding-top: 3rem;
+      border-top: 2px solid var(--border);
+    }
+
+    .doing-coming-soon h2 {
+      font-family: var(--heading);
+      font-size: 1.4rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.6rem;
+    }
+
+    .doing-coming-soon > p {
+      font-family: var(--body);
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      max-width: 60ch;
+      margin-bottom: 2rem;
+    }
+
+    .doing-future-grid {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .doing-future-card {
+      border: 1px dashed var(--border-light);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .doing-future-card:hover {
+      border-color: var(--text-dim);
+      transform: translateY(-2px);
+    }
+
+    .doing-future-eyebrow {
+      font-family: var(--heading);
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.6rem;
+    }
+
+    .doing-future-card h3 {
+      font-family: var(--heading);
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+    }
+
+    .doing-future-card p {
+      font-family: var(--body);
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 1.55;
+      color: var(--text-dim);
+    }
+
+    @media (max-width: 640px) {
+      .doing {
+        padding: 2rem 1rem 3rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .doing-future-card,
+      .doing-future-card:hover {
+        transform: none;
+        transition: none;
+      }
+    }
+  </style>
+</BaseLayout>

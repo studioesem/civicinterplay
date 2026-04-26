@@ -1,0 +1,131 @@
+---
+interface Props {
+  title: string;
+  src: string;
+  /** iframe height in CSS units. Defaults to 720px. */
+  height?: string;
+  /** Label for the open-in-new-tab fallback link. */
+  openLabel?: string;
+}
+
+const { title, src, height = '720px', openLabel = 'Open in a new tab' } = Astro.props;
+---
+<div class="tool-embed">
+  <div class="tool-embed-header">
+    <h3>{title}</h3>
+    <a href={src} target="_blank" rel="noopener external" class="tool-embed-launch">
+      {openLabel} <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+
+  <div class="tool-embed-frame" style={`--embed-height: ${height};`}>
+    <iframe
+      src={src}
+      title={title}
+      loading="lazy"
+      allow="fullscreen"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+    <noscript>
+      <p class="tool-embed-noscript">
+        This tool needs JavaScript to load. <a href={src} target="_blank" rel="noopener external">Open it in a new tab</a>.
+      </p>
+    </noscript>
+  </div>
+</div>
+
+<style>
+  .tool-embed {
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    background: #f8f8f8;
+    box-shadow: 4px 4px 0 var(--border);
+    overflow: hidden;
+    margin: 2rem 0;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .tool-embed:hover {
+    box-shadow: 6px 6px 0 var(--border);
+    transform: translateY(-2px);
+  }
+
+  .tool-embed-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border-light);
+    background: linear-gradient(45deg, #f8f8f8, #f0eff0, #f8f8f8);
+    background-size: 200% 200%;
+    animation: grad 18s ease infinite;
+    flex-wrap: wrap;
+  }
+
+  .tool-embed-header h3 {
+    font-family: var(--heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .tool-embed-launch {
+    font-family: var(--heading);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+
+  .tool-embed-launch:hover {
+    color: var(--purple);
+    border-bottom-color: var(--purple);
+  }
+
+  .tool-embed-frame {
+    position: relative;
+    width: 100%;
+    height: var(--embed-height, 720px);
+    background: #fff;
+  }
+
+  .tool-embed-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  .tool-embed-noscript {
+    padding: 2rem;
+    text-align: center;
+    font-family: var(--body);
+    color: var(--text-dim);
+  }
+
+  @media (max-width: 640px) {
+    .tool-embed-frame {
+      height: min(var(--embed-height, 720px), 80vh);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tool-embed,
+    .tool-embed-header {
+      animation: none;
+      transition: none;
+    }
+    .tool-embed:hover {
+      transform: none;
+    }
+  }
+</style>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIVIC INTERPLAY</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8f8f8; --text: #1c1917; --text-dim: rgba(28,25,23,0.65); --text-faint: rgba(28,25,23,0.4);
+  --border: #333; --border-light: rgba(28,25,23,0.1);
+  --purple: #7D50BD; --pink: #E076DB; --terracotta: #D16D54; --blush: #F8DFF6;
+  --sand: #DACCBA; --forest: #454E41; --periwinkle: #8E9BDD;
+  --heading: 'Fira Sans', sans-serif; --body: 'Merriweather', Georgia, serif; --radius: 12px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:16px; scroll-behavior:smooth; }
+body { font-family:var(--body); font-weight:300; background:var(--bg); color:var(--text); line-height:1.7; }
+.container { max-width:1100px; margin:0 auto; padding:0 2rem; }
+.narrow { max-width:720px; margin:0 auto; padding:0 1.5rem; }
+a { color:var(--purple); text-decoration:none; transition:all 0.3s; }
+a:hover { color:var(--pink); }
+
+/* Header */
+.site-header { padding:1.2rem 0; border-bottom:2px solid var(--border); box-shadow:0 4px 0 var(--border); background:linear-gradient(45deg,#f8f8f8,#f0eff0,#f8f8f8); background-size:200% 200%; animation:grad 15s ease infinite; position:sticky; top:0; z-index:100; }
+.header-inner { display:flex; justify-content:space-between; align-items:center; }
+.site-logo { display:flex; align-items:center; gap:0.6rem; text-decoration:none; }
+.site-logo img { width:28px; height:28px; border-radius:50%; }
+.site-logo span { font-family:var(--heading); font-size:0.95rem; font-weight:600; color:var(--text); letter-spacing:0.06em; text-transform:uppercase; }
+.nav-links { display:flex; gap:1.5rem; }
+.nav-links a { font-family:var(--heading); font-size:0.8rem; font-weight:400; color:var(--text-dim); position:relative; }
+.nav-links a::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:2px; background:var(--purple); transition:width 0.3s; }
+.nav-links a:hover { color:var(--text); }
+.nav-links a:hover::after { width:100%; }
+.nav-links a.active { color:var(--text); font-weight:500; }
+
+/* Page nav */
+.page-nav { display:flex; gap:0.5rem; padding:1rem 0; justify-content:center; border-bottom:1px solid var(--border-light); margin-bottom:2rem; flex-wrap:wrap; }
+.page-nav button { font-family:var(--heading); font-size:0.72rem; font-weight:500; padding:0.4rem 1rem; border:2px solid var(--border); border-radius:20px; background:transparent; cursor:pointer; transition:all 0.2s; text-transform:uppercase; letter-spacing:0.05em; }
+.page-nav button:hover { background:var(--text); color:#fff; }
+.page-nav button.active { background:var(--text); color:#fff; }
+
+/* Hero */
+.hero { position:relative; overflow:hidden; animation:fadeIn 0.8s ease both; }
+.hero-image { width:100%; height:360px; object-fit:cover; object-position:center 40%; display:block; }
+.hero-overlay { position:absolute; bottom:0; left:0; right:0; padding:3rem 2rem 2.5rem; background:linear-gradient(transparent,rgba(28,25,23,0.75)); }
+.hero-overlay h1 { font-family:var(--heading); font-size:2.6rem; font-weight:300; color:#fff; letter-spacing:0.1em; text-transform:uppercase; text-shadow:0 2px 8px rgba(0,0,0,0.3); }
+.hero-overlay .tagline { font-family:var(--body); font-size:0.92rem; font-weight:300; font-style:italic; color:rgba(255,255,255,0.85); max-width:420px; margin-top:0.3rem; }
+
+/* Sections */
+.sections { padding-top:3rem; }
+.section-heading { display:flex; justify-content:space-between; align-items:center; border:2px solid var(--border); border-radius:var(--radius); padding:1rem 1.5rem; margin-bottom:2rem; transition:all 0.2s; }
+.section-heading:hover { transform:translateY(-2px); box-shadow:0 4px 15px rgba(0,0,0,0.1); }
+.section-heading h2 { font-family:var(--heading); font-size:1.2rem; font-weight:500; letter-spacing:0.03em; }
+
+/* Post grids - different layouts */
+.post-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:2rem; margin-bottom:3.5rem; }
+.post-grid-featured { display:grid; grid-template-columns:1.2fr 0.8fr; gap:2rem; margin-bottom:3.5rem; }
+.post-grid-featured .post-card:first-child { grid-row:1 / 3; }
+.post-grid-featured .post-card:first-child .post-card-image,.post-grid-featured .post-card:first-child .img-placeholder { height:100%; min-height:300px; }
+.post-grid-guides { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-bottom:3.5rem; }
+
+/* Post cards */
+.post-card { background:var(--card-bg); border:1px solid rgba(28,25,23,0.08); border-radius:var(--radius); padding:1.25rem; transition:transform 0.3s,box-shadow 0.3s; text-decoration:none; color:inherit; display:block; border-top:4px solid var(--border-light); }
+.post-card:hover { transform:translateY(-6px); box-shadow:0 8px 25px rgba(0,0,0,0.12); }
+.post-card.cat-introduction { border-top-color:var(--purple); }
+.post-card.cat-training-grounds { border-top-color:var(--terracotta); }
+.post-card.cat-the-guides { border-top-color:var(--periwinkle); }
+.post-card.cat-work-sheets { border-top-color:var(--forest); }
+
+.img-placeholder { width:100%; height:200px; border-radius:8px; margin-bottom:1rem; transition:transform 0.3s; }
+.post-card:hover .img-placeholder { transform:scale(1.03); }
+.post-card-tag { font-family:var(--heading); font-size:0.62rem; font-weight:500; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem; }
+.post-card.cat-introduction .post-card-tag { color:var(--purple); }
+.post-card.cat-training-grounds .post-card-tag { color:var(--terracotta); }
+.post-card.cat-the-guides .post-card-tag { color:var(--periwinkle); }
+.post-card.cat-work-sheets .post-card-tag { color:var(--forest); }
+.post-card h3 { font-family:var(--heading); font-size:1.15rem; font-weight:500; line-height:1.35; margin-bottom:0.5rem; transition:color 0.3s; }
+.post-card:hover h3 { color:var(--purple); }
+.post-card-excerpt { font-size:0.82rem; font-weight:300; color:var(--text-dim); line-height:1.6; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+
+/* Callout blocks - the star of What is Civic Interplay */
+.callout {
+  background: #f8f8f8;
+  border: 2px solid var(--border);
+  border-left: 8px solid var(--purple);
+  border-radius: var(--radius);
+  padding: 1.8rem 2rem;
+  margin: 2rem 0;
+  box-shadow: 4px 4px 0 var(--border);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
+}
+.callout.visible { opacity:1; transform:translateY(0); }
+.callout:hover { box-shadow:6px 6px 0 var(--border); transform:translateY(-2px); }
+.callout.visible:hover { transform:translateY(-2px); }
+.callout p { font-family:var(--body); font-size:0.95rem; line-height:1.7; color:var(--text); margin-bottom:0.8rem; }
+.callout p:last-child { margin-bottom:0; }
+.callout strong { font-weight:700; }
+.callout em { font-style:italic; }
+.callout a { text-decoration:underline; text-underline-offset:3px; }
+
+/* Alternate callout colours */
+.callout:nth-child(3n+2) { border-left-color: var(--periwinkle); }
+.callout:nth-child(3n+3) { border-left-color: var(--terracotta); }
+.callout:nth-child(5n+4) { border-left-color: var(--pink); }
+.callout:nth-child(7n+5) { border-left-color: var(--forest); }
+
+/* Post page */
+.post-header { padding:3rem 0 2rem; animation:fadeIn 0.6s ease both; }
+.post-header h1 { font-family:var(--heading); font-size:2.2rem; font-weight:400; line-height:1.2; margin-bottom:0.6rem; }
+.post-header .post-tag { font-family:var(--heading); font-size:0.7rem; font-weight:500; text-transform:uppercase; letter-spacing:0.1em; color:var(--purple); margin-bottom:0.8rem; }
+.post-header .post-meta { font-family:var(--heading); font-size:0.78rem; font-weight:300; color:var(--text-faint); }
+.post-content { font-size:1rem; line-height:1.8; color:var(--text-dim); animation:fadeIn 0.8s ease 0.15s both; }
+.post-content p { margin-bottom:1.3rem; }
+.post-content h2 { font-family:var(--heading); font-size:1.5rem; font-weight:500; color:var(--text); margin:2.8rem 0 0.8rem; }
+.post-content blockquote { border-left:3px solid var(--purple); padding:0.8rem 0 0.8rem 1.4rem; margin:2rem 0; font-style:italic; color:var(--text-dim); }
+
+.back-link { padding:2.5rem 0; border-top:1px solid var(--border-light); margin-top:3rem; }
+.back-link a { font-family:var(--heading); font-size:0.85rem; color:var(--text-dim); }
+.back-link a:hover { color:var(--text); }
+.back-link a::before { content:'← '; }
+
+/* Footer */
+.site-footer { padding:2.5rem 0; border-top:2px solid var(--border); margin-top:3rem; text-align:center; }
+.footer-title { font-family:var(--heading); font-size:0.9rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem; }
+.footer-tagline { font-family:var(--body); font-size:0.78rem; font-weight:300; font-style:italic; color:var(--text-dim); margin-bottom:1rem; }
+.footer-links { display:flex; gap:1.2rem; justify-content:center; flex-wrap:wrap; }
+.footer-links a { font-family:var(--heading); font-size:0.7rem; color:var(--text-faint); }
+.footer-copy { font-family:var(--heading); font-size:0.65rem; color:var(--text-faint); margin-top:1.5rem; }
+
+/* Page visibility */
+.page { display:none; }
+.page.active { display:block; }
+
+.glitch { display:inline; position:relative; cursor:default; }
+.glitch:hover { animation:glitch 0.4s steps(2) forwards; }
+@keyframes glitch { 0%{text-shadow:none}10%{text-shadow:2px 0 var(--purple),-2px 0 var(--periwinkle)}20%{text-shadow:-1px 0 var(--purple),1px 0 var(--periwinkle)}30%{text-shadow:none}40%{text-shadow:1px 0 var(--purple),-1px 0 var(--pink);letter-spacing:0.02em}50%{text-shadow:none;letter-spacing:normal}60%{text-shadow:-2px 0 var(--pink)}70%{text-shadow:none}80%{text-shadow:1px 0 var(--periwinkle)}100%{text-shadow:none} }
+@keyframes grad { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)} }
+
+section { opacity:0; animation:fadeIn 0.6s ease forwards; }
+section:nth-child(1) { animation-delay:0.15s; }
+section:nth-child(2) { animation-delay:0.3s; }
+section:nth-child(3) { animation-delay:0.45s; }
+
+@media(max-width:768px) {
+  .hero-overlay h1{font-size:1.8rem} .hero-image{height:240px} .post-grid,.post-grid-featured,.post-grid-guides{grid-template-columns:1fr}
+  .container,.narrow{padding:0 1rem} .section-heading{padding:0.8rem 1.2rem;border-radius:25px}
+  .header-inner{flex-wrap:wrap;gap:0.8rem} .post-grid-featured .post-card:first-child{grid-row:auto}
+  .post-grid-featured .post-card:first-child .img-placeholder{min-height:200px;height:200px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="#" class="site-logo" onclick="showPage('home');return false">
+        <img src="data:image/png;base64,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" alt="CI">
+        <span>Civic Interplay</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#" onclick="showPage('home');return false" class="active" id="nav-home">Home</a>
+        <a href="#" onclick="showPage('about');return false" id="nav-about">About</a>
+        <a href="#" onclick="showPage('post');return false" id="nav-post">Sample Post</a>
+        <a href="https://sarahbarns.com">Sarah Barns</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+
+<div class="hero">
+  <img src="https://civicinterplay.io/content/images/2025/08/CivicAI_Visualisation_Header-2-1.jpg" alt="Civic Interplay" class="hero-image" onerror="this.style.background='linear-gradient(135deg,var(--forest),var(--purple))';this.style.height='360px'">
+  <div class="hero-overlay">
+    <h1>Civic <span class="glitch">Interplay</span></h1>
+    <p class="tagline">Towards civic agencies & civic AI intelligence</p>
+  </div>
+</div>
+
+<main class="container sections">
+
+  <section>
+    <div class="section-heading">
+      <h2>An Introduction</h2>
+    </div>
+    <div class="post-grid">
+      <a href="#" class="post-card cat-introduction" onclick="showPage('about');return false">
+        <div class="img-placeholder" style="background:linear-gradient(135deg,var(--sand),#b8a99a);"></div>
+        <div class="post-card-tag">Introduction</div>
+        <h3>What can you do here?</h3>
+        <p class="post-card-excerpt">Civic Interplay is a Think + Do Space. It's inspired by the idea that change not only comes from tools and skills and facts, but also different imaginaries.</p>
+      </a>
+      <a href="#" class="post-card cat-introduction">
+        <div class="img-placeholder" style="background:linear-gradient(135deg,var(--purple),#5a3890);"></div>
+        <div class="post-card-tag">Introduction</div>
+        <h3>Learning to be Planetary Citizens</h3>
+        <p class="post-card-excerpt">Somehow, in the not too distant past, who we are as citizens changed. Our allegiances shifted, our field of vision changed.</p>
+      </a>
+      <a href="#" class="post-card cat-introduction">
+        <div class="img-placeholder" style="background:linear-gradient(135deg,var(--periwinkle),#6670b8);"></div>
+        <div class="post-card-tag">Introduction · The Guides</div>
+        <h3>Can we shift our mindset?</h3>
+        <p class="post-card-excerpt">Many of us spend huge amounts of time online and connected, but are worried about the negative impacts of digital technology.</p>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-heading">
+      <h2>Featured Stories</h2>
+    </div>
+    <div class="post-grid">
+      <a href="#" class="post-card cat-training-grounds" onclick="showPage('post');return false">
+        <div class="img-placeholder" style="background:linear-gradient(135deg,var(--forest),#2d332b);"></div>
+        <div class="post-card-tag">Training Grounds</div>
+        <h3>They gathered inside a makeshift structure at De Ceuvel.</h3>
+        <p class="post-card-excerpt">Irina was there to hug people on arrival. Many had not yet met. Some had cycled here from nearby, others had flown by aircraft, walked, caught the train across Europe.</p>
+      </a>
+      <a href="#" class="post-card cat-training-grounds">
+        <div class="img-placeholder" style="background:linear-gradient(135deg,var(--terracotta),#a85540);"></div>
+        <div class="post-card-tag">Training Grounds</div>
+        <h3>WeCare</h3>
+        <p class="post-card-excerpt">A participatory digital storytelling project for RMIT's City North Social Innovation Precinct.</p>
+      </a>
+      <a href="#" class="post-card cat-training-grounds">
+        <div class="img-placeholder" style="background:linear-gradient(135deg,var(--blush),#e0b8dd);"></div>
+        <h3>The Active Interface</h3>
+        <p class="post-card-excerpt">Learning (again) from Ursula LeGuin. The late science fiction writer shared a definition of technology that resonates deeply.</p>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-heading">
+      <h2>The Guides</h2>
+    </div>
+    <div class="post-grid-guides">
+      <a href="#" class="post-card cat-the-guides">
+        <div class="img-placeholder" style="background:linear-gradient(135deg,var(--pink),#b850b2);"></div>
+        <div class="post-card-tag">The Guides</div>
+        <h3>Mystical language loops: A moment with Walter Benjamin</h3>
+        <p class="post-card-excerpt">A refreshed newsletter focus for 2025, and an actual-imaginary encounter with Walter Benjamin to guide a mystical love of language & storytelling.</p>
+      </a>
+      <a href="#" class="post-card cat-work-sheets">
+        <div class="img-placeholder" style="background:linear-gradient(135deg,var(--forest),#6a7a65);"></div>
+        <div class="post-card-tag">Work Sheets</div>
+        <h3>What's the ecological footprint of your digital life?</h3>
+        <p class="post-card-excerpt">What's the material intensity of your digital footprint? This experimental calculator creates a material footprint of a gen-AI conversation.</p>
+      </a>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<!-- ABOUT / WHAT IS CIVIC INTERPLAY PAGE -->
+<div class="page" id="page-about">
+<div class="narrow">
+  <div class="post-header">
+    <div class="post-tag" style="color:var(--purple)">About</div>
+    <h1>What is Civic Interplay?</h1>
+  </div>
+
+  <div class="post-content">
+    <div class="callout">
+      <p><strong>Civic Interplay is a space for reflection on a basic question: What does it mean to <em>become-citizen</em> in an era of planetary intelligence and sovereign AI?</strong></p>
+      <p>It's a kind of <em><strong>micro politics for a macro age.</strong></em></p>
+    </div>
+
+    <div class="callout">
+      <p><strong>Civic Interplay is <em>all</em> work in progress.</strong></p>
+      <p>This work is emerging as we speak. Its formal practices are yet to be discerned. This is not a space where outcomes are pre-determined.</p>
+    </div>
+
+    <div class="callout">
+      <p><strong>The 'Macro Age' We're Living Through</strong></p>
+      <p>We are living through the Sixth Mass Extinction, the rise of AI sovereignty, and a series of catastrophic climate tipping points.</p>
+      <p>This is not an era that we understand very well, though it may strike us as dangerous. These crises don't respect national borders. They can't be solved by individual nation-states acting alone.</p>
+    </div>
+
+    <div class="callout">
+      <p><strong>In this macro age, the language of 'citizenship' may not feel adequate.</strong></p>
+      <p>It may feel better suited to other times, times different to our own. From these other times we inherited a political world order that enabled many to live comfortably in recent decades. To think little of politics, and of what it means to act as citizens.</p>
+      <p>From these other times we almost reached the end of history.</p>
+    </div>
+
+    <div class="callout">
+      <p><strong>The macro age we find ourselves in is creating, before our eyes, a different kind of history.</strong></p>
+      <p>It's not the kind of history we were taught before. We can no longer say: <em>And then they lived comfortably ever after.</em></p>
+      <p>We are not so sure of that any more.</p>
+    </div>
+
+    <div class="callout">
+      <p><strong>But we can say: <em>We are the interface for a new politics of becoming.</em></strong></p>
+      <p>By 'interface' I mean something specific: we are the living, sensing, semi-autonomous connection between the world as it has been and the world as it might become.</p>
+      <p>Through our daily choices, about which platforms to use, which data to share, which automated systems to trust or resist, what terms and conditions we say yes to, we are actively training the planetary intelligences that shape material futures.</p>
+    </div>
+
+    <div class="callout">
+      <p><strong>This is the micro-politics of <em>civic interplay.</em></strong></p>
+    </div>
+
+    <hr style="border:none;border-top:1px solid var(--border-light);margin:3rem 0">
+
+    <h2>Beyond legacy models</h2>
+
+    <div class="callout">
+      <p><strong>The language of digital computing is suffused with legacy models:</strong></p>
+      <p><strong>'Cloud computing'</strong> — as though our data had no weight, no carbon cost, no material infrastructure spanning the earth</p>
+      <p><strong>'Human-centred design'</strong> — as though humans are the only thing that matters in a more-than-human world facing ecological collapse</p>
+      <p><strong>'Artificial intelligence'</strong> — as though it is somehow not real, or not borne of the collective wealth of knowledge</p>
+      <p><strong>'Information design'</strong> — as though designing how information flows were not also political acts</p>
+    </div>
+
+    <div class="callout">
+      <p><em><strong>What about instead:</strong></em></p>
+      <p>Our interconnected lives operate as training grounds for a new kind of planetary intelligence. The question is not whether we'll have planetary-scale AI systems — we already do — but what kind of citizens we'll be in relation to them.</p>
+    </div>
+
+    <h2>Training grounds for micro-political imaginaries</h2>
+
+    <div class="callout">
+      <p>To refuse the work of imagination is to accept the world as given by those who are already building it. But imagination requires practice. It requires spaces to think differently, to experiment with alternative relations, to repair what has been damaged.</p>
+      <p>This is where the micro-politics of civic interplay begins: not in grand manifestos or total system redesigns, but in smaller acts of intentionally crafting different relations.</p>
+    </div>
+
+    <div class="callout">
+      <p><strong>What counts as an act of politics, when digital scrolling places us in the crosshairs of a cybernetically-engineered system we didn't realise we'd sworn allegiance to?</strong></p>
+    </div>
+
+    <h2>Seeking spaces of civil repair</h2>
+
+    <div class="callout">
+      <p><strong>The word <em>civic</em> is related to another word: <em>civil</em>.</strong> Both words relate to a Latin word, <em>civis</em>, or citizenship.</p>
+      <p>To be a <em>civis</em>, in the ancient sense, was to be a member of an 'imagined community' — in the specific sense, a citizen of Rome.</p>
+      <p><strong>Our imagined communities today contain multitudes: of species, of co-intelligences.</strong></p>
+    </div>
+
+    <div class="callout">
+      <p><strong>How do we craft the workflows and digital relations that shape what kinds of 'imagined community' we belong to?</strong></p>
+      <p><strong>These are micro political acts; acts of civic interplay.</strong></p>
+    </div>
+
+    <div class="callout">
+      <p><em><strong>Civic Interplay</strong></em><strong> sees micro-acts of political belonging being forged in the training grounds of co-intelligent habitats.</strong></p>
+    </div>
+  </div>
+
+  <div class="back-link">
+    <a href="#" onclick="showPage('home');return false">Civic Interplay</a>
+  </div>
+</div>
+</div>
+
+<!-- SAMPLE POST PAGE -->
+<div class="page" id="page-post">
+<div class="narrow">
+  <div class="post-header">
+    <div class="post-tag" style="color:var(--terracotta)">Training Grounds</div>
+    <h1>They gathered inside a makeshift structure at De Ceuvel.</h1>
+    <div class="post-meta">September 2025</div>
+  </div>
+
+  <div style="width:100%;height:300px;border-radius:var(--radius);background:linear-gradient(135deg,var(--forest),#2d332b);margin-bottom:2.5rem;"></div>
+
+  <div class="post-content">
+    <p>Irina was there to hug people on arrival. There were no strangers, though many had not yet met. Some had cycled here from nearby, others had left their bicycles at home, flown by aircraft, walked, caught the train across Europe.</p>
+
+    <p>De Ceuvel is a former shipyard turned self-sustaining community workspace in Amsterdam Noord. Its houseboats, perched on remediated land, are connected by a boardwalk that weaves between phytoremediation gardens. The soil beneath is being cleaned by plants.</p>
+
+    <div class="callout">
+      <p><strong>What does it mean to gather in a place that is healing itself?</strong></p>
+      <p>The participants brought their own practices: data sovereignty researchers, regenerative designers, Indigenous knowledge holders, civic technologists. The gathering was not a conference. It was an experiment in what happens when you put these practices in the same room.</p>
+    </div>
+
+    <p>The conversations moved between the structural and the intimate. Someone spoke about the governance of training data. Someone else about the sound of wind through remediated soil. The gap between these registers was the point.</p>
+
+    <blockquote>
+      <p>"We are not here to agree. We are here to notice what happens when different forms of intelligence encounter each other in a space that is neither neutral nor finished."</p>
+    </blockquote>
+
+    <p>By the second day, something had shifted. The language of 'stakeholders' and 'frameworks' had given way to something more tentative, more honest. People were talking about what they didn't know. About what their disciplines couldn't see.</p>
+
+    <div class="callout">
+      <p><em><strong>This is what civic interplay looks like in practice:</strong></em> not a methodology, but a willingness to stay in the room when the frameworks stop working.</p>
+    </div>
+
+    <p>The boardwalk at De Ceuvel ends at the water. Standing there at dusk, watching the light on the IJ, it was hard not to think about what we were leaving behind and what we were walking toward. The soil beneath us was still healing. So were we.</p>
+  </div>
+
+  <div class="back-link">
+    <a href="#" onclick="showPage('home');return false">Civic Interplay</a>
+  </div>
+</div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-title">Civic Interplay</div>
+    <div class="footer-tagline">Towards civic agencies & civic AI intelligence</div>
+    <div class="footer-links">
+      <a href="https://sarahbarns.com">sarahbarns.com</a>
+      <a href="https://github.com/studioesem/civic-interplay-guides">GitHub</a>
+      <a href="https://studioesem.com">Studio ESEM</a>
+      <a href="https://storybox.co">STORYBOX</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 Sarah Barns</p>
+  </div>
+</footer>
+
+<script>
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const navEl = document.getElementById('nav-' + page);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// Scroll reveal for callout blocks
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.callout').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

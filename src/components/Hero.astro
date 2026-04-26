@@ -1,0 +1,56 @@
+---
+interface Props {
+  image?: string;
+  imageAlt?: string;
+  glitchWord?: string;
+  beforeGlitch?: string;
+  afterGlitch?: string;
+  tagline?: string;
+}
+
+const {
+  image,
+  imageAlt = '',
+  glitchWord,
+  beforeGlitch = '',
+  afterGlitch = '',
+  tagline,
+} = Astro.props;
+---
+<div class="hero">
+  {image && (
+    <img src={image} alt={imageAlt} class="hero-image" loading="eager" decoding="async" />
+  )}
+  {!image && <div class="hero-image hero-image--fallback" aria-hidden="true"></div>}
+  <div class="hero-overlay">
+    <h1>
+      {beforeGlitch}
+      {glitchWord && <span class="glitch">{glitchWord}</span>}
+      {afterGlitch}
+    </h1>
+    {tagline && <p class="tagline">{tagline}</p>}
+  </div>
+</div>
+
+<style>
+  .hero-image--fallback {
+    background: linear-gradient(135deg, var(--forest), var(--purple));
+    height: 360px;
+  }
+
+  .glitch {
+    display: inline;
+    position: relative;
+    cursor: default;
+  }
+
+  .glitch:hover {
+    animation: glitch 0.4s steps(2) forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glitch:hover {
+      animation: none;
+    }
+  }
+</style>

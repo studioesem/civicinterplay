@@ -1,0 +1,23 @@
+---
+// Wrap a word or phrase in <Glitch>word</Glitch> to give it the chromatic-aberration
+// hover effect. Honours prefers-reduced-motion.
+---
+<span class="glitch"><slot /></span>
+
+<style>
+  .glitch {
+    display: inline;
+    position: relative;
+    cursor: default;
+  }
+
+  .glitch:hover {
+    animation: glitch 0.4s steps(2) forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glitch:hover {
+      animation: none;
+    }
+  }
+</style>

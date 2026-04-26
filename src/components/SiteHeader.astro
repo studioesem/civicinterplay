@@ -1,0 +1,28 @@
+---
+const path = Astro.url.pathname;
+const isActive = (test: (p: string) => boolean) => test(path);
+
+const isHome = isActive((p) => p === '/' || p === '');
+const isReading = isActive((p) => p.startsWith('/reading'));
+const isDoing = isActive((p) => p.startsWith('/doing'));
+const isAbout = isActive(
+  (p) => p.startsWith('/about') || p.startsWith('/what-is-civic-interplay')
+);
+---
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="/" class="site-logo" aria-label="Civic Interplay home">
+        <span>Civic Interplay</span>
+      </a>
+      <nav aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="/" aria-current={isHome ? 'page' : undefined}>Home</a></li>
+          <li><a href="/reading/" aria-current={isReading ? 'page' : undefined}>Reading</a></li>
+          <li><a href="/doing/" aria-current={isDoing ? 'page' : undefined}>Doing</a></li>
+          <li><a href="/about/" aria-current={isAbout ? 'page' : undefined}>About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>

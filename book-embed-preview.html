@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Page Embed Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8f8f8; --text: #1c1917; --text-dim: rgba(28,25,23,0.65); --text-faint: rgba(28,25,23,0.4);
+  --border: #333; --border-light: rgba(28,25,23,0.1);
+  --purple: #7D50BD; --pink: #E076DB; --terracotta: #D16D54;
+  --forest: #454E41; --periwinkle: #8E9BDD; --sand: #DACCBA;
+  --heading: 'Fira Sans', sans-serif; --body: 'Merriweather', Georgia, serif; --radius: 12px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:16px; }
+body { font-family:var(--body); font-weight:300; background:var(--bg); color:var(--text); line-height:1.7; }
+.narrow { max-width:720px; margin:0 auto; padding:0 1.5rem; }
+a { color:var(--purple); }
+
+/* Civic Interplay post styles */
+.post-header { padding:3rem 0 2rem; }
+.post-header .post-tag { font-family:var(--heading); font-size:0.7rem; font-weight:500; text-transform:uppercase; letter-spacing:0.1em; color:var(--terracotta); margin-bottom:0.8rem; }
+.post-header h1 { font-family:var(--heading); font-size:2.2rem; font-weight:400; line-height:1.2; margin-bottom:0.6rem; }
+.post-header .post-meta { font-family:var(--heading); font-size:0.78rem; font-weight:300; color:var(--text-faint); }
+
+.post-content { font-size:1rem; line-height:1.8; color:var(--text-dim); }
+.post-content p { margin-bottom:1.3rem; }
+.post-content h2 { font-family:var(--heading); font-size:1.5rem; font-weight:500; color:var(--text); margin:2.8rem 0 0.8rem; }
+
+/* Callout blocks (the CI style) */
+.callout {
+  background:#f8f8f8; border:2px solid var(--border); border-left:8px solid var(--purple);
+  border-radius:var(--radius); padding:1.8rem 2rem; margin:2rem 0;
+  box-shadow:4px 4px 0 var(--border);
+  opacity:0; transform:translateY(30px);
+  transition:opacity 0.6s ease, transform 0.6s ease;
+}
+.callout.visible { opacity:1; transform:translateY(0); }
+.callout p { font-family:var(--body); font-size:0.95rem; line-height:1.7; color:var(--text); margin-bottom:0.8rem; }
+.callout p:last-child { margin-bottom:0; }
+
+/* ═══════════════════════════════════════════════════════════════
+   BOOK PAGE EMBED — the composed register
+   ═══════════════════════════════════════════════════════════════ */
+.book-page {
+  --book-paper: #faf8f4;
+  --book-ink: #1a1814;
+  --book-mid: #6b6560;
+  --book-accent: #8c4a2f;
+  --book-rule: #d8d2c8;
+  --book-pale: #f0ece4;
+
+  background: var(--book-paper);
+  margin: 3rem -1rem;
+  box-shadow:
+    0 1px 1px rgba(0,0,0,.06),
+    0 4px 8px rgba(0,0,0,.06),
+    0 16px 40px rgba(0,0,0,.1),
+    inset 2px 0 4px rgba(0,0,0,.04);
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.book-page.visible { opacity: 1; transform: translateY(0); }
+
+/* Spine edge */
+.book-page::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 8px;
+  background: linear-gradient(to right, rgba(0,0,0,.08), transparent);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Header area */
+.book-page-header {
+  position: relative;
+  padding: 3rem 3.5rem 1.8rem;
+  border-bottom: 1px solid var(--book-rule);
+}
+
+.book-eyebrow {
+  font-family: 'Libre Franklin', var(--heading);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--book-accent);
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+.book-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.2rem;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--book-ink);
+}
+
+.book-title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--book-mid);
+}
+
+/* Large ghosted numeral */
+.book-numeral {
+  position: absolute;
+  top: 0.5rem;
+  right: 2.5rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 10rem;
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(0,0,0,.035);
+  user-select: none;
+}
+
+/* Body area */
+.book-page-body {
+  padding: 2rem 3.5rem 2.5rem;
+}
+
+/* Epigraph */
+.book-epigraph {
+  margin-bottom: 2rem;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--book-rule);
+}
+
+.book-epigraph p {
+  font-family: 'EB Garamond', Georgia, serif !important;
+  font-size: 0.95rem !important;
+  font-style: italic;
+  line-height: 1.6 !important;
+  color: var(--book-mid) !important;
+  margin-bottom: 0 !important;
+}
+
+.book-epigraph cite {
+  display: block;
+  margin-top: 0.4rem;
+  font-family: 'Libre Franklin', var(--heading);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--book-accent);
+  font-style: normal;
+}
+
+/* Body text inside book pages */
+.book-page-body p {
+  font-family: 'EB Garamond', Georgia, serif !important;
+  font-size: 1.15rem !important;
+  line-height: 1.45 !important;
+  color: var(--book-ink) !important;
+  hyphens: auto;
+  margin-bottom: 0.8rem !important;
+}
+
+/* Lead paragraph with drop cap */
+.book-lead::first-letter {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 4rem;
+  font-weight: 700;
+  float: left;
+  line-height: 0.82;
+  margin-right: 0.1em;
+  margin-top: 0.05em;
+  color: var(--book-accent);
+}
+
+/* Pull quote inside book pages */
+.book-pull-quote {
+  padding: 1.2rem 0 1.2rem 1.5rem;
+  border-left: 2px solid var(--book-accent);
+  margin: 1.8rem 0;
+}
+
+.book-pull-quote p {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 1.1rem !important;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--book-mid) !important;
+  line-height: 1.4 !important;
+}
+
+/* Folio */
+.book-folio {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 3.5rem;
+  border-top: 1px solid var(--book-rule);
+  font-family: 'Libre Franklin', var(--heading);
+  font-size: 0.65rem;
+  color: var(--book-mid);
+}
+
+.book-folio a {
+  color: var(--book-accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.book-folio a:hover { text-decoration: underline; }
+
+/* Section break */
+.book-section-break {
+  text-align: center;
+  padding: 1.2rem 0;
+  color: var(--book-rule);
+  font-size: 1.2rem;
+  letter-spacing: 0.5em;
+}
+
+@media (max-width: 640px) {
+  .book-page { margin: 2rem -0.5rem; }
+  .book-page-header { padding: 2rem 1.8rem 1.5rem; }
+  .book-page-body { padding: 1.5rem 1.8rem 2rem; }
+  .book-folio { padding: 0.6rem 1.8rem; }
+  .book-title { font-size: 1.7rem; }
+  .book-numeral { font-size: 7rem; }
+}
+
+/* Animations */
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)} }
+</style>
+</head>
+<body>
+
+<div class="narrow">
+
+  <div class="post-header">
+    <div class="post-tag">Training Grounds</div>
+    <h1>They gathered inside a makeshift structure at De Ceuvel.</h1>
+    <div class="post-meta">September 2025</div>
+  </div>
+
+  <div class="post-content">
+
+    <p>Irina was there to hug people on arrival. There were no strangers, though many had not yet met. Some had cycled here from nearby, others had left their bicycles at home, flown by aircraft, walked, caught the train across Europe.</p>
+
+    <p>De Ceuvel is a former shipyard turned self-sustaining community workspace in Amsterdam Noord. Its houseboats, perched on remediated land, are connected by a boardwalk that weaves between phytoremediation gardens.</p>
+
+    <div class="callout visible">
+      <p><strong>What does it mean to gather in a place that is healing itself?</strong></p>
+      <p>The participants brought their own practices: data sovereignty researchers, regenerative designers, Indigenous knowledge holders, civic technologists.</p>
+    </div>
+
+    <p>The conversations moved between the structural and the intimate. Someone spoke about the governance of training data. Someone else about the sound of wind through remediated soil.</p>
+
+    <h2>A composed reflection</h2>
+
+    <p>After the gathering, I sat with what had happened and tried to write it down more carefully. What follows is from that sitting.</p>
+
+    <!-- ═══ BOOK PAGE EMBED ═══ -->
+    <div class="book-page">
+      <div class="book-page-header">
+        <div class="book-numeral">2</div>
+        <span class="book-eyebrow">Chapter Two &nbsp;·&nbsp; Still Here</span>
+        <h2 class="book-title">What the City<br><em>Remembers</em></h2>
+      </div>
+      <div class="book-page-body">
+        <blockquote class="book-epigraph">
+          <p>The archive is not a place where the past is stored. It is a place where the past is made available for the future to decide what it means.</p>
+          <cite>Carolyn Steedman, Dust, 2001</cite>
+        </blockquote>
+
+        <p class="book-lead">Every site carries a frequency beneath its noise. Before the infrastructure of data arrived, before the platform made legible what had always simply been, there were the sounds that no archive thought worth keeping.</p>
+
+        <p>The ABC sound archive began, in one sense, as bureaucratic habit. Engineers documented what they needed to document. But within those acetate discs, nested between station identifications and weather readings, were the ambient textures of a city becoming itself: trams on George Street, the particular creak of the Cahill Expressway, the call-and-response of a produce market that no longer exists.</p>
+
+        <div class="book-pull-quote">
+          <p>What the city remembers is not what was recorded, but what the recording accidentally preserved.</p>
+        </div>
+
+        <p>To listen to these recordings now is to enter a temporal fold. The city you hear is both gone and still here, embedded in the material fabric of streets and buildings that carry their acoustic signatures forward through time, even as the sounds themselves have been replaced.</p>
+      </div>
+      <div class="book-folio">
+        <span>Still Here</span>
+        <a href="#">Read full chapter →</a>
+      </div>
+    </div>
+    <!-- ═══ END BOOK PAGE ═══ -->
+
+    <p>Back at De Ceuvel, the boardwalk ended at the water. Standing there at dusk, watching the light on the IJ, it was hard not to think about what we were leaving behind and what we were walking toward.</p>
+
+    <div class="callout visible">
+      <p><em><strong>This is what civic interplay looks like in practice:</strong></em> not a methodology, but a willingness to stay in the room when the frameworks stop working.</p>
+    </div>
+
+    <p>The soil beneath us was still healing. So were we.</p>
+
+    <h2>Another book excerpt</h2>
+
+    <p>Later that week, I returned to an earlier passage I had been working on about the politics of listening.</p>
+
+    <!-- ═══ SHORTER BOOK PAGE EMBED ═══ -->
+    <div class="book-page">
+      <div class="book-page-body">
+        <blockquote class="book-epigraph">
+          <p>He who seeks to approach his own buried past must conduct himself like a man digging.</p>
+          <cite>Walter Benjamin</cite>
+        </blockquote>
+
+        <p class="book-lead">I have come to think of these contested recordings of urban memory as resonant traces. They reverberate with the echoes of past battles, evidencing the often contested, productive possibilities of a given location.</p>
+
+        <p>My listening technique has sought, through sound recordings, places that 'have no monument, no landmark to indicate their passing.' Something of an archaeological dig for media artefacts buried beneath the surface of the emergent digital terrain.</p>
+      </div>
+      <div class="book-folio">
+        <span>Still Here</span>
+        <span>126</span>
+      </div>
+    </div>
+    <!-- ═══ END BOOK PAGE ═══ -->
+
+    <p>Media recordings or platforms don't themselves have that capacity. But we do.</p>
+
+  </div>
+
+</div>
+
+<script>
+// Scroll reveal for callouts and book pages
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.callout, .book-page').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import PostCard from '../components/PostCard.astro';
+import { CATEGORY_LABEL } from '../content/config';
+
+const allPosts = (await getCollection('posts'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+
+const byPrimary = (cat: string) =>
+  allPosts.filter((p) => p.data.primaryCategory === cat);
+
+const introPosts = byPrimary('introduction');
+const trainingGroundsPosts = byPrimary('training-grounds');
+const guidesPosts = byPrimary('the-guides');
+const worksheetsPosts = byPrimary('work-sheets');
+const portalsPosts = byPrimary('the-portals');
+const guidesAndWorksheets = [...guidesPosts, ...worksheetsPosts];
+
+const heroImage = '/images/CivicAI_Visualisation_Header-2-1.jpg';
+
+function categoryLabelsFor(post: (typeof allPosts)[number]) {
+  const cats = post.data.categories ?? [];
+  if (cats.length > 0) {
+    return cats.map((c) => CATEGORY_LABEL[c]).join(' · ');
+  }
+  if (post.data.primaryCategory) {
+    return CATEGORY_LABEL[post.data.primaryCategory];
+  }
+  return undefined;
+}
+---
+<BaseLayout
+  title="Civic Interplay"
+  description="Towards civic agencies & civic AI intelligence. A Think + Do Space for civic-tech, design, and cultural-policy practitioners exploring the planetary age."
+  ogImage={heroImage}
+>
+  <Hero
+    image={heroImage}
+    imageAlt="Civic Interplay"
+    beforeGlitch="Civic "
+    glitchWord="Interplay"
+    tagline="Towards civic agencies & civic AI intelligence"
+  />
+
+  <main class="container sections">
+
+    {introPosts.length > 0 && (
+      <section>
+        <SectionHeading title="An Introduction" />
+        <div class="post-grid">
+          {introPosts.map((p) => (
+            <PostCard
+              href={`/${p.slug}/`}
+              title={p.data.title}
+              excerpt={p.data.excerpt}
+              category={p.data.primaryCategory}
+              categoryLabel={categoryLabelsFor(p)}
+              image={p.data.featureImage}
+              imageAlt={p.data.featureImageAlt}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {trainingGroundsPosts.length > 0 && (
+      <section>
+        <SectionHeading title="Training Grounds" />
+        <div class="post-grid">
+          {trainingGroundsPosts.map((p) => (
+            <PostCard
+              href={`/${p.slug}/`}
+              title={p.data.title}
+              excerpt={p.data.excerpt}
+              category={p.data.primaryCategory}
+              categoryLabel={categoryLabelsFor(p)}
+              image={p.data.featureImage}
+              imageAlt={p.data.featureImageAlt}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {guidesAndWorksheets.length > 0 && (
+      <section>
+        <SectionHeading title="The Guides + Work Sheets" />
+        <div class="post-grid-guides">
+          {guidesAndWorksheets.map((p) => (
+            <PostCard
+              href={`/${p.slug}/`}
+              title={p.data.title}
+              excerpt={p.data.excerpt}
+              category={p.data.primaryCategory}
+              categoryLabel={categoryLabelsFor(p)}
+              image={p.data.featureImage}
+              imageAlt={p.data.featureImageAlt}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {portalsPosts.length > 0 && (
+      <section>
+        <SectionHeading title="The Portals" />
+        <div class="post-grid">
+          {portalsPosts.map((p) => (
+            <PostCard
+              href={`/${p.slug}/`}
+              title={p.data.title}
+              excerpt={p.data.excerpt}
+              category={p.data.primaryCategory}
+              categoryLabel={categoryLabelsFor(p)}
+              image={p.data.featureImage}
+              imageAlt={p.data.featureImageAlt}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+  </main>
+</BaseLayout>

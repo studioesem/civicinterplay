@@ -1,0 +1,20 @@
+---
+interface Props {
+  title: string;
+  href?: string;
+}
+
+const { title, href } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+<Tag class="section-heading" href={href}>
+  <h2>{title}</h2>
+  <slot />
+</Tag>
+
+<style>
+  a.section-heading {
+    text-decoration: none;
+    color: inherit;
+  }
+</style>

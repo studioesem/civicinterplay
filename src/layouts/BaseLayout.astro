@@ -1,0 +1,74 @@
+---
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = 'Civic Interplay',
+  description = 'Towards civic agencies & civic AI intelligence. A Think + Do Space.',
+  ogImage,
+} = Astro.props;
+
+const fullTitle = title === 'Civic Interplay' ? title : `${title} — Civic Interplay`;
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap"
+    />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    <SiteHeader />
+    <slot />
+    <SiteFooter />
+
+    <script>
+      // Scroll reveal for callouts. Skipped if user prefers reduced motion.
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
+        );
+
+        document.querySelectorAll('.callout').forEach((el) => observer.observe(el));
+      } else {
+        document.querySelectorAll('.callout').forEach((el) => el.classList.add('visible'));
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "civicinterplay",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "ghost:convert": "node scripts/ghost-to-mdx.mjs"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.0.0",
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^5.1.0"
+  },
+  "devDependencies": {
+    "turndown": "^7.2.0",
+    "typescript": "^5.7.0"
+  }
+}
