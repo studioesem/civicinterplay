@@ -275,7 +275,7 @@ section:nth-child(4) { animation-delay: 0.60s; }
 /* --- Sections + section heading ---------------------------------------- */
 
 .sections {
-  padding-top: clamp(3rem, 6vw, 5rem);
+  padding-top: clamp(4.5rem, 8vw, 6rem);
 }
 
 .section-heading {

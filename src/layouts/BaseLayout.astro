@@ -17,6 +17,14 @@ const {
 
 const fullTitle = title === 'Civic Interplay' ? title : `${title} · Civic Interplay`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+
+// Resolve OG image: per-page override, otherwise the site-wide default tile.
+// Always emit an absolute URL so social platforms (Slack, X, LinkedIn, iMessage)
+// can fetch it without guessing the host.
+const ogImagePath = ogImage ?? '/og-default.png';
+const ogImageUrl = ogImagePath.startsWith('http')
+  ? ogImagePath
+  : new URL(ogImagePath, Astro.site).toString();
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -31,8 +39,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Civic Interplay — Towards civic agencies & civic AI intelligence" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="any" href="/favicon.png" />

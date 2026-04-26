@@ -9,7 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "ghost:convert": "node scripts/ghost-to-mdx.mjs"
+    "ghost:convert": "node scripts/ghost-to-mdx.mjs",
+    "og:generate": "node scripts/generate-og.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.0.0",
@@ -17,6 +18,7 @@
     "astro": "^5.1.0"
   },
   "devDependencies": {
+    "sharp": "^0.34.5",
     "turndown": "^7.2.0",
     "typescript": "^5.7.0"
   }
