@@ -196,7 +196,7 @@ section:nth-child(4) { animation-delay: 0.60s; }
 
 .nav-links a {
   font-family: var(--heading);
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 400;
   color: var(--text-dim);
   position: relative;
@@ -275,7 +275,7 @@ section:nth-child(4) { animation-delay: 0.60s; }
 /* --- Sections + section heading ---------------------------------------- */
 
 .sections {
-  padding-top: clamp(4.5rem, 8vw, 6rem);
+  padding-top: clamp(6rem, 10vw, 8rem);
 }
 
 .section-heading {
