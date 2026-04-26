@@ -309,7 +309,24 @@ async function main() {
     // Strip redundant bold inside ATX headings (Ghost wraps headings in <strong>).
     body = body.replace(/^(#{1,6})\s*\*\*(.+?)\*\*\s*$/gm, '$1 $2');
 
-    // Tidy: collapse triple-or-more blank lines, trim.
+    // Strip Ghost's auto-injected subscribe gumph that survives the kg-signup-card
+    // strip. These sit in plain <h2>/<p> tags around the signup card, not inside it.
+    // They appear at the tail of posts; loop so we catch combos and stack-ups.
+    const gumphPatterns = [
+      /^\s*Thanks for reading[^\n]*Subscribe[^\n]*$/gim,
+      /^\s*##+\s*Sign up for [^\n]+\s*$/gim,
+      /^\s*This is how we are learning to become\s*$/gim,
+      /^\s*Email sent![^\n]*complete your signup\.?\s*$/gim,
+      /^\s*No spam\.\s*Unsubscribe anytime\.?\s*$/gim,
+    ];
+    let prev;
+    do {
+      prev = body;
+      for (const re of gumphPatterns) body = body.replace(re, '');
+      body = body.replace(/\n{3,}/g, '\n\n').trim();
+    } while (body !== prev);
+
+    // Final tidy: collapse blank lines, trim, ensure trailing newline.
     body = body.replace(/\n{3,}/g, '\n\n').trim() + '\n';
 
     const featureImage = post.feature_image ? rewriteImageUrl(post.feature_image) : undefined;
