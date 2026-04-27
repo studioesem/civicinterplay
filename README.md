@@ -1,13 +1,13 @@
-# Civic Interplay
+# Civic Interplay Website
 
 The website for **Civic Interplay**, a Think + Do Space for civic-tech, design, and cultural-policy practitioners exploring the planetary age.
 
 Migrated from Ghost Pro to a static Astro site, deployed on Cloudflare Pages.
 
 - **Live site:** https://civicinterplay.io
-- **Tools subdomain:** https://sightings.civicinterplay.io (separate project)
+- **Tools subdomain:** https://sightings.civicinterplay.io (separate project) https://terrain.civicinterplay.io
 - **Website Author:** Sarah Barns ([sarahbarns.com](https://sarahbarns.com), [Studio ESEM](https://studioesem.com))
-- ****Tools** live at https://github.com/civic-interplay/
+- ****Tools** live at https://github.com/civic-interplay/ co-created with Irina Panovich, Civic Interplay co-founder 
 
 ## Stack
 
