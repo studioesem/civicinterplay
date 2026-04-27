@@ -8,9 +8,6 @@ export default defineConfig({
   build: {
     format: 'directory',
   },
-  redirects: {
-    '/about': '/what-is-civic-interplay',
-  },
   markdown: {
     shikiConfig: {
       theme: 'github-light',

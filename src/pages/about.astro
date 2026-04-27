@@ -1,0 +1,31 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const post = await getEntry('posts', 'what-is-civic-interplay');
+if (!post) throw new Error('about: missing what-is-civic-interplay post');
+
+const { Content } = await post.render();
+---
+<BaseLayout
+  title="About"
+  description={post.data.excerpt}
+  ogImage={post.data.featureImage}
+>
+  <article>
+    <div class="narrow">
+      <div class="post-header">
+        <div class="post-tag" style="color: var(--purple)">About</div>
+        <h1>{post.data.title}</h1>
+      </div>
+
+      <div class="post-content">
+        <Content />
+      </div>
+
+      <div class="back-link">
+        <a href="/">Civic Interplay</a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
