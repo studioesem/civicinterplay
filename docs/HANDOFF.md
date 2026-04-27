@@ -14,19 +14,17 @@ Everything else is reference.
 
 ## The shape of the project
 
-**What it is:** a website at [civicinterplay.io](https://civicinterplay.io). Sarah's "Think + Do Space" for civic-tech, design, and cultural-policy practitioners curious about AI. Migrated from Ghost Pro to a static Astro site, deployed on Cloudflare Pages.
-
 **Two halves:**
 
-- **Think** = essays, notes, field reports. Lives in `/reading/` and individual post pages.
+- **Think** = a website at [civicinterplay.io](https://civicinterplay.io) for essays, notes, field reports. Lives in `/reading/` and individual post pages. Deployed on Cloudflare Pages.
 - **Do** = tools, workshops, worksheets. Lives in `/doing/`. Currently: **Sightings** (a 2D civic-noticing tool) and **Terrain** (a semantic landscape of contributed briefs). Both are embedded as iframes from their own subdomains.
 
 **What's NOT here:** the tools themselves. They live in their own repos:
 
-- `civic-interplay/sightings` (Express, file-based storage, Render)
-- `studioesem/civicinterplay-landscape` (Express + Supabase + Nomic, Render). Internal name is "Terrain".
+- `civic-interplay/sightings` (Express, file-based storage, Render) led by Sarah
+- `studioesem/civicinterplay-landscape` and https://github.com/civic-interplay/civicinterplay-landscape (Express + Supabase + Nomic, Render). Internal name is "Terrain". Led by Irina
 
-This repo is the editorial / lobby surface. The tools are separate apps reachable at:
+This repo is the editorial / lobby surface. The tools are separate apps hosted at:
 
 - `terrain.civicinterplay.io`
 - `sightings.civicinterplay.io`
@@ -170,7 +168,7 @@ Picked up from the most recent `/audit` and the conversation log. Ordered roughl
 
 ## Open-source roadmap (the bigger work)
 
-Sarah's deeper question: how do we host workshop responses in a way that's **open source** and **tailorable per workshop or group**? Two pieces, ranked by lock-in.
+Sarah & Irina's deeper question: how do we host workshop responses in a way that's **open source** and **tailorable per workshop or group**? Two pieces, ranked by lock-in.
 
 ### 1. Embeddings (the biggest external dependency)
 
@@ -226,7 +224,7 @@ Sarah's gut, recorded in chat: **hybrid**. Live runs on shared instance; each wo
 **Repos:**
 - `studioesem/civicinterplay` — this site
 - `civic-interplay/sightings` — Sightings tool
-- `studioesem/civicinterplay-landscape` — Terrain tool
+- `studioesem/civicinterplay-landscape` and https://github.com/civic-interplay/civicinterplay-landscape — Terrain tool
 
 **Live:**
 - civicinterplay.io
