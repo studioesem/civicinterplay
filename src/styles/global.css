@@ -233,6 +233,7 @@ section:nth-child(4) { animation-delay: 0.60s; }
   position: relative;
   overflow: hidden;
   animation: fadeIn 0.8s ease both;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
 }
 
 .hero-image {
@@ -275,17 +276,7 @@ section:nth-child(4) { animation-delay: 0.60s; }
 /* --- Sections + section heading ---------------------------------------- */
 
 .sections {
-  padding-top: clamp(8rem, 12vw, 10rem);
-}
-
-/* Belt-and-braces: when a hero leads directly into a sections / main block,
-   add a top margin too. Some mobile browsers (iOS Safari most notably) seem
-   to under-render the .sections padding-top in certain layout combinations,
-   and adjacent-sibling selectors are computed earlier in the cascade. */
-.hero + main,
-.hero + .sections,
-main.sections > section:first-child {
-  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-top: clamp(6rem, 10vw, 8rem);
 }
 
 .section-heading {
