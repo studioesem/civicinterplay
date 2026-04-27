@@ -3,10 +3,10 @@
 //
 // Two usage modes:
 //
-// 1. Slug mode — auto-populates from the content collection:
+// 1. Slug mode: auto-populates from the content collection:
 //      <LinkCallout slug="at-de-ceuvel" eyebrow="Read next" />
 //
-// 2. Explicit mode — pass href + title + optional excerpt/category:
+// 2. Explicit mode: pass href + title + optional excerpt/category:
 //      <LinkCallout
 //        href="/doing/"
 //        eyebrow="Take with you"
@@ -45,7 +45,7 @@ if (slug) {
   try {
     entry = await getEntry('posts', slug);
   } catch (err) {
-    console.warn(`<LinkCallout slug="${slug}"> — entry not found.`, err);
+    console.warn(`<LinkCallout slug="${slug}">: entry not found.`, err);
   }
 }
 

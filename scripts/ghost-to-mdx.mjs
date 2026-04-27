@@ -20,6 +20,31 @@ const ROOT = path.resolve(__dirname, '..');
 const POSTS_OUT = path.join(ROOT, 'src/content/posts');
 const IMAGES_SRC = path.join(ROOT, 'civicinterplay-images');
 const IMAGES_OUT = path.join(ROOT, 'public/images');
+const IMAGE_ALTS_JSON = path.join(ROOT, 'data/image-alts.json');
+
+// Load the image-alts map. Keys are image basenames (filename only). Values are
+// alt text strings; an empty string means the image is intentionally decorative.
+// This file is the source of truth for alt text — survives ghost:convert re-runs.
+let IMAGE_ALTS = {};
+try {
+  IMAGE_ALTS = JSON.parse(fsSync.readFileSync(IMAGE_ALTS_JSON, 'utf8'));
+  delete IMAGE_ALTS._comment;
+} catch (err) {
+  console.warn(`! Could not load ${path.relative(ROOT, IMAGE_ALTS_JSON)}; falling back to empty alt text.`);
+}
+
+function altFor(src) {
+  if (!src) return '';
+  const basename = src.split('/').pop().split('?')[0];
+  return Object.prototype.hasOwnProperty.call(IMAGE_ALTS, basename)
+    ? IMAGE_ALTS[basename]
+    : '';
+}
+
+function escapeMdAlt(s) {
+  // Markdown alt text is delimited by ] so the only thing we need to escape.
+  return String(s).replace(/]/g, '\\]');
+}
 
 // --- Tag → category mapping --------------------------------------------------
 
@@ -174,17 +199,29 @@ function buildTurndown() {
   });
 
   // Preserve <figure><img></figure> as a clean Markdown image with caption.
+  // Alt text comes from data/image-alts.json (keyed by basename), not the
+  // <img alt> attribute, since Ghost exports almost never have alt text.
   td.addRule('figureImage', {
     filter: (node) => node.nodeName === 'FIGURE',
     replacement: (_content, node) => {
       const img = node.querySelector('img');
       if (!img) return '';
       const src = img.getAttribute('src') || '';
-      const alt = img.getAttribute('alt') || '';
+      const alt = altFor(src) || img.getAttribute('alt') || '';
       const captionEl = node.querySelector('figcaption');
       const caption = captionEl ? captionEl.textContent.trim() : '';
-      const md = `![${alt}](${src})`;
+      const md = `![${escapeMdAlt(alt)}](${src})`;
       return caption ? `${md}\n\n*${caption}*\n` : `${md}\n`;
+    },
+  });
+
+  // Bare <img> (no figure wrapper) — same alt-from-JSON treatment.
+  td.addRule('bareImage', {
+    filter: (node) => node.nodeName === 'IMG' && node.parentNode?.nodeName !== 'FIGURE',
+    replacement: (_content, node) => {
+      const src = node.getAttribute('src') || '';
+      const alt = altFor(src) || node.getAttribute('alt') || '';
+      return `![${escapeMdAlt(alt)}](${src})`;
     },
   });
 

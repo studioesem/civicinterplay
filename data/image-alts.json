@@ -1,0 +1,31 @@
+{
+  "_comment": "Alt text for migrated post images. Keyed by image basename (filename only). Read by scripts/ghost-to-mdx.mjs during conversion so alt text survives Ghost-export re-runs. Empty string = intentionally decorative (e.g. hero photos paired with an H1). When unsure, prefer the editorial caption over guessing. Add new entries here when adding new posts; the script falls back to '' if a key isn't found.",
+
+  "bike.jpg": "A bicycle leaning at the roadside, marking the way to de Ceuvel.",
+  "Indy.jpg": "Indy Johar speaking to a seated audience inside the makeshift wooden structure at the Metabolic Lab.",
+  "Civic-Economy-Protocols.jpg": "Martijn de Waal opening a session at the Metabolic Lab during the Civic Economy Protocols workshop, 2025.",
+  "governing-for-the-planet-1.jpg": "Cover image for Jonathan S Blake's essay on governing for the planet, published in Aeon.",
+  "DeCeuvel-1.jpg": "A houseboat at de Ceuvel, Amsterdam, converted into an artist studio.",
+
+  "201679b5-12d5-4051-b326-882908b55790_850x574-jpeg.jpg": "Walter Benjamin, mid-20th century photograph, sourced from Esther Leslie's essay marking the 75th anniversary of Benjamin's death.",
+  "3ddd5da4-d305-4794-831c-14705f92aa5c_600x443-jpeg.jpg": "An archival press photograph from the era of Benjamin's writing, captioned by Times Wide World Photos.",
+  "13a7d5fa-cf1b-4a2e-829b-2fd5b6210036_2048x1366-jpeg-1.jpg": "Story Factory Art Write Light Event 2022, an experiential storytelling installation by Studio ESEM.",
+  "13a7d5fa-cf1b-4a2e-829b-2fd5b6210036_2048x1366-jpeg.jpg": "Story Factory Art Write Light Event 2022, an experiential storytelling installation by Studio ESEM.",
+
+  "970e8eda-3f23-4599-a103-33f177de129f_564x720-jpeg.jpg": "Albert Einstein riding a bicycle outside Ben Meyer's house in Santa Barbara, California, 1933. Source: Leo Baeck Institute.",
+  "17989e31-a8be-4358-852a-9472dda07a9b_2667x3575-jpeg.jpg": "A printed book about Albert Einstein, photographed on a desk.",
+  "8e1ac1fc-a4f7-42ce-a5ec-7ae7b4cb6a68_1000x746.webp": "Albert Einstein standing at a blackboard covered in mathematical calculations, 1921. Hulton Archive.",
+  "6343dd6e-3b17-4878-ae66-b7bf6f2fddd7_640x498-jpeg.jpg": "Photograph credited to Robert and Talbot Trudeau, sourced via Flickr.",
+  "eda7e010-7b46-4844-97d5-7b2a5b127102_1024x1024.webp": "Illustration of digital landscapes and changing patterns of attention.",
+
+  "We-Care_Diagram-2.jpg": "Concept diagram for the We Care project, a participatory storytelling collaboration with RMIT.",
+  "Screenshot-2025-01-31-at-4.27.54---pm.png": "Documentation from a We Care workshop session, where participants explored Care and Common Growth as design principles for an innovation precinct.",
+  "We-care-5.png": "Portraits from the We Care participatory storytelling project, RMIT City North.",
+  "Screenshot-2025-10-22-at-4.43.13---PM.png": "We Care portraits featured on STORYBOX during the City North Activation program, October and November 2025.",
+
+  "Screen-Shot-2025-08-12-at-2.58.27-pm-2-1.png": "Visualisation suggesting the citizen as an active interface for civic AI.",
+  "Computer.jpg": "Magnetic core memory of an early IBM computer, photographed at the Women as Technology exhibition, Design Museum Den Bosch, 2025.",
+  "Screenshot-2025-11-09-at-9.30.04---pm-1.png": "We Care: Defining a politics for learning habitats. RMIT City North Social Innovation Precinct, 2025. Creative direction by Studio ESEM.",
+  "Circle-1.png": "",
+  "Circle-1-1.png": ""
+}
