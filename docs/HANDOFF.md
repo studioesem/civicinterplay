@@ -34,7 +34,7 @@ This repo is the editorial / lobby surface. The tools are separate apps reachabl
 ## Local setup
 
 ```bash
-git clone git@github.com:studioesem/civicinterplay.git
+git clone git@github.com:civic-interplay/civicinterplay.git
 cd civicinterplay
 npm install
 npm run dev          # http://localhost:4321
@@ -92,7 +92,7 @@ These apply to: site copy, blog content, captions, commit messages, PR descripti
 
 **Quickest path for a typo or link edit:**
 
-1. Open the file on GitHub: `github.com/studioesem/civicinterplay`
+1. Open the file on GitHub: `github.com/civic-interplay/civicinterplay`
 2. Click the pencil icon
 3. Edit, commit with a short message
 4. Cloudflare Pages auto-rebuilds in ~30–60 seconds
@@ -126,7 +126,7 @@ These apply to: site copy, blog content, captions, commit messages, PR descripti
 
 | Surface | Where | Repo | Notes |
 | --- | --- | --- | --- |
-| `civicinterplay.io` | Cloudflare Pages | `studioesem/civicinterplay` (this repo) | Static site. Deploy on push to `main`. |
+| `civicinterplay.io` | Cloudflare Pages | `civic-interplay/civicinterplay` (this repo) | Static site. Deploy on push to `main`. |
 | `terrain.civicinterplay.io` | Render (Singapore) | `civic-interplay/civicinterplay-landscape` | Express + Supabase (Sydney) + Nomic Atlas. |
 | `sightings.civicinterplay.io` | Render (Oregon) | `civic-interplay/sightings` | Express + local file storage. |
 
@@ -224,7 +224,7 @@ Sarah's gut, recorded in chat: **hybrid**. Live runs on shared instance; each wo
 ## Quick reference
 
 **Repos:**
-- `studioesem/civicinterplay` — this site
+- `civic-interplay/civicinterplay` — this site
 - `civic-interplay/sightings` — Sightings tool
 - `civic-interplay/civicinterplay-landscape` — Terrain tool
 
@@ -234,7 +234,7 @@ Sarah's gut, recorded in chat: **hybrid**. Live runs on shared instance; each wo
 - sightings.civicinterplay.io
 
 **Dashboards:**
-- GitHub: github.com/studioesem (this site) and github.com/civic-interplay (the tools)
+- GitHub: github.com/civic-interplay (this site + tools)
 - Cloudflare: dash.cloudflare.com (DNS for civicinterplay.io)
 - Render: dashboard.render.com (Sightings + Terrain services)
 - Supabase: supabase.com/dashboard (Terrain database, Sydney region)
@@ -243,6 +243,6 @@ Sarah's gut, recorded in chat: **hybrid**. Live runs on shared instance; each wo
 
 **Where to ask:**
 - Sarah: [sarahbarns.com](https://sarahbarns.com)
-- Issues for this repo: github.com/studioesem/civicinterplay/issues
+- Issues for this repo: github.com/civic-interplay/civicinterplay/issues
 
 **Last hand-off written:** 2026-04-27.

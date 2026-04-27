@@ -17,7 +17,7 @@ Astro static site migrating from Ghost Pro. Deploys to Cloudflare Pages.
 - Image download script: ./download-ghost-images.sh
 
 ## Deploy
-- Repo: studioesem/civicinterplay on GitHub
+- Repo: civic-interplay/civicinterplay on GitHub (transferred from studioesem 2026-04-27)
 - Host: Cloudflare Pages
 - Build: astro build, output: dist
 - Same workflow as studioesem/sarahbsite
