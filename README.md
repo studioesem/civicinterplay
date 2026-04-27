@@ -6,7 +6,8 @@ Migrated from Ghost Pro to a static Astro site, deployed on Cloudflare Pages.
 
 - **Live site:** https://civicinterplay.io
 - **Tools subdomain:** https://sightings.civicinterplay.io (separate project)
-- **Author:** Sarah Barns ([sarahbarns.com](https://sarahbarns.com), [Studio ESEM](https://studioesem.com))
+- **Website Author:** Sarah Barns ([sarahbarns.com](https://sarahbarns.com), [Studio ESEM](https://studioesem.com))
+- ****Tools** live at https://github.com/civic-interplay/
 
 ## Stack
 
