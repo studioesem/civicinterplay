@@ -63,6 +63,9 @@ const formattedDate = post.data.publishedAt.toLocaleDateString('en-AU', {
           <div class="post-tag" style={`color: ${tagColour}`}>{categoryLabel}</div>
         )}
         <h1>{post.data.title}</h1>
+        {post.data.excerpt && (
+          <p class="post-subtitle">{post.data.excerpt}</p>
+        )}
         <div class="post-meta">{formattedDate}</div>
       </div>
 
