@@ -1,0 +1,101 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import VideoEmbed from '../../components/VideoEmbed.astro';
+
+export async function getStaticPaths() {
+  const items = await getCollection('embeds');
+  return items.map((item) => ({
+    params: { slug: item.id },
+    props: { item },
+  }));
+}
+
+interface Props {
+  item: CollectionEntry<'embeds'>;
+}
+
+const { item } = Astro.props;
+const d = item.data;
+const watchHref = d.sourcePostSlug
+  ? `https://civicinterplay.io/${d.sourcePostSlug}/`
+  : 'https://civicinterplay.io/';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{d.title} - Civic Interplay</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style is:global>
+    :root {
+      --bg: #f8f8f8;
+      --text: #1c1917;
+      --text-dim: rgba(28, 25, 23, 0.78);
+      --text-faint: rgba(28, 25, 23, 0.55);
+      --border: #333;
+      --border-light: rgba(28, 25, 23, 0.1);
+      --purple: #7D50BD;
+      --pink: #E076DB;
+      --heading: 'Fira Sans', system-ui, sans-serif;
+      --body: 'Fira Sans', system-ui, sans-serif;
+      --radius: 12px;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      font-family: var(--heading);
+      color: var(--text);
+    }
+    .embed-shell {
+      padding: 0;
+      margin: 0;
+      position: relative;
+    }
+    .embed-shell .video-embed {
+      margin: 0;
+    }
+    .embed-watch-link {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.7rem;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(6px);
+      color: #fff;
+      font-family: var(--heading);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 999px;
+      transition: background 0.2s ease;
+    }
+    .embed-watch-link:hover { background: var(--purple); }
+    .embed-watch-link::after { content: '\\2197'; font-size: 0.78rem; line-height: 1; }
+  </style>
+</head>
+<body>
+  <div class="embed-shell">
+    <a class="embed-watch-link" href={watchHref} target="_top" rel="noopener">Watch on Civic Interplay</a>
+    <VideoEmbed
+      src={d.video}
+      webm={d.videoWebm}
+      poster={d.poster}
+      caption={d.caption}
+      aspectRatio={d.aspectRatio ?? '16/9'}
+      title={d.title}
+    />
+  </div>
+</body>
+</html>

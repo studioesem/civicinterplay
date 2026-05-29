@@ -1,0 +1,3 @@
+/embed/*
+  Content-Security-Policy: frame-ancestors *;
+  Cache-Control: public, max-age=300

@@ -37,4 +37,18 @@ const posts = defineCollection({
   }),
 });
 
-export const collections = { posts };
+const embeds = defineCollection({
+  type: 'data',
+  schema: z.object({
+    title: z.string(),
+    video: z.string(),
+    videoWebm: z.string().optional(),
+    poster: z.string().optional(),
+    caption: z.string().optional(),
+    credit: z.string().optional(),
+    sourcePostSlug: z.string().optional(),
+    aspectRatio: z.string().optional(),
+  }),
+});
+
+export const collections = { posts, embeds };
