@@ -22,6 +22,7 @@ const posts = defineCollection({
     title: z.string(),
     slug: z.string().optional(),
     excerpt: z.string().optional(),
+    subtitle: z.string().optional(),
     publishedAt: z.coerce.date(),
     updatedAt: z.coerce.date().optional(),
     featureImage: z.string().optional(),
