@@ -72,7 +72,10 @@ const ratioStyle = useNativeRatio ? '' : `--video-aspect: ${aspectRatio};`;
       </p>
     </video>
   </div>
-  {caption && <figcaption>{caption}</figcaption>}
+  <figcaption>
+    {caption && <span class="video-embed-caption-text">{caption}</span>}
+    <span class="video-embed-brand">Civic Interplay</span>
+  </figcaption>
 </figure>
 
 <style>
@@ -116,14 +119,35 @@ const ratioStyle = useNativeRatio ? '' : `--video-aspect: ${aspectRatio};`;
   }
 
   .video-embed figcaption {
-    font-family: var(--heading);
-    font-size: 0.78rem;
-    font-weight: 300;
-    color: var(--text-faint);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
     background: #f8f8f8;
-    padding: 0.75rem 1.25rem;
-    border-top: 1px solid var(--border-light);
+    padding: 0.85rem 1.25rem;
+    border-top: 2px solid var(--border);
+  }
+
+  .video-embed-caption-text {
+    font-family: var(--heading);
+    font-size: 0.88rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text);
     text-align: left;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .video-embed-brand {
+    font-family: var(--heading);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--purple);
+    white-space: nowrap;
+    flex: 0 0 auto;
   }
 
   .video-embed-fallback {
