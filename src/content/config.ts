@@ -26,6 +26,8 @@ const posts = defineCollection({
     updatedAt: z.coerce.date().optional(),
     featureImage: z.string().optional(),
     featureImageAlt: z.string().optional(),
+    featureVideo: z.string().optional(),
+    featureVideoWebm: z.string().optional(),
     categories: z.array(z.enum(CATEGORIES)).default([]),
     primaryCategory: z.enum(CATEGORIES).optional(),
     author: z.string().default('Sarah Barns'),

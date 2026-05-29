@@ -28,5 +28,12 @@ pnpm-debug.log*
 civic-interplay.ghost.*.json
 civicinterplay-images/
 
+# Local media source folders (originals + working files; too large for git).
+# Optimised versions get uploaded to R2 (civicinterplay-media bucket) or
+# copied into public/images/.
+civic-interplay-videos/
+civicinterplay-images-optimised/
+_image-report.json
+
 # civicinterplay-preview.html and download-ghost-images.sh ARE committed —
 # they're reference assets used by .impeccable.md and the migration docs.

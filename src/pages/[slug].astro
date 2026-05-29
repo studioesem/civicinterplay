@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import VideoEmbed from '../components/VideoEmbed.astro';
 import { CATEGORY_LABEL } from '../content/config';
 
 export async function getStaticPaths() {
@@ -65,7 +66,15 @@ const formattedDate = post.data.publishedAt.toLocaleDateString('en-AU', {
         <div class="post-meta">{formattedDate}</div>
       </div>
 
-      {post.data.featureImage && (
+      {post.data.featureVideo ? (
+        <VideoEmbed
+          src={post.data.featureVideo}
+          webm={post.data.featureVideoWebm}
+          poster={post.data.featureImage}
+          title={post.data.featureImageAlt}
+          aspectRatio="auto"
+        />
+      ) : post.data.featureImage && (
         <img
           src={post.data.featureImage}
           alt={post.data.featureImageAlt ?? ''}

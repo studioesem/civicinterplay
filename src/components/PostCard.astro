@@ -7,6 +7,8 @@ interface Props {
   categoryLabel?: string;
   image?: string;
   imageAlt?: string;
+  video?: string;
+  videoWebm?: string;
   fallbackGradient?: string;
 }
 
@@ -18,6 +20,8 @@ const {
   categoryLabel,
   image,
   imageAlt = '',
+  video,
+  videoWebm,
   fallbackGradient,
 } = Astro.props;
 
@@ -36,7 +40,21 @@ const placeholderBg =
   fallbackGradient ?? (category ? gradientByCategory[category] : 'linear-gradient(135deg, var(--sand), #b8a99a)');
 ---
 <a href={href} class={`post-card ${catClass}`.trim()}>
-  {image ? (
+  {video ? (
+    <video
+      class="post-card-video"
+      poster={image}
+      muted
+      loop
+      playsinline
+      preload="none"
+      aria-label={imageAlt}
+      data-card-video
+    >
+      {videoWebm && <source src={videoWebm} type="video/webm" />}
+      <source src={video} type="video/mp4" />
+    </video>
+  ) : image ? (
     <img src={image} alt={imageAlt} class="post-card-image" loading="lazy" decoding="async" />
   ) : (
     <div class="img-placeholder" style={`background: ${placeholderBg};`}></div>
@@ -71,7 +89,8 @@ const placeholderBg =
   .post-card.cat-the-portals { border-top-color: var(--pink); }
 
   .img-placeholder,
-  .post-card-image {
+  .post-card-image,
+  .post-card-video {
     width: 100%;
     height: 200px;
     border-radius: 8px;
@@ -80,10 +99,12 @@ const placeholderBg =
     object-fit: cover;
     object-position: center;
     display: block;
+    background: #000;
   }
 
   .post-card:hover .img-placeholder,
-  .post-card:hover .post-card-image {
+  .post-card:hover .post-card-image,
+  .post-card:hover .post-card-video {
     transform: scale(1.03);
   }
 
@@ -127,3 +148,31 @@ const placeholderBg =
     overflow: hidden;
   }
 </style>
+
+<script>
+  // Only play card videos when they enter the viewport. Keeps bandwidth and
+  // CPU sensible on a feed of cards. Pauses on reduced-motion entirely.
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const videos = document.querySelectorAll<HTMLVideoElement>('video[data-card-video]');
+
+  if (reduceMotion) {
+    videos.forEach((v) => {
+      v.removeAttribute('autoplay');
+      v.pause();
+    });
+  } else if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const v = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting) {
+          v.play().catch(() => { /* autoplay can be blocked; poster remains */ });
+        } else {
+          v.pause();
+        }
+      }
+    }, { rootMargin: '50px', threshold: 0.25 });
+    videos.forEach((v) => io.observe(v));
+  } else {
+    videos.forEach((v) => v.play().catch(() => {}));
+  }
+</script>
