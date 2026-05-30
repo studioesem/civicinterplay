@@ -1,0 +1,153 @@
+---
+// Embed an audio file (e.g. served from Cloudflare R2 or any direct URL).
+//
+// Usage:
+//   <AudioEmbed src="https://media.civicinterplay.io/clips/superorganism.mp3" caption="..." />
+//
+//   <AudioEmbed
+//     src="https://media.civicinterplay.io/clips/superorganism.mp3"
+//     ogg="https://media.civicinterplay.io/clips/superorganism.ogg"
+//     poster="/images/superorganism-big-tree.jpg"
+//     caption="Superorganism: 20 minutes at the Botanica."
+//     title="Superorganism, Botanica session"
+//   />
+
+interface Props {
+  /** Primary audio file URL (typically MP3 for broad compatibility). */
+  src: string;
+  /** Optional Ogg/Opus source for browsers that prefer it. Served first. */
+  ogg?: string;
+  /** Optional poster/album-art image shown above the player. */
+  poster?: string;
+  /** Optional alt text for the poster image. */
+  posterAlt?: string;
+  /** Optional caption rendered alongside the Civic Interplay imprint. */
+  caption?: string;
+  /** Optional accessible title for the audio. */
+  title?: string;
+  /** Loop the audio. Defaults to false. */
+  loop?: boolean;
+}
+
+const {
+  src,
+  ogg,
+  poster,
+  posterAlt = '',
+  caption,
+  title,
+  loop = false,
+} = Astro.props;
+---
+<figure class="audio-embed">
+  {poster && (
+    <img class="audio-embed-poster" src={poster} alt={posterAlt} loading="lazy" decoding="async" />
+  )}
+  <div class="audio-embed-frame">
+    <audio
+      controls
+      preload="metadata"
+      loop={loop}
+      title={title}
+    >
+      {ogg && <source src={ogg} type="audio/ogg" />}
+      <source src={src} type="audio/mpeg" />
+      <p class="audio-embed-fallback">
+        Your browser can't play this audio.
+        <a href={src} download>Download it</a> instead.
+      </p>
+    </audio>
+  </div>
+  <figcaption>
+    {caption && <span class="audio-embed-caption-text">{caption}</span>}
+    <span class="audio-embed-brand">Civic Interplay</span>
+  </figcaption>
+</figure>
+
+<style>
+  .audio-embed {
+    margin: 2rem 0;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 4px 4px 0 var(--border);
+    overflow: hidden;
+    background: #fff;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .audio-embed:hover {
+    box-shadow: 6px 6px 0 var(--border);
+    transform: translateY(-2px);
+  }
+
+  .audio-embed-poster {
+    width: 100%;
+    max-height: 360px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .audio-embed-frame {
+    padding: 1rem 1.25rem 1.1rem;
+    background: #fff;
+  }
+
+  .audio-embed-frame audio {
+    width: 100%;
+    display: block;
+  }
+
+  .audio-embed figcaption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    background: #f8f8f8;
+    padding: 0.85rem 1.25rem;
+    border-top: 2px solid var(--border);
+  }
+
+  .audio-embed-caption-text {
+    font-family: var(--heading);
+    font-size: 0.88rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text);
+    text-align: left;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .audio-embed-brand {
+    font-family: var(--heading);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--purple);
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+
+  .audio-embed-fallback {
+    color: var(--text);
+    padding: 1rem;
+    font-family: var(--body);
+    text-align: center;
+  }
+
+  .audio-embed-fallback a {
+    color: var(--purple);
+    text-decoration: underline;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .audio-embed,
+    .audio-embed:hover {
+      transition: none;
+      transform: none;
+    }
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import VideoEmbed from '../../components/VideoEmbed.astro';
+import AudioEmbed from '../../components/AudioEmbed.astro';
 
 export async function getStaticPaths() {
   const items = await getCollection('embeds');
@@ -87,15 +88,28 @@ const watchHref = d.sourcePostSlug
 </head>
 <body>
   <div class="embed-shell">
-    <a class="embed-watch-link" href={watchHref} target="_top" rel="noopener">Watch on Civic Interplay</a>
-    <VideoEmbed
-      src={d.video}
-      webm={d.videoWebm}
-      poster={d.poster}
-      caption={d.caption}
-      aspectRatio={d.aspectRatio ?? '16/9'}
-      title={d.title}
-    />
+    <a class="embed-watch-link" href={watchHref} target="_top" rel="noopener">
+      {d.mediaType === 'audio' ? 'Listen on Civic Interplay' : 'Watch on Civic Interplay'}
+    </a>
+    {d.mediaType === 'audio' ? (
+      <AudioEmbed
+        src={d.audio ?? ''}
+        ogg={d.audioOgg}
+        poster={d.poster}
+        posterAlt={d.title}
+        caption={d.caption}
+        title={d.title}
+      />
+    ) : (
+      <VideoEmbed
+        src={d.video ?? ''}
+        webm={d.videoWebm}
+        poster={d.poster}
+        caption={d.caption}
+        aspectRatio={d.aspectRatio ?? '16/9'}
+        title={d.title}
+      />
+    )}
   </div>
 </body>
 </html>

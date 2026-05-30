@@ -4,11 +4,11 @@ For Irina (and anyone else picking up loose threads on Civic Interplay). This do
 
 If you only read three things, read them in this order:
 
-1. This document.
-2. [`.impeccable.md`](../.impeccable.md) at the project root (the design context).
-3. [`README.md`](../README.md) for the dev / build / deploy basics.
+1. This document (the architectural story).
+2. [`EDITOR-GUIDE.md`](EDITOR-GUIDE.md) (the day-to-day "how do I publish a post / embed a video / share an iframe" companion).
+3. [`.impeccable.md`](../.impeccable.md) at the project root (the design context).
 
-Everything else is reference.
+Everything else is reference, including [`README.md`](../README.md) for dev / build / deploy basics.
 
 ---
 
@@ -114,11 +114,31 @@ These apply to: site copy, blog content, captions, commit messages, PR descripti
 | Footer | `src/components/SiteFooter.astro` |
 | Colours / fonts / global spacing | `src/styles/global.css` (variables on `:root`) |
 | Image alt text for migrated posts | `data/image-alts.json` (don't edit MDX directly, it'll be lost on next `ghost:convert`) |
+| Video player component | `src/components/VideoEmbed.astro` |
+| Audio player component | `src/components/AudioEmbed.astro` |
+| Iframe embed page (`/embed/<slug>/`) | `src/pages/embed/[slug].astro`, entries in `src/content/embeds/*.json` |
+| HTTP headers for `/embed/*` (CSP, cache) | `public/_headers` |
 | Component behaviour | `src/components/{Name}.astro` |
 
-**To add a new post:** create `src/content/posts/{slug}.mdx` with the frontmatter pattern from any existing post. Schema is in `src/content/config.ts`. Drop new images into `public/images/`.
+**To add a new post:** create `src/content/posts/{slug}.mdx` with the frontmatter pattern from any existing post. Schema is in `src/content/config.ts`. Drop new images into `public/images/`. Day-to-day workflow is documented in [`EDITOR-GUIDE.md`](EDITOR-GUIDE.md).
 
 **To add a new tool to /doing/:** edit `src/pages/doing.astro`, add a new `<section class="doing-tool">` with a `<ToolEmbed>`. The pattern is reusable for as many tools as needed.
+
+## Media (video, audio, R2)
+
+Self-hosted videos and audio live in the **`civic-interplay` R2 bucket** served at `media.civicinterplay.io`. Two posters of the same source are normal: a `featureImage` (used as social card + audio/video poster) and the encoded media (uploaded to R2). The repo deliberately does not commit media files; the local `civic-interplay-videos/` folder is gitignored and acts as the working / encoding area.
+
+**Upload script** (mirrors the storybox bucket pattern, requires the `[r2]` rclone profile): `~/Projects/studioesem/scripts/upload-civicinterplay.sh <local-path> <bucket-key>`. Sets the right content-type, cache headers, and prints the final URL.
+
+**Encoding recipe** (ffmpeg, web-friendly): re-encode `.MOV` originals to MP4 (H.264, faststart) plus optional WebM (VP9). 720p is the default ceiling for talking-head content; square sources stay square at 720x720. See conversation log on May 29 for the verbatim ffmpeg invocations or copy from `EDITOR-GUIDE.md`.
+
+**Three places media surfaces:**
+
+1. **Post hero** — frontmatter `featureVideo` / `featureAudio` (with optional WebM / Ogg companions). The post page renders the appropriate player automatically. Falls back to `featureImage` if neither is set.
+2. **Inline in a post body** — `<VideoEmbed>` or `<AudioEmbed>` imports at the top of the MDX file, then drop the component anywhere in the body.
+3. **Iframe embed for sharing elsewhere** — one JSON file in `src/content/embeds/` registers a slim iframe-friendly page at `/embed/<slug>/`. Schema is polymorphic (`mediaType: 'video' | 'audio'`). `public/_headers` sets `Content-Security-Policy: frame-ancestors *` on `/embed/*` so other sites can iframe these without CSP collisions.
+
+**Magenta wash + resize** for hero stills is a one-pass script: `~/Projects/studioesem/scripts/magenta-wash.js path/to/image.png`. Resizes to ≤1600px wide, outputs mozjpeg q82 JPEG by default, applies the site's signature pink-magenta tint (#e94e9c @ 0.35 multiply). Flags for overrides (`--width`, `--format png`, `--alpha`, etc.). Output drops next to the input as `<basename>-magenta.jpg`; copy into `public/images/` with a kebab-case filename.
 
 ## Live infrastructure
 
@@ -127,8 +147,9 @@ These apply to: site copy, blog content, captions, commit messages, PR descripti
 | `civicinterplay.io` | Cloudflare Pages | `studioesem/civicinterplay` (this repo) | Static site. Deploy on push to `main`. |
 | `terrain.civicinterplay.io` | Render (Singapore) | `studioesem/civicinterplay-landscape` | Express + Supabase (Sydney) + Nomic Atlas. |
 | `sightings.civicinterplay.io` | Render (Oregon) | `civic-interplay/sightings` | Express + local file storage. |
+| `media.civicinterplay.io` | Cloudflare R2 (bucket `civic-interplay`) | n/a | Static media (mp4, webm, mp3, etc.). Uploaded via `~/Projects/studioesem/scripts/upload-civicinterplay.sh`. |
 
-DNS for all three lives in the `civicinterplay.io` Cloudflare zone as CNAMEs (DNS-only, grey cloud, not orange).
+DNS for all four lives in the `civicinterplay.io` Cloudflare zone as CNAMEs (DNS-only, grey cloud, not orange).
 
 **Env vars on Render** for Terrain: `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, `NOMIC_API_KEY`, `NODE_ENV=production`. Supabase project is in Sydney region.
 
@@ -243,4 +264,4 @@ Sarah's gut, recorded in chat: **hybrid**. Live runs on shared instance; each wo
 - Sarah: [sarahbarns.com](https://sarahbarns.com)
 - Issues for this repo: github.com/studioesem/civicinterplay/issues
 
-**Last hand-off written:** 2026-04-27.
+**Last hand-off written:** 2026-05-30 (R2 media bucket + Video/AudioEmbed components + iframe `/embed/` route + magenta-wash pipeline added since the previous revision).

@@ -2,6 +2,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import VideoEmbed from '../components/VideoEmbed.astro';
+import AudioEmbed from '../components/AudioEmbed.astro';
 import { CATEGORY_LABEL } from '../content/config';
 
 export async function getStaticPaths() {
@@ -76,6 +77,14 @@ const formattedDate = post.data.publishedAt.toLocaleDateString('en-AU', {
           poster={post.data.featureImage}
           title={post.data.featureImageAlt}
           aspectRatio="auto"
+        />
+      ) : post.data.featureAudio ? (
+        <AudioEmbed
+          src={post.data.featureAudio}
+          ogg={post.data.featureAudioOgg}
+          poster={post.data.featureImage}
+          posterAlt={post.data.featureImageAlt}
+          title={post.data.featureImageAlt}
         />
       ) : post.data.featureImage && (
         <img
