@@ -36,6 +36,8 @@ const posts = defineCollection({
     author: z.string().default('Sarah Barns'),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
+    articleType: z.enum(['BlogPosting', 'Article', 'ScholarlyArticle', 'CreativeWork']).default('BlogPosting'),
+    keywords: z.array(z.string()).optional(),
   }),
 });
 

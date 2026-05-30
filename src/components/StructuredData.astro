@@ -1,0 +1,126 @@
+---
+// Emit JSON-LD structured data for the site.
+// Always emits Person + WebSite. If an article prop is passed, also emits
+// an Article-shaped block (BlogPosting / Article / ScholarlyArticle /
+// CreativeWork) under the same @graph.
+//
+// The Person identity is intentionally centralised here so the rest of the
+// codebase doesn't repeat itself. Update once, propagates everywhere.
+
+interface ArticleData {
+  type: 'BlogPosting' | 'Article' | 'ScholarlyArticle' | 'CreativeWork';
+  headline: string;
+  description?: string;
+  url: string;
+  image?: string;
+  datePublished: string;
+  dateModified?: string;
+  keywords?: string[];
+  about?: string[];
+}
+
+interface Props {
+  article?: ArticleData;
+}
+
+const { article } = Astro.props;
+
+const PERSON_ID = 'https://civicinterplay.io/#sarahbarns';
+const WEBSITE_ID = 'https://civicinterplay.io/#website';
+
+const person = {
+  '@type': 'Person',
+  '@id': PERSON_ID,
+  name: 'Sarah Barns',
+  givenName: 'Sarah',
+  familyName: 'Barns',
+  jobTitle: "Vice Chancellor's Senior Research Fellow",
+  affiliation: {
+    '@type': 'Organization',
+    name: 'RMIT University',
+    url: 'https://www.rmit.edu.au/',
+  },
+  url: 'https://civicinterplay.io/',
+  identifier: {
+    '@type': 'PropertyValue',
+    propertyID: 'ORCID',
+    value: '0000-0002-0087-7166',
+  },
+  sameAs: [
+    'https://orcid.org/0000-0002-0087-7166',
+    'https://www.rmit.edu.au/profiles/b/sarah-barns2',
+    'https://www.linkedin.com/in/sarahbarns/',
+    'https://www.studioesem.com/about/',
+    'https://sarahbarns.com/',
+  ],
+  knowsAbout: [
+    'civic interplay',
+    'platform urbanism',
+    'participatory public media',
+    'sensory urban interpretation',
+    'digital placemaking',
+    'civic AI',
+  ],
+};
+
+const website = {
+  '@type': 'WebSite',
+  '@id': WEBSITE_ID,
+  name: 'Civic Interplay',
+  description: 'Creating civic-minded digital ecosystems for a more care-full world.',
+  url: 'https://civicinterplay.io/',
+  author: { '@id': PERSON_ID },
+  publisher: { '@id': PERSON_ID },
+  inLanguage: 'en-AU',
+};
+
+type ArticleNode = {
+  '@type': string;
+  '@id': string;
+  headline: string;
+  url: string;
+  mainEntityOfPage: { '@id': string };
+  isPartOf: { '@id': string };
+  author: { '@id': string };
+  publisher: { '@id': string };
+  inLanguage: string;
+  datePublished: string;
+  dateModified?: string;
+  description?: string;
+  image?: string;
+  keywords?: string;
+  about?: { '@type': string; name: string }[];
+};
+
+const articleNode: ArticleNode | null = article
+  ? (() => {
+      const node: ArticleNode = {
+        '@type': article.type,
+        '@id': `${article.url}#article`,
+        headline: article.headline,
+        url: article.url,
+        mainEntityOfPage: { '@id': article.url },
+        isPartOf: { '@id': WEBSITE_ID },
+        author: { '@id': PERSON_ID },
+        publisher: { '@id': PERSON_ID },
+        inLanguage: 'en-AU',
+        datePublished: article.datePublished,
+      };
+      if (article.dateModified) node.dateModified = article.dateModified;
+      if (article.description) node.description = article.description;
+      if (article.image) node.image = article.image;
+      if (article.keywords?.length) node.keywords = article.keywords.join(', ');
+      if (article.about?.length) {
+        node.about = article.about.map((name) => ({ '@type': 'Thing', name }));
+      }
+      return node;
+    })()
+  : null;
+
+const graph = [person, website, ...(articleNode ? [articleNode] : [])];
+const ldJson = {
+  '@context': 'https://schema.org',
+  '@graph': graph,
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(ldJson)}></script>

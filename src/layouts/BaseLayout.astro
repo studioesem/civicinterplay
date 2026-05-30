@@ -1,18 +1,30 @@
 ---
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import StructuredData from '../components/StructuredData.astro';
 import '../styles/global.css';
+
+interface ArticleMeta {
+  type: 'BlogPosting' | 'Article' | 'ScholarlyArticle' | 'CreativeWork';
+  publishedAt: Date;
+  updatedAt?: Date;
+  tags?: string[];
+  keywords?: string[];
+  about?: string[];
+}
 
 interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  article?: ArticleMeta;
 }
 
 const {
   title = 'Civic Interplay',
   description = 'Towards civic agencies & civic AI intelligence. A Think + Do Space.',
   ogImage,
+  article,
 } = Astro.props;
 
 const fullTitle = title === 'Civic Interplay' ? title : `${title} · Civic Interplay`;
@@ -25,6 +37,20 @@ const ogImagePath = ogImage ?? '/og-default.png';
 const ogImageUrl = ogImagePath.startsWith('http')
   ? ogImagePath
   : new URL(ogImagePath, Astro.site).toString();
+
+const structuredArticle = article
+  ? {
+      type: article.type,
+      headline: title,
+      description,
+      url: canonical,
+      image: ogImageUrl,
+      datePublished: article.publishedAt.toISOString(),
+      dateModified: (article.updatedAt ?? article.publishedAt).toISOString(),
+      keywords: article.keywords,
+      about: article.about,
+    }
+  : undefined;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +61,7 @@ const ogImageUrl = ogImagePath.startsWith('http')
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={article ? 'article' : 'website'} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -45,6 +71,21 @@ const ogImageUrl = ogImagePath.startsWith('http')
     <meta property="og:image:alt" content="Civic Interplay. Towards civic agencies and civic AI intelligence." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImageUrl} />
+
+    {article && (
+      <>
+        <meta property="article:author" content="Sarah Barns" />
+        <meta property="article:published_time" content={article.publishedAt.toISOString()} />
+        {article.updatedAt && (
+          <meta property="article:modified_time" content={article.updatedAt.toISOString()} />
+        )}
+        {article.tags?.map((tag) => (
+          <meta property="article:tag" content={tag} />
+        ))}
+      </>
+    )}
+
+    <StructuredData article={structuredArticle} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="any" href="/favicon.png" />

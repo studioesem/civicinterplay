@@ -44,6 +44,14 @@ const formattedDate = post.data.publishedAt.toLocaleDateString('en-AU', {
   title={post.data.title}
   description={post.data.excerpt}
   ogImage={post.data.featureImage}
+  article={{
+    type: post.data.articleType,
+    publishedAt: post.data.publishedAt,
+    updatedAt: post.data.updatedAt,
+    tags: post.data.categories.map((c) => CATEGORY_LABEL[c]),
+    keywords: post.data.keywords,
+    about: post.data.keywords ?? post.data.categories.map((c) => CATEGORY_LABEL[c]),
+  }}
 >
   <article>
     <div class="narrow">
