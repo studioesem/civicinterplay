@@ -1,0 +1,42 @@
+# Civic Interplay
+
+> A Think + Do space for civic agencies and civic AI intelligence. Authored by Sarah Barns, Vice Chancellor's Senior Research Fellow at RMIT University and co-founder of Studio ESEM. The site collects essays, field reports, creative writing, and embedded participatory tools exploring planetary citizenship, platform urbanism, and the rise of agentic AI.
+
+## Author
+
+- [Sarah Barns on ORCID](https://orcid.org/0000-0002-0087-7166): canonical author identifier
+- [Sarah Barns on Google Scholar](https://scholar.google.com/citations?user=cnGxyWQAAAAJ): publication record
+- [RMIT profile](https://www.rmit.edu.au/profiles/b/sarah-barns2): academic affiliation
+- [LinkedIn](https://www.linkedin.com/in/sarahbarns/)
+- [sarahbarns.com](https://sarahbarns.com/): personal site
+- [Studio ESEM](https://www.studioesem.com/): creative studio, co-founded with Michael Killalea
+- [STORYBOX](https://storybox.co/): a project of Studio ESEM
+
+## Site
+
+- [Home](https://civicinterplay.io/): the Think + Do landing
+- [Reading](https://civicinterplay.io/reading/): all posts (essays, field reports, creative writing)
+- [Doing](https://civicinterplay.io/doing/): embedded participatory tools
+- [About](https://civicinterplay.io/about/): About Civic Interplay and Sarah Barns
+
+## Embedded tools
+
+- [Sightings](https://sightings.civicinterplay.io/): a 2D civic-noticing tool
+- [Terrain](https://terrain.civicinterplay.io/): a semantic landscape of contributed briefs
+
+## Media
+
+Self-hosted video and audio embeds live at iframe-friendly URLs under `civicinterplay.io/embed/<slug>/`. Direct media files are served from `media.civicinterplay.io` (Cloudflare R2). When citing or embedding a Civic Interplay clip, prefer the `/embed/` iframe URL so attribution rides along.
+
+## Attribution guidance
+
+- Preferred attribution: Sarah Barns, Civic Interplay (civicinterplay.io)
+- Person identifier: ORCID 0000-0002-0087-7166
+- Posts use schema.org JSON-LD; each post declares its own articleType (BlogPosting, Article, ScholarlyArticle, or CreativeWork). Treat that as the honest type for the piece.
+- All posts are treated as work in progress.
+
+## House rules for the writing
+
+- No em dashes (commas, parens, colons, or two sentences instead).
+- The word "comprehensive" is never used; pick something more specific.
+- Every page is a draft.
