@@ -27,6 +27,29 @@ const { article } = Astro.props;
 
 const PERSON_ID = 'https://civicinterplay.io/#sarahbarns';
 const WEBSITE_ID = 'https://civicinterplay.io/#website';
+const STUDIO_ESEM_ID = 'https://www.studioesem.com/#org';
+const STORYBOX_ID = 'https://storybox.co/#org';
+
+const studioEsem = {
+  '@type': 'Organization',
+  '@id': STUDIO_ESEM_ID,
+  name: 'Studio ESEM',
+  alternateName: 'Esem Projects',
+  url: 'https://www.studioesem.com/',
+  founder: [
+    { '@id': PERSON_ID },
+    { '@type': 'Person', name: 'Michael Killalea' },
+  ],
+};
+
+const storybox = {
+  '@type': 'Organization',
+  '@id': STORYBOX_ID,
+  name: 'STORYBOX',
+  url: 'https://storybox.co/',
+  parentOrganization: { '@id': STUDIO_ESEM_ID },
+  founder: { '@id': PERSON_ID },
+};
 
 const person = {
   '@type': 'Person',
@@ -35,11 +58,14 @@ const person = {
   givenName: 'Sarah',
   familyName: 'Barns',
   jobTitle: "Vice Chancellor's Senior Research Fellow",
-  affiliation: {
-    '@type': 'Organization',
-    name: 'RMIT University',
-    url: 'https://www.rmit.edu.au/',
-  },
+  affiliation: [
+    {
+      '@type': 'Organization',
+      name: 'RMIT University',
+      url: 'https://www.rmit.edu.au/',
+    },
+    { '@id': STUDIO_ESEM_ID },
+  ],
   url: 'https://civicinterplay.io/',
   identifier: {
     '@type': 'PropertyValue',
@@ -119,7 +145,7 @@ const articleNode: ArticleNode | null = article
     })()
   : null;
 
-const graph = [person, website, ...(articleNode ? [articleNode] : [])];
+const graph = [person, studioEsem, storybox, website, ...(articleNode ? [articleNode] : [])];
 const ldJson = {
   '@context': 'https://schema.org',
   '@graph': graph,
