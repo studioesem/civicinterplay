@@ -51,6 +51,33 @@ Categories: `introduction`, `training-grounds`, `the-guides`, `work-sheets`, `th
 
 **Single newlines** in MDX become line breaks (`<br>`) on the page, matching the Substack convention. Use a blank line for paragraph breaks. Existing migrated posts wrote one long line per paragraph; both styles work.
 
+### Picking an `articleType`
+
+Every post page emits a JSON-LD `Article`-shaped block telling search engines and AI systems what kind of writing this is. Schema.org best practice: pick the most specific honest type.
+
+| Type | When to use |
+| --- | --- |
+| `BlogPosting` *(default)* | Field reports, workshop write-ups, journal entries, casual commentary. No frontmatter change needed. |
+| `Article` | Essays. Sustained structured argument, polished prose. The Guides when they're essayistic. Not peer-reviewed. |
+| `ScholarlyArticle` | Peer-reviewed work. Only when the post has actually been through review. |
+| `CreativeWork` | Poetry, fiction, dialogues, experimental writing. "What time are we living in?" is an example. |
+
+To override the default, add one line to frontmatter:
+
+```yaml
+articleType: "Article"   # or "ScholarlyArticle" or "CreativeWork"
+```
+
+Honest signalling matters. Overclaiming `ScholarlyArticle` for non-reviewed work can hurt the site's overall search quality signals; underclaiming costs visibility in academic indexes. When in doubt, default down (BlogPosting → Article → ScholarlyArticle) and only step up when the piece earns it.
+
+Optional `keywords` array, for surfacing specific tags beyond the post's categories:
+
+```yaml
+keywords: ["urban innovation", "common growth", "civic technology"]
+```
+
+If unset, the post's `categories` get used as the article's `about` topics automatically.
+
 ## 3. Hero options
 
 The frontmatter supports three mutually-exclusive hero formats. The post page picks the first one that's set:
