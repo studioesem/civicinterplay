@@ -68,6 +68,18 @@ import ToolEmbed from '../components/ToolEmbed.astro';
       </p>
     </section>
 
+    <aside class="sov-cost">
+      <p class="sov-cost-label">The cost of this research</p>
+      <p>
+        This project runs on AI too. Across five working sessions it has used roughly the
+        energy of <strong>12 phone charges</strong>, <strong>one and a half glasses</strong>
+        of water, and the carbon of a <strong>350 m car trip</strong> (about 156 Wh, 358 mL
+        and 64 g CO₂), logged openly in our
+        <a href="https://app.notion.com/p/10618c7776a749fb8051ee4e8d1df570" target="_blank" rel="noopener external">Cost of Compute tracker</a>.
+        Rough estimates; snapshot 29 June 2026.
+      </p>
+    </aside>
+
     <footer class="sov-footer">
       <p>
         Find this map alongside the other tools on the <a href="/doing">Do page</a>.
@@ -169,6 +181,40 @@ import ToolEmbed from '../components/ToolEmbed.astro';
     }
 
     .sov-footer a {
+      color: var(--purple);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .sov-cost {
+      margin-top: 3rem;
+      border-left: 4px solid #D16D54;
+      background: #faf6f0;
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--border);
+      padding: 1.25rem 1.5rem;
+    }
+
+    .sov-cost-label {
+      font-family: var(--heading);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.5rem;
+    }
+
+    .sov-cost p:last-child {
+      font-family: var(--body);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text);
+      max-width: 65ch;
+      margin: 0;
+    }
+
+    .sov-cost a {
       color: var(--purple);
       text-decoration: underline;
       text-underline-offset: 3px;
