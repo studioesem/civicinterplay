@@ -1,0 +1,183 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolEmbed from '../components/ToolEmbed.astro';
+---
+<BaseLayout
+  title="AI Sovereignties"
+  description="A live map of the infrastructure behind AI in Australia, and the public debate forming around it. Data centres, mines, refineries, energy and water, and the lines of ownership running through them."
+>
+  <main class="container sov">
+
+    <header class="sov-header">
+      <p class="sov-eyebrow">Civic Interplay / Sovereignties</p>
+      <h1>AI Sovereignties</h1>
+      <p class="sov-intro">
+        A live map of the infrastructure behind AI in Australia, and the public
+        debate forming around it. Data centres, mines, refineries, the energy
+        and water they draw, and the lines of ownership running through them.
+        Each point is a real site on the ground.
+      </p>
+    </header>
+
+    <ToolEmbed
+      title="Sovereignties"
+      src="https://sovereignties.civicinterplay.io/"
+      openLabel="Open the map in a new tab"
+      height="820px"
+    />
+    <p class="sov-note">
+      Not loading? Your browser may be blocking the embedded site. Use the <a href="https://sovereignties.civicinterplay.io/" target="_blank" rel="noopener external">open in a new tab</a> link to launch it directly.
+    </p>
+
+    <section class="sov-section">
+      <h2>What you're looking at</h2>
+      <p>
+        Every point is a site: a data centre, a mine, a refinery, or a piece of
+        energy or water infrastructure. The colours trace ownership and
+        governance, who owns it, who approved it, and what it draws to keep
+        running. The map reads from an open tracker, so it shifts as the tracker
+        does.
+      </p>
+    </section>
+
+    <section class="sov-section">
+      <h2>The debate, not just the opposition</h2>
+      <p>
+        Alongside the map we track contestation: the public record of who is
+        arguing about these sites, on what grounds, and how intensely. It holds
+        the case for as well as against. Jobs, investment and sovereign
+        capability on one side; water, energy, consultation and amenity on the
+        other.
+      </p>
+      <p>
+        One pattern we watch is the lag, how long after a project is approved
+        before any public contestation appears. Where a foreign-owned site
+        carrying a sovereignty claim draws none at all, the silence is itself the
+        finding.
+      </p>
+    </section>
+
+    <section class="sov-section">
+      <h2>Where the data comes from</h2>
+      <p>
+        The map is read from the Critical Infrastructure Tracker, an open
+        database updated as projects move. The contestation record is built from
+        planning submissions, local and national press, council and inquiry
+        material, and notes from the ground. Everything here is a draft, and
+        corrections are welcome.
+      </p>
+    </section>
+
+    <footer class="sov-footer">
+      <p>
+        Find this map alongside the other tools on the <a href="/doing">Do page</a>.
+        Questions or corrections? <a href="https://sarahbarns.com" rel="external">Reach out</a>.
+      </p>
+    </footer>
+
+  </main>
+
+  <style>
+    .sov {
+      padding: 3rem 2rem 4rem;
+      max-width: 880px;
+    }
+
+    .sov-header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .sov-eyebrow {
+      font-family: var(--heading);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.6rem;
+    }
+
+    .sov-header h1 {
+      font-family: var(--heading);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .sov-intro {
+      font-family: var(--body);
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--text-dim);
+      max-width: 62ch;
+    }
+
+    .sov-note {
+      font-family: var(--heading);
+      font-size: 0.78rem;
+      color: var(--text-faint);
+      margin-top: 1rem;
+      max-width: 65ch;
+    }
+
+    .sov-note a {
+      color: var(--text-dim);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .sov-note a:hover {
+      color: var(--purple);
+    }
+
+    .sov-section {
+      margin-top: 3rem;
+    }
+
+    .sov-section h2 {
+      font-family: var(--heading);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.8rem;
+    }
+
+    .sov-section p {
+      font-family: var(--body);
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text);
+      max-width: 65ch;
+      margin-bottom: 1rem;
+    }
+
+    .sov-footer {
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 2px solid var(--border);
+    }
+
+    .sov-footer p {
+      font-family: var(--body);
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      max-width: 60ch;
+    }
+
+    .sov-footer a {
+      color: var(--purple);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    @media (max-width: 640px) {
+      .sov {
+        padding: 2rem 1rem 3rem;
+      }
+    }
+  </style>
+</BaseLayout>
