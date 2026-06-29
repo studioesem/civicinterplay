@@ -13,6 +13,7 @@ draft: false
 ---
 
 import Callout from '../../components/Callout.astro';
+import SlideShow from '../../components/SlideShow.astro';
 
 <Callout>
 
@@ -24,6 +25,19 @@ The build out of data centres across Australia is now facing community backlash,
 Civic interplay is meant to be a [quiet set of reflections](https://civicinterplay.io/about/) on what it means to *become-citizen* in an era of planetary-scale AI systems. 
 
 Except the question of *whose sovereignty* citizens are interfacing with keeps going unresolved, to the point that situations on the ground are becoming *increasingly strained*. Decidedly *not-quiet*, even.  
+
+<SlideShow
+  caption="Selected slides from the talk at the American Association of Geographers Annual Conference, San Francisco, April 2026."
+  images={[
+    { src: '/images/talk/aag-title.jpg', alt: 'Title slide: Mapping AI Sovereignties' },
+    { src: '/images/talk/aag-1.jpg', alt: 'Talk slide on AI sovereignty and infrastructure' },
+    { src: '/images/talk/aag-2.jpg', alt: 'Talk slide on AI sovereignty and infrastructure' },
+    { src: '/images/talk/aag-3.jpg', alt: 'Talk slide on AI sovereignty and infrastructure' },
+    { src: '/images/talk/aag-4.jpg', alt: 'Talk slide on AI sovereignty and infrastructure' },
+    { src: '/images/talk/aag-5.jpg', alt: 'Talk slide on AI sovereignty and infrastructure' },
+    { src: '/images/talk/aag-6.jpg', alt: 'Talk slide on AI sovereignty and infrastructure' },
+  ]}
+/>
 
 **Living during the build out**
 
@@ -60,4 +74,19 @@ The map aims to make this situation visible. It tracks data centres, mines, refi
 
 The question is not whether to use AI systems - they're embedded in all our digital workflows now, no? - but what kinds of digital sovereignties, and by implication, what kinds of digital citizenship, are being fostered through infrastructure roll-out and the mandate to grow AI capabilities using hyperscaler models. Through a comparative agenda it will, in turn, be possible to see that there are many potential versions of AI sovereignty coalescing as new alliances foster distinct models and capabilities. 
 
+Further reading: *[Urban AI](https://www.rmit.edu.au/content/dam/rmit/au/en/research/networks-centres-groups/cur/RMIT_CUR_Thought%20Leadership%20Series_Project6_Urban%20AI.pdf)*, from RMIT's Centre for Urban Research Thought Leadership Series.
+
 Please note: This work is in the *emergent-state*. Do get in touch if you would like to collaborate; it's an open field. 
+
+**How it's built**
+
+<figure style="margin: 2rem 0;">
+  <img src="/images/architecture.svg" alt="Diagram: a Notion tracker feeds a live API that renders the map." style="display:block; width:100%; height:auto; border:2px solid var(--border); border-radius:var(--radius); box-shadow:4px 4px 0 var(--border); background:#fff; padding:1rem; box-sizing:border-box;" />
+  <figcaption style="font-family:var(--heading); font-size:0.75rem; color:var(--text-faint); margin-top:0.6rem;">A Notion tracker feeds a live API that renders the map. Built with Claude Code, with compute costs logged recursively.</figcaption>
+</figure>
+
+**Contribute**
+
+Spot a missing site, an error, or contestation we have not captured? Add it below, or [open the form in a new tab](https://studio-esem.notion.site/a504252cf109454598a7b02e5024b10d).
+
+<iframe src="https://studio-esem.notion.site/a504252cf109454598a7b02e5024b10d" title="Submit an issue or missing site" loading="lazy" style="width:100%; height:640px; border:2px solid var(--border); border-radius:var(--radius); background:#fff; margin-top:1rem;"></iframe>

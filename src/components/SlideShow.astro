@@ -1,0 +1,73 @@
+---
+// A lightweight, no-JS horizontal slider (CSS scroll-snap). Swipe on touch,
+// scroll/drag on desktop. Pass an ordered array of { src, alt }.
+interface Slide {
+  src: string;
+  alt: string;
+}
+interface Props {
+  images: Slide[];
+  caption?: string;
+}
+const { images, caption } = Astro.props;
+---
+<figure class="slideshow">
+  <div class="slideshow-track" tabindex="0" aria-label="Slide gallery, scroll to browse">
+    {images.map((s) => (
+      <img class="slideshow-slide" src={s.src} alt={s.alt} loading="lazy" />
+    ))}
+  </div>
+  <div class="slideshow-foot">
+    {caption && <figcaption>{caption}</figcaption>}
+    <span class="slideshow-hint">scroll / swipe →</span>
+  </div>
+</figure>
+
+<style>
+  .slideshow {
+    margin: 2.5rem 0;
+  }
+  .slideshow-track {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.75rem;
+    scrollbar-width: thin;
+  }
+  .slideshow-slide {
+    flex: 0 0 86%;
+    width: 86%;
+    height: auto;
+    scroll-snap-align: center;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 4px 4px 0 var(--border);
+    background: #fff;
+  }
+  .slideshow-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-top: 0.6rem;
+  }
+  .slideshow figcaption,
+  .slideshow-hint {
+    font-family: var(--heading);
+    font-size: 0.75rem;
+    color: var(--text-faint);
+    line-height: 1.5;
+  }
+  .slideshow-hint {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  @media (max-width: 640px) {
+    .slideshow-slide {
+      flex-basis: 92%;
+      width: 92%;
+    }
+  }
+</style>
