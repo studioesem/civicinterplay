@@ -27,7 +27,7 @@ import ToolEmbed from '../components/ToolEmbed.astro';
     </header>
 
     <ToolEmbed
-      title="Sovereignties"
+      title="Mapping AI Sovereignties"
       src="https://sovereignties.civicinterplay.io/"
       openLabel="Open the map in a new tab"
       height="820px"
@@ -62,15 +62,17 @@ import ToolEmbed from '../components/ToolEmbed.astro';
         carrying a sovereignty claim draws none at all, the silence is itself the
         finding.
       </p>
+      <p>
+        <a href="https://studio-esem.notion.site/Contestation-sovereignty-trackers-full-session-38d18df0b77581f697dfe059a69b454d" target="_blank" rel="noopener external">See the contestation record</a>, the trackers behind the map, in Notion.
+      </p>
     </section>
 
     <section class="sov-section">
       <h2>The rise of a term</h2>
       <p>
-        "AI sovereignty" went from near-absent to everywhere in three years. This is
-        how often it appears in global news coverage: close to zero in 2022, a spike
-        around Davos in early 2025, and a peak through 2026. The term is loudest now,
-        which is why this project asks what comes after it.
+        "AI sovereignty" went from near-absent to everywhere in three years. The chart below captures
+        how often it appears in global news coverage. Close to zero in 2022, a spike
+        around Davos in early 2025, and a peak through 2026.
       </p>
       <img
         class="sov-chart"
@@ -89,21 +91,20 @@ import ToolEmbed from '../components/ToolEmbed.astro';
     <section class="sov-section">
       <h2>Where the data comes from</h2>
       <p>
-        The map is read from the Critical Infrastructure Tracker, an open
-        database updated as projects move. The contestation record is built from
-        planning submissions, local and national press, council and inquiry
-        material, and notes from the ground. Everything here is a draft, and
-        corrections are welcome.
+        The map sources data from a Critical Infrastructure Tracker, a
+        database built in Notion. The data is sourced agentically, supported through Claude Code, with compute costs also tracked recursively. The contestation record is built from
+        planning submissions, local and national press, local governments and other inquiry
+        material. Corrections are welcome; the effort feels gestural rather than comprehensive, for now.
       </p>
     </section>
 
     <aside class="sov-cost">
       <p class="sov-cost-label">The cost of this research</p>
       <p>
-        This project runs on AI too. Across five working sessions it has used roughly the
+        This project runs on AI too. Across five working sessions it has used <em>roughly</em> the
         energy of <strong>12 phone charges</strong>, <strong>one and a half glasses</strong>
         of water, and the carbon of a <strong>350 m car trip</strong> (about 156 Wh, 358 mL
-        and 64 g CO₂), logged openly in our
+        and 64 g CO₂). The compute costs are self-reported by Claude Code, and probably very unreliable? They are logged openly in the
         <a href="https://studio-esem.notion.site/10618c7776a749fb8051ee4e8d1df570?v=4b15487e90c245358d7cae4d7c85cd89" target="_blank" rel="noopener external">Cost of Compute tracker</a>.
         Rough estimates; snapshot 29 June 2026.
       </p>
@@ -194,6 +195,12 @@ import ToolEmbed from '../components/ToolEmbed.astro';
       color: var(--text);
       max-width: 65ch;
       margin-bottom: 1rem;
+    }
+
+    .sov-section p a {
+      color: var(--purple);
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
 
     .sov-footer {
