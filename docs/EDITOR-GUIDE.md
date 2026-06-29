@@ -184,12 +184,31 @@ The iframe HTML to share:
 ```html
 <iframe
   src="https://civicinterplay.io/embed/olah-vatican-2026/"
-  width="640" height="380"
+  width="100%" height="420"
   frameborder="0" allowfullscreen
-  allow="autoplay; fullscreen; encrypted-media"
-  style="border: 0; max-width: 100%;"
+  allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+  style="border: 0; width: 100%; max-width: 720px;"
 ></iframe>
 ```
+
+The embed page fits any clip ratio (16/9, square, audio) without letterboxing. Set `max-width` to taste; the `height` is just a starting value.
+
+The embed reports its real height to the host page so the iframe can size itself exactly to the content (no clipped caption, no scrollbar). To switch that on, drop this one-time listener anywhere on the host page (it sizes every Civic Interplay embed on the page):
+
+```html
+<script>
+  window.addEventListener('message', function (e) {
+    if (!e.data || e.data.type !== 'civicinterplay:embed-size') return;
+    document
+      .querySelectorAll('iframe[src*="civicinterplay.io/embed/"]')
+      .forEach(function (f) {
+        if (f.contentWindow === e.source) f.style.height = e.data.height + 'px';
+      });
+  });
+</script>
+```
+
+Without the listener the iframe just keeps its authored `height`, so the snippet still works on its own.
 
 The embed page shows the styled player + a "Watch on Civic Interplay" (or "Listen on") link in the corner that opens the source post in the parent frame. `noindex` is set so embed pages don't compete with canonical posts in search.
 

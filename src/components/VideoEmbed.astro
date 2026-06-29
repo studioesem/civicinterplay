@@ -34,6 +34,9 @@ interface Props {
   hideControls?: boolean;
   /** Optional accessible title for the video. */
   title?: string;
+  /** Constrain to a narrow, centred column. For tall phone/podcast clips that
+   *  would otherwise dominate the page. */
+  portrait?: boolean;
 }
 
 const {
@@ -47,12 +50,13 @@ const {
   muted = autoplay,
   hideControls = false,
   title,
+  portrait = false,
 } = Astro.props;
 
 const useNativeRatio = aspectRatio === 'auto';
 const ratioStyle = useNativeRatio ? '' : `--video-aspect: ${aspectRatio};`;
 ---
-<figure class="video-embed" style={ratioStyle} data-native-ratio={useNativeRatio ? 'true' : undefined}>
+<figure class:list={['video-embed', { 'video-embed--portrait': portrait }]} style={ratioStyle} data-native-ratio={useNativeRatio ? 'true' : undefined}>
   <div class="video-embed-frame">
     <video
       controls={!hideControls}
@@ -92,6 +96,14 @@ const ratioStyle = useNativeRatio ? '' : `--video-aspect: ${aspectRatio};`;
   .video-embed:hover {
     box-shadow: 6px 6px 0 var(--border);
     transform: translateY(-2px);
+  }
+
+  /* Tall phone/podcast clips: keep them to a narrow centred column so they
+     don't tower over the rest of the post. */
+  .video-embed--portrait {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .video-embed-frame {
