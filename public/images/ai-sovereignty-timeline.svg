@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="540" viewBox="0 0 1000 540" font-family="Helvetica, Arial, sans-serif">
+<rect width="1000" height="540" fill="#fafafa"/>
+<text x="58" y="34" font-size="21" font-weight="bold" fill="#222">The rise of &#8220;AI sovereignty&#8221;</text>
+<text x="58" y="56" font-size="12.5" fill="#555">Share of global news coverage mentioning &#8220;sovereign AI&#8221; or &#8220;AI sovereignty&#8221;. GDELT, monthly, relative volume.</text>
+<line x1="58" y1="484.0" x2="970" y2="484.0" stroke="#ccc" stroke-width="1"/>
+<line x1="58.0" y1="484.0" x2="58.0" y2="489.0" stroke="#ccc"/>
+<text x="58.0" y="506.0" font-size="12" fill="#777" text-anchor="middle">2022</text>
+<line x1="264.5" y1="484.0" x2="264.5" y2="489.0" stroke="#ccc"/>
+<text x="264.5" y="506.0" font-size="12" fill="#777" text-anchor="middle">2023</text>
+<line x1="471.0" y1="484.0" x2="471.0" y2="489.0" stroke="#ccc"/>
+<text x="471.0" y="506.0" font-size="12" fill="#777" text-anchor="middle">2024</text>
+<line x1="677.5" y1="484.0" x2="677.5" y2="489.0" stroke="#ccc"/>
+<text x="677.5" y="506.0" font-size="12" fill="#777" text-anchor="middle">2025</text>
+<line x1="884.0" y1="484.0" x2="884.0" y2="489.0" stroke="#ccc"/>
+<text x="884.0" y="506.0" font-size="12" fill="#777" text-anchor="middle">2026</text>
+<text x="58" y="80" font-size="11" fill="#999">more coverage &#8593;</text>
+<path d="M58.0 484.0 L58.0 482.6 L75.2 482.6 L92.4 482.6 L126.8 478.5 L144.0 479.8 L161.2 479.8 L178.5 482.6 L195.7 472.5 L230.1 479.8 L264.5 482.6 L281.7 358.6 L298.9 479.4 L316.1 481.2 L333.3 474.3 L350.5 480.3 L367.7 481.2 L384.9 481.7 L402.2 480.3 L419.4 476.6 L436.6 473.4 L453.8 454.0 L471.0 458.2 L488.2 466.9 L505.4 452.6 L522.6 449.9 L539.8 425.0 L557.0 468.3 L574.2 443.4 L591.4 470.6 L608.6 457.7 L625.8 458.2 L643.1 455.9 L660.3 464.6 L677.5 455.9 L694.7 273.2 L711.9 459.1 L729.1 460.5 L746.3 440.2 L763.5 415.7 L780.7 430.5 L797.9 425.9 L815.1 422.2 L832.3 425.0 L849.5 407.0 L866.8 388.5 L884.0 413.9 L901.2 113.7 L918.4 261.7 L935.6 389.5 L952.8 159.3 L970.0 188.8 L970.0 484.0 Z" fill="#7D50BD" fill-opacity="0.12"/>
+<path d="M58.0 482.6 L75.2 482.6 L92.4 482.6 L126.8 478.5 L144.0 479.8 L161.2 479.8 L178.5 482.6 L195.7 472.5 L230.1 479.8 L264.5 482.6 L281.7 358.6 L298.9 479.4 L316.1 481.2 L333.3 474.3 L350.5 480.3 L367.7 481.2 L384.9 481.7 L402.2 480.3 L419.4 476.6 L436.6 473.4 L453.8 454.0 L471.0 458.2 L488.2 466.9 L505.4 452.6 L522.6 449.9 L539.8 425.0 L557.0 468.3 L574.2 443.4 L591.4 470.6 L608.6 457.7 L625.8 458.2 L643.1 455.9 L660.3 464.6 L677.5 455.9 L694.7 273.2 L711.9 459.1 L729.1 460.5 L746.3 440.2 L763.5 415.7 L780.7 430.5 L797.9 425.9 L815.1 422.2 L832.3 425.0 L849.5 407.0 L866.8 388.5 L884.0 413.9 L901.2 113.7 L918.4 261.7 L935.6 389.5 L952.8 159.3 L970.0 188.8" fill="none" stroke="#7D50BD" stroke-width="2.2"/>
+<circle cx="281.7" cy="358.6" r="3.5" fill="#D16D54"/>
+<line x1="281.7" y1="358.6" x2="281.7" y2="338.6" stroke="#D16D54" stroke-width="1" stroke-dasharray="2 2"/>
+<text x="281.7" y="342.6" font-size="11.5" fill="#9c3b22" text-anchor="middle" font-weight="bold">Isolated early spike</text>
+<circle cx="539.8" cy="425.0" r="3.5" fill="#D16D54"/>
+<line x1="539.8" y1="425.0" x2="539.8" y2="405.0" stroke="#D16D54" stroke-width="1" stroke-dasharray="2 2"/>
+<text x="539.8" y="409.0" font-size="11.5" fill="#9c3b22" text-anchor="middle" font-weight="bold">Nvidia sells 'sovereign AI'</text>
+<circle cx="694.7" cy="273.2" r="3.5" fill="#D16D54"/>
+<line x1="694.7" y1="273.2" x2="694.7" y2="253.2" stroke="#D16D54" stroke-width="1" stroke-dasharray="2 2"/>
+<text x="694.7" y="257.2" font-size="11.5" fill="#9c3b22" text-anchor="middle" font-weight="bold">Davos / WEF 2025</text>
+<circle cx="866.8" cy="388.5" r="3.5" fill="#D16D54"/>
+<line x1="866.8" y1="388.5" x2="866.8" y2="426.5" stroke="#D16D54" stroke-width="1" stroke-dasharray="2 2"/>
+<text x="860.8" y="422.5" font-size="11.5" fill="#9c3b22" text-anchor="end" font-weight="bold">AU National AI Plan</text>
+<circle cx="901.2" cy="113.7" r="3.5" fill="#D16D54"/>
+<line x1="901.2" y1="113.7" x2="901.2" y2="95.7" stroke="#D16D54" stroke-width="1" stroke-dasharray="2 2"/>
+<text x="901.2" y="99.7" font-size="11.5" fill="#9c3b22" text-anchor="middle" font-weight="bold">Peak coverage (Feb 2026)</text>
+<text x="58" y="526" font-size="12" fill="#444">&#8220;After AI Sovereignty&#8221; asks what the term relocates, and to whom. The curve is still climbing, so the &#8220;after&#8221; is analytical, not chronological.</text>
+</svg>
