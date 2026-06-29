@@ -13,11 +13,19 @@ interface ArticleMeta {
   about?: string[];
 }
 
+interface DatasetMeta {
+  name: string;
+  description?: string;
+  keywords?: string[];
+  spatialCoverage?: string;
+}
+
 interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
   article?: ArticleMeta;
+  dataset?: DatasetMeta;
 }
 
 const {
@@ -25,6 +33,7 @@ const {
   description = 'Towards civic agencies & civic AI intelligence. A Think + Do Space.',
   ogImage,
   article,
+  dataset,
 } = Astro.props;
 
 const fullTitle = title === 'Civic Interplay' ? title : `${title} · Civic Interplay`;
@@ -51,6 +60,8 @@ const structuredArticle = article
       about: article.about,
     }
   : undefined;
+
+const structuredDataset = dataset ? { ...dataset, url: canonical } : undefined;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -85,7 +96,7 @@ const structuredArticle = article
       </>
     )}
 
-    <StructuredData article={structuredArticle} />
+    <StructuredData article={structuredArticle} dataset={structuredDataset} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="any" href="/favicon.png" />
