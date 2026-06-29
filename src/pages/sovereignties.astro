@@ -58,6 +58,26 @@ import ToolEmbed from '../components/ToolEmbed.astro';
     </section>
 
     <section class="sov-section">
+      <h2>The rise of a term</h2>
+      <p>
+        "AI sovereignty" went from near-absent to everywhere in three years. This is
+        how often it appears in global news coverage: close to zero in 2022, a spike
+        around Davos in early 2025, and a peak through 2026. The term is loudest now,
+        which is why this project asks what comes after it.
+      </p>
+      <img
+        class="sov-chart"
+        src="/images/ai-sovereignty-timeline.svg"
+        alt="Line chart of global news coverage mentioning 'sovereign AI' or 'AI sovereignty', rising from near-zero in 2022 to a peak in 2026."
+        loading="lazy"
+      />
+      <p class="sov-chart-credit">
+        Source: GDELT news-coverage volume (relative). More in the
+        <a href="https://studio-esem.notion.site/AI-Sovereignties-project-explainer-38d18df0b77581ab8465dcb65a6628ad" target="_blank" rel="noopener external">project explainer</a>.
+      </p>
+    </section>
+
+    <section class="sov-section">
       <h2>Where the data comes from</h2>
       <p>
         The map is read from the Critical Infrastructure Tracker, an open
@@ -181,6 +201,30 @@ import ToolEmbed from '../components/ToolEmbed.astro';
     }
 
     .sov-footer a {
+      color: var(--purple);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .sov-chart {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin-top: 1.25rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--border);
+      background: #fafafa;
+    }
+
+    .sov-section p.sov-chart-credit {
+      font-family: var(--heading);
+      font-size: 0.78rem;
+      color: var(--text-faint);
+      margin-top: 0.8rem;
+    }
+
+    .sov-section p.sov-chart-credit a {
       color: var(--purple);
       text-decoration: underline;
       text-underline-offset: 3px;
