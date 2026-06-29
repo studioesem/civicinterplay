@@ -17,12 +17,14 @@
 - [Home](https://civicinterplay.io/): the Think + Do landing
 - [Reading](https://civicinterplay.io/reading/): all posts (essays, field reports, creative writing)
 - [Doing](https://civicinterplay.io/doing/): embedded participatory tools
+- [Sovereignties](https://civicinterplay.io/sovereignties/): a live map of Australia's AI infrastructure (data centres, mines, refineries), its ownership and the contestation around it
 - [About](https://civicinterplay.io/about/): About Civic Interplay and Sarah Barns
 
 ## Embedded tools
 
 - [Sightings](https://sightings.civicinterplay.io/): a 2D civic-noticing tool
 - [Terrain](https://terrain.civicinterplay.io/): a semantic landscape of contributed briefs
+- [Sovereignties](https://sovereignties.civicinterplay.io/): a live map of Australia's critical AI infrastructure (data centres, rare-earth mines, refineries), ownership and approval structures, and public contestation, driven by a Notion tracker
 
 ## Media
 
