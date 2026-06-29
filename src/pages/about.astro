@@ -29,13 +29,19 @@ const { Content } = await post.render();
           Sarah Barns is Vice Chancellor's Senior Research Fellow at <a href="https://www.rmit.edu.au/profiles/b/sarah-barns2">RMIT University</a>, and a co-founder of <a href="https://www.studioesem.com/">Studio ESEM</a> with Michael Killalea, through which she leads <a href="https://storybox.co/">STORYBOX</a>. Her research and practice explores civic agencies, platform urbanism, sensory urban interpretation, and the participatory politics of digital and AI infrastructures. She is the author of <em>Platform Urbanism</em> (Palgrave Macmillan, 2020).
         </p>
         <p>
-          Sarah has a long history of media innovation at the intersection of urban-historical change, historical interpretation, digital governance and experience design. Her PhD practice supported the ABC's first mobile content platform and was awarded the ABC's Best Digital Content Award in 2008 (Sydney Sidetracks). Through Studio ESEM, her practice founded in 2011 with Michael Killalea, she has led award-winning digital interpretation projects for the Australian National University (Mt Stromlo Observatory), the Australian Museum (Birds of Australia STORYBOX) and City of Parramatta Council, among others. 
-          In 2025 her participatory media platform STORYBOX received the International Award for Participatory Media and Infrastructure at the Media Architecture Biennale.
+          <a class="contact-button" href="https://www.rmit.edu.au/profiles/b/sarah-barns2" data-u="sarah" data-d="studioesem.com" rel="nofollow">Contact Sarah</a>
         </p>
-        <p>
-          Today Sarah's research weaves practices of participatory storytelling, media architecture and political/environmental geography as agents of change in the creation of civic AI. This research chapter builds on her pioneering work in the shaping of platform urbanism as a field of digital geography (2013-2018) to now consider practices of digital civics as *somewhat playful acts*, reflective of the *somewhat post-rational* nature of the agentic imagination. 
-          Her current work, expressed in the form of *civic-interplay* is funded through an RMIT Vice Chancellor's Senior Research Fellowship, and based at the Centre for Urban Research in alliance with the Planetary Civics Inquiry.
-        </p>
+        <details class="about-more">
+          <summary>More about Sarah</summary>
+          <p>
+            Sarah has a long history of media innovation at the intersection of urban-historical change, historical interpretation, digital governance and experience design. Her PhD practice supported the ABC's first mobile content platform and was awarded the ABC's Best Digital Content Award in 2008 (Sydney Sidetracks). Through Studio ESEM, her practice founded in 2011 with Michael Killalea, she has led award-winning digital interpretation projects for the Australian National University (Mt Stromlo Observatory), the Australian Museum (Birds of Australia STORYBOX) and City of Parramatta Council, among others.
+            In 2025 her participatory media platform STORYBOX received the International Award for Participatory Media and Infrastructure at the Media Architecture Biennale.
+          </p>
+          <p>
+            Today Sarah's research weaves practices of participatory storytelling, media architecture and political/environmental geography as agents of change in the creation of civic AI. This research chapter builds on her pioneering work in the shaping of platform urbanism as a field of digital geography (2013-2018) to now consider practices of digital civics as <em>somewhat playful acts</em>, reflective of the <em>somewhat post-rational</em> nature of the agentic imagination.
+            Her current work, expressed in the form of <em>civic-interplay</em>, is funded through an RMIT Vice Chancellor's Senior Research Fellowship, and based at the Centre for Urban Research in alliance with the Planetary Civics Inquiry.
+          </p>
+        </details>
         <p class="about-author-links" aria-label="Sarah's author identity links">
           <a href="https://sarahbarns.com/">sarahbarns.com</a>
           <span aria-hidden="true">·</span>
@@ -52,4 +58,51 @@ const { Content } = await post.render();
       </div>
     </div>
   </article>
+
+  <style>
+    .contact-button {
+      display: inline-block;
+      padding: 0.55rem 1.2rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 3px 3px 0 var(--border);
+      font-family: var(--heading);
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      color: var(--text);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    }
+    .contact-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 5px 5px 0 var(--border);
+      color: var(--purple);
+    }
+    .about-more {
+      margin: 2.5rem 0 1.25rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+    }
+    .about-more summary {
+      cursor: pointer;
+      font-family: var(--heading);
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--purple);
+    }
+    .about-more p {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--text-dim);
+    }
+  </style>
+
+  <script>
+    // Assemble the mailto at runtime so the address isn't in the page source (anti-spam).
+    document.querySelectorAll('a.contact-button[data-u]').forEach((a) => {
+      a.setAttribute('href', 'mailto:' + a.getAttribute('data-u') + '@' + a.getAttribute('data-d'));
+    });
+  </script>
 </BaseLayout>
