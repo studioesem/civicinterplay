@@ -19,11 +19,20 @@ interface ArticleData {
   about?: string[];
 }
 
-interface Props {
-  article?: ArticleData;
+interface DatasetData {
+  name: string;
+  description?: string;
+  url: string;
+  keywords?: string[];
+  spatialCoverage?: string;
 }
 
-const { article } = Astro.props;
+interface Props {
+  article?: ArticleData;
+  dataset?: DatasetData;
+}
+
+const { article, dataset } = Astro.props;
 
 const PERSON_ID = 'https://civicinterplay.io/#sarahbarns';
 const WEBSITE_ID = 'https://civicinterplay.io/#website';
@@ -145,7 +154,31 @@ const articleNode: ArticleNode | null = article
     })()
   : null;
 
-const graph = [person, studioEsem, storybox, website, ...(articleNode ? [articleNode] : [])];
+const datasetNode = dataset
+  ? {
+      '@type': 'Dataset',
+      '@id': `${dataset.url}#dataset`,
+      name: dataset.name,
+      ...(dataset.description ? { description: dataset.description } : {}),
+      url: dataset.url,
+      isPartOf: { '@id': WEBSITE_ID },
+      creator: { '@id': PERSON_ID },
+      publisher: { '@id': PERSON_ID },
+      ...(dataset.keywords?.length ? { keywords: dataset.keywords.join(', ') } : {}),
+      ...(dataset.spatialCoverage ? { spatialCoverage: dataset.spatialCoverage } : {}),
+      isAccessibleForFree: true,
+      inLanguage: 'en-AU',
+    }
+  : null;
+
+const graph = [
+  person,
+  studioEsem,
+  storybox,
+  website,
+  ...(articleNode ? [articleNode] : []),
+  ...(datasetNode ? [datasetNode] : []),
+];
 const ldJson = {
   '@context': 'https://schema.org',
   '@graph': graph,
