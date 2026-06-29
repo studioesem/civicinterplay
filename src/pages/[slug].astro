@@ -6,7 +6,10 @@ import AudioEmbed from '../components/AudioEmbed.astro';
 import { CATEGORY_LABEL } from '../content/config';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts', (p) => !p.data.draft);
+  // Drafts render in `npm run dev` so you can preview and write copy, but are
+  // excluded from the production build (and from every listing). Set draft: true
+  // in frontmatter to keep a post in this preview-only state.
+  const posts = await getCollection('posts', (p) => import.meta.env.DEV || !p.data.draft);
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: { post },

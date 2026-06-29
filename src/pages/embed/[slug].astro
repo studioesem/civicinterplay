@@ -54,7 +54,9 @@ const watchHref = d.sourcePostSlug
       color: var(--text);
     }
     .embed-shell {
-      padding: 0;
+      /* small inset so the offset box-shadow on the player isn't clipped by the
+         iframe edge; the auto-height script measures this padding too */
+      padding: 2px 6px 6px 2px;
       margin: 0;
       position: relative;
     }
@@ -87,7 +89,7 @@ const watchHref = d.sourcePostSlug
   </style>
 </head>
 <body>
-  <div class="embed-shell">
+  <div class="embed-shell" id="embed-shell">
     <a class="embed-watch-link" href={watchHref} target="_top" rel="noopener">
       {d.mediaType === 'audio' ? 'Listen on Civic Interplay' : 'Watch on Civic Interplay'}
     </a>
@@ -111,5 +113,25 @@ const watchHref = d.sourcePostSlug
       />
     )}
   </div>
+  <script>
+    // Report our rendered height to the parent page so a host iframe can size
+    // itself to the content. This keeps any aspect ratio (16/9, square, audio)
+    // from letterboxing or clipping the caption, at any iframe width.
+    // The host opts in with the small listener shown in EDITOR-GUIDE.md; without
+    // it, the iframe just keeps its authored height (graceful fallback).
+    const shell = document.getElementById('embed-shell');
+    if (shell) {
+      const postHeight = () => {
+        const height = Math.ceil(shell.getBoundingClientRect().height);
+        parent.postMessage({ type: 'civicinterplay:embed-size', height }, '*');
+      };
+      window.addEventListener('load', postHeight);
+      if ('ResizeObserver' in window) {
+        new ResizeObserver(postHeight).observe(shell);
+      } else {
+        window.addEventListener('resize', postHeight);
+      }
+    }
+  </script>
 </body>
 </html>
