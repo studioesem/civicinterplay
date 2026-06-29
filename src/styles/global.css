@@ -593,7 +593,7 @@ section:nth-child(4) { animation-delay: 0.60s; }
 .about-author {
   margin-top: 3rem;
   padding: 2rem 2.2rem;
-  background: var(--blush);
+  background: #f8f8f8;
   border: 2px solid var(--border);
   border-left: 8px solid var(--purple);
   border-radius: var(--radius);
