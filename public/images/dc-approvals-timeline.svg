@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="560" viewBox="0 0 1000 560" font-family="Helvetica, Arial, sans-serif">
+<rect width="1000" height="560" fill="#fafafa"/>
+<text x="58" y="34" font-size="21" font-weight="bold" fill="#222">Fast-tracked, and quiet about it</text>
+<text x="58" y="56" font-size="12.5" fill="#555">Cumulative Victorian data-centre permits granted by the Minister for Planning under the Development Facilitation Program.</text>
+<text x="58" y="73" font-size="12.5" fill="#555">Each decided without public exhibition &#183; no third-party appeal to VCAT.</text>
+
+<!-- baseline + x axis -->
+<line x1="70" y1="470" x2="950" y2="470" stroke="#ccc" stroke-width="1"/>
+<line x1="70" y1="470" x2="70" y2="475" stroke="#ccc"/>
+<text x="70" y="492" font-size="12" fill="#777" text-anchor="middle">Jan 2025</text>
+<line x1="356.5" y1="470" x2="356.5" y2="475" stroke="#ccc"/>
+<text x="356.5" y="492" font-size="12" fill="#777" text-anchor="middle">Jul 2025</text>
+<line x1="647.7" y1="470" x2="647.7" y2="475" stroke="#ccc"/>
+<text x="647.7" y="492" font-size="12" fill="#777" text-anchor="middle">Jan 2026</text>
+<line x1="934.2" y1="470" x2="934.2" y2="475" stroke="#ccc"/>
+<text x="934.2" y="492" font-size="12" fill="#777" text-anchor="middle">Jul 2026</text>
+
+<!-- left count axis -->
+<text x="58" y="402" font-size="11" fill="#aaa" text-anchor="end">1</text>
+<text x="58" y="330" font-size="11" fill="#aaa" text-anchor="end">2</text>
+<text x="58" y="258" font-size="11" fill="#aaa" text-anchor="end">3</text>
+<text x="58" y="186" font-size="11" fill="#aaa" text-anchor="end">4</text>
+<text x="58" y="114" font-size="11" fill="#aaa" text-anchor="end">5</text>
+<text x="58" y="96" font-size="11" fill="#999">approvals &#8593;</text>
+
+<!-- cumulative step line -->
+<path d="M70 470 L217.2 470 L217.2 398 L312.2 398 L312.2 326 L625.5 326 L625.5 254 L673.1 254 L673.1 182 L847.2 182 L847.2 110 L950 110" fill="none" stroke="#7D50BD" stroke-width="2.4"/>
+
+<!-- approval markers -->
+<circle cx="217.2" cy="398" r="4" fill="#D16D54"/>
+<text x="223" y="393" font-size="11" fill="#9c3b22" font-weight="bold">Truganina, Leakes Rd &#183; Apr 2025</text>
+<circle cx="312.2" cy="326" r="4" fill="#D16D54"/>
+<text x="318" y="321" font-size="11" fill="#9c3b22" font-weight="bold">South Morang &#183; Jun 2025</text>
+<circle cx="625.5" cy="254" r="4" fill="#D16D54"/>
+<text x="619" y="247" font-size="11" fill="#9c3b22" font-weight="bold" text-anchor="end">West Footscray, Perri &#183; Dec 2025</text>
+<circle cx="673.1" cy="182" r="4" fill="#D16D54"/>
+<text x="667" y="175" font-size="11" fill="#9c3b22" font-weight="bold" text-anchor="end">NEXTDC M4, Port Melbourne &#183; Jan 2026</text>
+<circle cx="847.2" cy="110" r="4" fill="#D16D54"/>
+<text x="841" y="103" font-size="11" fill="#9c3b22" font-weight="bold" text-anchor="end">PGIM, Truganina &#183; May 2026</text>
+
+<!-- contrast: the contested one that did not proceed -->
+<line x1="859.8" y1="470" x2="859.8" y2="436" stroke="#8E9BDD" stroke-width="1" stroke-dasharray="2 2"/>
+<path d="M855.8 432 l8 8 M863.8 432 l-8 8" stroke="#5b66a8" stroke-width="1.6"/>
+<text x="852" y="452" font-size="11" fill="#5b66a8" text-anchor="end" font-weight="bold">WA &#183; GreenSquareDC, Hazelmere:</text>
+<text x="852" y="465" font-size="11" fill="#5b66a8" text-anchor="end">withdrawn after 1,836 objections</text>
+
+<text x="58" y="528" font-size="12" fill="#444">Where notice is exempted there is no window to object, so the record stays empty. The only application that met organised objection was one</text>
+<text x="58" y="544" font-size="12" fill="#444">that went to public comment: GreenSquareDC in Perth, withdrawn before a decision. Confirmed approvals only; per-permit notice status still being verified.</text>
+</svg>
