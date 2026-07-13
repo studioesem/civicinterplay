@@ -2,6 +2,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import VideoEmbed from '../../components/VideoEmbed.astro';
 import AudioEmbed from '../../components/AudioEmbed.astro';
+import '../../styles/fonts.ts';
 
 export async function getStaticPaths() {
   const items = await getCollection('embeds');
@@ -28,9 +29,6 @@ const watchHref = d.sourcePostSlug
   <title>{d.title} - Civic Interplay</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style is:global>
     :root {
       --bg: #f8f8f8;

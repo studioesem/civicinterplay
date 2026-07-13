@@ -1,0 +1,138 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import VideoEmbed from '../components/VideoEmbed.astro';
+
+// Reuse the real clip registry so the demo below is the actual product,
+// not a mock-up.
+const demo = await getEntry('embeds', 'olah-vatican-2026');
+const d = demo?.data;
+
+const embedSnippet = `<iframe
+  src="https://civicinterplay.io/embed/olah-vatican-2026"
+  style="width:100%; border:0; aspect-ratio:16/9"
+  loading="lazy"
+  allowfullscreen
+  title="Civic Interplay video player"
+></iframe>`;
+
+// DRAFT copy. Sarah to revise wording.
+---
+<BaseLayout
+  title="A video player that doesn't watch you back"
+  description="A small video player built as a counter-model: no third-party scripts, no cookies, self-hosted media, captioned and portable by default."
+>
+  <article>
+    <div class="narrow">
+      <div class="post-header">
+        <div class="post-tag" style="color: var(--purple)">The player</div>
+        <h1>A video player that doesn't watch you back</h1>
+      </div>
+
+      <div class="post-content">
+        <p class="lede"><em>This is a draft. A small video player, built as a counter-model.</em></p>
+
+        <p>
+          Most embedded players are surveillance instruments wearing a play button. They
+          set cookies, load third-party scripts, log who watched what and for how long, and
+          feed it back into a recommendation machine you don't control. Until recently this
+          one quietly did some of that too: it pulled its typeface from Google's servers, so
+          every viewer's browser phoned home before the video even started. We noticed. We
+          fixed it.
+        </p>
+
+        <p>
+          Now it doesn't. The media sits on our own storage. There are no third-party
+          scripts, no cookies, no tracking pixels, no algorithm deciding what you see next.
+          If Civic Interplay disappeared tomorrow, the file would still play and you could
+          still download it.
+        </p>
+
+        <p>
+          It is a tiny thing. But sovereignty over infrastructure starts with small
+          refusals: the choice to host your own file, to not phone home, to let a viewer
+          just watch.
+        </p>
+
+        {d && (
+          <VideoEmbed
+            src={d.video ?? ''}
+            webm={d.videoWebm}
+            poster={d.poster}
+            caption={d.caption}
+            aspectRatio={d.aspectRatio ?? '16/9'}
+            title={d.title}
+          />
+        )}
+
+        <h2>The promises</h2>
+        <ul class="promises">
+          <li><strong>No third-party scripts, no cookies.</strong> The player calls no domain but our own. Nothing to consent to.</li>
+          <li><strong>Self-hosted media.</strong> The video files live on our storage, not a platform's.</li>
+          <li><strong>Captioned and legible by default.</strong> Accessibility is the baseline, not an add-on.</li>
+          <li><strong>Portable.</strong> Native, downloadable, and it keeps working if we don't.</li>
+        </ul>
+
+        <h2>Put it on your own site</h2>
+        <p>Paste this wherever you can drop HTML. It loads nothing from us until someone presses play.</p>
+        <pre class="embed-code"><code>{embedSnippet}</code></pre>
+      </div>
+
+      <div class="back-link">
+        <a href="/">Civic Interplay</a>
+      </div>
+    </div>
+  </article>
+
+  <style>
+    .lede {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+    }
+
+    .promises {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0;
+    }
+    .promises li {
+      padding: 0.85rem 0 0.85rem 1.5rem;
+      border-top: 1px solid var(--border-light);
+      position: relative;
+      font-size: 0.98rem;
+    }
+    .promises li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 1.15rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--purple);
+    }
+    .promises li strong {
+      color: var(--text);
+    }
+
+    .embed-code {
+      background: #1c1917;
+      color: #f8f8f8;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--border);
+      padding: 1.1rem 1.25rem;
+      overflow-x: auto;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    }
+    .embed-code code {
+      background: none;
+      border: 0;
+      padding: 0;
+      color: inherit;
+      white-space: pre;
+    }
+  </style>
+</BaseLayout>
