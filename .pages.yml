@@ -1,0 +1,167 @@
+media:
+  input: public/images
+  output: /images
+
+content:
+  - name: posts
+    label: Posts
+    type: collection
+    path: src/content/posts
+    extension: mdx
+    format: yaml-frontmatter
+    filename: "{fields.slug}.mdx"
+    view:
+      fields: [title, primaryCategory, publishedAt, draft]
+      sort: [publishedAt, title]
+      default:
+        sort: publishedAt
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: slug
+        label: Slug
+        type: string
+        description: URL path for the post, e.g. what-is-civic-interplay
+      - name: subtitle
+        label: Subtitle
+        type: string
+      - name: excerpt
+        label: Excerpt
+        type: text
+      - name: publishedAt
+        label: Published at
+        type: date
+        required: true
+        options:
+          time: true
+          format: yyyy-MM-dd'T'HH:mm:ss.SSSxxx
+      - name: updatedAt
+        label: Updated at
+        type: date
+        options:
+          time: true
+          format: yyyy-MM-dd'T'HH:mm:ss.SSSxxx
+      - name: featureImage
+        label: Feature image
+        type: image
+      - name: featureImageAlt
+        label: Feature image alt text
+        type: string
+      - name: featureVideo
+        label: Feature video (mp4 URL)
+        type: string
+      - name: featureVideoWebm
+        label: Feature video (webm URL)
+        type: string
+      - name: featureAudio
+        label: Feature audio (mp3 URL)
+        type: string
+      - name: featureAudioOgg
+        label: Feature audio (ogg URL)
+        type: string
+      - name: categories
+        label: Categories
+        type: select
+        list: true
+        options:
+          values:
+            - value: introduction
+              label: Introduction
+            - value: training-grounds
+              label: Training Grounds
+            - value: the-guides
+              label: The Guides
+            - value: work-sheets
+              label: Work Sheets
+            - value: the-portals
+              label: The Portals
+      - name: primaryCategory
+        label: Primary category
+        type: select
+        options:
+          values:
+            - value: introduction
+              label: Introduction
+            - value: training-grounds
+              label: Training Grounds
+            - value: the-guides
+              label: The Guides
+            - value: work-sheets
+              label: Work Sheets
+            - value: the-portals
+              label: The Portals
+      - name: author
+        label: Author
+        type: string
+        default: Sarah Barns
+      - name: featured
+        label: Featured
+        type: boolean
+        default: false
+      - name: draft
+        label: Draft
+        type: boolean
+        default: false
+        description: Drafts build locally but are excluded from the live site
+      - name: articleType
+        label: Article type
+        type: select
+        default: BlogPosting
+        options:
+          values: [BlogPosting, Article, ScholarlyArticle, CreativeWork]
+      - name: keywords
+        label: Keywords
+        type: string
+        list: true
+      - name: body
+        label: Body
+        type: rich-text
+
+  - name: embeds
+    label: Embeds
+    type: collection
+    path: src/content/embeds
+    extension: json
+    format: json
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: mediaType
+        label: Media type
+        type: select
+        default: video
+        options:
+          values: [video, audio]
+      - name: video
+        label: Video (mp4 URL)
+        type: string
+      - name: videoWebm
+        label: Video (webm URL)
+        type: string
+      - name: aspectRatio
+        label: Aspect ratio
+        type: string
+        description: e.g. 16/9 or auto
+      - name: audio
+        label: Audio (mp3 URL)
+        type: string
+      - name: audioOgg
+        label: Audio (ogg URL)
+        type: string
+      - name: poster
+        label: Poster image URL
+        type: string
+      - name: caption
+        label: Caption
+        type: string
+      - name: credit
+        label: Credit
+        type: string
+      - name: sourcePostSlug
+        label: Source post slug
+        type: string
