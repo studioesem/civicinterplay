@@ -9,6 +9,10 @@ Migrated from Ghost Pro to a static Astro site, deployed on Cloudflare Pages.
 - **Website Author:** Sarah Barns ([sarahbarns.com](https://sarahbarns.com), [Studio ESEM](https://studioesem.com))
 - ****Tools** live at https://github.com/civic-interplay/ co-created with Irina Panovich, Civic Interplay co-founder 
 
+## Publishing
+
+Posts are written and published through [Pages CMS](https://app.pagescms.org), no coding needed. Co-publishers: see [PUBLISHING.md](./PUBLISHING.md).
+
 ## Stack
 
 - [Astro 5](https://astro.build) static site, MDX content collections
