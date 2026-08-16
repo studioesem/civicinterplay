@@ -75,7 +75,7 @@ Open it from the Posts list, edit, save. If the post is live (Draft off), your s
 ## Things to leave alone
 
 - The **Embeds** section, unless agreed
-- Posts that contain special blocks (coloured callout boxes and embedded players). These use custom code that the visual editor garbles on save. If a post contains code-looking tags like `<Callout>` or `import ...`, don't edit it in the visual editor: click the `< >` (source) toggle in the editor toolbar first and make your changes there, where the special blocks stay untouched. When in doubt, ask Sarah.
+- Posts that contain special blocks (coloured callout boxes and embedded players). These use custom code that the visual editor garbles on save. If a post contains code-looking tags like `<Callout>` or `import ...`, don't edit it in the visual editor: click **Source** on the small Editor/Source switch at the top right of the Body field first and make your changes there, where the special blocks stay untouched. When in doubt, ask Sarah.
 - Anything outside Pages CMS: the repository's other files are the site's machinery
 
 ## When something goes wrong
