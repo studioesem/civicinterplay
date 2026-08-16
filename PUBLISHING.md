@@ -66,6 +66,7 @@ A gentle warning: publishing is instant and there is no approval step. When in d
 - Use JPG for photos, PNG for graphics with text
 - Before uploading, give the file a sensible name (`botanica-tree.jpg`, not `IMG_4032 copy FINAL.jpg`); that name becomes part of its web address forever
 - Big files make the site slow. Aim for under 500 KB; 1600px wide is plenty
+- To caption an image in the body, put a line in *italics* directly underneath it; the site styles it as a small centred caption
 
 ## Editing an existing post
 
@@ -74,7 +75,7 @@ Open it from the Posts list, edit, save. If the post is live (Draft off), your s
 ## Things to leave alone
 
 - The **Embeds** section, unless agreed
-- Posts that contain special blocks (coloured callout boxes and embedded players). These use custom code that the editor can garble. If you open a post and see code-looking tags like `<Callout>` or `import ...`, close it without saving and ask Sarah to make the change instead.
+- Posts that contain special blocks (coloured callout boxes and embedded players). These use custom code that the visual editor garbles on save. If a post contains code-looking tags like `<Callout>` or `import ...`, don't edit it in the visual editor: click the `< >` (source) toggle in the editor toolbar first and make your changes there, where the special blocks stay untouched. When in doubt, ask Sarah.
 - Anything outside Pages CMS: the repository's other files are the site's machinery
 
 ## When something goes wrong
