@@ -68,6 +68,44 @@ A gentle warning: publishing is instant and there is no approval step. When in d
 - Big files make the site slow. Aim for under 500 KB; 1600px wide is plenty
 - To caption an image in the body, put a line in *italics* directly underneath it; the site styles it as a small centred caption
 
+## Callout cards and video players
+
+The coloured callout cards and the video players are special blocks. The visual editor can't create them (and will garble them if it saves over them), so they're always added and edited in **Source** mode: the Editor/Source switch at the top right of the Body field.
+
+Step one, once per post: in Source mode, put the lines you need at the very top of the Body, before any text. Only include the ones the post actually uses.
+
+```
+import Callout from '../../components/Callout.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
+```
+
+### A callout card
+
+```
+<Callout>
+
+Your text here. Normal formatting works inside: **bold**, *italics*, links.
+
+</Callout>
+```
+
+The blank lines above and below the text matter. Keep them.
+
+### A video player
+
+```
+<VideoEmbed
+  src="https://media.civicinterplay.io/clips/your-clip.mp4"
+  poster="/images/your-poster.jpg"
+  caption="Caption shown under the player."
+  aspectRatio="auto"
+/>
+```
+
+The poster is a normal image from the site's image library. The video itself lives at media.civicinterplay.io; ask Sarah to upload new clips there. For tall phone-shaped clips, add `portrait` on its own line before the closing `/>`.
+
+Golden rule: once a post contains any of these blocks, do all future edits to that post in Source mode.
+
 ## Editing an existing post
 
 Open it from the Posts list, edit, save. If the post is live (Draft off), your saved changes go live within minutes. For bigger reworks of a live post, tell Sarah first.
