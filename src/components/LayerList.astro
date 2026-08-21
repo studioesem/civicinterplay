@@ -1,0 +1,177 @@
+---
+// The text version of a Field Note diagram.
+//
+// The image above it carries the design. This carries the content: real,
+// selectable, indexable text, so the substance of the diagram is not locked
+// inside a picture. Order is meaningful in both current uses (stack layers,
+// ladder rungs), so it renders as an ordered list, top rung first.
+
+export type Layer = {
+  num: string;
+  name: string;
+  detail: string;
+  /** Who holds it, or what it is drawn from. */
+  tag?: string;
+  tagNote?: string;
+  /** Flag a precedent that is adjacent rather than direct. */
+  verify?: boolean;
+  /** Pull focus to one row. */
+  highlight?: boolean;
+};
+
+interface Props {
+  layers: Layer[];
+  tagHeading?: string;
+}
+
+const { layers, tagHeading } = Astro.props;
+---
+<ol class="layers">
+  {layers.map((l) => (
+    <li class:list={['layer', { 'is-highlight': l.highlight }]}>
+      <span class="layer-num">{l.num}</span>
+      <span class="layer-body">
+        <span class="layer-rule" aria-hidden="true"></span>
+        <span class="layer-name">{l.name}</span>
+        <span class="layer-detail">{l.detail}</span>
+      </span>
+      {l.tag && (
+        <span class="layer-tag">
+          {tagHeading && <span class="layer-tag-heading">{tagHeading}</span>}
+          <span class="layer-tag-name">{l.tag}</span>
+          {l.tagNote && <span class="layer-tag-note">{l.tagNote}</span>}
+          {l.verify && <span class="layer-verify">Adjacent precedent, verify before use</span>}
+        </span>
+      )}
+    </li>
+  ))}
+</ol>
+
+<style>
+  .layers {
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    counter-reset: none;
+  }
+
+  .layer {
+    display: grid;
+    grid-template-columns: 2.4rem 1fr;
+    gap: 0.2rem 1rem;
+    align-items: start;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem;
+    background: #fffefc;
+  }
+
+  .layer.is-highlight {
+    border-color: #B8317B;
+    box-shadow: 3px 3px 0 rgba(184, 49, 123, 0.35);
+  }
+
+  .layer-num {
+    font-family: var(--heading);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+    font-variant-numeric: tabular-nums;
+    padding-top: 0.5rem;
+  }
+
+  .layer-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 0;
+  }
+
+  .layer-rule {
+    display: block;
+    width: 44px;
+    height: 5px;
+    background: #B8317B;
+    margin-bottom: 0.2rem;
+  }
+
+  .layer-name {
+    font-family: var(--heading);
+    font-size: 1.02rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    line-height: 1.25;
+  }
+
+  .layer-detail {
+    font-family: var(--body);
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text-dim);
+  }
+
+  .layer-tag {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    margin-top: 0.7rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .layer-tag-heading {
+    font-family: var(--heading);
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .layer-tag-name {
+    font-family: var(--heading);
+    font-size: 0.92rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .layer-tag-note {
+    font-family: var(--heading);
+    font-size: 0.76rem;
+    font-weight: 400;
+    color: var(--text-faint);
+  }
+
+  .layer-verify {
+    font-family: var(--heading);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    color: #A9482F;
+    margin-top: 0.25rem;
+  }
+
+  /* Wide: the source column sits beside the layer rather than under it. */
+  @media (min-width: 720px) {
+    .layer {
+      grid-template-columns: 2.4rem minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 0 1.5rem;
+      align-items: center;
+    }
+
+    .layer-tag {
+      grid-column: 3;
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+      border-left: 1px solid var(--border-light);
+      padding-left: 1.4rem;
+    }
+  }
+</style>

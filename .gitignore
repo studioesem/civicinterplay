@@ -37,3 +37,7 @@ _image-report.json
 
 # civicinterplay-preview.html and download-ghost-images.sh ARE committed —
 # they're reference assets used by .impeccable.md and the migration docs.
+
+# Working material, not site content
+talk-source/
+new content /

@@ -1,0 +1,284 @@
+---
+// A horizontally scrolling row of statement cards.
+//
+// Suits the manifesto callouts because each one is a discrete proposition
+// rather than a paragraph of continuous argument, so breaking the flow costs
+// nothing and reading one at a time gains something.
+//
+// Horizontal scrolling hides content, so this leans on three affordances: the
+// next card always peeks in from the right, the arrows are always visible on
+// desktop, and the region is keyboard-scrollable. Source order is untouched,
+// so screen readers and search engines read all of it regardless.
+
+interface Props {
+  label: string;
+  /** Adds an invitation card at the end of the row. */
+  addHref?: string;
+  addLabel?: string;
+}
+
+const { label, addHref, addLabel = 'Add your card here' } = Astro.props;
+---
+<div class="scroller-wrap">
+  <div
+    class="card-scroller"
+    role="region"
+    aria-label={label}
+    tabindex="0"
+    data-scroller
+  >
+    <slot />
+
+    {addHref && (
+      <a
+        class="callout card-add"
+        href={addHref}
+        target="_blank"
+        rel="noopener external"
+      >
+        <span class="card-add-plus" aria-hidden="true">+</span>
+        <span class="card-add-label">{addLabel}</span>
+      </a>
+    )}
+  </div>
+
+  <div class="scroller-controls">
+    <button type="button" class="scroller-btn" data-dir="-1" aria-label="Scroll left">
+      <span aria-hidden="true">&larr;</span>
+    </button>
+    <button type="button" class="scroller-btn" data-dir="1" aria-label="Scroll right">
+      <span aria-hidden="true">&rarr;</span>
+    </button>
+  </div>
+</div>
+
+<style is:global>
+  /* The article column is 720px, which would give ~200px columns. Break out
+     to the full container width so the cards are wide enough to read. */
+  .scroller-wrap {
+    width: min(1100px, calc(100vw - 3rem));
+    margin: 2.5rem 0 3rem 50%;
+    transform: translateX(-50%);
+  }
+
+  .card-scroller {
+    display: grid;
+    grid-auto-flow: column;
+    /* Three across, with the fourth peeking so the row reads as scrollable. */
+    grid-auto-columns: calc((100% - 3 * 1.4rem) / 3.15);
+    /* Equal heights. Keep the cards short (see the dev word-count warning
+       below) or the longest one sets the height for the whole row. */
+    align-items: stretch;
+    gap: 1.4rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    padding: 0.5rem 0.5rem 1.2rem;
+    margin: 0 -0.5rem;
+    scrollbar-width: thin;
+  }
+
+  .card-scroller:focus-visible {
+    outline: 3px solid var(--purple);
+    outline-offset: 2px;
+    border-radius: var(--radius);
+  }
+
+  /* The callouts become the cards. The scroll-reveal is switched off here:
+     it starts at opacity 0 and waits for an observer, which is wrong for
+     something sitting off the right-hand edge. */
+  .card-scroller .callout {
+    scroll-snap-align: start;
+    margin: 0;
+    opacity: 1;
+    transform: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1.6rem 1.8rem;
+    background: var(--card-bg, #f8f8f8);
+    color: var(--card-ink, var(--text));
+    border: 2px solid var(--border);
+    border-left: 8px solid var(--card-kicker, var(--purple));
+  }
+
+  /* Typographic hierarchy. The heading is the bold text at the top of the
+     card, and it can span several inline runs: a sentence may be strong, then
+     em+strong, then strong again. Targeting only the first run split such a
+     sentence across two fonts, so every bold run in the opening paragraph is
+     promoted, inline, and the unbolded remainder stays as body. */
+  .card-scroller .callout > p:first-child strong {
+    font-family: var(--heading);
+    font-size: clamp(1.02rem, 1.35vw, 1.2rem);
+    font-weight: 600;
+    line-height: 1.32;
+    letter-spacing: 0.005em;
+    color: var(--card-ink, var(--text));
+  }
+
+  .card-scroller .callout > p:first-child em strong,
+  .card-scroller .callout > p:first-child strong em {
+    font-style: italic;
+  }
+
+  /* Everything else is body, in Merriweather, wherever it sits. */
+  .card-scroller .callout p {
+    font-family: var(--body);
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--card-ink-dim, var(--text-dim));
+  }
+
+  .card-scroller .callout a {
+    color: var(--card-kicker, var(--purple));
+  }
+
+  /* A card that is only a statement runs as display type end to end, so the
+     block-heading rule above is switched off and the whole line stays joined. */
+  .card-scroller .callout:has(p:only-child):not(:has(br)) > p {
+    font-family: var(--heading);
+    font-size: clamp(1.35rem, 1.9vw, 1.7rem);
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--card-ink, var(--text));
+    text-wrap: balance;
+  }
+
+  .card-scroller .callout:has(p:only-child):not(:has(br)) > p strong {
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  /* Rotate through the tints, the way the callout borders always have.
+     Flat fills here rather than gradients: at card size the gradient read as
+     a smudge rather than a colour. */
+  .card-scroller .callout:nth-child(5n + 1) {
+    --card-bg: var(--tint-purple-a);
+    --card-kicker: var(--ink-purple);
+  }
+  .card-scroller .callout:nth-child(5n + 2) {
+    --card-bg: var(--tint-periwinkle-a);
+    --card-kicker: var(--ink-periwinkle);
+  }
+  .card-scroller .callout:nth-child(5n + 3) {
+    --card-bg: var(--tint-terracotta-a);
+    --card-kicker: var(--ink-terracotta);
+  }
+  .card-scroller .callout:nth-child(5n + 4) {
+    --card-bg: var(--tint-cream-a);
+    --card-kicker: var(--ink-cream);
+  }
+  .card-scroller .callout:nth-child(5n + 5) {
+    --card-bg: var(--tint-pink-a);
+    --card-kicker: var(--ink-pink);
+  }
+
+
+  .scroller-controls {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: flex-end;
+    margin-top: 0.2rem;
+  }
+
+  .scroller-btn {
+    appearance: none;
+    width: 2.6rem;
+    height: 2.6rem;
+    font-size: 1rem;
+    font-family: var(--heading);
+    color: var(--text);
+    background: #fffefc;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 3px 3px 0 var(--border);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  }
+
+  .scroller-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 5px 5px 0 var(--border);
+    color: var(--purple);
+  }
+
+  .scroller-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+    box-shadow: 2px 2px 0 var(--border);
+  }
+
+  @media (max-width: 900px) {
+    .card-scroller { grid-auto-columns: calc((100% - 2 * 1.4rem) / 2.15); }
+  }
+
+  @media (max-width: 600px) {
+    .card-scroller { grid-auto-columns: 86%; gap: 1rem; }
+    .card-scroller .callout { padding: 1.2rem 1.3rem; }
+    .card-scroller .callout > p:first-child strong { font-size: 1.02rem; }
+    .card-scroller .callout:has(p:only-child):not(:has(br)) > p { font-size: 1.35rem; }
+  .scroller-controls { justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroller-btn,
+    .scroller-btn:hover:not(:disabled) {
+      transition: none;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Authoring aid, dev only. A statement card stops being a statement somewhere
+  // north of ~80 words, and starts setting the height of every card beside it.
+  if (import.meta.env.DEV) {
+    const LIMIT = 80;
+    document.querySelectorAll('.card-scroller').forEach((track, ti) => {
+      track.querySelectorAll('.callout').forEach((card, ci) => {
+        const n = (card.textContent ?? '').trim().split(/\s+/).filter(Boolean).length;
+        if (n > LIMIT) {
+          console.warn(
+            `[CardScroller] scroller ${ti + 1}, card ${ci + 1} is ${n} words (limit ${LIMIT}). ` +
+            `Consider splitting it: "${(card.textContent ?? '').trim().slice(0, 60)}..."`
+          );
+        }
+      });
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-scroller]').forEach((track) => {
+    const wrap = track.closest('.scroller-wrap');
+    const btns = wrap?.querySelectorAll<HTMLButtonElement>('.scroller-btn');
+    if (!btns) return;
+
+    const step = () => {
+      const first = track.firstElementChild as HTMLElement | null;
+      return first ? first.getBoundingClientRect().width + 22 : track.clientWidth * 0.8;
+    };
+
+    const sync = () => {
+      const max = track.scrollWidth - track.clientWidth - 2;
+      btns.forEach((b) => {
+        const dir = Number(b.dataset.dir);
+        b.disabled = dir < 0 ? track.scrollLeft <= 2 : track.scrollLeft >= max;
+      });
+    };
+
+    btns.forEach((b) =>
+      b.addEventListener('click', () => {
+        track.scrollBy({
+          left: Number(b.dataset.dir) * step(),
+          behavior: reduce ? 'auto' : 'smooth',
+        });
+      })
+    );
+
+    track.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+    sync();
+  });
+</script>

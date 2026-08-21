@@ -1,10 +1,49 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ToolEmbed from '../components/ToolEmbed.astro';
+import PostCard from '../components/PostCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+
+// An index of tools, each with its own page, rather than a stack of embeds.
+// All cream, because that is what the accent means here: a live tool.
+const tools = [
+  {
+    href: '/sovereignties/',
+    title: 'Mapping AI Sovereignties',
+    excerpt:
+      "A live map of the data centre super cycle shaping Australia's digital future under the banner of 'sovereign compute'. Contribute, explore, dispute.",
+    image: '/images/tiles/map-560.webp',
+    imageAlt:
+      'Field note card reading: I spent the past five months building a data centre map to track the super cycle transforming energy, water and land infrastructure.',
+  },
+  {
+    href: '/terrain/',
+    title: 'Familiar Terrain',
+    excerpt:
+      'A walkable semantic terrain. Texts, noticings and ideas cluster into regions based on the patterns embeddings find in them. Built by Irina Panovich.',
+    image: '/images/tiles/terrain-560.webp',
+    imageAlt: 'Field note card reading: A walkable semantic terrain.',
+  },
+  {
+    href: '/player/',
+    title: 'The Anthro-player',
+    excerpt:
+      'A video player that does not watch you back. No third-party scripts, no cookies, self-hosted and captioned by default. Currently holding clips of Anthropic being the good guys.',
+    image: '/images/tiles/player-560.webp',
+    imageAlt: "Field note card reading: A player that doesn't watch back.",
+  },
+  {
+    href: '/civic-interplay-toolkit/',
+    title: 'Civic Interplay Toolkit',
+    excerpt:
+      'Workflows, prompt instructions and transcripts, public on GitHub. Designed to be forked, adapted, broken and rebuilt. Everything in it is a draft.',
+    image: '/images/tiles/toolkit-560.webp',
+    imageAlt: 'Field note card reading: Workflows and prompts, forkable.',
+  },
+];
 ---
 <BaseLayout
   title="Doing"
-  description="Tools and experiments that foster collaborative enquiry around practices of agentic civics. All are works in progress."
+  description="Experiments and shared tools that put agent-based workflows to work on critical investigations of global governance and civic values."
 >
   <main class="container doing">
 
@@ -12,114 +51,68 @@ import ToolEmbed from '../components/ToolEmbed.astro';
       <p class="doing-eyebrow">Civic Interplay / Do</p>
       <h1>Doing</h1>
       <p class="doing-intro">
-        Experimental tools and practices, somewhat thinking-out-loud. They are designed as collaborative frameworks for agentic-civics and civic interplays. 
-        Mostly developed for in-person gatherings and intentional partnerships.
-        All are works in progress.
-      </p>
-      <p class="doing-tool-note" style="margin-top: 1.25rem;">
-        New here? Start with <a href="/sovereignties/">AI Sovereignties</a>, a live map of the infrastructure behind AI in Australia.
+        Experiments and shared tools that put into practice the uses of
+        agent-based workflows for critical investigations of global governance
+        and civic values. These are designed to be built upon, shared, and
+        debated as part of in-person gatherings and forums.
       </p>
     </header>
 
-    <section class="doing-tool" id="sovereignties">
-      <div class="doing-tool-meta">
-        <p class="doing-eyebrow">Tool 01</p>
-        <h2>Sovereignties</h2>
-        <p class="doing-tool-summary">
-          A live map of the infrastructural dimensions of AI sovereignties in Australia. Learn more about this project: read <a href="/ai-sovereignties/">Mapping AI Sovereignties</a>. Feel free to contribute, explore, dispute.
-        </p>
-      </div>
+    <SectionHeading title="Tools" />
+    <div class="post-grid tools-grid">
+      {tools.map((t) => (
+        <PostCard
+          href={t.href}
+          title={t.title}
+          excerpt={t.excerpt}
+          categoryLabel="Live tool"
+          accent="cream"
+          image={t.image}
+          imageAlt={t.imageAlt}
+        />
+      ))}
 
-      <ToolEmbed
-        title="Mapping AI Sovereignties"
-        src="https://sovereignties.civicinterplay.io/"
-        openLabel="Open Sovereignties in a new tab"
-        height="780px"
-      />
-
-      <p class="doing-tool-note">
-        Not loading? Your browser may be blocking the embedded site. Use the <a href="https://sovereignties.civicinterplay.io/" target="_blank" rel="noopener external">open in a new tab</a> link to launch it directly.
-      </p>
-
-      <p class="doing-tool-note">
-        Learn more about this project: read <a href="/ai-sovereignties/">Mapping AI Sovereignties</a>, or open the <a href="/sovereignties/">Mapping AI Sovereignties page</a>.
-      </p>
-      <p class="doing-tool-note">
-        Spot a gap or an error? <a href="https://studio-esem.notion.site/a504252cf109454598a7b02e5024b10d" target="_blank" rel="noopener external">Submit a missing site or correction</a>.
-      </p>
-    </section>
-
-    <section class="doing-tool" id="sightings">
-      <div class="doing-tool-meta">
-        <p class="doing-eyebrow">Tool 02</p>
-        <h2>Sightings</h2>
-        <p class="doing-tool-summary">
-          A tool for logging what you notice (outside of an algorithmic feed). Designed for the Gathering Intelligences Workshop (March 2026). 
-          Bring your phone, your camera, your senses.
-          What can you see when you slow down enough to notice the interfaces,
-          infrastructures, and intelligences shaping the place you are in?
-          WIP.
-        </p>
-      </div>
-
-      <ToolEmbed
-        title="Sightings"
-        src="https://sightings.civicinterplay.io/"
-        openLabel="Open Sightings in a new tab"
-        height="780px"
-      />
-
-      <p class="doing-tool-note">
-        Not loading? Your browser may be blocking the embedded site. Use the <a href="https://sightings.civicinterplay.io/" target="_blank" rel="noopener external">open in a new tab</a> link to launch it directly.
-      </p>
-    </section>
-
-    <section class="doing-tool" id="terrain">
-      <div class="doing-tool-meta">
-        <p class="doing-eyebrow">Tool 03</p>
-        <h2>Terrain</h2>
-        <p class="doing-tool-summary">
-          A walkable semantic terrain. Texts, noticings, and ideas cluster into
-          regions based on the patterns embeddings find in them. Nearby points
-          share more than language. Created by Irina Panovich for the Gathering Intelligences Workshop, March 2026. WIP. 
-        </p>
-      </div>
-
-      <ToolEmbed
-        title="Terrain"
-        src="https://terrain.civicinterplay.io/"
-        openLabel="Open Terrain in a new tab"
-        height="780px"
-      />
-
-      <p class="doing-tool-note">
-        Not loading? Your browser may be blocking the embedded site. Use the <a href="https://terrain.civicinterplay.io/" target="_blank" rel="noopener external">open in a new tab</a> link to launch it directly.
-      </p>
-    </section>
+      <a
+        class="tool-add"
+        href="https://studio-esem.notion.site/a504252cf109454598a7b02e5024b10d"
+        target="_blank"
+        rel="noopener external"
+      >
+        <span class="tool-add-plus" aria-hidden="true">+</span>
+        <span class="tool-add-label">More to come</span>
+        <span class="tool-add-note">Working on something similar? Get in touch.</span>
+      </a>
+    </div>
 
     <section class="doing-coming-soon">
-      <h2>Coming soon</h2>
+      <h2>What's coming</h2>
       <p>
-        Workshops, worksheets, and more tools are in development. If you're a
-        practitioner, student, or researcher who'd like to be involved,
-        <a href="https://sarahbarns.com" rel="external">get in touch</a>.
+        Civic Interplay is designed as a resource for agentic-civic methods and
+        frameworks. If you are working on something similar, get in touch. You
+        can also follow progress on
+        <a href="https://github.com/civic-interplay" target="_blank" rel="noopener external">GitHub</a>.
+        More resources are coming soon.
+      </p>
+
+      <p class="doing-cta">
+        <a href="https://studio-esem.notion.site/a504252cf109454598a7b02e5024b10d" target="_blank" rel="noopener external">Register your interest</a>
       </p>
 
       <ul class="doing-future-grid">
-        <li class="doing-future-card">
+        <li class="doing-future-card accent-purple">
+          <p class="doing-future-eyebrow">Next</p>
+          <h3>Map it where you live</h3>
+          <p>Adapt the Data Centres map for your jurisdiction.</p>
+        </li>
+        <li class="doing-future-card accent-cream">
           <p class="doing-future-eyebrow">In development</p>
           <h3>Worksheets</h3>
           <p>Printable and interactive prompts for practising civic interplay in your own context.</p>
         </li>
-        <li class="doing-future-card">
-          <p class="doing-future-eyebrow">In development</p>
-          <h3>Workshops</h3>
-          <p>Facilitated sessions for groups exploring planetary citizenship and AI sovereignty are in development.</p>
-        </li>
-        <li class="doing-future-card">
-          <p class="doing-future-eyebrow">In development</p>
-          <h3>Field tools</h3>
-          <p>Tools for mapping the civic interfaces around you.</p>
+        <li class="doing-future-card accent-terracotta">
+          <p class="doing-future-eyebrow">On request</p>
+          <h3>Sessions</h3>
+          <p>Facilitated sessions for groups working on planetary citizenship and AI sovereignty. Register interest above.</p>
         </li>
       </ul>
     </section>
@@ -127,10 +120,7 @@ import ToolEmbed from '../components/ToolEmbed.astro';
   </main>
 
   <style>
-    .doing {
-      padding: 3rem 2rem 4rem;
-      max-width: 880px;
-    }
+    .doing { padding: 3rem 2rem 4rem; max-width: 1100px; }
 
     .doing-header {
       margin-bottom: 3rem;
@@ -154,62 +144,59 @@ import ToolEmbed from '../components/ToolEmbed.astro';
       font-weight: 300;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.8rem;
     }
 
     .doing-intro {
       font-family: var(--body);
-      font-size: 0.95rem;
-      font-style: italic;
-      color: var(--text-dim);
-      max-width: 60ch;
-    }
-
-    .doing-tool {
-      margin-bottom: 4rem;
-    }
-
-    .doing-tool-meta {
-      margin-bottom: 1.5rem;
-    }
-
-    .doing-tool-meta h2 {
-      font-family: var(--heading);
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      font-weight: 400;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.8rem;
-    }
-
-    .doing-tool-summary {
-      font-family: var(--body);
-      font-size: 1rem;
+      font-size: 1.02rem;
       line-height: 1.7;
-      color: var(--text);
-      max-width: 65ch;
-    }
-
-    .doing-tool-summary em {
-      color: var(--text-faint);
-      font-style: italic;
-    }
-
-    .doing-tool-note {
-      font-family: var(--heading);
-      font-size: 0.78rem;
-      color: var(--text-faint);
-      margin-top: 1rem;
-      max-width: 65ch;
-    }
-
-    .doing-tool-note a {
       color: var(--text-dim);
-      text-decoration: underline;
-      text-underline-offset: 3px;
+      max-width: 64ch;
     }
 
-    .doing-tool-note a:hover {
-      color: var(--purple);
+    .tools-grid { margin-bottom: 3.5rem; }
+
+    /* The invitation, same move as the card at the end of the About scroller. */
+    .tool-add {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 0.5rem;
+      padding: 2rem 1.4rem;
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      color: var(--text-dim);
+      transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .tool-add:hover {
+      background: var(--tint-purple-a);
+      border-color: var(--ink-purple);
+      color: var(--ink-purple);
+    }
+
+    .tool-add-plus {
+      font-family: var(--heading);
+      font-size: 2.4rem;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .tool-add-label {
+      font-family: var(--heading);
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
+
+    .tool-add-note {
+      font-family: var(--body);
+      font-size: 0.8rem;
+      font-weight: 300;
+      line-height: 1.5;
+      max-width: 24ch;
     }
 
     .doing-coming-soon {
@@ -229,8 +216,36 @@ import ToolEmbed from '../components/ToolEmbed.astro';
       font-family: var(--body);
       font-size: 0.95rem;
       color: var(--text-dim);
-      max-width: 60ch;
-      margin-bottom: 2rem;
+      max-width: 62ch;
+      margin-bottom: 1.5rem;
+    }
+
+    .doing-coming-soon > p a {
+      color: var(--ink-purple);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .doing-cta { margin: 1.5rem 0 2rem; }
+
+    .doing-cta a {
+      display: inline-block;
+      padding: 0.7rem 1.4rem;
+      background: var(--tint-purple-a);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--border);
+      font-family: var(--heading);
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .doing-cta a:hover {
+      transform: translateY(-2px);
+      box-shadow: 6px 6px 0 var(--border);
+      color: var(--ink-purple);
     }
 
     .doing-future-grid {
@@ -243,24 +258,27 @@ import ToolEmbed from '../components/ToolEmbed.astro';
     }
 
     .doing-future-card {
-      border: 1px dashed var(--border-light);
+      background: var(--card-bg, #fffefc);
+      color: var(--card-ink, var(--text));
+      border: 2px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.25rem;
-      transition: border-color 0.25s, transform 0.25s;
+      box-shadow: 4px 4px 0 var(--border);
+      padding: 1.25rem 1.4rem;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .doing-future-card:hover {
-      border-color: var(--text-dim);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 7px 7px 0 var(--border);
     }
 
     .doing-future-eyebrow {
       font-family: var(--heading);
+      color: var(--card-kicker, var(--text-faint));
       font-size: 0.6rem;
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--text-faint);
       margin-bottom: 0.6rem;
     }
 
@@ -276,20 +294,17 @@ import ToolEmbed from '../components/ToolEmbed.astro';
       font-size: 0.85rem;
       font-weight: 300;
       line-height: 1.55;
-      color: var(--text-dim);
+      color: var(--card-ink-dim, var(--text-dim));
     }
 
-    @media (max-width: 640px) {
-      .doing {
-        padding: 2rem 1rem 3rem;
-      }
-    }
+    @media (max-width: 640px) { .doing { padding: 2rem 1rem 3rem; } }
 
     @media (prefers-reduced-motion: reduce) {
-      .doing-future-card,
-      .doing-future-card:hover {
-        transform: none;
+      .doing-future-card, .doing-future-card:hover,
+      .doing-cta a, .doing-cta a:hover,
+      .tool-add, .tool-add:hover {
         transition: none;
+        transform: none;
       }
     }
   </style>

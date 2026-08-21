@@ -5,7 +5,9 @@ Astro static site migrating from Ghost Pro. Deploys to Cloudflare Pages.
 ## Design
 - Fonts: Fira Sans (headings) + Merriweather (body)
 - Palette: #7D50BD (purple), #E076DB (pink), #D16D54 (terracotta), #F8DFF6 (blush), #DACCBA (sand), #454E41 (forest), #8E9BDD (periwinkle)
-- Category colours: Introduction=purple, Training Grounds=terracotta, The Guides=periwinkle, Work Sheets=forest
+- Category colours: Foundational Docs=purple, Training Grounds=terracotta, Essays & Readings=periwinkle, The Portals=pink
+- Live tools + worksheets use the cream accent, whatever their category
+- Card fills are soft tints with dark ink, all measured for WCAG AA. See the Card accents block in global.css
 - Callout blocks with scroll-reveal, coloured left borders, box-shadow
 - Glitch hover effect on key words
 - Light background (#f8f8f8), bold borders, card hover lift

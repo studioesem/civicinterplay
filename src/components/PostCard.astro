@@ -3,13 +3,20 @@ interface Props {
   href: string;
   title: string;
   excerpt?: string;
-  category?: 'introduction' | 'training-grounds' | 'the-guides' | 'work-sheets' | 'the-portals' | null;
+  category?: 'foundational-docs' | 'training-grounds' | 'essays-readings' | 'the-portals' | null;
   categoryLabel?: string;
   image?: string;
   imageAlt?: string;
   video?: string;
   videoWebm?: string;
+  /** Kept for one-off overrides; the default fallback is the bike. */
   fallbackGradient?: string;
+  /** Overrides the category default. Set per post when a card needs to read
+      as something other than its category, e.g. a tool listed under Training
+      Grounds should be cream like the tool tile above it. */
+  accent?: 'cream' | 'purple' | 'terracotta' | 'periwinkle' | 'pink' | 'plain';
+  /** Shown under the tag. Used on the Reading archive, where chronology matters. */
+  date?: string;
 }
 
 const {
@@ -23,23 +30,31 @@ const {
   video,
   videoWebm,
   fallbackGradient,
+  accent,
+  date,
 } = Astro.props;
 
 const catClass = category ? `cat-${category}` : '';
 
-// Default gradient pairs per category, used when there's no feature image.
-const gradientByCategory: Record<string, string> = {
-  introduction: 'linear-gradient(135deg, var(--purple), #5a3890)',
-  'training-grounds': 'linear-gradient(135deg, var(--terracotta), #a85540)',
-  'the-guides': 'linear-gradient(135deg, var(--periwinkle), #6670b8)',
-  'work-sheets': 'linear-gradient(135deg, var(--forest), #2d332b)',
-  'the-portals': 'linear-gradient(135deg, var(--pink), #b850b2)',
+// Category sets the default accent; `accent` overrides it per card.
+const accentByCategory: Record<string, string> = {
+  'foundational-docs': 'purple',
+  'training-grounds': 'terracotta',
+  'essays-readings': 'periwinkle',
+  'the-portals': 'pink',
 };
+const accentClass = `accent-${accent ?? (category ? accentByCategory[category] : 'plain')}`;
 
-const placeholderBg =
-  fallbackGradient ?? (category ? gradientByCategory[category] : 'linear-gradient(135deg, var(--sand), #b8a99a)');
+// Posts without artwork get the bike rather than an abstract mark. An asterisk
+// in terracotta read as the Anthropic logo, which is not a thing to imply.
+const FALLBACK_IMAGE = '/images/bike.jpg';
+const FALLBACK_ALT =
+  'A road bicycle mounted high on a pole against a purple and blue sky, with coloured circles overlaid.';
+const cardImage = image ?? (video ? undefined : FALLBACK_IMAGE);
+const cardImageAlt = image ? imageAlt : FALLBACK_ALT;
+
 ---
-<a href={href} class={`post-card ${catClass}`.trim()}>
+<a href={href} class={`post-card ${catClass} ${accentClass}`.trim()}>
   {video ? (
     <video
       class="post-card-video"
@@ -54,75 +69,80 @@ const placeholderBg =
       {videoWebm && <source src={videoWebm} type="video/webm" />}
       <source src={video} type="video/mp4" />
     </video>
-  ) : image ? (
-    <img src={image} alt={imageAlt} class="post-card-image" loading="lazy" decoding="async" />
+  ) : fallbackGradient && !image ? (
+    <div class="img-placeholder" style={`background: ${fallbackGradient};`}></div>
   ) : (
-    <div class="img-placeholder" style={`background: ${placeholderBg};`}></div>
+    <img src={cardImage} alt={cardImageAlt} class="post-card-image" loading="lazy" decoding="async" />
   )}
-  {categoryLabel && <div class="post-card-tag">{categoryLabel}</div>}
+  {(categoryLabel || date) && (
+    <div class="post-card-tag">
+      {categoryLabel}{categoryLabel && date && <span class="post-card-dot"> · </span>}{date}
+    </div>
+  )}
   <h3>{title}</h3>
   {excerpt && <p class="post-card-excerpt">{excerpt}</p>}
 </a>
 
 <style>
+  /* Same chrome as the home-page tiles: 2px rule, hard offset shadow, lift on
+     hover. The accent classes in global.css supply the fill and the ink. */
   .post-card {
-    background: var(--card-bg, transparent);
-    border: 1px solid rgba(28, 25, 23, 0.08);
+    background: var(--card-bg, #fffefc);
+    color: var(--card-ink, var(--text));
+    border: 2px solid var(--border);
     border-radius: var(--radius);
-    padding: 1.25rem;
-    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 4px 4px 0 var(--border);
+    padding: 1.1rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     text-decoration: none;
-    color: inherit;
-    display: block;
-    border-top: 4px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 
   .post-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    transform: translateY(-3px);
+    box-shadow: 7px 7px 0 var(--border);
   }
 
-  .post-card.cat-introduction { border-top-color: var(--purple); }
-  .post-card.cat-training-grounds { border-top-color: var(--terracotta); }
-  .post-card.cat-the-guides { border-top-color: var(--periwinkle); }
-  .post-card.cat-work-sheets { border-top-color: var(--forest); }
-  .post-card.cat-the-portals { border-top-color: var(--pink); }
+  .post-card:focus-visible {
+    outline: 3px solid var(--purple);
+    outline-offset: 3px;
+  }
 
   .img-placeholder,
   .post-card-image,
   .post-card-video {
     width: 100%;
-    height: 200px;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    transition: transform 0.3s;
+    height: 190px;
+    border-radius: 6px;
+    border: 2px solid var(--card-edge, var(--border-light));
+    margin-bottom: 0.9rem;
     object-fit: cover;
     object-position: center;
     display: block;
-    background: #000;
+    background: var(--card-edge, var(--sand));
   }
 
-  .post-card:hover .img-placeholder,
-  .post-card:hover .post-card-image,
-  .post-card:hover .post-card-video {
-    transform: scale(1.03);
+  .img-placeholder {
+    background: var(--card-edge, var(--sand));
   }
+
+
 
   .post-card-tag {
     font-family: var(--heading);
     font-size: 0.62rem;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     margin-bottom: 0.5rem;
-    color: var(--text-dim);
+    color: var(--card-kicker, var(--text-faint));
   }
 
-  .post-card.cat-introduction .post-card-tag { color: var(--purple); }
-  .post-card.cat-training-grounds .post-card-tag { color: var(--terracotta); }
-  .post-card.cat-the-guides .post-card-tag { color: var(--periwinkle); }
-  .post-card.cat-work-sheets .post-card-tag { color: var(--forest); }
-  .post-card.cat-the-portals .post-card-tag { color: var(--pink); }
+  .post-card-dot {
+    opacity: 0.55;
+  }
 
   .post-card h3 {
     font-family: var(--heading);
@@ -134,13 +154,13 @@ const placeholderBg =
   }
 
   .post-card:hover h3 {
-    color: var(--purple);
+    color: var(--card-hover-ink, var(--purple));
   }
 
   .post-card-excerpt {
     font-size: 0.82rem;
     font-weight: 300;
-    color: var(--text-dim);
+    color: var(--card-ink-dim, var(--text-dim));
     line-height: 1.6;
     display: -webkit-box;
     -webkit-line-clamp: 3;

@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolEmbed from '../components/ToolEmbed.astro';
+---
+<BaseLayout
+  title="Familiar Terrain"
+  description="A walkable semantic terrain. Texts, noticings and ideas cluster into regions based on the patterns embeddings find in them."
+  ogImage="/images/tiles/terrain-1120.webp"
+>
+  <main class="container tool-page">
+    <header class="tool-header">
+      <p class="tool-eyebrow">Civic Interplay / Tool</p>
+      <h1>Familiar Terrain</h1>
+      <p class="tool-intro">
+        A walkable semantic terrain. Texts, noticings and ideas cluster into
+        regions based on the patterns embeddings find in them. Nearby points
+        share more than language.
+      </p>
+    </header>
+
+    <ToolEmbed
+      title="Familiar Terrain"
+      src="https://terrain.civicinterplay.io/"
+      openLabel="Open Familiar Terrain in a new tab"
+      height="820px"
+    />
+
+    <p class="tool-note">
+      Not loading? Your browser may be blocking the embedded site. Use the
+      <a href="https://terrain.civicinterplay.io/" target="_blank" rel="noopener external">open in a new tab</a>
+      link to launch it directly.
+    </p>
+
+    <section class="tool-section">
+      <h2>What you're walking through</h2>
+      <p>
+        Every text in the terrain has been turned into a set of coordinates by an
+        embedding model, so the distance between two points is a measure of how
+        alike a machine finds them. Walking it is a way of seeing what those
+        judgments look like from the inside, including where they are wrong.
+      </p>
+      <p>
+        Created by Irina Panovich for the Gathering Intelligences Workshop,
+        March 2026. A work in progress.
+      </p>
+    </section>
+
+    <p class="tool-back"><a href="/doing/">All tools</a></p>
+  </main>
+
+  <style>
+    .tool-page { padding: 3rem 2rem 4rem; max-width: 1100px; }
+
+    .tool-header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .tool-eyebrow {
+      font-family: var(--heading);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.6rem;
+    }
+
+    .tool-header h1 {
+      font-family: var(--heading);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .tool-intro {
+      font-family: var(--body);
+      font-size: 1.02rem;
+      line-height: 1.7;
+      color: var(--text-dim);
+      max-width: 62ch;
+    }
+
+    .tool-note {
+      font-family: var(--heading);
+      font-size: 0.78rem;
+      color: var(--text-faint);
+      margin-top: 1rem;
+      max-width: 65ch;
+    }
+
+    .tool-note a { color: var(--text-dim); text-decoration: underline; text-underline-offset: 3px; }
+
+    .tool-section { margin-top: 3rem; }
+
+    .tool-section h2 {
+      font-family: var(--heading);
+      font-size: 1.3rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      padding-bottom: 0.6rem;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 1.2rem;
+    }
+
+    .tool-section p {
+      font-family: var(--body);
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 64ch;
+      margin-bottom: 1rem;
+    }
+
+    .tool-back {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid var(--border);
+      font-family: var(--heading);
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 640px) { .tool-page { padding: 2rem 1rem 3rem; } }
+  </style>
+</BaseLayout>

@@ -1,4 +1,11 @@
 ---
+export type Hotspot = {
+  /** Position as a percentage of the hero box, not of the source image. */
+  x: number;
+  y: number;
+  label: string;
+};
+
 interface Props {
   image?: string;
   imageAlt?: string;
@@ -6,6 +13,10 @@ interface Props {
   beforeGlitch?: string;
   afterGlitch?: string;
   tagline?: string;
+  hotspots?: Hotspot[];
+  /** Sits as the restored dot over the first letter of glitchWord. Uppercase
+      strips the tittle off an I; this puts one back, and makes it ask something. */
+  titleHotspot?: { label: string };
 }
 
 const {
@@ -15,17 +26,54 @@ const {
   beforeGlitch = '',
   afterGlitch = '',
   tagline,
+  hotspots = [],
+  titleHotspot,
 } = Astro.props;
+
+// Labels near an edge would overflow if they all centred on their dot, so the
+// ones out wide anchor to their own side instead.
+const alignFor = (x: number) => (x < 25 ? 'start' : x > 75 ? 'end' : 'center');
+// The hero clips its overflow, so a label opening upward from near the top
+// gets cut off. Those flip and open downward instead.
+const dropFor = (y: number) => (y < 32 ? 'below' : 'above');
+
+// Popups borrow the card accents, so the hero belongs to the same system as
+// the grids below. Rotating rather than fixed, the way the callouts do.
+const ACCENTS = ['accent-purple', 'accent-terracotta', 'accent-periwinkle', 'accent-pink', 'accent-cream'];
+
+const head = glitchWord?.charAt(0) ?? '';
+const rest = glitchWord?.slice(1) ?? '';
 ---
 <div class="hero">
   {image && (
     <img src={image} alt={imageAlt} class="hero-image" loading="eager" decoding="async" />
   )}
   {!image && <div class="hero-image hero-image--fallback" aria-hidden="true"></div>}
+
+  {hotspots.length > 0 && (
+    <div class="hotspots">
+      {hotspots.map((h, i) => (
+        <button
+          type="button"
+          class:list={['hotspot', `align-${alignFor(h.x)}`, `open-${dropFor(h.y)}`, ACCENTS[i % ACCENTS.length]]}
+          style={`--x:${h.x}%; --y:${h.y}%; --i:${i}`}
+          aria-expanded="false"
+        >
+          <span class="hotspot-dot" aria-hidden="true"></span>
+          <span class="hotspot-label">{h.label}</span>
+        </button>
+      ))}
+    </div>
+  )}
+
   <div class="hero-overlay">
     <h1>
       {beforeGlitch}
-      {glitchWord && <span class="glitch">{glitchWord}</span>}
+      {glitchWord && (
+        <span class="glitch">
+          {titleHotspot ? (<span class="tittle-host">{head}<button type="button" class="hotspot hotspot--tittle align-start open-above accent-pink" aria-expanded="false"><span class="hotspot-dot" aria-hidden="true"></span><span class="hotspot-label">{titleHotspot.label}</span></button></span>) : head}{rest}
+        </span>
+      )}
       {afterGlitch}
     </h1>
     {tagline && <p class="tagline">{tagline}</p>}
@@ -35,7 +83,7 @@ const {
 <style>
   .hero-image--fallback {
     background: linear-gradient(135deg, var(--forest), var(--purple));
-    height: 360px;
+    height: clamp(360px, 40vw, 560px);
   }
 
   .glitch {
@@ -48,9 +96,183 @@ const {
     animation: glitch 0.4s steps(2) forwards;
   }
 
+  /* --- Hotspots ----------------------------------------------------------
+     Provocations floating over the scene rather than annotations pinned to
+     objects in it. The hero is a cover-cropped band, so which part of the
+     illustration sits under a given percentage shifts with viewport width.
+     Anything claiming to label a specific sensor would drift. */
+
+  .hotspots {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hotspot {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: 0.5rem;
+    cursor: pointer;
+    line-height: 0;
+  }
+
+  .hotspot-dot {
+    display: block;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--card-kicker, var(--pink));
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 0 rgba(224, 118, 219, 0.65);
+    animation: hotspot-pulse 2.8s ease-out infinite;
+    animation-delay: calc(var(--i) * 0.55s);
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .hotspot:hover .hotspot-dot,
+  .hotspot:focus-visible .hotspot-dot,
+  .hotspot[aria-expanded='true'] .hotspot-dot {
+    transform: scale(1.4);
+    animation-play-state: paused;
+  }
+
+  .hotspot-label {
+    position: absolute;
+    /* Long questions wrap rather than shooting off the edge of the hero. */
+    white-space: normal;
+    width: max-content;
+    max-width: min(260px, 42vw);
+    text-align: left;
+    font-family: var(--heading);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    color: var(--card-ink, var(--text));
+    background: var(--card-bg, #fff);
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 4px 4px 0 var(--border);
+    padding: 0.7rem 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+  }
+
+  .open-above .hotspot-label { bottom: calc(100% + 0.15rem); }
+  .open-below .hotspot-label { top: calc(100% + 0.15rem); }
+
+  .align-center .hotspot-label { left: 50%; transform: translateX(-50%) translateY(4px); }
+  .align-start  .hotspot-label { left: 0;   transform: translateY(4px); }
+  .align-end    .hotspot-label { right: 0;  transform: translateY(4px); }
+
+  .open-below.align-center .hotspot-label { transform: translateX(-50%) translateY(-4px); }
+  .open-below.align-start  .hotspot-label,
+  .open-below.align-end    .hotspot-label { transform: translateY(-4px); }
+
+  .hotspot:hover .hotspot-label,
+  .hotspot:focus-visible .hotspot-label,
+  .hotspot[aria-expanded='true'] .hotspot-label {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .align-center:hover .hotspot-label,
+  .align-center:focus-visible .hotspot-label,
+  .align-center[aria-expanded='true'] .hotspot-label {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .align-start:hover .hotspot-label,
+  .align-start:focus-visible .hotspot-label,
+  .align-start[aria-expanded='true'] .hotspot-label,
+  .align-end:hover .hotspot-label,
+  .align-end:focus-visible .hotspot-label,
+  .align-end[aria-expanded='true'] .hotspot-label {
+    transform: translateY(0);
+  }
+
+  /* --- The restored tittle ----------------------------------------------
+     CIVIC INTERPLAY is set uppercase, which strips the dot off the I. This
+     puts one back and makes it ask a question. */
+
+  .tittle-host {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tittle-host .hotspot--tittle {
+    position: absolute;
+    left: 50%;
+    top: -0.34em;
+    transform: translateX(-50%);
+    padding: 0.35rem;
+  }
+
+  .hotspot--tittle .hotspot-dot {
+    width: 0.17em;
+    height: 0.17em;
+    border-width: 0;
+    background: var(--pink);
+  }
+
+  .hotspot--tittle .hotspot-label {
+    bottom: calc(100% + 0.05rem);
+    top: auto;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    font-weight: 500;
+  }
+
+  .hotspot:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+    border-radius: 50%;
+  }
+
+  @keyframes hotspot-pulse {
+    0%   { box-shadow: 0 0 0 0 var(--card-pulse, rgba(224, 118, 219, 0.6)); }
+    70%  { box-shadow: 0 0 0 14px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+
+  /* Crowded and fiddly to tap on a 240px-tall band. */
+  @media (max-width: 700px) {
+    .hotspots { display: none; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .glitch:hover {
-      animation: none;
-    }
+    .glitch:hover { animation: none; }
+    .hotspot-dot { animation: none; }
+    .hotspot-label,
+    .hotspot-dot { transition: none; }
   }
 </style>
+
+<script>
+  // Hover and keyboard focus are handled in CSS. This is only so a tap works
+  // on a touch device, where :hover never resolves.
+  document.querySelectorAll<HTMLButtonElement>('.hotspot').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      document
+        .querySelectorAll('.hotspot[aria-expanded="true"]')
+        .forEach((b) => b.setAttribute('aria-expanded', 'false'));
+      btn.setAttribute('aria-expanded', String(!open));
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if ((e.target as Element)?.closest('.hotspot')) return;
+    document
+      .querySelectorAll('.hotspot[aria-expanded="true"]')
+      .forEach((b) => b.setAttribute('aria-expanded', 'false'));
+  });
+</script>

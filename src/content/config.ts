@@ -1,18 +1,16 @@
 import { defineCollection, z } from 'astro:content';
 
 export const CATEGORIES = [
-  'introduction',
+  'foundational-docs',
   'training-grounds',
-  'the-guides',
-  'work-sheets',
+  'essays-readings',
   'the-portals',
 ] as const;
 
 export const CATEGORY_LABEL: Record<(typeof CATEGORIES)[number], string> = {
-  introduction: 'Introduction',
+  'foundational-docs': 'Foundational Docs',
   'training-grounds': 'Training Grounds',
-  'the-guides': 'The Guides',
-  'work-sheets': 'Work Sheets',
+  'essays-readings': 'Essays & Readings',
   'the-portals': 'The Portals',
 };
 
@@ -36,6 +34,12 @@ const posts = defineCollection({
     author: z.string().default('Sarah Barns'),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
+    // Overrides the colour a card gets from its category. Use when a card
+    // should read as what it IS rather than where it sits, e.g. a tool listed
+    // under Training Grounds wants cream, like the tool tile on the home page.
+    accent: z
+      .enum(['cream', 'purple', 'terracotta', 'periwinkle', 'pink', 'plain'])
+      .optional(),
     articleType: z.enum(['BlogPosting', 'Article', 'ScholarlyArticle', 'CreativeWork']).default('BlogPosting'),
     keywords: z.array(z.string()).optional(),
   }),
@@ -61,4 +65,49 @@ const embeds = defineCollection({
   }),
 });
 
-export const collections = { posts, embeds };
+// Field notes: the investigative series (cream cards, magenta rule, numbered
+// layers). Body is MDX so it reads like the rest of the site; `layers` is
+// structured so the diagram's content stays real text rather than pixels, and
+// so it can be edited as a form in Pages CMS.
+const fieldnotes = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    eyebrow: z.string().default('Civic Interplay / Field note'),
+    heading: z.string(),
+    standfirst: z.string(),
+    tileId: z.string(),
+    imageAlt: z.string(),
+    caption: z.string().optional(),
+    tagHeading: z.string().optional(),
+    layers: z
+      .array(
+        z.object({
+          num: z.string(),
+          name: z.string(),
+          detail: z.string(),
+          tag: z.string().optional(),
+          tagNote: z.string().optional(),
+          verify: z.boolean().default(false),
+          highlight: z.boolean().default(false),
+        })
+      )
+      .default([]),
+    next: z
+      .array(
+        z.object({
+          label: z.string(),
+          href: z.string(),
+          external: z.boolean().default(false),
+        })
+      )
+      .default([]),
+    doi: z.string().optional(),
+    publishedAt: z.coerce.date(),
+    updatedAt: z.coerce.date().optional(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { posts, embeds, fieldnotes };

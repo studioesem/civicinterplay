@@ -4,7 +4,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import PostCard from '../components/PostCard.astro';
+import Tile from '../components/Tile.astro';
 import { CATEGORY_LABEL } from '../content/config';
+import home from '../data/home.json';
+
+const tiles = home.tiles.filter((t) => !t.draft);
 
 const allPosts = (await getCollection('posts'))
   .filter((p) => !p.data.draft)
@@ -13,14 +17,16 @@ const allPosts = (await getCollection('posts'))
 const byPrimary = (cat: string) =>
   allPosts.filter((p) => p.data.primaryCategory === cat);
 
-const introPosts = byPrimary('introduction');
+const foundationalPosts = byPrimary('foundational-docs');
 const trainingGroundsPosts = byPrimary('training-grounds');
-const guidesPosts = byPrimary('the-guides');
-const worksheetsPosts = byPrimary('work-sheets');
+const essaysPosts = byPrimary('essays-readings');
 const portalsPosts = byPrimary('the-portals');
-const guidesAndWorksheets = [...guidesPosts, ...worksheetsPosts];
 
-const heroImage = '/images/CivicAI_Visualisation_Header-2-1.jpg';
+// The v2-03 FLAT visualisation carries no headline type of its own, so it does
+// not fight the wordmark sitting over it.
+const heroImage = '/images/CivicAI_Visualisation_v2-03_FLAT.jpg';
+const heroAlt =
+  'Illustration of a street where civic AI is already at work: air quality, road, soil and tree sensors mounted on light poles, with people walking, cycling and using wheelchairs moving through it, picked out in magenta and purple.';
 
 function categoryLabelsFor(post: (typeof allPosts)[number]) {
   const cats = post.data.categories ?? [];
@@ -35,30 +41,46 @@ function categoryLabelsFor(post: (typeof allPosts)[number]) {
 ---
 <BaseLayout
   title="Civic Interplay"
-  description="Towards civic agencies & civic AI intelligence. A Think + Do Space for civic-tech, design, and cultural-policy practitioners exploring the planetary age."
+  description="A think and do space for agentic civics and civic AI."
   ogImage={heroImage}
 >
   <Hero
     image={heroImage}
-    imageAlt=""
+    imageAlt={heroAlt}
     beforeGlitch="Civic "
     glitchWord="Interplay"
-    tagline="Towards civic agencies & civic AI intelligence"
+    tagline="A think and do space for agentic civics and civic AI"
+    hotspots={home.hotspots}
+    titleHotspot={home.titleHotspot}
   />
 
   <main class="container sections">
 
-    {introPosts.length > 0 && (
+    {tiles.length > 0 && (
+      <section class="tiles-section">
+        <SectionHeading title="What's New" />
+        <ul class="tile-grid">
+          {tiles.map((t) => (
+            <li>
+              <Tile id={t.id} type={t.type} kicker={t.kicker} cta={t.cta} href={t.href} alt={t.alt} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {foundationalPosts.length > 0 && (
       <section>
-        <SectionHeading title="An Introduction" />
+        <SectionHeading title="Foundational Docs" />
         <div class="post-grid">
-          {introPosts.map((p) => (
+          {foundationalPosts.map((p) => (
             <PostCard
               href={`/${p.slug}/`}
               title={p.data.title}
               excerpt={p.data.excerpt}
               category={p.data.primaryCategory}
               categoryLabel={categoryLabelsFor(p)}
+              accent={p.data.accent}
               image={p.data.featureImage}
               imageAlt={p.data.featureImageAlt}
               video={p.data.featureVideo}
@@ -80,6 +102,7 @@ function categoryLabelsFor(post: (typeof allPosts)[number]) {
               excerpt={p.data.excerpt}
               category={p.data.primaryCategory}
               categoryLabel={categoryLabelsFor(p)}
+              accent={p.data.accent}
               image={p.data.featureImage}
               imageAlt={p.data.featureImageAlt}
               video={p.data.featureVideo}
@@ -90,17 +113,18 @@ function categoryLabelsFor(post: (typeof allPosts)[number]) {
       </section>
     )}
 
-    {guidesAndWorksheets.length > 0 && (
+    {essaysPosts.length > 0 && (
       <section>
-        <SectionHeading title="The Guides + Work Sheets" />
-        <div class="post-grid-guides">
-          {guidesAndWorksheets.map((p) => (
+        <SectionHeading title="Essays &amp; Readings" />
+        <div class="post-grid">
+          {essaysPosts.map((p) => (
             <PostCard
               href={`/${p.slug}/`}
               title={p.data.title}
               excerpt={p.data.excerpt}
               category={p.data.primaryCategory}
               categoryLabel={categoryLabelsFor(p)}
+              accent={p.data.accent}
               image={p.data.featureImage}
               imageAlt={p.data.featureImageAlt}
               video={p.data.featureVideo}
@@ -122,6 +146,7 @@ function categoryLabelsFor(post: (typeof allPosts)[number]) {
               excerpt={p.data.excerpt}
               category={p.data.primaryCategory}
               categoryLabel={categoryLabelsFor(p)}
+              accent={p.data.accent}
               image={p.data.featureImage}
               imageAlt={p.data.featureImageAlt}
               video={p.data.featureVideo}
@@ -133,4 +158,34 @@ function categoryLabelsFor(post: (typeof allPosts)[number]) {
     )}
 
   </main>
+
+  <style>
+    .tiles-section {
+      margin-bottom: 3.5rem;
+    }
+
+
+
+
+
+
+
+    .tile-grid {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.6rem;
+    }
+
+    /* Two 4:5 tiles side by side on a phone leaves ~160px each, which is too
+       narrow for the call to action underneath. One column instead. */
+    @media (max-width: 620px) {
+      .tile-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+  </style>
 </BaseLayout>

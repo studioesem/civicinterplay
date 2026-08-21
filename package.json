@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "ghost:convert": "node scripts/ghost-to-mdx.mjs",
-    "og:generate": "node scripts/generate-og.mjs"
+    "og:generate": "node scripts/generate-og.mjs",
+    "tiles:build": "node scripts/build-tiles.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.0.0",

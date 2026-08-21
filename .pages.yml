@@ -1,0 +1,381 @@
+media:
+  input: public/images
+  output: /images
+
+content:
+  - name: home
+    label: Home page
+    type: file
+    path: src/data/home.json
+    format: json
+    fields:
+      - name: hotspots
+        label: Hero hotspots
+        type: object
+        list: true
+        description: The provocations that pop up over the header illustration. Positions are a percentage across and down the header box, so 50 / 50 is dead centre. Keep them above about 55 down, or they collide with the title.
+        fields:
+          - name: label
+            label: Question
+            type: string
+            required: true
+            description: Keep it short. It shows on one line.
+          - name: x
+            label: Across (%)
+            type: number
+            required: true
+          - name: y
+            label: Down (%)
+            type: number
+            required: true
+      - name: tiles
+        label: Tiles
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: Image id
+            type: string
+            required: true
+            description: Matches the file in public/images/tiles, e.g. "stack" uses stack-560.webp. Run `npm run tiles:build` to add a new one.
+          - name: type
+            label: Card type
+            type: select
+            default: field-note
+            description: Drives the card's colour and marker. Tool is cream with a pulsing dot, field note is periwinkle with a square, method is purple with an arrow.
+            options:
+              values:
+                - value: tool
+                  label: Live tool
+                - value: field-note
+                  label: Field note
+                - value: method
+                  label: Method
+          - name: kicker
+            label: Kicker
+            type: string
+            description: Small label above the call to action, e.g. Live tool, Field note, Method
+          - name: cta
+            label: Call to action
+            type: string
+            required: true
+            description: The clickable line. Keep it a verb phrase, plain language, no jargon.
+          - name: href
+            label: Link
+            type: string
+            required: true
+          - name: alt
+            label: Image alt text
+            type: text
+            required: true
+            description: Transcribe what the card says. This is the only text a screen reader gets for the image.
+          - name: draft
+            label: Hidden
+            type: boolean
+            default: false
+            description: Hide the tile until its destination page exists
+
+  - name: fieldnotes
+    label: Field notes
+    type: collection
+    path: src/content/fieldnotes
+    extension: mdx
+    format: yaml-frontmatter
+    filename: "{fields.tileId}.mdx"
+    view:
+      fields: [title, publishedAt, draft]
+      default:
+        sort: publishedAt
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: text
+        required: true
+        description: Used for search results and link previews
+      - name: eyebrow
+        label: Eyebrow
+        type: string
+        default: Civic Interplay / Field note
+      - name: heading
+        label: Page heading
+        type: string
+        required: true
+        description: The question the page answers, in plain language
+      - name: standfirst
+        label: Standfirst
+        type: text
+        required: true
+      - name: tileId
+        label: Image id
+        type: string
+        required: true
+        description: Matches public/images/tiles, e.g. "ladder". Also becomes the URL.
+      - name: imageAlt
+        label: Image alt text
+        type: text
+        required: true
+      - name: caption
+        label: Image caption
+        type: string
+      - name: tagHeading
+        label: Column heading
+        type: string
+        description: Heading above the right-hand column, e.g. "Who holds it" or "Drawn from"
+      - name: layers
+        label: Layers / rungs
+        type: object
+        list: true
+        description: The diagram as text. Top of the diagram first.
+        fields:
+          - name: num
+            label: Number
+            type: string
+            required: true
+          - name: name
+            label: Name
+            type: string
+            required: true
+          - name: detail
+            label: Detail
+            type: text
+          - name: tag
+            label: Tag
+            type: string
+            description: Who holds it, or what it is drawn from
+          - name: tagNote
+            label: Tag note
+            type: string
+            description: The source, agency, or field
+          - name: verify
+            label: Adjacent precedent
+            type: boolean
+            default: false
+            description: Flags this as a close analogue rather than a direct one
+          - name: highlight
+            label: Highlight
+            type: boolean
+            default: false
+      - name: next
+        label: Where to next
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Label
+            type: string
+            required: true
+          - name: href
+            label: Link
+            type: string
+            required: true
+          - name: external
+            label: Opens in a new tab
+            type: boolean
+            default: false
+      - name: doi
+        label: DOI
+        type: string
+        description: Without the https://doi.org/ prefix. Drives the "Cite this" block.
+      - name: publishedAt
+        label: Published at
+        type: date
+        required: true
+        options:
+          time: true
+          format: yyyy-MM-dd'T'HH:mm:ss.SSSxxx
+      - name: updatedAt
+        label: Updated at
+        type: date
+        options:
+          time: true
+          format: yyyy-MM-dd'T'HH:mm:ss.SSSxxx
+      - name: draft
+        label: Draft
+        type: boolean
+        default: false
+      - name: body
+        label: Body
+        type: rich-text
+        description: Prose only. Use a blockquote for a caveat, it renders as the pink note panel.
+
+  - name: posts
+    label: Posts
+    type: collection
+    path: src/content/posts
+    extension: mdx
+    format: yaml-frontmatter
+    filename: "{fields.slug}.mdx"
+    view:
+      fields: [title, primaryCategory, publishedAt, draft]
+      sort: [publishedAt, title]
+      default:
+        sort: publishedAt
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: slug
+        label: Slug
+        type: string
+        description: URL path for the post, e.g. what-is-civic-interplay
+      - name: subtitle
+        label: Subtitle
+        type: string
+      - name: excerpt
+        label: Excerpt
+        type: text
+      - name: publishedAt
+        label: Published at
+        type: date
+        required: true
+        options:
+          time: true
+          format: yyyy-MM-dd'T'HH:mm:ss.SSSxxx
+      - name: updatedAt
+        label: Updated at
+        type: date
+        options:
+          time: true
+          format: yyyy-MM-dd'T'HH:mm:ss.SSSxxx
+      - name: featureImage
+        label: Feature image
+        type: image
+      - name: featureImageAlt
+        label: Feature image alt text
+        type: string
+      - name: featureVideo
+        label: Feature video (mp4 URL)
+        type: string
+      - name: featureVideoWebm
+        label: Feature video (webm URL)
+        type: string
+      - name: featureAudio
+        label: Feature audio (mp3 URL)
+        type: string
+      - name: featureAudioOgg
+        label: Feature audio (ogg URL)
+        type: string
+      - name: categories
+        label: Categories
+        type: select
+        list: true
+        options:
+          values:
+            - value: foundational-docs
+              label: Foundational Docs
+            - value: training-grounds
+              label: Training Grounds
+            - value: essays-readings
+              label: Essays & Readings
+            - value: the-portals
+              label: The Portals
+      - name: primaryCategory
+        label: Primary category
+        type: select
+        options:
+          values:
+            - value: foundational-docs
+              label: Foundational Docs
+            - value: training-grounds
+              label: Training Grounds
+            - value: essays-readings
+              label: Essays & Readings
+            - value: the-portals
+              label: The Portals
+      - name: author
+        label: Author
+        type: string
+        default: Sarah Barns
+      - name: featured
+        label: Featured
+        type: boolean
+        default: false
+      - name: accent
+        label: Card colour
+        type: select
+        description: Leave blank to use the category colour. Set it when a card should read as what it is rather than where it sits, e.g. cream for a tool.
+        options:
+          values:
+            - value: cream
+              label: Cream (tools)
+            - value: purple
+              label: Purple
+            - value: terracotta
+              label: Terracotta
+            - value: periwinkle
+              label: Periwinkle
+            - value: pink
+              label: Pink
+            - value: plain
+              label: Plain white
+      - name: draft
+        label: Draft
+        type: boolean
+        default: false
+        description: Drafts build locally but are excluded from the live site
+      - name: articleType
+        label: Article type
+        type: select
+        default: BlogPosting
+        options:
+          values: [BlogPosting, Article, ScholarlyArticle, CreativeWork]
+      - name: keywords
+        label: Keywords
+        type: string
+        list: true
+      - name: body
+        label: Body
+        type: rich-text
+
+  - name: embeds
+    label: Embeds
+    type: collection
+    path: src/content/embeds
+    extension: json
+    format: json
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: mediaType
+        label: Media type
+        type: select
+        default: video
+        options:
+          values: [video, audio]
+      - name: video
+        label: Video (mp4 URL)
+        type: string
+      - name: videoWebm
+        label: Video (webm URL)
+        type: string
+      - name: aspectRatio
+        label: Aspect ratio
+        type: string
+        description: e.g. 16/9 or auto
+      - name: audio
+        label: Audio (mp3 URL)
+        type: string
+      - name: audioOgg
+        label: Audio (ogg URL)
+        type: string
+      - name: poster
+        label: Poster image URL
+        type: string
+      - name: caption
+        label: Caption
+        type: string
+      - name: credit
+        label: Credit
+        type: string
+      - name: sourcePostSlug
+        label: Source post slug
+        type: string

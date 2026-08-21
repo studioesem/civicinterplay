@@ -1,0 +1,326 @@
+---
+// Shared shell for the Field Note landing pages (/ai-stack/, /benefit-ladder/).
+//
+// One screen, plain language: the graphic, what it means, the content as real
+// text, and what to do next. Deliberately shorter and flatter than an essay,
+// because these pages exist for people who arrived from a tile with a question,
+// not for people settling in to read.
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LayerList from './LayerList.astro';
+import type { Layer } from './LayerList.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  eyebrow: string;
+  heading: string;
+  standfirst: string;
+  tileId: string;
+  imageAlt: string;
+  caption?: string;
+  ogImage?: string;
+  layers?: Layer[];
+  tagHeading?: string;
+  next?: { label: string; href: string; external?: boolean }[];
+  doi?: string;
+  publishedAt?: Date;
+  updatedAt?: Date;
+}
+
+const {
+  title,
+  description,
+  eyebrow,
+  heading,
+  standfirst,
+  tileId,
+  imageAlt,
+  caption,
+  ogImage,
+  layers = [],
+  tagHeading,
+  next = [],
+  doi,
+  publishedAt,
+  updatedAt,
+} = Astro.props;
+
+const base = `/images/tiles/${tileId}`;
+
+const year = (updatedAt ?? publishedAt)?.getFullYear();
+const citation = doi
+  ? `Barns, S. (${year}). ${title}. Civic Interplay. https://doi.org/${doi}`
+  : null;
+const stamp = (updatedAt ?? publishedAt)?.toLocaleDateString('en-AU', {
+  year: 'numeric',
+  month: 'long',
+});
+---
+<BaseLayout title={title} description={description} ogImage={ogImage ?? `${base}-1120.webp`}>
+  <main class="container fieldnote">
+    <header class="fn-header">
+      <p class="fn-eyebrow">{eyebrow}</p>
+      <h1>{heading}</h1>
+      <p class="fn-standfirst">{standfirst}</p>
+    </header>
+
+    <figure class="fn-figure">
+      <img
+        src={`${base}-1120.webp`}
+        srcset={`${base}-560.webp 560w, ${base}-1120.webp 1120w`}
+        sizes="(max-width: 720px) 92vw, 560px"
+        alt={imageAlt}
+        width="560"
+        height="700"
+        decoding="async"
+      />
+      {caption && <figcaption>{caption}</figcaption>}
+    </figure>
+
+    {layers.length > 0 && (
+      <section class="fn-layers" aria-label="The diagram as text">
+        <LayerList layers={layers} tagHeading={tagHeading} />
+      </section>
+    )}
+
+    <div class="fn-body">
+      <slot />
+    </div>
+
+    {next.length > 0 && (
+      <nav class="fn-next" aria-label="Where to next">
+        {next.map((n) => (
+          <a
+            href={n.href}
+            target={n.external ? '_blank' : undefined}
+            rel={n.external ? 'noopener external' : undefined}
+          >{n.label}</a>
+        ))}
+      </nav>
+    )}
+
+    {citation && (
+      <section class="fn-cite" aria-labelledby="fn-cite-heading">
+        <h2 id="fn-cite-heading">Cite this</h2>
+        <p class="fn-cite-line">{citation}</p>
+        <p class="fn-cite-note">
+          Licensed <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener external" target="_blank">CC BY 4.0</a>.
+          Reuse it, adapt it, build on it. Attribution is the licence condition, and
+          it is also how this work gets counted.
+          {stamp && <> Last revised {stamp}.</>}
+        </p>
+        <p class="fn-cite-note">
+          Running this somewhere?
+          <a href="https://studio-esem.notion.site/a504252cf109454598a7b02e5024b10d" rel="noopener external" target="_blank">Tell us where</a>
+          and it goes on the public register.
+        </p>
+      </section>
+    )}
+
+    <p class="fn-back"><a href="/">Civic Interplay</a></p>
+  </main>
+
+  <style>
+    .fieldnote {
+      padding: 3rem 2rem 4rem;
+      max-width: 880px;
+    }
+
+    .fn-header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .fn-eyebrow {
+      font-family: var(--heading);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.6rem;
+    }
+
+    .fn-header h1 {
+      font-family: var(--heading);
+      font-size: clamp(1.9rem, 5vw, 2.9rem);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      line-height: 1.12;
+      text-wrap: balance;
+      margin-bottom: 0.9rem;
+    }
+
+    .fn-standfirst {
+      font-family: var(--body);
+      font-size: 1.02rem;
+      line-height: 1.7;
+      color: var(--text-dim);
+      max-width: 62ch;
+    }
+
+    .fn-figure {
+      margin: 0 0 2.5rem;
+      max-width: 560px;
+    }
+
+    .fn-figure img {
+      width: 100%;
+      height: auto;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--border);
+      background: #F4ECD7;
+    }
+
+    .fn-figure figcaption {
+      font-family: var(--heading);
+      font-size: 0.75rem;
+      line-height: 1.6;
+      color: var(--text-faint);
+      margin-top: 0.8rem;
+      max-width: 55ch;
+    }
+
+    .fn-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .fn-body :global(h2) {
+      font-family: var(--heading);
+      font-size: 1.3rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin-top: 1.6rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .fn-body :global(h2:first-child) {
+      margin-top: 0;
+    }
+
+    .fn-body :global(p) {
+      font-family: var(--body);
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 64ch;
+    }
+
+    /* Caveats are written as blockquotes so they survive a rich-text editor. */
+    .fn-body :global(blockquote) {
+      background: var(--blush);
+      border: 2px solid var(--border);
+      border-left: 8px solid var(--terracotta);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--border);
+      padding: 1.2rem 1.4rem;
+      margin: 0.6rem 0;
+      max-width: 64ch;
+    }
+
+    .fn-body :global(blockquote p) {
+      font-family: var(--heading);
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .fn-layers {
+      margin-bottom: 2.5rem;
+    }
+
+    .fn-next {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1.6rem;
+    }
+
+    .fn-next a {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 3px 3px 0 var(--border);
+      font-family: var(--heading);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    }
+
+    .fn-next a:hover {
+      transform: translateY(-2px);
+      box-shadow: 5px 5px 0 var(--border);
+      color: var(--purple);
+    }
+
+    .fn-cite {
+      margin-top: 3rem;
+      padding: 1.6rem 1.8rem;
+      background: #fffefc;
+      border: 2px solid var(--border);
+      border-left: 8px solid var(--forest);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--border);
+    }
+
+    .fn-cite h2 {
+      font-family: var(--heading);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.9rem;
+    }
+
+    .fn-cite-line {
+      font-family: var(--heading);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      word-break: break-word;
+      margin-bottom: 0.9rem;
+    }
+
+    .fn-cite-note {
+      font-family: var(--heading);
+      font-size: 0.8rem;
+      line-height: 1.65;
+      color: var(--text-faint);
+      margin-top: 0.5rem;
+    }
+
+    .fn-cite-note a {
+      color: var(--purple);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .fn-back {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid var(--border);
+      font-family: var(--heading);
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 640px) {
+      .fieldnote { padding: 2rem 1rem 3rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fn-body :global(.fn-next a),
+      .fn-body :global(.fn-next a:hover) {
+        transition: none;
+        transform: none;
+      }
+    }
+  </style>
+</BaseLayout>

@@ -9,6 +9,10 @@ Migrated from Ghost Pro to a static Astro site, deployed on Cloudflare Pages.
 - **Website Author:** Sarah Barns ([sarahbarns.com](https://sarahbarns.com), [Studio ESEM](https://studioesem.com))
 - ****Tools** live at https://github.com/civic-interplay/ co-created with Irina Panovich, Civic Interplay co-founder 
 
+## Publishing
+
+Posts are written and published through [Pages CMS](https://app.pagescms.org), no coding needed. Co-publishers: see [PUBLISHING.md](./PUBLISHING.md).
+
 ## Stack
 
 - [Astro 5](https://astro.build) static site, MDX content collections
@@ -23,7 +27,22 @@ npm run dev          # http://localhost:4321
 npm run build        # → dist/
 npm run preview      # serves the built dist/ locally
 npm run ghost:convert # re-runs the Ghost JSON → MDX conversion
+npm run tiles:build   # rebuilds the home-page Field Note tiles
 ```
+
+### Field Note tiles
+
+`npm run tiles:build` crops the large Instagram exports to the 4:5 Field Notes
+grid and writes responsive webp into `public/images/tiles/`. Sources live in the
+**sibling project folders** (`../data centres/`, `../ai-sovereignties/`), not in
+this repo, because they are 0.4–1.4MB each. Set `TILE_SRC` if that tree moves.
+
+The script also *generates* the `method` tile, which has no Instagram source. It
+is an inverted field note (black ground, cream ink) so the one tile that is a
+door rather than a document reads as deliberately different.
+
+Tile copy lives in `src/data/tiles.ts` as real text, never baked into the image,
+so a call to action can be edited without re-exporting a PNG.
 
 Node 20+ recommended.
 

@@ -1,0 +1,85 @@
+{
+  "hotspots": [
+    {
+      "x": 13,
+      "y": 20,
+      "label": "Who owns the reading?"
+    },
+    {
+      "x": 34,
+      "y": 38,
+      "label": "Who agreed to be sensed?"
+    },
+    {
+      "x": 50,
+      "y": 15,
+      "label": "What kind of interface are you?"
+    },
+    {
+      "x": 68,
+      "y": 33,
+      "label": "Where is the value flowing here?"
+    },
+    {
+      "x": 87,
+      "y": 18,
+      "label": "What beneficiaries are being counted, and by whom?"
+    },
+    {
+      "x": 22,
+      "y": 50,
+      "label": "How can I re-route my data for good here?"
+    },
+    {
+      "x": 58,
+      "y": 52,
+      "label": "Who else cares about bird habitats here?"
+    },
+    {
+      "x": 80,
+      "y": 46,
+      "label": "Who resourced by compute today?"
+    }
+  ],
+  "titleHotspot": {
+    "label": "Could we do this differently?"
+  },
+  "tiles": [
+    {
+      "id": "map",
+      "type": "tool",
+      "kicker": "Live tool",
+      "cta": "See who is building AI infrastructure in Australia",
+      "href": "/sovereignties/",
+      "alt": "Field note card reading: I spent the past five months building a data centre map to track the super cycle transforming energy, water and land infrastructure.",
+      "draft": false
+    },
+    {
+      "id": "stack",
+      "type": "field-note",
+      "kicker": "Field note",
+      "cta": "Find out who holds each layer of the AI stack",
+      "href": "/field-notes/ai-stack/",
+      "alt": "Field note diagram titled Who holds each layer of the Australian AI stack. Six layers, from minerals at the bottom to value and returns at the top, each labelled with who holds it: Washington and Beijing, Australia, global funds, hyperscalers, US labs, offshore.",
+      "draft": false
+    },
+    {
+      "id": "ladder",
+      "type": "field-note",
+      "kicker": "Field note",
+      "cta": "See what a community could actually ask for",
+      "href": "/field-notes/benefit-ladder/",
+      "alt": "Field note diagram titled The local benefit ladder. Eight rungs running from reserved capacity at the bottom to standing at the top, arranged as a climb from compensation to co-ownership.",
+      "draft": false
+    },
+    {
+      "id": "method",
+      "type": "method",
+      "kicker": "Method",
+      "cta": "Run this where you live",
+      "href": "/start/",
+      "alt": "Inverted field note card, cream on black, reading: Run this where you live. Map the AI infrastructure in your own jurisdiction.",
+      "draft": true
+    }
+  ]
+}

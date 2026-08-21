@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" width="1080" height="1350">
+  <rect width="1080" height="1350" fill="#F4ECD7"/>
+  <g stroke="#111111" stroke-width="3" opacity="0.28">
+       <line x1="34" y1="190" x2="62" y2="190"/>
+       <line x1="48" y1="176" x2="48" y2="204"/>
+     </g> <g stroke="#111111" stroke-width="3" opacity="0.28">
+       <line x1="1018" y1="190" x2="1046" y2="190"/>
+       <line x1="1032" y1="176" x2="1032" y2="204"/>
+     </g> <g stroke="#111111" stroke-width="3" opacity="0.28">
+       <line x1="34" y1="1260" x2="62" y2="1260"/>
+       <line x1="48" y1="1246" x2="48" y2="1274"/>
+     </g> <g stroke="#111111" stroke-width="3" opacity="0.28">
+       <line x1="1018" y1="1260" x2="1046" y2="1260"/>
+       <line x1="1032" y1="1246" x2="1032" y2="1274"/>
+     </g>
+
+  <rect x="90" y="90" width="760" height="58" fill="#111111"/>
+  <rect x="112" y="113" width="13" height="13" fill="#F4ECD7"/>
+  <text x="140" y="129" font-family="Menlo, Consolas, monospace"
+        font-size="23" font-weight="500" letter-spacing="4.2"
+        fill="#F4ECD7">FIELD NOTES FROM HISTORY IN THE MAKING</text>
+
+  <text x="110" y="380" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="96" font-weight="700" fill="#111111">*</text>
+  <rect x="110" y="440" width="112" height="13" fill="#B8317B"/>
+
+  <text x="108" y="600" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="76" font-weight="700" letter-spacing="-1" fill="#111111">A player that</text>
+  <rect x="98" y="628" width="832" height="98" fill="#111111"/>
+  <text x="116" y="704" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="76" font-weight="700" letter-spacing="-1" fill="#F4ECD7">doesn't watch back</text>
+
+  <text x="108" y="808" font-family="Menlo, Consolas, monospace"
+        font-size="27" fill="#7d766c">no third-party scripts, no cookies</text>
+
+  <text x="108" y="1258" font-family="Menlo, Consolas, monospace"
+        font-size="22" letter-spacing="2.6" fill="#8b8378">CIVIC INTERPLAY · TOOL</text>
+</svg>

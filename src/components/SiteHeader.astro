@@ -26,3 +26,23 @@ const isAbout = isActive(
     </div>
   </div>
 </header>
+
+<style>
+  /* Chromatic-aberration hover on the wordmark, reusing the site-wide `glitch`
+     keyframes from global.css. Same move as the hero, at nav scale. */
+  .site-logo span {
+    display: inline-block;
+  }
+
+  .site-logo:hover span,
+  .site-logo:focus-visible span {
+    animation: glitch 0.4s steps(2) forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-logo:hover span,
+    .site-logo:focus-visible span {
+      animation: none;
+    }
+  }
+</style>

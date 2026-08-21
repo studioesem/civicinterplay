@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import FieldNoteLayout from '../../components/FieldNoteLayout.astro';
+
+export async function getStaticPaths() {
+  const notes = (await getCollection('fieldnotes')).filter((n) => !n.data.draft);
+  return notes.map((note) => ({ params: { slug: note.slug }, props: { note } }));
+}
+
+const { note } = Astro.props;
+const { Content } = await note.render();
+const d = note.data;
+---
+<FieldNoteLayout
+  title={d.title}
+  description={d.description}
+  eyebrow={d.eyebrow}
+  heading={d.heading}
+  standfirst={d.standfirst}
+  tileId={d.tileId}
+  imageAlt={d.imageAlt}
+  caption={d.caption}
+  layers={d.layers}
+  tagHeading={d.tagHeading}
+  next={d.next}
+  doi={d.doi}
+  publishedAt={d.publishedAt}
+  updatedAt={d.updatedAt}
+>
+  <Content />
+</FieldNoteLayout>

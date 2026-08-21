@@ -12,7 +12,7 @@
 //        eyebrow="Take with you"
 //        title="Sightings & other tools"
 //        excerpt="The Do half of Civic Interplay."
-//        category="introduction"
+//        category="foundational-docs"
 //      />
 //
 // Explicit props override anything fetched from a slug.
@@ -101,10 +101,9 @@ const isExternal = href.startsWith('http://') || href.startsWith('https://');
   .link-callout:nth-of-type(7n + 5):not([class*='cat-']) { border-left-color: var(--forest); }
 
   /* Tie the border colour to the destination's category when known. */
-  .link-callout.cat-introduction { border-left-color: var(--purple); }
+  .link-callout.cat-foundational-docs { border-left-color: var(--purple); }
   .link-callout.cat-training-grounds { border-left-color: var(--terracotta); }
-  .link-callout.cat-the-guides { border-left-color: var(--periwinkle); }
-  .link-callout.cat-work-sheets { border-left-color: var(--forest); }
+  .link-callout.cat-essays-readings { border-left-color: var(--periwinkle); }
   .link-callout.cat-the-portals { border-left-color: var(--pink); }
 
   .link-callout:hover {
@@ -142,10 +141,9 @@ const isExternal = href.startsWith('http://') || href.startsWith('https://');
     color: var(--text-dim);
   }
 
-  .link-callout.cat-introduction .link-callout-cat { color: var(--purple); }
+  .link-callout.cat-foundational-docs .link-callout-cat { color: var(--purple); }
   .link-callout.cat-training-grounds .link-callout-cat { color: var(--terracotta); }
-  .link-callout.cat-the-guides .link-callout-cat { color: var(--periwinkle); }
-  .link-callout.cat-work-sheets .link-callout-cat { color: var(--forest); }
+  .link-callout.cat-essays-readings .link-callout-cat { color: var(--periwinkle); }
   .link-callout.cat-the-portals .link-callout-cat { color: var(--pink); }
 
   .link-callout-title {

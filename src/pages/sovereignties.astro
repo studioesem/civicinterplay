@@ -105,8 +105,45 @@ import ToolEmbed from '../components/ToolEmbed.astro';
       />
       <p class="sov-chart-credit">
         Source: Victorian Ministerial Permits Register (Planning Victoria). Confirmed
-        approvals only; per-permit public-notice status is being verified. Drawn from the
+        approvals only. Per-permit public-notice status verified August 2026: exempted
+        across the ministerial cohort, now recorded per site. Drawn from the
         <a href="https://studio-esem.notion.site/Contestation-sovereignty-trackers-full-session-38d18df0b77581f697dfe059a69b454d" target="_blank" rel="noopener external">Critical Infrastructure Tracker</a>.
+      </p>
+    </section>
+
+    <section class="sov-section">
+      <h2>What the approvals don't say</h2>
+      <p>
+        In August 2026 we audited the public planning records of thirteen approved or
+        lodged Victorian data-centre applications. Not one discloses the electricity the
+        facility is expected to draw. None states a water demand. Only one describes its
+        cooling method. The megawatt figures everyone quotes &mdash; 162MW at Fishermans
+        Bend, 400+MW at Laverton North, 354MW at Tullamarine &mdash; live in press
+        releases and investment-promotion pages, not in the permits. We downloaded the
+        permit documents and searched them; the planning portal's own application
+        timeline renders the public-notice step as an empty circle, skipped.
+      </p>
+      <p>
+        Sometimes the record does not even say who the data centre is for. The 354MW
+        Tullamarine campus was applied for and approved in the name of a shelf company,
+        EMKC3 Pty Ltd; AirTrunk's name entered the register only after approval, via an
+        <em>application to correct planning permit</em>. Applications elsewhere are
+        fronted by engineering consultants, with the operator nowhere on the page.
+      </p>
+      <p>
+        It does not have to work this way. In NSW, State Significant Development
+        applications exhibit their environmental impact statements before approval,
+        numbers included: Goodman's Lane Cove West proposal discloses 510 million litres
+        of drinking water a year for cooling; AirTrunk's Kemps Creek campus, 22.4
+        million. Exhibition is what makes a number contestable &mdash; and a commitment
+        holdable. Better patterns surface in Victoria too, just not in the permits: AWS's
+        Melton facility will run on recycled water from day one, a Victorian first,
+        disclosed by the water corporation rather than the planning record.
+      </p>
+      <p>
+        The audit &mdash; method, per-site evidence, and the permit PDFs themselves
+        &mdash; is published in the
+        <a href="https://github.com/civic-interplay/ai-sovereignties/blob/main/docs/DISCLOSURE-AUDIT.md" target="_blank" rel="noopener external">open repository</a>.
       </p>
     </section>
 
@@ -115,7 +152,10 @@ import ToolEmbed from '../components/ToolEmbed.astro';
       <p>
         The map sources data from a Critical Infrastructure Tracker, a database built in Notion updated every two weeks through a mix of agent-based research and human-in-the-loop weaving. The data is sourced agentically, supported through Claude Code, with compute costs also tracked recursively. The contestation record is built from
         planning submissions, local and national press, local governments and other inquiry
-        material. 
+        material. In mid-2026 the Victorian coverage was substantially deepened by a
+        consolidated data-centre list compiled by City of Melbourne officers &mdash; the
+        kind of ground-truthing between councils and open research this project hopes to
+        trade in.
         Corrections are welcome; the effort feels (for now) gestural rather than exhaustive.
       </p>
       <p>
@@ -126,7 +166,9 @@ import ToolEmbed from '../components/ToolEmbed.astro';
     <section class="sov-section">
       <h2>Methods, citation and licence</h2>
       <p>
-        Formally, this is <em>a living atlas of contesting and curating AI sovereignties (Australian view)</em>. How each entry is sourced and classified is set out in the <a href="https://studio-esem.notion.site/AI-Sovereignties-project-explainer-38d18df0b77581ab8465dcb65a6628ad" target="_blank" rel="noopener external">project explainer</a>. Entries are coded by agent and flagged for human review (agent, human, or human-verified), so the basis of each classification stays visible.
+        Formally, this is <em>a living atlas of contesting and curating AI sovereignties (Australian view)</em>. How each entry is sourced and classified is set out in the <a href="https://studio-esem.notion.site/AI-Sovereignties-project-explainer-38d18df0b77581ab8465dcb65a6628ad" target="_blank" rel="noopener external">project explainer</a> and, in fuller form, the project's
+        <a href="https://github.com/civic-interplay/ai-sovereignties/blob/main/docs/METHODOLOGY.md" target="_blank" rel="noopener external">methodology statement</a>. Entries are coded by agent and flagged for human review (agent, human, or human-verified), so the basis of each classification stays visible. Findings are stress-tested by adversarial agent review before publication, and the
+        <a href="https://github.com/civic-interplay/ai-sovereignties/blob/main/docs/FACT-CHECKING-GUIDE.md" target="_blank" rel="noopener external">fact-checking protocol</a> used for human verification is published alongside the data.
       </p>
       <p>
         The project's methodology, classification and written analysis are openly licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener external">CC BY 4.0</a>. The underlying records are compiled from public sources, cited per entry; the facts themselves carry no such claim. Cite as: Sarah Barns, <em>A living atlas of contesting and curating AI sovereignties (Australian view)</em>, Civic Interplay, 2026. <a href="https://doi.org/10.5281/zenodo.21026430" target="_blank" rel="noopener external">doi.org/10.5281/zenodo.21026430</a>.
@@ -149,7 +191,7 @@ import ToolEmbed from '../components/ToolEmbed.astro';
 
     <footer class="sov-footer">
       <p>
-        Find this map alongside the other tools on the <a href="/doing">Do page</a>.
+        Find this map alongside the other tools on the <a href="/doing/">Do page</a>.
         Questions or corrections? <a href="https://sarahbarns.com" rel="external">Reach out</a>.
       </p>
       <p>

@@ -1,0 +1,171 @@
+---
+// A Field Note tile: the series image inside the site's card chrome, with the
+// call to action as real text underneath.
+//
+// The image carries a big baked-in headline so the thumbnail reads strongly at
+// a glance. The CTA under it is the editable, indexable, screen-readable copy.
+
+// Card coding. The type drives the accent and the marker, so you can tell a
+// live tool from a field note from a method at a glance, before reading.
+//   tool       pink, with a live pulse (it is running right now)
+//   field-note forest, square mark (echoes the eyebrow bullet in the series)
+//   method     purple, arrow mark (it is a thing to do)
+export type TileType = 'tool' | 'field-note' | 'method';
+
+interface Props {
+  id: string;
+  kicker: string;
+  cta: string;
+  href: string;
+  alt: string;
+  type?: TileType;
+}
+
+const { id, kicker, cta, href, alt, type = 'field-note' } = Astro.props;
+const base = `/images/tiles/${id}`;
+
+// Shares the accent system with PostCard, so the top row and the grids below
+// read as one set. A tool is cream, matching the Field Notes ground.
+const accentByType: Record<TileType, string> = {
+  tool: 'accent-cream',
+  'field-note': 'accent-periwinkle',
+  method: 'accent-purple',
+};
+---
+<a class:list={['tile', `is-${type}`, accentByType[type]]} href={href}>
+  <span class="tile-shot">
+    <img
+      src={`${base}-560.webp`}
+      srcset={`${base}-560.webp 560w, ${base}-1120.webp 1120w`}
+      sizes="(max-width: 640px) 90vw, (max-width: 1000px) 44vw, 23vw"
+      alt={alt}
+      width="560"
+      height="700"
+      loading="lazy"
+      decoding="async"
+    />
+  </span>
+  <span class="tile-kicker">
+    <span class="tile-mark" aria-hidden="true"></span>
+    {kicker}
+  </span>
+  <span class="tile-cta">{cta}</span>
+</a>
+
+<style>
+  .tile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-decoration: none;
+    background: var(--card-bg, #fffefc);
+    color: var(--card-ink, var(--text));
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 4px 4px 0 var(--border);
+    padding: 1.1rem;
+    height: 100%;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .tile:hover {
+    transform: translateY(-3px);
+    box-shadow: 7px 7px 0 var(--border);
+  }
+
+  .tile-shot {
+    display: block;
+    border: 2px solid var(--card-edge, var(--border-light));
+    border-radius: 6px;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: #F4ECD7;
+  }
+
+  .tile-shot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tile:focus-visible {
+    outline: 3px solid var(--purple);
+    outline-offset: 3px;
+  }
+
+  /* --- Card coding ------------------------------------------------------- */
+
+  .tile.is-tool       { --tile-accent: var(--pink); }
+  .tile.is-field-note { --tile-accent: var(--forest); }
+  .tile.is-method     { --tile-accent: var(--purple); }
+
+  .tile-kicker {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--heading);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--card-kicker, var(--text-faint));
+  }
+
+  .tile-mark {
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: var(--card-kicker, var(--text-faint));
+    flex: none;
+  }
+
+  /* A method is a thing to do, so it points. */
+  .tile.is-method .tile-mark {
+    width: 0;
+    height: 0;
+    background: none;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 8px solid var(--card-kicker, var(--text-faint));
+  }
+
+  /* A tool is running right now, so it breathes. Same language as the hero
+     hotspots, deliberately. */
+  .tile.is-tool .tile-mark {
+    border-radius: 50%;
+    animation: tile-live 2.6s ease-out infinite;
+  }
+
+  @keyframes tile-live {
+    0%   { box-shadow: 0 0 0 0 var(--card-pulse, rgba(224, 118, 219, 0.7)); }
+    70%  { box-shadow: 0 0 0 8px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+
+  .tile-cta {
+    font-family: var(--heading);
+    font-size: 1.02rem;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: 0.01em;
+    text-wrap: balance;
+    transition: color 0.25s ease;
+  }
+
+  .tile:hover .tile-cta {
+    color: var(--card-hover-ink, var(--purple));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tile,
+    .tile:hover {
+      transition: none;
+      transform: none;
+    }
+
+    .tile.is-tool .tile-mark {
+      animation: none;
+    }
+  }
+</style>
