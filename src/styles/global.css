@@ -553,6 +553,31 @@ section:nth-child(4) { animation-delay: 0.60s; }
   margin: 2rem 0;
 }
 
+/* SVG diagrams sit on a bordered white card, so plain markdown images
+   from the CMS pick up the figure treatment without inline HTML. */
+.post-content img[src$=".svg"] {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 2px solid var(--border);
+  box-shadow: 4px 4px 0 var(--border);
+  background: #fff;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* Italic line directly under an image reads as its caption */
+.post-content img + em,
+.post-content p:has(img) + p > em:only-child {
+  display: block;
+  font-family: var(--heading);
+  font-style: normal;
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  text-align: center;
+  margin-top: -1.2rem;
+}
+
 .post-content figure {
   margin: 2rem 0;
 }

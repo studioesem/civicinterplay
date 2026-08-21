@@ -66,6 +66,45 @@ A gentle warning: publishing is instant and there is no approval step. When in d
 - Use JPG for photos, PNG for graphics with text
 - Before uploading, give the file a sensible name (`botanica-tree.jpg`, not `IMG_4032 copy FINAL.jpg`); that name becomes part of its web address forever
 - Big files make the site slow. Aim for under 500 KB; 1600px wide is plenty
+- To caption an image in the body, put a line in *italics* directly underneath it; the site styles it as a small centred caption
+
+## Callout cards and video players
+
+The coloured callout cards and the video players are special blocks. The visual editor can't create them (and will garble them if it saves over them), so they're always added and edited in **Source** mode: the Editor/Source switch at the top right of the Body field.
+
+Step one, once per post: in Source mode, put the lines you need at the very top of the Body, before any text. Only include the ones the post actually uses.
+
+```
+import Callout from '../../components/Callout.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
+```
+
+### A callout card
+
+```
+<Callout>
+
+Your text here. Normal formatting works inside: **bold**, *italics*, links.
+
+</Callout>
+```
+
+The blank lines above and below the text matter. Keep them.
+
+### A video player
+
+```
+<VideoEmbed
+  src="https://media.civicinterplay.io/clips/your-clip.mp4"
+  poster="/images/your-poster.jpg"
+  caption="Caption shown under the player."
+  aspectRatio="auto"
+/>
+```
+
+The poster is a normal image from the site's image library. The video itself lives at media.civicinterplay.io; ask Sarah to upload new clips there. For tall phone-shaped clips, add `portrait` on its own line before the closing `/>`.
+
+Golden rule: once a post contains any of these blocks, do all future edits to that post in Source mode.
 
 ## Editing an existing post
 
@@ -74,7 +113,7 @@ Open it from the Posts list, edit, save. If the post is live (Draft off), your s
 ## Things to leave alone
 
 - The **Embeds** section, unless agreed
-- Posts that contain special blocks (coloured callout boxes and embedded players). These use custom code that the editor can garble. If you open a post and see code-looking tags like `<Callout>` or `import ...`, close it without saving and ask Sarah to make the change instead.
+- Posts that contain special blocks (coloured callout boxes and embedded players). These use custom code that the visual editor garbles on save. If a post contains code-looking tags like `<Callout>` or `import ...`, don't edit it in the visual editor: click **Source** on the small Editor/Source switch at the top right of the Body field first and make your changes there, where the special blocks stay untouched. When in doubt, ask Sarah.
 - Anything outside Pages CMS: the repository's other files are the site's machinery
 
 ## When something goes wrong
