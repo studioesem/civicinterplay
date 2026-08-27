@@ -14,9 +14,11 @@ interface Props {
   afterGlitch?: string;
   tagline?: string;
   hotspots?: Hotspot[];
-  /** Sits as the restored dot over the first letter of glitchWord. Uppercase
-      strips the tittle off an I; this puts one back, and makes it ask something. */
-  titleHotspot?: { label: string };
+  /** Restores the dot over the first letter of glitchWord, which uppercase
+      strips off. Decorative only: no text goes inside the h1, or the wordmark
+      reads as "Civic ICould we do this differently?nterplay" to anything
+      parsing the page. */
+  titleDot?: boolean;
 }
 
 const {
@@ -27,7 +29,7 @@ const {
   afterGlitch = '',
   tagline,
   hotspots = [],
-  titleHotspot,
+  titleDot = false,
 } = Astro.props;
 
 // Labels near an edge would overflow if they all centred on their dot, so the
@@ -71,7 +73,7 @@ const rest = glitchWord?.slice(1) ?? '';
       {beforeGlitch}
       {glitchWord && (
         <span class="glitch">
-          {titleHotspot ? (<span class="tittle-host">{head}<button type="button" class="hotspot hotspot--tittle align-start open-above accent-pink" aria-expanded="false"><span class="hotspot-dot" aria-hidden="true"></span><span class="hotspot-label">{titleHotspot.label}</span></button></span>) : head}{rest}
+          {titleDot ? (<span class="tittle-host">{head}<span class="tittle-dot" aria-hidden="true"></span></span>) : head}{rest}
         </span>
       )}
       {afterGlitch}
@@ -200,41 +202,24 @@ const rest = glitchWord?.slice(1) ?? '';
 
   /* --- The restored tittle ----------------------------------------------
      CIVIC INTERPLAY is set uppercase, which strips the dot off the I. This
-     puts one back and makes it ask a question. */
+     puts one back. Purely decorative: it carries no text, because anything
+     inside the h1 becomes part of the wordmark for screen readers, search
+     engines and anything else reading the page. */
 
   .tittle-host {
     position: relative;
     display: inline-block;
   }
 
-  .tittle-host .hotspot--tittle {
+  .tittle-dot {
     position: absolute;
     left: 50%;
-    top: -0.34em;
+    top: -0.30em;
     transform: translateX(-50%);
-    padding: 0.35rem;
-  }
-
-  .hotspot--tittle .hotspot-dot {
     width: 0.17em;
     height: 0.17em;
-    border-width: 0;
-    background: var(--pink);
-  }
-
-  .hotspot--tittle .hotspot-label {
-    bottom: calc(100% + 0.05rem);
-    top: auto;
-    font-size: 0.95rem;
-    letter-spacing: 0.02em;
-    text-transform: none;
-    font-weight: 500;
-  }
-
-  .hotspot:focus-visible {
-    outline: 2px solid #fff;
-    outline-offset: 2px;
     border-radius: 50%;
+    background: var(--pink);
   }
 
   @keyframes hotspot-pulse {

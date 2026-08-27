@@ -39,11 +39,14 @@
       "x": 80,
       "y": 46,
       "label": "Who resourced by compute today?"
+    },
+    {
+      "x": 50,
+      "y": 40,
+      "label": "Could we do this differently?"
     }
   ],
-  "titleHotspot": {
-    "label": "Could we do this differently?"
-  },
+  "titleDot": true,
   "tiles": [
     {
       "id": "map",
