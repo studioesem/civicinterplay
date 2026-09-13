@@ -19,7 +19,6 @@ const byPrimary = (cat: string) =>
 
 const foundationalPosts = byPrimary('foundational-docs');
 const trainingGroundsPosts = byPrimary('training-grounds');
-const essaysPosts = byPrimary('essays-readings');
 const portalsPosts = byPrimary('the-portals');
 
 // The v2-03 FLAT visualisation carries no headline type of its own, so it does
@@ -96,28 +95,6 @@ function categoryLabelsFor(post: (typeof allPosts)[number]) {
         <SectionHeading title="Training Grounds" />
         <div class="post-grid">
           {trainingGroundsPosts.map((p) => (
-            <PostCard
-              href={`/${p.slug}/`}
-              title={p.data.title}
-              excerpt={p.data.excerpt}
-              category={p.data.primaryCategory}
-              categoryLabel={categoryLabelsFor(p)}
-              accent={p.data.accent}
-              image={p.data.featureImage}
-              imageAlt={p.data.featureImageAlt}
-              video={p.data.featureVideo}
-              videoWebm={p.data.featureVideoWebm}
-            />
-          ))}
-        </div>
-      </section>
-    )}
-
-    {essaysPosts.length > 0 && (
-      <section>
-        <SectionHeading title="Essays &amp; Readings" />
-        <div class="post-grid">
-          {essaysPosts.map((p) => (
             <PostCard
               href={`/${p.slug}/`}
               title={p.data.title}

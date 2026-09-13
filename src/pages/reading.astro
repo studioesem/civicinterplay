@@ -2,6 +2,9 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
+import ReadingCard from '../components/ReadingCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import readingsData from '../data/readings.json';
 import { CATEGORY_LABEL } from '../content/config';
 
 const posts = (await getCollection('posts'))
@@ -45,6 +48,8 @@ const entries = [
   })),
   ...fieldNotes,
 ].sort((a, b) => b.sortKey - a.sortKey);
+
+const friends = readingsData.readings;
 ---
 <BaseLayout
   title="Reading"
@@ -55,11 +60,41 @@ const entries = [
       <p class="reading-eyebrow">Civic Interplay / Think</p>
       <h1>Reading</h1>
       <p class="reading-intro">
-        Essays, Resources and Foundational Documentation.
+        Essays, Resources and more.
       </p>
     </header>
 
-    <div class="post-grid">
+    <section class="reading-section">
+      <SectionHeading title="Friends of Civic Interplay" />
+      <p class="reading-lede">
+        Source materials on civic AI and civic AI governance. This is an
+        emerging field, with essays and papers primarily from 2024 onwards.
+      </p>
+      <div class="friends-grid">
+        {friends.map((r) => (
+          <ReadingCard
+            title={r.title}
+            authors={r.authors}
+            publisher={r.publisher}
+            year={r.year}
+            href={r.href}
+            note={r.note}
+            accent={r.accent}
+          />
+        ))}
+      </div>
+      <p class="reading-lede reading-lede-after">
+        For more related literature visit:
+        <a href="/listening/">Listening to an emergent field</a>.
+      </p>
+    </section>
+
+    <section class="reading-section">
+      <SectionHeading title="Musings" />
+      <p class="reading-lede">
+        Thinking out in the open, without an algorithm.
+      </p>
+      <div class="post-grid">
       {entries.map((e) => (
         <PostCard
           href={e.href}
@@ -75,10 +110,40 @@ const entries = [
           videoWebm={e.videoWebm}
         />
       ))}
-    </div>
+      </div>
+    </section>
   </main>
 
   <style>
+    .reading-section {
+      margin-bottom: 3.5rem;
+    }
+
+    .reading-lede {
+      font-family: var(--body);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-dim);
+      max-width: 64ch;
+      margin: 0 0 1.8rem;
+    }
+
+    .reading-lede-after {
+      margin: 1.8rem 0 0;
+    }
+
+    .reading-lede a {
+      color: var(--purple);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .friends-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.4rem;
+    }
+
     .reading {
       padding: 3rem 2rem 4rem;
       max-width: 1100px;
@@ -104,6 +169,7 @@ const entries = [
       font-family: var(--heading);
       font-size: clamp(2rem, 5vw, 3rem);
       font-weight: 300;
+      line-height: 1.08;
       letter-spacing: 0.04em;
       text-transform: uppercase;
       margin-bottom: 0.6rem;

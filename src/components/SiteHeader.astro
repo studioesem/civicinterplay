@@ -3,6 +3,14 @@ const path = Astro.url.pathname;
 const isActive = (test: (p: string) => boolean) => test(path);
 
 const isHome = isActive((p) => p === '/' || p === '');
+// The map is the way most people arrive. Give it a nav slot of its own, and
+// light it up for the story and the Senate submission that hang off it too.
+const isMap = isActive(
+  (p) =>
+    p.startsWith('/sovereignties') ||
+    p.startsWith('/data-centres-map') ||
+    p.startsWith('/submission')
+);
 const isReading = isActive((p) => p.startsWith('/reading'));
 const isDoing = isActive((p) => p.startsWith('/doing'));
 const isAbout = isActive(
@@ -18,6 +26,7 @@ const isAbout = isActive(
       <nav aria-label="Primary">
         <ul class="nav-links">
           <li><a href="/" aria-current={isHome ? 'page' : undefined}>Home</a></li>
+          <li><a href="/sovereignties/" aria-current={isMap ? 'page' : undefined}>Map</a></li>
           <li><a href="/reading/" aria-current={isReading ? 'page' : undefined}>Reading</a></li>
           <li><a href="/doing/" aria-current={isDoing ? 'page' : undefined}>Doing</a></li>
           <li><a href="/about/" aria-current={isAbout ? 'page' : undefined}>About</a></li>

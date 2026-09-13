@@ -41,10 +41,6 @@ const RATIO = 5 / 4;
 
 const SOURCES = [
   {
-    id: 'map',
-    from: 'data centres/b-23-outro-map.png',
-  },
-  {
     id: 'stack',
     from: 'ai-sovereignties/ai_stack_fieldnotes.png',
   },
@@ -172,6 +168,34 @@ function creamTileSvg({ headline, knockout, sub, signoff }) {
 }
 
 const GENERATED = [
+  {
+    id: 'map',
+    headline: 'Tracking the',
+    knockout: 'super cycle',
+    sub: 'energy, water and land, site by site',
+    signoff: 'CIVIC INTERPLAY \u00B7 TRACKER',
+  },
+  {
+    id: 'submission',
+    headline: 'Fourteen asks of',
+    knockout: 'the Senate',
+    sub: 'on AI, data centres and disclosure',
+    signoff: 'CIVIC INTERPLAY \u00B7 SUBMISSION',
+  },
+  {
+    id: 'listening',
+    headline: 'Listening to an',
+    knockout: 'emergent field',
+    sub: 'the vocabulary of civic AI, counted',
+    signoff: 'CIVIC INTERPLAY \u00B7 LISTENING',
+  },
+  {
+    id: 'friends',
+    headline: 'Source materials',
+    knockout: 'on civic AI',
+    sub: 'what the field is writing now',
+    signoff: 'CIVIC INTERPLAY \u00B7 READING',
+  },
   {
     id: 'terrain',
     headline: 'A walkable',

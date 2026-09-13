@@ -3,11 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ToolEmbed from '../components/ToolEmbed.astro';
 ---
 <BaseLayout
-  title="AI Sovereignties"
-  description="A live map of the infrastructure behind AI in Australia, and the public debate forming around it. Data centres, mines, refineries, energy and water, and the lines of ownership running through them."
+  title="Data Centres Sovereignty Tracker"
+  description="The Data Centres Sovereignty Tracker: a living atlas of the infrastructure behind AI in Australia, and the public debate forming around it. Data centres, mines, refineries, energy and water, and the lines of ownership running through them."
   ogImage="/images/og-sovereignties.png"
   dataset={{
-    name: "Australia's Critical AI Infrastructure Tracker",
+    name: "Data Centres Sovereignty Tracker",
     description: "A live, openly maintained map of the infrastructure behind AI in Australia: data centres, rare-earth mines, refineries, and the energy and water they draw, with ownership, approval pathways, and the public contestation forming around each site.",
     keywords: ["AI sovereignty", "data centres", "critical minerals", "AI infrastructure", "Australia", "compute", "rare earths"],
     spatialCoverage: "Australia",
@@ -16,18 +16,25 @@ import ToolEmbed from '../components/ToolEmbed.astro';
   <main class="container sov">
 
     <header class="sov-header">
-      <p class="sov-eyebrow">Civic Interplay / Sovereignties</p>
-      <h1>AI Sovereignties</h1>
+      <p class="sov-eyebrow">Civic Interplay / Tracker</p>
+      <h1>Data Centres Sovereignty Tracker</h1>
       <p class="sov-intro">
-        A live map of the infrastructure behind AI in Australia, and the public
-        debate forming around it. Data centres, mines, refineries, the energy
-        and water they draw, and the lines of ownership running through them.
-        Each point is a real site on the ground.
+        A living atlas of infrastructural AI in Australia, addressing each
+        layer of the infrastructural-AI stack. The tracker covers ownership of
+        compute, resource impacts, planning pathways, community contestation,
+        and supply chain considerations, and runs an openly accessible and
+        forkable code base on GitHub as well as Summary Data sheets for each
+        State and Territory in Australia and an RSS news feed.
+      </p>
+      <p class="sov-wayfind">
+        <a href="/data-centres-map/">Read the story behind the map</a>
+        <span aria-hidden="true">·</span>
+        <a href="/submission/">Submission to the Senate inquiry</a>
       </p>
     </header>
 
     <ToolEmbed
-      title="Mapping AI Sovereignties"
+      title="Data Centres Sovereignty Tracker"
       src="https://datacentres.civicinterplay.io/"
       openLabel="Open the map in a new tab"
       height="820px"
@@ -39,31 +46,47 @@ import ToolEmbed from '../components/ToolEmbed.astro';
     <section class="sov-section">
       <h2>What you're looking at</h2>
       <p>
-        This is a living atlas of an increasingly contested historical terrain.
-        The primary focus is on critical infrastructure required for the national AI sovereignty agenda to be realised on Australian soil. 
-        This focus includes data centres, mines, refineries, and related
-        energy or water infrastructure. 
-        
-        The legend does lots of work. Different ownership and governance models are called out: not just who owns but also who approves, and who contests.
+        Each point on the map is a data centre that includes multiple registers
+        of approvals, ownership, planning pathways, environmental conditions,
+        and supply chains.
       </p>
     </section>
 
     <section class="sov-section">
-      <h2>Whose voices are heard</h2>
+      <h2>What version of AI governance is this?</h2>
       <p>
-        The Australian debates are following closely behind widespread public disapproval of data centre construction, particularly in areas facing water stress or growing energy prices. 
-        The tracker is listening to who is contesting the infrastructure roll-out, and those who advocate for it. 
+        The data centre build out expresses a vision for AI sovereignty actively
+        championed by the Australian Government. It entails a fast tracked
+        planning approval process that is undermining local government
+        capabilities to act or intervene, or citizen-based social licence. The
+        tracker is examining where contestation sits in relation to planning
+        approvals, and what version of sovereignty is being performed through
+        ownership structures identified at each site.
+      </p>
+      <p>
         The opposition to data centre approvals is taking place at a time when many government agencies are onboarding AI enablement officers, and the AI capabilities are becoming essential in the workforce. 
         Australians have historically been fast adopters of new technology, and this wave of agentic disruption is no different. Many Australians are enjoying the MCP frisson, even if they begrudge the data centre expansion.
       </p>
       <p>
-        This is intentionally being crafted out in the open. A focus is on approval rates, the practices of resistance being deployed, and the roles played by different government agencies, whether local government, State Government agencies, or Federal Government.
-        The different patterns for AI stack building are of great interest. A hyperscale data centre in a territory facing water shortage demonstrates a high degree of allegiance to hyperscale-subject relations, at the expense of other forms of civic belonging. 
-        Investment in a mix of local compute, AI innovation ecosystems and critical-curious minds, combined with reflexive self-awareness of the dangers of deepening dependencies, underpinned by supportive agencies and alternate infrastructures and 'AI enablement' is the preferred pathway. 
-        All eyes and ears are open for this pattern in the landscape. 
+        The focus is on approval rates, the practices of resistance being
+        deployed, and the roles played by different government agencies, whether
+        local government, State Government agencies, or Federal Government.
       </p>
       <p>
         <a href="https://studio-esem.notion.site/Contestation-sovereignty-trackers-full-session-38d18df0b77581f697dfe059a69b454d" target="_blank" rel="noopener external">See the contestation record</a>, the trackers behind the map, in Notion.
+      </p>
+    </section>
+
+    <section class="sov-section">
+      <h2>An experiment in recursive listening</h2>
+      <p>
+        This tracker is built openly with AI, using Claude, a frontier model
+        built by Anthropic.
+      </p>
+      <p>
+        The different patterns for AI stack building are of great interest. A hyperscale data centre in a territory facing water shortage demonstrates a high degree of allegiance to hyperscale-subject relations, at the expense of other forms of civic belonging. 
+        Investment in a mix of local compute, AI innovation ecosystems and critical-curious minds, combined with reflexive self-awareness of the dangers of deepening dependencies, underpinned by supportive agencies and alternate infrastructures and 'AI enablement' is the preferred pathway. 
+        All eyes and ears are open for this pattern in the landscape. 
       </p>
     </section>
 
@@ -88,7 +111,7 @@ import ToolEmbed from '../components/ToolEmbed.astro';
     </section>
 
     <section class="sov-section">
-      <h2>How fast, how quietly</h2>
+      <h2>Where is the data on data centre approvals?</h2>
       <p>
         Most of Victoria's large data centres are approved by the Minister for Planning
         under the Development Facilitation Program, not by the local council. The
@@ -107,19 +130,19 @@ import ToolEmbed from '../components/ToolEmbed.astro';
         Source: Victorian Ministerial Permits Register (Planning Victoria). Confirmed
         approvals only. Per-permit public-notice status verified August 2026: exempted
         across the ministerial cohort, now recorded per site. Drawn from the
-        <a href="https://studio-esem.notion.site/Contestation-sovereignty-trackers-full-session-38d18df0b77581f697dfe059a69b454d" target="_blank" rel="noopener external">Critical Infrastructure Tracker</a>.
+        <a href="https://studio-esem.notion.site/Contestation-sovereignty-trackers-full-session-38d18df0b77581f697dfe059a69b454d" target="_blank" rel="noopener external">Data Centres Sovereignty Tracker</a>.
       </p>
     </section>
 
     <section class="sov-section">
-      <h2>What the approvals don't say</h2>
+      <h2>Tracker Audit Snapshot: Aug 2026</h2>
       <p>
-        In August 2026 we audited the public planning records of thirteen approved or
-        lodged Victorian data-centre applications. Not one discloses the electricity the
+        In August 2026 the tracker audited the public planning records of thirteen
+        approved or lodged Victorian data-centre applications. Not one discloses the electricity the
         facility is expected to draw. None states a water demand. Only one describes its
-        cooling method. The megawatt figures everyone quotes &mdash; 162MW at Fishermans
-        Bend, 400+MW at Laverton North, 354MW at Tullamarine &mdash; live in press
-        releases and investment-promotion pages, not in the permits. We downloaded the
+        cooling method. The megawatt figures everyone quotes (162MW at Fishermans
+        Bend, 400+MW at Laverton North, 354MW at Tullamarine) live in press
+        releases and investment-promotion pages, not in the permits. The tracker downloaded the
         permit documents and searched them; the planning portal's own application
         timeline renders the public-notice step as an empty circle, skipped.
       </p>
@@ -135,14 +158,14 @@ import ToolEmbed from '../components/ToolEmbed.astro';
         applications exhibit their environmental impact statements before approval,
         numbers included: Goodman's Lane Cove West proposal discloses 510 million litres
         of drinking water a year for cooling; AirTrunk's Kemps Creek campus, 22.4
-        million. Exhibition is what makes a number contestable &mdash; and a commitment
+        million. Exhibition is what makes a number contestable, and a commitment
         holdable. Better patterns surface in Victoria too, just not in the permits: AWS's
         Melton facility will run on recycled water from day one, a Victorian first,
         disclosed by the water corporation rather than the planning record.
       </p>
       <p>
-        The audit &mdash; method, per-site evidence, and the permit PDFs themselves
-        &mdash; is published in the
+        The audit (method, per-site evidence, and the permit PDFs themselves)
+        is published in the
         <a href="https://github.com/civic-interplay/ai-sovereignties/blob/main/docs/DISCLOSURE-AUDIT.md" target="_blank" rel="noopener external">open repository</a>.
       </p>
     </section>
@@ -150,16 +173,16 @@ import ToolEmbed from '../components/ToolEmbed.astro';
     <section class="sov-section">
       <h2>Where the data comes from</h2>
       <p>
-        The map sources data from a Critical Infrastructure Tracker, a database built in Notion updated every two weeks through a mix of agent-based research and human-in-the-loop weaving. The data is sourced agentically, supported through Claude Code, with compute costs also tracked recursively. The contestation record is built from
+        The map sources data from a Data Centres Sovereignty Tracker, a database built in Notion updated every two weeks through a mix of agent-based research and human-in-the-loop weaving. The data is sourced agentically, supported through Claude Code, with compute costs also tracked recursively. The contestation record is built from
         planning submissions, local and national press, local governments and other inquiry
         material. In mid-2026 the Victorian coverage was substantially deepened by a
-        consolidated data-centre list compiled by City of Melbourne officers &mdash; the
-        kind of ground-truthing between councils and open research this project hopes to
+        consolidated data-centre list compiled by City of Melbourne officers, the
+        kind of ground-truthing between councils and open research the tracker hopes to
         trade in.
         Corrections are welcome; the effort feels (for now) gestural rather than exhaustive.
       </p>
       <p>
-        Spot a missing site, an error, or contestation we have not captured? <a href="https://studio-esem.notion.site/a504252cf109454598a7b02e5024b10d" target="_blank" rel="noopener external">Submit it here</a>.
+        Spot a missing site, an error, or contestation the tracker has not captured? <a href="https://studio-esem.notion.site/a504252cf109454598a7b02e5024b10d" target="_blank" rel="noopener external">Submit it here</a>.
       </p>
     </section>
 
@@ -190,6 +213,13 @@ import ToolEmbed from '../components/ToolEmbed.astro';
     </aside>
 
     <footer class="sov-footer">
+      <p>
+        The evidence here was lodged with the Senate Environment and
+        Communications References Committee in August 2026.
+        <a href="/submission/">Read the submission and its fourteen recommendations</a>.
+        The background to the project is in
+        <a href="/data-centres-map/">Mapping Australian Data Centres</a>.
+      </p>
       <p>
         Find this map alongside the other tools on the <a href="/doing/">Do page</a>.
         Questions or corrections? <a href="https://sarahbarns.com" rel="external">Reach out</a>.
@@ -227,6 +257,7 @@ import ToolEmbed from '../components/ToolEmbed.astro';
       font-family: var(--heading);
       font-size: clamp(2rem, 5vw, 3rem);
       font-weight: 300;
+      line-height: 1.08;
       letter-spacing: 0.04em;
       text-transform: uppercase;
       margin-bottom: 0.6rem;
@@ -238,6 +269,23 @@ import ToolEmbed from '../components/ToolEmbed.astro';
       font-style: italic;
       color: var(--text-dim);
       max-width: 62ch;
+    }
+
+    .sov-wayfind {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.2rem;
+      font-family: var(--heading);
+      font-size: 0.82rem;
+      letter-spacing: 0.03em;
+      color: var(--text-faint);
+    }
+
+    .sov-wayfind a {
+      color: var(--purple);
+      text-decoration: underline;
+      text-underline-offset: 4px;
     }
 
     .sov-note {

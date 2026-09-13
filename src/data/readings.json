@@ -1,0 +1,124 @@
+{
+  "readings": [
+    {
+      "id": "sieber-civic-participation",
+      "title": "What is civic participation in artificial intelligence?",
+      "authors": "Renée Sieber, Ana Brandusescu, Suthee Sangiambut & Abigail Adu-Daako",
+      "publisher": "Environment and Planning B: Urban Analytics and City Science",
+      "year": "2025",
+      "href": "https://journals.sagepub.com/doi/10.1177/23998083241296200",
+      "accent": "purple",
+      "note": "A core reference for the Civic AI methodology. Sieber and colleagues ask what civic participation in AI actually means, and note that AI's opacity, mutability and resource requirements impede meaningful engagement, particularly in cities. They distinguish institutional transparency, functional empowerment and democratic empowerment."
+    },
+    {
+      "id": "buchan-magnificent-humanity",
+      "title": "Magnificent Humanity: Civic AI in Dr Duncan's City",
+      "authors": "Iain Buchan",
+      "publisher": "University of Liverpool",
+      "year": "2026",
+      "href": "https://news.liverpool.ac.uk/2026/09/07/professor-iain-buchan-explores-liverpools-opportunity-to-lead-on-civic-ai/",
+      "accent": "periwinkle",
+      "note": "Liverpool built the world's first civic data cooperative on the back of its public health history. In this piece, Buchan argues for a civic path to AI that serves lives, livelihoods and life chances. Buchan's connected city architecture models civic AI governance and stewardship at the level of the city precinct and is an inspiration for civic interplay."
+    },
+    {
+      "id": "liverpool-ai-charter",
+      "title": "Liverpool City Region AI Charter",
+      "authors": "Liverpool City Region",
+      "publisher": "University of Liverpool",
+      "year": "2025",
+      "href": "https://news.liverpool.ac.uk/2025/07/04/first-of-its-kind-ai-charter-to-drive-responsible-data-sharing-in-liverpool-city-region/",
+      "accent": "periwinkle",
+      "note": "A first-of-its-kind charter for responsible data sharing across a city region, which is what it looks like when civic AI stops being a framing and becomes a document people sign."
+    },
+    {
+      "id": "ada-going-public",
+      "title": "Going public: the role of public participation approaches in commercial AI labs",
+      "authors": "Ada Lovelace Institute",
+      "publisher": "Ada Lovelace Institute",
+      "year": "2023",
+      "href": "https://www.adalovelaceinstitute.org/report/going-public-participation-ai/",
+      "accent": "terracotta",
+      "note": "The Ada Lovelace Institute asked commercial AI labs what public participation they actually do. The answer: belief in it, no consistent methods, and obstacles that are structural rather than technical, being resourcing, siloes, misaligned incentives and commercial sensitivity. Useful for anyone who assumes participation fails for lack of good intentions."
+    },
+    {
+      "id": "ada-public-voices",
+      "title": "Public voices in AI",
+      "authors": "Octavia Field Reid and the Ada Lovelace Institute",
+      "publisher": "Ada Lovelace Institute",
+      "year": "ongoing",
+      "href": "https://www.adalovelaceinstitute.org/project/public-voice-in-ai/",
+      "accent": "terracotta",
+      "note": "The ongoing programme rather than the single report. It works on what the public actually thinks about AI and on the methods for getting those voices into decisions. Crucial because participation is the part everyone endorses and nobody specifies."
+    },
+    {
+      "id": "vtaiwan-g0v",
+      "title": "How public participation can improve AI governance: vTaiwan's initiatives",
+      "authors": "vTaiwan and g0v",
+      "publisher": "Friedrich Naumann Foundation",
+      "year": "2024",
+      "href": "https://www.freiheit.org/taiwan/how-public-participation-can-improve-ai-governance-vtaiwans-initiatives",
+      "accent": "forest",
+      "note": "A working precedent that shows how a decentralised community can contribute to data governance processes in productive ways."
+    },
+    {
+      "id": "verhulst-anticipatory",
+      "title": "Anticipatory Data Governance in the Age of AI",
+      "authors": "Stefaan Verhulst and colleagues",
+      "publisher": "The GovLab",
+      "year": "2026",
+      "href": "https://arxiv.org/abs/2607.27029",
+      "accent": "purple",
+      "note": "Seven signals from GovLab forecasting studios. The open data paradigm is under strain, ecosystems are becoming machine-centric, and data infrastructure is getting harder to sustain. Anticipatory AI governance is core to the civic interplay imaginary."
+    },
+    {
+      "id": "eurostack",
+      "title": "EuroStack: A European Alternative for Digital Sovereignty",
+      "authors": "Francesca Bria, Paul Timmers & Fausto Gernone",
+      "publisher": "UCL Institute for Innovation and Public Purpose",
+      "year": "2025",
+      "href": "https://www.ucl.ac.uk/bartlett/publications/2025/feb/eurostack-european-alternative-digital-sovereignty",
+      "accent": "periwinkle",
+      "note": "Bria is advancing the EuroStack initiative, building on data sovereignty efforts to reclaim European digital sovereignty, now in an era of AI."
+    },
+    {
+      "id": "reframetech",
+      "title": "ReframeTech: algorithms for the common good",
+      "authors": "Bertelsmann Stiftung",
+      "publisher": "Bertelsmann Stiftung",
+      "year": "ongoing",
+      "href": "https://www.bertelsmann-stiftung.de/en/our-projects/reframetech-algorithmen-fuers-gemeinwohl/",
+      "accent": "periwinkle",
+      "note": "The programme that commissioned EuroStack, establishing algorithms for the common good. Seeking partnerships for global AI governance."
+    },
+    {
+      "id": "jrc-enabled",
+      "title": "ENABLED: Innovation for data ecosystems and sovereignty",
+      "authors": "Joint Research Centre, Digital and Data Sovereignty Unit",
+      "publisher": "European Commission",
+      "year": "2024 to 2029",
+      "href": "https://joint-research-centre.ec.europa.eu/scientific-activities/enabled-project-innovation-data-ecosystems-and-sovereignty_en",
+      "accent": "forest",
+      "note": "The European Commission's own science service doing digital sovereignty as a research programme. Run out of the JRC's Digital and Data Sovereignty Unit in Ispra, it feeds the European Data Union Strategy and is standing up a Data Sharing and Digital Sovereignty Innovation Lab that uses regulatory sandboxing to test governance before it is legislated. Where EuroStack makes the argument from outside, this is the institution building the evidence from within."
+    },
+    {
+      "id": "bridle-ways-of-being",
+      "title": "Ways of Being: Beyond Human Intelligence",
+      "authors": "James Bridle",
+      "publisher": "Allen Lane",
+      "year": "2022",
+      "href": "https://www.jamesbridle.com/books/ways-of-being",
+      "accent": "cream",
+      "note": "Bridle cautions against treating human intelligence as the only kind worth designing AI systems for. Bridle argues that \"human-centred design\" is a legacy model in a more-than-human world facing ecological collapse."
+    },
+    {
+      "id": "lovelock-novacene",
+      "title": "Novacene: The Coming Age of Hyperintelligence",
+      "authors": "James Lovelock",
+      "publisher": "Allen Lane",
+      "year": "2019",
+      "href": "https://en.wikipedia.org/wiki/Novacene",
+      "accent": "cream",
+      "note": "Near the end of his life Lovelock imagined AI as essential to Earth's self-regulation, with humans as enablers of a more intelligent life form. Lovelock's vision avoids the political economy of hyperscale AI, but it does bring a hopeful imagination to human-AI collaboration as a kind of hospicing of modernity, to another form of intelligence that may well outlive humanity. It helps set the frame: What kind of civic practices are agents trained in?"
+    }
+  ]
+}

@@ -60,6 +60,17 @@ const diveIn = [...foundational, ...fieldNotes];
         <h1>{post.data.title}</h1>
       </div>
 
+      <!-- A plain answer before the cards start. Someone arriving cold, a
+           journalist most of all, should get the one-line version before
+           scrolling through the card deck. -->
+      <div class="about-standfirst">
+        <p class="about-standfirst-lead">
+          A think and do space for agentic civics and civic AI, which explores
+          ideas and practices that look to a future where civic AI governance
+          is not only imaginable, but real.
+        </p>
+      </div>
+
       <div class="post-content">
         <Content />
       </div>
@@ -128,6 +139,21 @@ const diveIn = [...foundational, ...fieldNotes];
   </article>
 
   <style>
+    .about-standfirst {
+      margin: 0 0 2.5rem;
+      padding-left: 1.2rem;
+      border-left: 4px solid var(--purple);
+      max-width: 62ch;
+    }
+
+    .about-standfirst-lead {
+      font-family: var(--body);
+      font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+      line-height: 1.6;
+      color: var(--text);
+      margin: 0;
+    }
+
     .about-next {
       margin: 3.5rem auto 0;
       padding-top: 2.5rem;

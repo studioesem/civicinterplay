@@ -1,0 +1,532 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// The fourteen recommendations, kept close to the wording lodged with the
+// Committee so they stay quotable. The full document is linked at the top and
+// bottom of the page.
+// The fourteen recommendations as lodged, grouped under the five themes the
+// FINAL submission uses. Kept close to the lodged wording so they stay
+// quotable.
+const groups = [
+  {
+    theme: 'Transparency and disclosure',
+    items: [
+      { title: 'Mandatory disclosure at application stage',
+        body: "Resource impacts of data centre developments to be mandated for data centres above 5MW. Applicants to state expected electrical load, expected annual water demand by source (potable, recycled, or other), and cooling technology. These disclosures should form part of the publicly exhibited application documents, not commercial-in-confidence annexures available only to agencies." },
+      { title: 'Public exhibition stage should not be ignored',
+        body: "Fast-track programs such as Victoria's Development Facilitation Program should not extinguish exhibition for facilities of this scale. A minimum public notice and comment window, allowing sufficient time for public engagement and consultation, should apply nationally, incorporated into the national data centre principles flagged in the National AI Plan and consistent with the 'meaningful community consultation' expectation now embedded in the NSW Data Centre Policy Framework." },
+      { title: 'Support for local government',
+        body: 'Referral packages to councils must include load data. Agency assessments of grid and water impacts should also be published alongside any approval outcome.' },
+    ],
+  },
+  {
+    theme: 'Monitoring and reporting',
+    items: [
+      { title: 'A national public register',
+        body: 'A national public register of data centre applications and performance, carrying the mandated fields above, with annual reporting of actual consumption against approved estimates on a mandatory NABERS-style basis, to ensure ongoing monitoring over time. Modelled on existing schemes such as the National Greenhouse and Energy Reporting scheme and the NABERS disclosure regime, alongside adjacent amendments to state planning systems.' },
+      { title: 'Transparent reporting on energy sources',
+        body: 'Public renewable energy claims by data centre operators should distinguish contracted supply, certificate matching and offsets, consistent with ACCC guidance on environmental claims, and be verifiable against the register. Any claims of renewable supply should demonstrate additionality and be verifiable through REGO time and location matching, with facility registration data reported to AEMO.' },
+      { title: 'Mandatory e-waste and server lifecycle reporting',
+        body: "Data centre operators should be required to report server stock, turnover rates and e-waste recycling outcomes annually through the public register, so that Australia's exposure to AI-driven e-waste growth can be measured and managed before turnover volumes peak." },
+      { title: 'Demand evidence of environmental impact',
+        body: 'Approvals should be conditional on demonstrably additional renewable supply to match demand, no reliance on new or extended fossil generation, and consistency with legislated Commonwealth and state emissions targets, assessed against cumulative demand.' },
+    ],
+  },
+  {
+    theme: 'Community benefit and compute access',
+    items: [
+      { title: 'Benefit sharing agreements',
+        body: 'National data centre standards should include a benefit-sharing obligation for facilities above 5MW. Modelled on the per-megawatt community benefit contributions established for renewable energy zone generators in NSW, calculated per megawatt of approved load, indexed, for the operating life of the facility. The obligation should attach to the land through conditions of consent rather than to the corporate applicant, and payments should be reported through the public register.' },
+      { title: 'Compute access as condition of consent',
+        body: "We support the Albanese Government's stated intention to convert Expectation 5 of the Expectations of data centres and AI infrastructure developers to a binding requirement. Compute-access obligations for Australian researchers, small businesses and public institutions should be assessable against a public register." },
+    ],
+  },
+  {
+    theme: 'Sovereignty claims and Commonwealth agreements',
+    items: [
+      { title: 'Commonwealth facilitation conditional on disclosure',
+        body: "Where the Commonwealth enters memoranda of understanding or comparable arrangements with global AI companies, alignment with the Government's Expectations of data centres and AI infrastructure developers should be evidenced through mandatory disclosures, and the terms of any commitments made, including benefit-sharing and compute-access commitments, should be published in full." },
+      { title: 'Define sovereign capability by layer',
+        body: "Any claim of sovereign AI capability in a government to company agreement should specify which specific layer of the technology stack it refers to. Domestic hosting of physical infrastructure should not be claimed as equivalent to domestic control of AI capability. Appendix B sets out the dimensions of the 'infrastructural AI stack' for this purpose." },
+      { title: "Address gaps in the application of sovereignty to Australia's Indigenous data sovereignty layer",
+        body: 'Sovereign capability claims currently attach to compute, facilities and models, while Indigenous data sovereignty remains the only register of sovereignty in the stack with no binding instrument in any approval pathway. Commonwealth agreements with global AI companies, and the national data centre principles flagged in the National AI Plan, should give effect to the Framework for Governance of Indigenous Data (2024) and be consistent with the Maiam nayri Wingara principles and the CARE principles for Indigenous data governance, including through data governance conditions in facilitation agreements and Commonwealth procurement.' },
+    ],
+  },
+  {
+    theme: 'National consistency',
+    items: [
+      { title: 'A pause on approvals until nationally-consistent frameworks apply',
+        body: 'New data centre approvals above 5MW should be paused until the nationally consistent standards flagged in the National AI Plan, the National Electricity Rule changes to be considered by the Energy and Climate Change Ministerial Council in September 2026, and the disclosure and benefit-sharing requirements recommended in this submission are in force.' },
+      { title: 'Advance nationally-consistent definitions of land use',
+        body: 'The Commonwealth should advocate for nationally-consistent definitions of data centres as a distinct use class in state planning schemes, assessed by reference to megawatts of connected load rather than floor area, and preferentially located within designated precincts that enable heat reuse, recycled water, grid coordination and research co-location, on the model of renewable energy zones.' },
+    ],
+  },
+];
+
+const DOC = '/senate-submission-barns-2026.pdf';
+
+// Number them 1..14 across the whole set, so the page matches the document's
+// own "fourteen recommendations" and its internal cross-references. A CSS
+// counter restarted inside each <ol>.
+let n = 0;
+const numbered = groups.map((g) => ({
+  theme: g.theme,
+  items: g.items.map((r) => ({ ...r, n: ++n })),
+}));
+---
+<BaseLayout
+  title="Submission to the Senate Inquiry into AI and Data Centres"
+  description="Submission to the Senate Environment and Communications References Committee inquiry into Artificial Intelligence and Data Centres, with fourteen recommendations on disclosure, public exhibition, benefit sharing and sovereign capability."
+  ogImage="/images/og-sovereignties.png"
+>
+  <main class="container sub">
+
+    <header class="sub-header">
+      <p class="sub-eyebrow">Civic Interplay / Submission</p>
+      <h1>Submission to the Senate Inquiry into AI and Data Centres</h1>
+      <p class="sub-intro">
+        Submission to the Senate Environment and Communications References
+        Committee inquiry into Artificial Intelligence and Data Centres, lodged
+        1 September 2026. It draws on the Data Centres Transparency Project, and
+        makes fourteen recommendations.
+      </p>
+      <dl class="sub-meta">
+        <div>
+          <dt>Lead author</dt>
+          <dd>Dr Sarah Barns</dd>
+        </div>
+        <div>
+          <dt>Contributing authors</dt>
+          <dd>Dr Kajsa Lundberg, Dr Emma McRae, Associate Professor Ascelin Gordon</dd>
+        </div>
+        <div>
+          <dt>Prepared at</dt>
+          <dd>Centre for Urban Research, RMIT University</dd>
+        </div>
+        <div>
+          <dt>Lodged</dt>
+          <dd>1 September 2026</dd>
+        </div>
+      </dl>
+      <p class="sub-actions">
+        <a class="sub-button" href={DOC}>Read the full submission</a>
+        <a class="sub-link" href="/sovereignties/">See the Tracker</a>
+      </p>
+    </header>
+
+    <section class="sub-section">
+      <h2>What this submission argues</h2>
+      <div class="sub-letter">
+        <p>
+          Australia's digital infrastructure is foundational to its national
+          sovereignty. It is a strength of Australian democracy that an
+          investment wave of this scale can be brought into the public realm for
+          contestation and debate; such debate is itself part of the critical
+          infrastructure of Australian democracy. Sovereignty should not be
+          pursued at the expense of the democratic conditions for accountability
+          and transparency that Australia as a nation helped to pioneer.
+        </p>
+        <p>
+          The current debate has also revealed how little visibility communities
+          have into which level of government makes the decisions that shape
+          their lives, a gap that opaque approval pathways widen. Many of the
+          critical decisions shaping data centre infrastructure are being made
+          through fast-track planning pathways that exempt or truncate community
+          consultation and public exhibition, without transparency around
+          environmental impacts. This heightens environmental, social and
+          economic risks, and investors are already expressing concern that data
+          centres are losing their social licence to operate.
+        </p>
+        <p>
+          Core to our submission is therefore the need for greater transparency
+          in the planning and approval of data centres across all levels of
+          government, and ongoing monitoring against approved resource impacts to
+          ensure they do not contravene existing sovereign commitments.
+        </p>
+        <p>
+          It is not acceptable, in an era of information abundance, that such
+          long-lived and resource-intensive assets can be approved without public
+          exhibition. Much of this lies with state planning regimes, but the
+          Commonwealth should use its powers to advance national standards and
+          mandatory national reporting. Investment in sovereign digital
+          infrastructure should not undermine Australia's existing commitments,
+          including its Nationally Determined Contribution under the Paris
+          Agreement and the due diligence obligations recently affirmed by the
+          International Court of Justice.
+        </p>
+        <p>
+          Nor should this investment be a missed opportunity. Benefit-sharing and
+          precinct-scale innovation districts can strengthen Australia's skills
+          and knowledge ecosystem and accelerate the transition away from the
+          resource dependencies driving global heating. And in advancing
+          Indigenous data sovereignty, consistent with the National AI Plan's
+          commitments and the Framework for Governance of Indigenous Data,
+          Australia can lead the world in recognising the knowledge systems that
+          have nurtured people on this continent for millennia.
+        </p>
+        <p class="sub-letter-src">From the covering letter to the Committee.</p>
+      </div>
+    </section>
+
+    <section class="sub-section">
+      <h2>Summary of Key Recommendations</h2>
+      {numbered.map((g) => (
+        <div class="sub-group">
+          <h3 class="sub-theme">{g.theme}</h3>
+          <ol class="sub-recs">
+            {g.items.map((r) => (
+              <li>
+                <span class="sub-num" aria-hidden="true">{r.n}</span>
+                <h4>{r.title}</h4>
+                <p>{r.body}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </section>
+
+    <section class="sub-section">
+      <h2>Key Data Centres Sovereignty Tracker findings</h2>
+      <p class="sub-asat">As at August 2026.</p>
+      <ul class="sub-findings">
+        <li>
+          Of the 69 sites in the analysis subset, <strong>38 were approved
+          through processes with no public exhibition</strong>, whether by
+          fast-track designation or under a state significant development
+          pathway. That is 55 per cent.
+        </li>
+        <li>
+          Capacity figures are publicly available for <strong>only 30 of the 69
+          approvals</strong>. In Victoria in 2026, twelve sites were approved
+          with no public exhibition at all.
+        </li>
+        <li>
+          Across thirteen approved or lodged Victorian applications audited in
+          August 2026, <strong>none disclosed expected electricity or water
+          demand</strong>, and only one reported its cooling method.
+        </li>
+        <li>
+          The megawatt figures in public circulation, 162MW at Fishermans Bend,
+          400MW plus at Laverton North, 354MW at Tullamarine, <strong>appear only
+          in corporate press releases</strong> and government investment
+          promotion material.
+        </li>
+        <li>
+          Applications are being lodged by engineering consultants or shelf
+          companies. The 354MW Tullamarine campus was approved in the name of
+          EMKC3 Pty Ltd. <strong>The owner, AirTrunk, became known only after
+          approval</strong>, through an application to correct the permit.
+        </li>
+        <li>
+          Data centres consume roughly 3 per cent of national electricity today,
+          <strong>projected to reach 13 per cent by 2036</strong>.
+        </li>
+      </ul>
+    </section>
+
+    <section class="sub-section">
+      <h2>What the submission addresses</h2>
+      <p>
+        The submission responds to two of the Committee's terms of reference: the
+        effectiveness of existing regulatory frameworks in managing the growth of
+        data centres in Australia, including deals between the Government and
+        global AI companies, and the potential impacts of artificial intelligence
+        and data centres on Australian communities, industries and the
+        environment, including water and energy.
+      </p>
+      <p>
+        It draws on the <a href="https://datacentres.civicinterplay.io/" target="_blank" rel="noopener external">Data Centres Transparency Project</a>,
+        established in 2026. As at August 2026 the tracker covered 89 sites, of
+        which 69 informed the analysis. Methods, evidence documents and the
+        fact-checking protocol are published in the project's data repository
+        (<a href="https://doi.org/10.5281/zenodo.21994643" target="_blank" rel="noopener external">doi.org/10.5281/zenodo.21994643</a>).
+      </p>
+    </section>
+
+    <footer class="sub-footer">
+      <p>
+        <a href={DOC}>Read the full submission</a>, including the response to
+        each term of reference, the reference list, the civic AI methods appendix
+        and the infrastructural AI stack.
+      </p>
+      <p>
+        The evidence base is the <a href="/sovereignties/">Data Centres Sovereignty Tracker</a>.
+        The background to the project is in <a href="/data-centres-map/">Mapping Australian Data Centres</a>.
+      </p>
+    </footer>
+
+  </main>
+
+  <style>
+    .sub {
+      padding: 3rem 2rem 4rem;
+      max-width: 880px;
+    }
+
+    .sub-header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .sub-eyebrow {
+      font-family: var(--heading);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.6rem;
+    }
+
+    .sub-header h1 {
+      font-family: var(--heading);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 300;
+      /* Without this it inherits the body's 1.7, which is right for running
+         prose and far too airy for a three-line display heading. */
+      line-height: 1.15;
+      letter-spacing: 0.01em;
+      margin-bottom: 0.8rem;
+      max-width: 26ch;
+      text-wrap: balance;
+    }
+
+    .sub-intro {
+      font-family: var(--body);
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--text-dim);
+      max-width: 62ch;
+    }
+
+    .sub-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem 2rem;
+      margin: 1.8rem 0 0;
+    }
+
+    .sub-meta dt {
+      font-family: var(--heading);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.25rem;
+    }
+
+    .sub-meta dd {
+      font-family: var(--body);
+      font-size: 0.92rem;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .sub-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem 1.5rem;
+      margin-top: 1.8rem;
+    }
+
+    .sub-button {
+      display: inline-block;
+      font-family: var(--heading);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.7rem 1.2rem;
+      border: 2px solid var(--ink, #1a1a1a);
+      border-radius: 4px;
+      color: var(--ink, #1a1a1a);
+      background: var(--blush, #f8dff6);
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .sub-button:hover,
+    .sub-button:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 3px 3px 0 var(--purple);
+    }
+
+    .sub-link {
+      font-family: var(--heading);
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      color: var(--purple);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .sub-section {
+      margin-top: 3rem;
+    }
+
+    .sub-section h2 {
+      font-family: var(--heading);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.8rem;
+    }
+
+    .sub-asat {
+      font-family: var(--heading);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin: -0.4rem 0 1.2rem;
+    }
+
+    .sub-section p {
+      font-family: var(--body);
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text);
+      max-width: 65ch;
+      margin-bottom: 1rem;
+    }
+
+    .sub-section p a,
+    .sub-footer p a {
+      color: var(--purple);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .sub-findings {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-width: 65ch;
+    }
+
+    .sub-findings li {
+      font-family: var(--body);
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text);
+      padding: 0 0 0 1.2rem;
+      margin-bottom: 1rem;
+      border-left: 3px solid var(--terracotta, #d16d54);
+    }
+
+    .sub-letter {
+      max-width: 65ch;
+      padding: 1.4rem 1.6rem;
+      border: 2px solid var(--border);
+      border-left: 8px solid var(--purple);
+      border-radius: var(--radius);
+      background: var(--tint-purple-a);
+    }
+
+    .sub-letter p {
+      font-family: var(--body);
+      font-size: 0.96rem;
+      line-height: 1.7;
+      color: var(--text);
+      margin: 0 0 0.9rem;
+    }
+
+    .sub-letter p:last-child {
+      margin-bottom: 0;
+    }
+
+    .sub-letter-src {
+      font-family: var(--heading);
+      font-size: 0.7rem !important;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint) !important;
+      padding-top: 0.6rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .sub-group {
+      margin-top: 2rem;
+    }
+
+    .sub-theme {
+      font-family: var(--heading);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin: 0 0 0.9rem;
+    }
+
+    .sub-recs {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-width: 68ch;
+    }
+
+    .sub-recs li {
+      position: relative;
+      padding: 1.2rem 1.3rem 1.2rem 3.6rem;
+      margin-bottom: 1rem;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    .sub-num {
+      position: absolute;
+      left: 1.2rem;
+      top: 1.2rem;
+      font-family: var(--heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--purple);
+    }
+
+    .sub-recs h4 {
+      font-family: var(--heading);
+      font-size: 1.02rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      margin: 0 0 0.4rem;
+    }
+
+    .sub-recs p {
+      font-family: var(--body);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--text-dim);
+      margin: 0;
+    }
+
+    .sub-footer {
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 2px solid var(--border);
+    }
+
+    .sub-footer p {
+      font-family: var(--body);
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      max-width: 60ch;
+      margin-bottom: 0.8rem;
+    }
+
+    @media (max-width: 620px) {
+      .sub {
+        padding: 2rem 1.2rem 3rem;
+      }
+
+      .sub-recs li {
+        padding: 1rem 1rem 1rem 3rem;
+      }
+    }
+  </style>
+</BaseLayout>

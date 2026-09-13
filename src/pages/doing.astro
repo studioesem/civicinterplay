@@ -8,12 +8,12 @@ import SectionHeading from '../components/SectionHeading.astro';
 const tools = [
   {
     href: '/sovereignties/',
-    title: 'Mapping AI Sovereignties',
+    title: 'Data Centres Sovereignty Tracker',
     excerpt:
       "A live map of the data centre super cycle shaping Australia's digital future under the banner of 'sovereign compute'. Contribute, explore, dispute.",
     image: '/images/tiles/map-560.webp',
     imageAlt:
-      'Field note card reading: I spent the past five months building a data centre map to track the super cycle transforming energy, water and land infrastructure.',
+      'Field note card reading: Tracking the super cycle. Energy, water and land, site by site.',
   },
   {
     href: '/terrain/',
@@ -74,13 +74,13 @@ const tools = [
 
       <a
         class="tool-add"
-        href="https://studio-esem.notion.site/a504252cf109454598a7b02e5024b10d"
+        href="https://studio-esem.notion.site/3da18df0b77580e9ab23f55c2bc23021"
         target="_blank"
         rel="noopener external"
       >
         <span class="tool-add-plus" aria-hidden="true">+</span>
         <span class="tool-add-label">More to come</span>
-        <span class="tool-add-note">Working on something similar? Get in touch.</span>
+        <span class="tool-add-note">Tell us what you are working on and we will let you know when we gather.</span>
       </a>
     </div>
 
@@ -88,14 +88,14 @@ const tools = [
       <h2>What's coming</h2>
       <p>
         Civic Interplay is designed as a resource for agentic-civic methods and
-        frameworks. If you are working on something similar, get in touch. You
+        frameworks. Sign up and we will tell you when we start gathering. You
         can also follow progress on
         <a href="https://github.com/civic-interplay" target="_blank" rel="noopener external">GitHub</a>.
         More resources are coming soon.
       </p>
 
       <p class="doing-cta">
-        <a href="https://studio-esem.notion.site/a504252cf109454598a7b02e5024b10d" target="_blank" rel="noopener external">Register your interest</a>
+        <a href="https://studio-esem.notion.site/3da18df0b77580e9ab23f55c2bc23021" target="_blank" rel="noopener external">Stay in touch</a>
       </p>
 
       <ul class="doing-future-grid">
@@ -112,7 +112,7 @@ const tools = [
         <li class="doing-future-card accent-terracotta">
           <p class="doing-future-eyebrow">On request</p>
           <h3>Sessions</h3>
-          <p>Facilitated sessions for groups working on planetary citizenship and AI sovereignty. Register interest above.</p>
+          <p>Facilitated sessions for groups working on planetary citizenship and AI sovereignty. Sign up above.</p>
         </li>
       </ul>
     </section>
@@ -142,6 +142,7 @@ const tools = [
       font-family: var(--heading);
       font-size: clamp(2rem, 5vw, 3rem);
       font-weight: 300;
+      line-height: 1.08;
       letter-spacing: 0.04em;
       text-transform: uppercase;
       margin-bottom: 0.8rem;
@@ -157,7 +158,6 @@ const tools = [
 
     .tools-grid { margin-bottom: 3.5rem; }
 
-    /* The invitation, same move as the card at the end of the About scroller. */
     .tool-add {
       display: flex;
       flex-direction: column;

@@ -572,10 +572,15 @@ section:nth-child(4) { animation-delay: 0.60s; }
   display: block;
   font-family: var(--heading);
   font-style: normal;
-  font-size: 0.78rem;
-  color: var(--text-faint);
+  /* Captions carry credit lines and provenance, so they have to be readable.
+     At --text-faint (55%) they sat under the 4.5:1 AA threshold for text this
+     small. --text-dim clears it comfortably. */
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--text-dim);
   text-align: center;
-  margin-top: -1.2rem;
+  max-width: 62ch;
+  margin: -1.2rem auto 0;
 }
 
 .post-content figure {
@@ -584,10 +589,12 @@ section:nth-child(4) { animation-delay: 0.60s; }
 
 .post-content figcaption {
   font-family: var(--heading);
-  font-size: 0.78rem;
-  color: var(--text-faint);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--text-dim);
   text-align: center;
-  margin-top: 0.6rem;
+  max-width: 62ch;
+  margin: 0.6rem auto 0;
 }
 
 .post-content ul,

@@ -1,0 +1,137 @@
+---
+// A card for someone else's work.
+//
+// Deliberately imageless. Book covers and publisher artwork are copyrighted,
+// they would sit badly together (a paperback cover beside a think-tank logo
+// beside a government banner), and using them unclearned would undercut a site
+// that publishes its own licence terms. So the absence of a picture becomes the
+// signal: this is work we are pointing at, not work we made. Musings keeps its
+// feature images and the two sections read as different kinds of thing without
+// having to be labelled.
+
+interface Props {
+  title: string;
+  authors: string;
+  publisher: string;
+  year: string;
+  href: string;
+  note: string;
+  accent?: string;
+}
+
+const { title, authors, publisher, year, href, note, accent = 'purple' } = Astro.props;
+
+// The host, shown so the destination is legible before the click.
+let host = '';
+try {
+  host = new URL(href).hostname.replace(/^www\./, '');
+} catch {
+  host = '';
+}
+---
+<article class:list={['reading-card', `accent-${accent}`]}>
+  <p class="reading-card-meta">
+    <span class="reading-card-publisher">{publisher}</span>
+    <span aria-hidden="true">&middot;</span>
+    <span>{year}</span>
+  </p>
+
+  <h3 class="reading-card-title">
+    <a href={href} target="_blank" rel="noopener external">{title}</a>
+  </h3>
+
+  <p class="reading-card-authors">{authors}</p>
+
+  <p class="reading-card-note">{note}</p>
+
+  {host && (
+    <p class="reading-card-host">
+      <span aria-hidden="true">&rarr;</span> {host}
+    </p>
+  )}
+</article>
+
+<style>
+  .reading-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1.6rem 1.3rem;
+    border: 2px solid var(--border);
+    border-left: 8px solid var(--card-kicker, var(--purple));
+    border-radius: var(--radius);
+    background: var(--card-bg, #fff);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .reading-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 var(--border);
+  }
+
+  .reading-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-family: var(--heading);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--card-kicker, var(--purple));
+    margin: 0 0 0.6rem;
+  }
+
+  .reading-card-title {
+    font-family: var(--heading);
+    font-size: 1.12rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin: 0 0 0.35rem;
+  }
+
+  .reading-card-title a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .reading-card-title a:hover,
+  .reading-card-title a:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* The whole card is the hit area, not just the title. */
+  .reading-card-title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .reading-card {
+    position: relative;
+  }
+
+  .reading-card-authors {
+    font-family: var(--body);
+    font-size: 0.86rem;
+    font-style: italic;
+    color: var(--text-dim);
+    margin: 0 0 0.8rem;
+  }
+
+  .reading-card-note {
+    font-family: var(--body);
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: var(--text);
+    margin: 0 0 1rem;
+  }
+
+  .reading-card-host {
+    font-family: var(--heading);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--text-faint);
+    margin: auto 0 0;
+  }
+</style>
