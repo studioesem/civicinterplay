@@ -19,12 +19,19 @@ import ToolEmbed from '../components/ToolEmbed.astro';
       <p class="sov-eyebrow">Civic Interplay / Tracker</p>
       <h1>Data Centres Sovereignty Tracker</h1>
       <p class="sov-intro">
-        A living atlas of infrastructural AI in Australia, addressing each
-        layer of the infrastructural-AI stack. The tracker covers ownership of
-        compute, resource impacts, planning pathways, community contestation,
-        and supply chain considerations, and runs an openly accessible and
-        forkable code base on GitHub as well as Summary Data sheets for each
-        State and Territory in Australia and an RSS news feed.
+        A <a href="https://datacentres.civicinterplay.io/" target="_blank" rel="noopener external">living atlas</a>
+        of infrastructural AI in Australia, addressing each layer of the
+        infrastructural-AI stack. The tracker covers ownership of compute,
+        resource impacts, planning pathways, community contestation, and supply
+        chain considerations, and runs an openly accessible and
+        <a href="https://github.com/civic-interplay/ai-sovereignties" target="_blank" rel="noopener external">forkable code base on GitHub</a>
+        alongside
+        <a href="https://datacentres.civicinterplay.io/sheets" target="_blank" rel="noopener external">Summary Data sheets</a>
+        for each State and Territory in Australia, a
+        <a href="https://datacentres.civicinterplay.io/glossary" target="_blank" rel="noopener external">Glossary</a>,
+        a <a href="https://github.com/civic-interplay/ai-sovereignties/blob/main/docs/METHODOLOGY.md" target="_blank" rel="noopener external">Methods statement</a>,
+        and a <a href="https://datacentres.civicinterplay.io/news" target="_blank" rel="noopener external">News feed</a>
+        (<a href="https://datacentres.civicinterplay.io/news/feed.xml" target="_blank" rel="noopener external">RSS</a>).
       </p>
       <p class="sov-wayfind">
         <a href="/data-centres-map/">Read the story behind the map</a>
@@ -286,6 +293,13 @@ import ToolEmbed from '../components/ToolEmbed.astro';
       color: var(--purple);
       text-decoration: underline;
       text-underline-offset: 4px;
+    }
+
+    .sov-intro a {
+      color: var(--purple);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-style: normal;
     }
 
     .sov-note {
