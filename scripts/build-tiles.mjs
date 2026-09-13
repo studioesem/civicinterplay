@@ -177,9 +177,9 @@ const GENERATED = [
   },
   {
     id: 'submission',
-    headline: 'Fourteen asks of',
-    knockout: 'the Senate',
-    sub: 'on AI, data centres and disclosure',
+    headline: 'The Senate',
+    knockout: 'Submission',
+    sub: 'key recommendations',
     signoff: 'CIVIC INTERPLAY \u00B7 SUBMISSION',
   },
   {

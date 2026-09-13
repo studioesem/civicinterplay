@@ -26,13 +26,13 @@
   <rect x="110" y="440" width="112" height="13" fill="#B8317B"/>
 
   <text x="108" y="600" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
-        font-size="76" font-weight="700" letter-spacing="-1" fill="#111111">Fourteen asks of</text>
+        font-size="76" font-weight="700" letter-spacing="-1" fill="#111111">The Senate</text>
   <rect x="98" y="628" width="480" height="98" fill="#111111"/>
   <text x="116" y="704" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
-        font-size="76" font-weight="700" letter-spacing="-1" fill="#F4ECD7">the Senate</text>
+        font-size="76" font-weight="700" letter-spacing="-1" fill="#F4ECD7">Submission</text>
 
   <text x="108" y="808" font-family="Menlo, Consolas, monospace"
-        font-size="27" fill="#7d766c">on AI, data centres and disclosure</text>
+        font-size="27" fill="#7d766c">key recommendations</text>
 
   <text x="108" y="1258" font-family="Menlo, Consolas, monospace"
         font-size="22" letter-spacing="2.6" fill="#8b8378">CIVIC INTERPLAY · SUBMISSION</text>
