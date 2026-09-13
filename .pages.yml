@@ -75,6 +75,59 @@ content:
             default: false
             description: Hide the tile until its destination page exists
 
+  - name: readings
+    label: Friends of Civic Interplay
+    type: file
+    path: src/data/readings.json
+    format: json
+    description: The reading list of other people's work, shown on the Reading page above Musings. These cards carry no images on purpose, so there is nothing to upload.
+    fields:
+      - name: readings
+        label: Readings
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: ID
+            type: string
+            required: true
+            description: A short lowercase name with hyphens, unique in this list. Not shown anywhere; it just keeps the entries apart.
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: authors
+            label: Authors
+            type: string
+            required: true
+            description: As you would cite them, e.g. "Francesca Bria, Paul Timmers & Fausto Gernone".
+          - name: publisher
+            label: Publisher
+            type: string
+            required: true
+            description: The journal, institute or press. Shown small above the title.
+          - name: year
+            label: Year
+            type: string
+            required: true
+            description: A year, or "ongoing" for a live programme.
+          - name: href
+            label: Link
+            type: string
+            required: true
+            description: The full URL, starting https://. Opens in a new tab.
+          - name: accent
+            label: Colour
+            type: select
+            options:
+              values: [purple, periwinkle, terracotta, forest, cream, pink]
+            description: The left border. Group related entries by giving them the same colour.
+          - name: note
+            label: Why it matters
+            type: text
+            required: true
+            description: Two or three sentences in your own voice on why this belongs. This commentary is the point; without it the page is only a list of links.
+
   - name: fieldnotes
     label: Field notes
     type: collection
