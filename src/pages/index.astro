@@ -17,8 +17,13 @@ const allPosts = (await getCollection('posts'))
 const byPrimary = (cat: string) =>
   allPosts.filter((p) => p.data.primaryCategory === cat);
 
-const foundationalPosts = byPrimary('foundational-docs');
-const trainingGroundsPosts = byPrimary('training-grounds');
+// Six fills two complete rows of three. A seventh would hang alone on a row
+// of its own, so the overflow goes to the Reading page instead.
+const HOME_MAX = 6;
+const foundationalAll = byPrimary('foundational-docs');
+const trainingGroundsAll = byPrimary('training-grounds');
+const foundationalPosts = foundationalAll.slice(0, HOME_MAX);
+const trainingGroundsPosts = trainingGroundsAll.slice(0, HOME_MAX);
 const portalsPosts = byPrimary('the-portals');
 
 // The v2-03 FLAT visualisation carries no headline type of its own, so it does
@@ -87,6 +92,11 @@ function categoryLabelsFor(post: (typeof allPosts)[number]) {
             />
           ))}
         </div>
+        {foundationalAll.length > HOME_MAX && (
+          <p class="section-more">
+            <a href="/reading/">View all in Reading</a>
+          </p>
+        )}
       </section>
     )}
 
@@ -109,6 +119,11 @@ function categoryLabelsFor(post: (typeof allPosts)[number]) {
             />
           ))}
         </div>
+        {trainingGroundsAll.length > HOME_MAX && (
+          <p class="section-more">
+            <a href="/reading/">View all in Reading</a>
+          </p>
+        )}
       </section>
     )}
 
@@ -137,6 +152,19 @@ function categoryLabelsFor(post: (typeof allPosts)[number]) {
   </main>
 
   <style>
+    .section-more {
+      margin: 1.4rem 0 0;
+      font-family: var(--heading);
+      font-size: 0.82rem;
+      letter-spacing: 0.03em;
+    }
+
+    .section-more a {
+      color: var(--purple);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
     .tiles-section {
       margin-bottom: 3.5rem;
     }
