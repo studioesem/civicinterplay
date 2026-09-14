@@ -41,10 +41,8 @@
     --heading: 'Fira Sans', system-ui, sans-serif;
     --body: 'Merriweather', Georgia, serif;
 
-    /* Written by the scroll handler. Periwinkle at the top, purple through
-       the middle, sand by the end. */
-    --t-peri: 1;
-    --t-purple: 0;
+    /* Written by the scroll handler. Purple the whole way down, turning to
+       sand only at the end. */
     --t-sand: 0;
   }
 
@@ -65,19 +63,10 @@
   /* Full-strength ink, the same purple the plates are printed in, so the
      paper sheet lifts off it. Periwinkle at the top, purple through the
      middle, sand by the end. */
-  .wash-peri {
-    opacity: var(--t-peri);
-    background:
-      radial-gradient(90% 70% at 8% 0%, #E9ECFB, transparent 62%),
-      radial-gradient(75% 60% at 96% 18%, #A8B3E6, transparent 66%),
-      radial-gradient(85% 65% at 40% 104%, #7C86CE, transparent 70%),
-      linear-gradient(165deg, #BFC7EE 0%, #8E9BDD 52%, #7F76C9 100%);
-  }
   .wash-purple {
-    opacity: var(--t-purple);
     background:
       radial-gradient(80% 62% at 92% 2%, #B38BE0, transparent 64%),
-      radial-gradient(85% 66% at 4% 46%, #8E9BDD, transparent 66%),
+      radial-gradient(85% 66% at 4% 46%, #9080D2, transparent 66%),
       radial-gradient(80% 60% at 56% 102%, #553380, transparent 70%),
       linear-gradient(170deg, #8E6BC8 0%, #7D50BD 48%, #6A45A4 100%);
   }
@@ -584,7 +573,6 @@
 </style>
 
 <div class="ground" aria-hidden="true">
-  <span class="wash-peri"></span>
   <span class="wash-purple"></span>
   <span class="wash-sand"></span>
 </div>
@@ -852,7 +840,7 @@
 
       <article class="guide g-langton">
         <div class="plate"><div class="img plate-langton"></div><div class="ink"></div></div>
-        <p class="credit">Marcia Langton. Source to confirm.</p>
+        <p class="credit">Marcia Langton. Source: The Howling Infinite.</p>
         <h3>Marcia Langton</h3>
         <p class="key">Key: the custodian</p>
         <dl class="spec">
@@ -874,7 +862,7 @@
 
       <article class="guide g-rovelli">
         <div class="plate"><div class="img plate-rovelli"></div><div class="ink"></div></div>
-        <p class="credit">Carlo Rovelli. Source to confirm.</p>
+        <p class="credit">Carlo Rovelli. Source: The Guardian.</p>
         <h3>Carlo Rovelli</h3>
         <p class="key">Key: the interval</p>
         <dl class="spec">
@@ -1119,9 +1107,8 @@
     var h = document.body.scrollHeight - window.innerHeight;
     var p = h > 0 ? Math.min(1, Math.max(0, window.scrollY / h)) : 0;
     var clamp = function (v) { return Math.min(1, Math.max(0, v)); };
-    root.style.setProperty('--t-peri', String(clamp(1 - p * 2)));
-    root.style.setProperty('--t-purple', String(clamp(1 - Math.abs(p * 2 - 1))));
-    root.style.setProperty('--t-sand', String(clamp(p * 2 - 1)));
+    // Sand holds off until the last stretch, so the page is purple throughout.
+    root.style.setProperty('--t-sand', String(clamp((p - 0.62) / 0.38)));
   }
 
   window.addEventListener('scroll', function () {
