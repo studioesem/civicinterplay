@@ -1,0 +1,898 @@
+<title>A Steward's First Walk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap">
+<style>
+  :root {
+    --bg: #f8f8f8;
+    --paper: #fff;
+    --text: #1c1917;
+    --text-dim: rgba(28, 25, 23, 0.78);
+    --text-faint: rgba(28, 25, 23, 0.55);
+    --border: #333;
+    --border-light: rgba(28, 25, 23, 0.12);
+
+    --purple: #7D50BD;
+    --pink: #E076DB;
+    --terracotta: #D16D54;
+    --blush: #F8DFF6;
+    --sand: #DACCBA;
+    --forest: #454E41;
+    --periwinkle: #8E9BDD;
+
+    --tint-cream-a: #FBF7ED;
+    --ink-cream: #6E5A3C;
+    --edge-cream: #DFD3BC;
+    --tint-purple-a: #EFE6FA;
+    --ink-purple: #553380;
+    --edge-purple: #C0A8DC;
+    --tint-terracotta-a: #FAE7DD;
+    --ink-terracotta: #8B3A25;
+    --edge-terracotta: #E0AE97;
+    --tint-periwinkle-a: #E9ECFB;
+    --ink-periwinkle: #3C478A;
+    --edge-periwinkle: #B4BEE9;
+    --tint-pink-a: #FBE6F8;
+    --ink-pink: #86307F;
+    --edge-pink: #E3ACD9;
+
+    --heading: 'Fira Sans', system-ui, sans-serif;
+    --body: 'Merriweather', Georgia, serif;
+  }
+
+  body {
+    font-family: var(--body);
+    font-weight: 300;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+  .eyebrow {
+    font-family: var(--heading);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  h1 {
+    font-family: var(--heading);
+    font-size: clamp(2.2rem, 6vw, 3.4rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-wrap: balance;
+    margin: 0.7rem 0 1.1rem;
+  }
+
+  h2 {
+    font-family: var(--heading);
+    font-size: 1.35rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  h3 {
+    font-family: var(--heading);
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  p { max-width: 62ch; }
+
+  .lede {
+    font-size: 1.05rem;
+    color: var(--text-dim);
+    max-width: 58ch;
+  }
+
+  header.page {
+    border-bottom: 3px solid var(--border);
+    padding-bottom: 1.8rem;
+    margin-bottom: 2.8rem;
+  }
+
+  .stamp {
+    display: inline-block;
+    margin-top: 1.2rem;
+    font-family: var(--heading);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-terracotta);
+    border: 1.5px solid var(--edge-terracotta);
+    background: var(--tint-terracotta-a);
+    padding: 0.3rem 0.7rem;
+  }
+
+  section { margin-bottom: 3.5rem; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0.6rem;
+    margin-bottom: 1.8rem;
+    flex-wrap: wrap;
+  }
+  .section-head .note {
+    font-family: var(--heading);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-left: auto;
+  }
+
+  /* --- The spine ------------------------------------------------------- */
+
+  .spine { display: grid; gap: 0; }
+
+  .move {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 1.5rem;
+    padding: 1.4rem 0;
+    border-top: 1px solid var(--border-light);
+  }
+  .move:first-child { border-top: none; padding-top: 0; }
+
+  .move .clock {
+    font-family: var(--heading);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-variant-numeric: tabular-nums;
+    padding-top: 0.25rem;
+  }
+  .move .clock b {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    text-transform: none;
+  }
+
+  .move h3 { margin-bottom: 0.35rem; }
+  .move p { margin-bottom: 0.5rem; color: var(--text-dim); }
+
+  .said {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 0.95rem;
+    border-left: 8px solid var(--periwinkle);
+    background: var(--paper);
+    box-shadow: 0 2px 10px rgba(28, 25, 23, 0.06);
+    padding: 0.7rem 1rem;
+    margin: 0.7rem 0 0.2rem;
+    max-width: 58ch;
+  }
+  .said::before {
+    content: 'Spoken';
+    display: block;
+    font-family: var(--heading);
+    font-style: normal;
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 0.25rem;
+  }
+
+  .move.screens-shut .said { border-left-color: var(--terracotta); }
+  .move.screens-open .said { border-left-color: var(--purple); }
+
+  .rule-band {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: var(--tint-terracotta-a);
+    border: 1.5px solid var(--edge-terracotta);
+    color: var(--ink-terracotta);
+    font-family: var(--heading);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 0.7rem 1rem;
+    margin: 1.2rem 0;
+  }
+  .rule-band .dot {
+    flex: none;
+    width: 0.58rem;
+    height: 0.58rem;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+
+  /* --- Line drawings ---------------------------------------------------- */
+  /* One stroke weight throughout. Each card's own hue comes through --hue
+     where the card defines one; everything else falls back to the ink. */
+
+  svg use, symbol { fill: none; stroke: currentColor; stroke-width: 1.4;
+    stroke-linecap: round; stroke-linejoin: round; }
+  symbol * { vector-effect: non-scaling-stroke; }
+
+  .guide { position: relative; }
+  .guide .emblem {
+    position: absolute;
+    top: 1rem;
+    right: 1.1rem;
+    width: 4.6rem;
+    height: 3.4rem;
+    color: var(--hue-ink);
+  }
+  .guide .who, .guide h3, .guide .key { padding-right: 5.4rem; }
+
+  .reg-art {
+    width: 100%;
+    max-width: 10rem;
+    height: 4.2rem;
+    margin: 0.1rem auto 0.3rem;
+    color: var(--ink);
+    display: block;
+  }
+
+  .clock .tick {
+    display: block;
+    width: 1.35rem;
+    height: 1.35rem;
+    margin-bottom: 0.3rem;
+    color: var(--text-faint);
+  }
+
+  /* --- Register cards --------------------------------------------------- */
+
+  .registers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.1rem;
+  }
+
+  .reg {
+    background: var(--fill);
+    border: 2px solid var(--edge);
+    padding: 1.2rem 1.1rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    break-inside: avoid;
+  }
+  .reg .kicker {
+    font-family: var(--heading);
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .reg h3 {
+    font-size: 1.3rem;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .reg .ask { font-size: 0.92rem; color: var(--text-dim); margin: 0; }
+  .reg ol {
+    list-style: none;
+    counter-reset: beat;
+    display: grid;
+    gap: 0.3rem;
+    font-size: 0.86rem;
+    color: var(--text-dim);
+  }
+  .reg ol li { counter-increment: beat; padding-left: 1.4rem; position: relative; }
+  .reg ol li::before {
+    content: counter(beat);
+    position: absolute;
+    left: 0;
+    top: 0.05rem;
+    font-family: var(--heading);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .reg .trap {
+    font-family: var(--heading);
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    border-top: 1px solid var(--edge);
+    padding-top: 0.55rem;
+    margin-top: auto;
+  }
+
+  .r-heart { --fill: var(--tint-pink-a); --edge: var(--edge-pink); --ink: var(--ink-pink); }
+  .r-body { --fill: var(--tint-terracotta-a); --edge: var(--edge-terracotta); --ink: var(--ink-terracotta); }
+  .r-mind { --fill: var(--tint-periwinkle-a); --edge: var(--edge-periwinkle); --ink: var(--ink-periwinkle); }
+  .r-agent { --fill: var(--tint-purple-a); --edge: var(--edge-purple); --ink: var(--ink-purple); }
+
+  /* --- Guide cards ------------------------------------------------------ */
+
+  .guides { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; }
+
+  .guide {
+    background: var(--paper);
+    border: 1px solid var(--border-light);
+    border-left: 8px solid var(--hue);
+    box-shadow: 0 2px 12px rgba(28, 25, 23, 0.07);
+    padding: 1.2rem 1.3rem 1.3rem;
+    break-inside: avoid;
+  }
+  .guide .who {
+    font-family: var(--heading);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .guide h3 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin: 0.15rem 0 0.1rem;
+  }
+  .guide .key {
+    font-family: var(--heading);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--hue-ink);
+    margin-bottom: 0.9rem;
+  }
+  .guide dl { display: grid; grid-template-columns: 5.6rem 1fr; gap: 0.45rem 0.9rem; font-size: 0.88rem; }
+  .guide dt {
+    font-family: var(--heading);
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    padding-top: 0.28rem;
+  }
+  .guide dd { color: var(--text-dim); }
+
+  .g-leguin { --hue: var(--pink); --hue-ink: var(--ink-pink); }
+  .g-rovelli { --hue: var(--periwinkle); --hue-ink: var(--ink-periwinkle); }
+  .g-benjamin { --hue: var(--purple); --hue-ink: var(--ink-purple); }
+  .g-graeber { --hue: var(--terracotta); --hue-ink: var(--ink-terracotta); }
+  .g-ostrom { --hue: var(--forest); --hue-ink: var(--forest); }
+  .g-lovelock { --hue: var(--sand); --hue-ink: var(--ink-cream); }
+
+  .pairing {
+    background: var(--blush);
+    border: 1.5px solid var(--edge-pink);
+    padding: 0.9rem 1.1rem;
+    margin-top: 1.2rem;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+  }
+  .pairing strong { font-family: var(--heading); font-weight: 600; color: var(--ink-pink); }
+
+  /* --- Capture sheet ---------------------------------------------------- */
+
+  .sheet {
+    background: var(--tint-cream-a);
+    border: 2px solid var(--edge-cream);
+    padding: 1.6rem 1.5rem 1.8rem;
+  }
+  .sheet .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.4rem 2rem; margin-top: 1.2rem; }
+  .field label {
+    display: block;
+    font-family: var(--heading);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-cream);
+    margin-bottom: 0.5rem;
+  }
+  .field .lines { display: grid; gap: 0.95rem; }
+  .field .lines i { display: block; border-bottom: 1px solid var(--edge-cream); height: 0.2rem; }
+
+  /* --- Kit list --------------------------------------------------------- */
+
+  .kit { list-style: none; display: grid; gap: 0.5rem; font-size: 0.92rem; color: var(--text-dim); max-width: 62ch; }
+  .kit li { padding-left: 1.6rem; position: relative; }
+  .kit li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    border: 1.5px solid var(--border);
+  }
+
+  footer.page {
+    border-top: 2px solid var(--border);
+    padding-top: 1.2rem;
+    font-family: var(--heading);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    color: var(--text-faint);
+  }
+
+  @media (max-width: 560px) {
+    .move { grid-template-columns: 1fr; gap: 0.4rem; }
+    .move .clock b { display: inline; font-size: 1.1rem; margin-right: 0.5rem; }
+    .guide dl { grid-template-columns: 1fr; gap: 0.1rem 0; }
+    .guide dt { padding-top: 0.5rem; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .wrap { max-width: none; padding: 0; }
+    section { break-inside: auto; }
+    .guide, .reg, .move, .sheet { break-inside: avoid; }
+    .page-break { break-before: page; }
+    .said { box-shadow: none; border: 1px solid var(--border-light); border-left: 8px solid var(--periwinkle); }
+    .guide { box-shadow: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<div class="wrap">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <g id="sym-defaults" fill="none" stroke="currentColor" stroke-width="1.4"
+       stroke-linecap="round" stroke-linejoin="round"></g>
+  </defs>
+
+  <!-- Guide emblems, 64 x 48 -->
+  <symbol id="g-leguin" viewBox="0 0 64 48">
+    <path d="M13 17 L17 42 H45 L49 17 Z"/>
+    <path d="M10 17 H52"/>
+    <path d="M22 17 C22 7 40 7 40 17" stroke="var(--hue, currentColor)"/>
+    <circle cx="24" cy="29" r="3.4"/>
+    <rect x="29" y="30" width="7" height="7" rx="1"/>
+    <path d="M40 37 L43.5 30 L47 37 Z"/>
+    <path d="M25 36 h4"/>
+    <circle cx="57" cy="10" r="2.6" stroke="var(--hue, currentColor)"/>
+    <path d="M52 15 q4 -3 3 -7" stroke="var(--hue, currentColor)" stroke-dasharray="2 2.4"/>
+  </symbol>
+
+  <symbol id="g-rovelli" viewBox="0 0 64 48">
+    <circle cx="16" cy="24" r="11"/>
+    <path d="M16 24 V15"/>
+    <path d="M16 13 v-2"/>
+    <circle cx="38" cy="28" r="7.5" stroke="var(--hue, currentColor)"/>
+    <path d="M38 28 L43 24" stroke="var(--hue, currentColor)"/>
+    <circle cx="54" cy="32" r="4.5"/>
+    <path d="M54 32 L54 28.5"/>
+    <path d="M6 42 H58" stroke-dasharray="2 3"/>
+  </symbol>
+
+  <symbol id="g-benjamin" viewBox="0 0 64 48">
+    <path d="M14 9 L44 12 L46 30 L38 28 L33 33 L27 29 L16 31 Z"/>
+    <path d="M20 17 H38"/>
+    <path d="M20 22 H34"/>
+    <path d="M20 27 H28" stroke="var(--hue, currentColor)"/>
+    <path d="M30 33 V42" stroke="var(--hue, currentColor)" stroke-dasharray="2 2.6"/>
+    <path d="M18 42 H46"/>
+  </symbol>
+
+  <symbol id="g-graeber" viewBox="0 0 64 48">
+    <path d="M12 12 L48 8 L52 34 L16 38 Z"/>
+    <path d="M18 18 H40"/>
+    <path d="M18 24 H34"/>
+    <path d="M20 29 q4 -4 8 0 t8 0" stroke="var(--hue, currentColor)"/>
+    <circle cx="45" cy="27" r="5" stroke="var(--hue, currentColor)"/>
+    <path d="M42.5 27 H47.5 M45 24.5 V29.5" stroke="var(--hue, currentColor)"/>
+  </symbol>
+
+  <symbol id="g-ostrom" viewBox="0 0 64 48">
+    <path d="M6 32 L14 12 L38 9 L46 30 L24 40 Z" stroke-dasharray="4.5 3.5"/>
+    <path d="M14 12 V4 M38 9 V1 M46 30 V22 M6 32 V24"/>
+    <path d="M11 4 h6 M35 1 h6 M43 22 h6 M3 24 h6"/>
+    <path d="M50 26 q7 -7 12 0 q-5 7 -12 0 Z" stroke="var(--hue, currentColor)"/>
+    <circle cx="56" cy="26" r="2.4" stroke="var(--hue, currentColor)"/>
+  </symbol>
+
+  <symbol id="g-lovelock" viewBox="0 0 64 48">
+    <path d="M2 46 q26 -14 54 -2"/>
+    <rect x="16" y="30" width="11" height="8" rx="1"/>
+    <path d="M18 30 q3 -6 0 -10 q-3 -5 0 -9" stroke="var(--hue, currentColor)"/>
+    <path d="M25 30 q4 -7 0 -13" stroke="var(--hue, currentColor)"/>
+    <path d="M44 22 a9 9 0 0 1 14 -7" />
+    <path d="M51 22 V32 M45 32 h12"/>
+    <path d="M40 10 q4 5 0 10 M35 6 q7 9 0 18" stroke="var(--hue, currentColor)"/>
+  </symbol>
+
+  <!-- Register banners, 96 x 52 -->
+  <symbol id="r-heart" viewBox="0 0 96 52">
+    <path d="M30 48 q-8 -4 -9 -13 q-1 -7 3 -8 q3 -1 4 4 l1 5"/>
+    <path d="M29 36 V21 q0 -4 3.5 -4 t3.5 4 v13"/>
+    <path d="M36 34 V17 q0 -4 3.5 -4 t3.5 4 v17"/>
+    <path d="M43 34 V21 q0 -4 3.5 -4 t3.5 4 v14"/>
+    <path d="M50 35 V25 q0 -4 3.5 -4 t3.5 4 v11 q0 9 -6 12"/>
+    <path d="M30 48 q13 4 24 0"/>
+    <circle cx="66" cy="20" r="6"/>
+    <path d="M66 10 V5 M74 14 l4 -4 M74 27 l4 4"/>
+  </symbol>
+  <symbol id="r-body" viewBox="0 0 96 52">
+    <circle cx="48" cy="13" r="6"/>
+    <path d="M48 19 V35"/>
+    <path d="M48 23 L38 30 M48 23 L58 30"/>
+    <path d="M48 35 L42 47 M48 35 L54 47"/>
+    <path d="M26 10 q4 5 0 10 M20 6 q7 9 0 18"/>
+    <path d="M70 10 q-4 5 0 10 M76 6 q-7 9 0 18"/>
+  </symbol>
+  <symbol id="r-mind" viewBox="0 0 96 52">
+    <path d="M22 38 L36 16 L58 22 L74 12 M36 16 L48 40 L58 22 M48 40 L74 12"/>
+    <circle cx="36" cy="16" r="3.4"/>
+    <circle cx="58" cy="22" r="3.4"/>
+    <circle cx="48" cy="40" r="3.4"/>
+    <circle cx="22" cy="38" r="3.4"/>
+    <circle cx="74" cy="12" r="4.4"/>
+  </symbol>
+  <symbol id="r-agent" viewBox="0 0 96 52">
+    <rect x="20" y="10" width="42" height="32" rx="2"/>
+    <path d="M20 18 H62"/>
+    <circle cx="25" cy="14" r="1.3"/>
+    <path d="M27 27 H46 M27 33 H40"/>
+    <path d="M50 30 V37"/>
+    <path d="M62 26 H74" stroke-dasharray="2.5 2.5"/>
+    <circle cx="79" cy="26" r="4"/>
+  </symbol>
+
+  <!-- Spine marks, 20 x 20 -->
+  <symbol id="m-threshold" viewBox="0 0 20 20">
+    <path d="M5 17 V5 h10 v12"/><path d="M8 11 h6 M12 8 l3 3 l-3 3"/>
+  </symbol>
+  <symbol id="m-listen" viewBox="0 0 20 20">
+    <path d="M6 14 q-3 -4 0 -8"/><path d="M10 16 q-5 -6 0 -12"/><path d="M14 18 q-7 -8 0 -16"/>
+  </symbol>
+  <symbol id="m-sense" viewBox="0 0 20 20">
+    <path d="M7 17 V9 q0 -2 2 -2 t2 2 V5 q0 -2 2 -2 t2 2 v10 q0 2 -2 2 Z"/><path d="M7 12 q-3 1 -3 4"/>
+  </symbol>
+  <symbol id="m-fork" viewBox="0 0 20 20">
+    <path d="M10 18 V11"/><path d="M10 11 L4 4 M10 11 L16 4"/><circle cx="4" cy="3" r="1.4"/><circle cx="16" cy="3" r="1.4"/>
+  </symbol>
+  <symbol id="m-walk" viewBox="0 0 20 20">
+    <ellipse cx="7" cy="6" rx="2.4" ry="3.4"/><ellipse cx="13" cy="14" rx="2.4" ry="3.4"/>
+  </symbol>
+  <symbol id="m-key" viewBox="0 0 20 20">
+    <circle cx="6" cy="10" r="3.4"/><path d="M9.4 10 H17"/><path d="M14 10 v3 M17 10 v3"/>
+  </symbol>
+  <symbol id="m-window" viewBox="0 0 20 20">
+    <rect x="3" y="5" width="14" height="11" rx="1.5"/><path d="M3 8.5 H17"/><path d="M6 12.5 H11"/>
+  </symbol>
+  <symbol id="m-return" viewBox="0 0 20 20">
+    <path d="M16 6 q-6 -3 -10 2 t2 9"/><path d="M4 6 l2.5 2.5 L4 11" /><path d="M13 14 h4"/>
+  </symbol>
+</svg>
+
+
+  <header class="page">
+    <p class="eyebrow">Civic Interplay / Steward onboarding / Copenhagen</p>
+    <h1>A Steward's First Walk</h1>
+    <p class="lede">Attention before the context window. Forty-five minutes, one place, four registers of being, six guides holding six keys.</p>
+    <p class="stamp">Draft. Sarah's words go over the top of mine.</p>
+  </header>
+
+  <section>
+    <div class="section-head">
+      <h2>The spine</h2>
+      <p class="note">Eight movements, about 45 minutes</p>
+    </div>
+
+    <div class="rule-band">
+      <span class="dot" aria-hidden="true"></span>
+      <span>One rule holds the whole thing together: no screens until movement six.</span>
+    </div>
+
+    <div class="spine">
+
+      <div class="move screens-shut">
+        <div class="clock"><svg class="tick" viewBox="0 0 20 20" aria-hidden="true"><use href="#m-threshold"/></svg><b>00</b>2 min</div>
+        <div>
+          <h3>The threshold</h3>
+          <p>Phones into the bag. Watch or paper timer only. Name out loud what each of you is carrying into this, including the thing you would rather not be carrying.</p>
+          <p class="said">We are going to pay attention to this place before we ask a machine anything about it.</p>
+        </div>
+      </div>
+
+      <div class="move screens-shut">
+        <div class="clock"><svg class="tick" viewBox="0 0 20 20" aria-hidden="true"><use href="#m-listen"/></svg><b>01</b>6 min</div>
+        <div>
+          <h3>Listen to now</h3>
+          <p>Standing or sitting, not walking. No talking, no notes. Count sounds on your fingers if you need somewhere to put the attention. Copenhagen offers water, bells, bikes, gulls, wind, ventilation. Hold until the timer, past the point where it gets uncomfortable.</p>
+          <p class="said">Listen to now. Six minutes. Nothing to produce at the end of it.</p>
+        </div>
+      </div>
+
+      <div class="move screens-shut">
+        <div class="clock"><svg class="tick" viewBox="0 0 20 20" aria-hidden="true"><use href="#m-sense"/></svg><b>02</b>6 min</div>
+        <div>
+          <h3>How do we feel this place</h3>
+          <p>Now speak. Each of you names the sense that dominated, the sense that was missing or suppressed, and one thing your body did without being asked. Write only after saying it.</p>
+          <p class="said">What senses stand out? And which one did this place shut down?</p>
+        </div>
+      </div>
+
+      <div class="move screens-shut">
+        <div class="clock"><svg class="tick" viewBox="0 0 20 20" aria-hidden="true"><use href="#m-fork"/></svg><b>03</b>2 min</div>
+        <div>
+          <h3>The fork</h3>
+          <p>Lay the four register cards down. This is the only moment of the walk that is a choice rather than an instruction. Each of you takes one, and says why, in one sentence.</p>
+          <p class="said">We want to map a complicated terrain with our hearts, our bodies, our minds and our agents. What do you want to speak from first?</p>
+        </div>
+      </div>
+
+      <div class="move screens-shut">
+        <div class="clock"><svg class="tick" viewBox="0 0 20 20" aria-hidden="true"><use href="#m-walk"/></svg><b>04</b>10 min</div>
+        <div>
+          <h3>Walk the register</h3>
+          <p>Follow the three beats on the card you took, out loud, while walking. When you finish your own, pick up the register the other person did not choose and walk that one too. The trap line on each card is the thing to watch for in yourself, not in each other.</p>
+        </div>
+      </div>
+
+      <div class="move screens-shut">
+        <div class="clock"><svg class="tick" viewBox="0 0 20 20" aria-hidden="true"><use href="#m-key"/></svg><b>05</b>8 min</div>
+        <div>
+          <h3>Conjure a guide</h3>
+          <p>Six guides, face down. Draw one, or choose one if the terrain has already told you who it wants. Take the key and perform the act on the card, here, before any of it becomes language for a machine.</p>
+          <p class="said">Each guide holds a key. The key does not explain the place. It opens a part of it you were not looking at.</p>
+        </div>
+      </div>
+
+      <div class="move screens-open">
+        <div class="clock"><svg class="tick" viewBox="0 0 20 20" aria-hidden="true"><use href="#m-window"/></svg><b>06</b>8 min</div>
+        <div>
+          <h3>The context window</h3>
+          <p>Phones out. The guide comes into the window with you, and the key is the constraint: the guide asks, it does not answer. Give the agent what you noticed first, then the key, then ask it what you missed. Notice the moment your attention leaves the place and goes into the screen. That moment is the subject.</p>
+          <p class="said">You are not the guide. You hold the guide's key. Here is what we noticed. Ask us what we did not.</p>
+        </div>
+      </div>
+
+      <div class="move screens-open">
+        <div class="clock"><svg class="tick" viewBox="0 0 20 20" aria-hidden="true"><use href="#m-return"/></svg><b>07</b>3 min</div>
+        <div>
+          <h3>The return</h3>
+          <p>Screens away again. Two questions, then the capture sheet: what did the agent reach that you could not, and what did you hold that it could not get near. The sheet becomes the first field note.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="page-break">
+    <div class="section-head">
+      <h2>The four registers</h2>
+      <p class="note">Movement 03, then 04</p>
+    </div>
+    <div class="registers">
+
+      <article class="reg r-heart">
+        <svg class="reg-art" viewBox="0 0 96 52" aria-hidden="true"><use href="#r-heart"/></svg>
+        <p class="kicker">Register</p>
+        <h3>Heart</h3>
+        <p class="ask">What here would you defend, and from what?</p>
+        <ol>
+          <li>The attachment.</li>
+          <li>The loss you can already name.</li>
+          <li>Who else holds it.</li>
+        </ol>
+        <p class="trap">Trap: feeling standing in for a claim.</p>
+      </article>
+
+      <article class="reg r-body">
+        <svg class="reg-art" viewBox="0 0 96 52" aria-hidden="true"><use href="#r-body"/></svg>
+        <p class="kicker">Register</p>
+        <h3>Body</h3>
+        <p class="ask">What is your body registering that has not yet become words?</p>
+        <ol>
+          <li>The sense that dominated.</li>
+          <li>The sense that was shut down.</li>
+          <li>What you moved away from.</li>
+        </ol>
+        <p class="trap">Trap: describing the view instead of the sensation.</p>
+      </article>
+
+      <article class="reg r-mind">
+        <svg class="reg-art" viewBox="0 0 96 52" aria-hidden="true"><use href="#r-mind"/></svg>
+        <p class="kicker">Register</p>
+        <h3>Mind</h3>
+        <p class="ask">What structure do you think is operating here?</p>
+        <ol>
+          <li>The pattern.</li>
+          <li>The counter-example.</li>
+          <li>Who the pattern pays.</li>
+        </ol>
+        <p class="trap">Trap: arriving with the answer already loaded.</p>
+      </article>
+
+      <article class="reg r-agent">
+        <svg class="reg-art" viewBox="0 0 96 52" aria-hidden="true"><use href="#r-agent"/></svg>
+        <p class="kicker">Register</p>
+        <h3>Agent</h3>
+        <p class="ask">What would you set a machine looking for, and what will it miss?</p>
+        <ol>
+          <li>The question worth delegating.</li>
+          <li>The context it cannot have.</li>
+          <li>What you will check by hand afterwards.</li>
+        </ol>
+        <p class="trap">Trap: opening the window before the other three have spoken.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="page-break">
+    <div class="section-head">
+      <h2>Six guides, six keys</h2>
+      <p class="note">Movement 05, carried into 06</p>
+    </div>
+    <div class="guides">
+
+      <article class="guide g-leguin">
+        <svg class="emblem" viewBox="0 0 64 48" aria-hidden="true"><use href="#g-leguin"/></svg>
+        <p class="who">Guide</p>
+        <h3>Ursula Le Guin</h3>
+        <p class="key">Key: the bag</p>
+        <dl>
+          <dt>Terrain</dt><dd>What this place holds, rather than what it does.</dd>
+          <dt>The act</dt><dd>Name five things this place carries. Then one it refuses to carry.</dd>
+          <dt>Bring back</dt><dd>A list, not a story.</dd>
+          <dt>In the window</dt><dd>Ask for the container, not the conflict.</dd>
+        </dl>
+      </article>
+
+      <article class="guide g-rovelli">
+        <svg class="emblem" viewBox="0 0 64 48" aria-hidden="true"><use href="#g-rovelli"/></svg>
+        <p class="who">Guide</p>
+        <h3>Carlo Rovelli</h3>
+        <p class="key">Key: the interval</p>
+        <dl>
+          <dt>Terrain</dt><dd>The durations layered in one site. Tidal, seasonal, budgetary, electoral, a training run.</dd>
+          <dt>The act</dt><dd>Name three clocks running here at different speeds. Say which one the place is governed by.</dd>
+          <dt>Bring back</dt><dd>Three speeds and their units.</dd>
+          <dt>In the window</dt><dd>Ask what changes if the question is asked in a different clock.</dd>
+        </dl>
+      </article>
+
+      <article class="guide g-benjamin">
+        <svg class="emblem" viewBox="0 0 64 48" aria-hidden="true"><use href="#g-benjamin"/></svg>
+        <p class="who">Guide</p>
+        <h3>Walter Benjamin</h3>
+        <p class="key">Key: the fragment</p>
+        <dl>
+          <dt>Terrain</dt><dd>The outmoded and the discarded. The past lodged inside the present.</dd>
+          <dt>The act</dt><dd>Pick up one thrown-away thing. Read it as a document.</dd>
+          <dt>Bring back</dt><dd>The object itself, in your pocket.</dd>
+          <dt>In the window</dt><dd>Give the agent the fragment before you give it the frame.</dd>
+        </dl>
+      </article>
+
+      <article class="guide g-graeber">
+        <svg class="emblem" viewBox="0 0 64 48" aria-hidden="true"><use href="#g-graeber"/></svg>
+        <p class="who">Guide</p>
+        <h3>David Graeber</h3>
+        <p class="key">Key: the IOU</p>
+        <dl>
+          <dt>Terrain</dt><dd>Obligation. The arbitrary wearing the clothes of the necessary.</dd>
+          <dt>The act</dt><dd>Name one rule everybody here obeys that somebody made up.</dd>
+          <dt>Bring back</dt><dd>The rule, and who it pays.</dd>
+          <dt>In the window</dt><dd>Ask how else it could have been made, and who would have had to agree.</dd>
+        </dl>
+      </article>
+
+      <article class="guide g-ostrom">
+        <svg class="emblem" viewBox="0 0 64 48" aria-hidden="true"><use href="#g-ostrom"/></svg>
+        <p class="who">Guide</p>
+        <h3>Elinor Ostrom</h3>
+        <p class="key">Key: the boundary</p>
+        <dl>
+          <dt>Terrain</dt><dd>Rules in use, as distinct from rules on paper.</dd>
+          <dt>The act</dt><dd>Draw the edge of one shared thing here. Then find out who watches it.</dd>
+          <dt>Bring back</dt><dd>A boundary and a monitor.</dd>
+          <dt>In the window</dt><dd>Hold what you drew against her eight design principles and see which are missing.</dd>
+          <dt>The name</dt><dd>She and Vincent Ostrom called their Bloomington centre a Workshop, not an institute: artisans, tools, apprentices, things made and repaired in company. It is the closest existing description of what we are doing.</dd>
+        </dl>
+      </article>
+
+      <article class="guide g-lovelock">
+        <svg class="emblem" viewBox="0 0 64 48" aria-hidden="true"><use href="#g-lovelock"/></svg>
+        <p class="who">Guide</p>
+        <h3>James Lovelock</h3>
+        <p class="key">Key: the instrument</p>
+        <dl>
+          <dt>Terrain</dt><dd>Metabolism. Heat, water, air, load. The heat you are standing in has a source, and in Denmark some of it comes back as district heating.</dd>
+          <dt>The act</dt><dd>If you could read only this place's breath, how would you know it is alive?</dd>
+          <dt>Bring back</dt><dd>One flow you could actually measure.</dd>
+          <dt>In the window</dt><dd>Ask what a probe passing overhead would read in the atmosphere here.</dd>
+        </dl>
+      </article>
+
+    </div>
+
+    <p class="pairing"><strong>A pairing, if the terrain turns to governance.</strong> Draw Graeber and Ostrom together. One key opens what is arbitrary and could be otherwise, the other opens what has endured because somebody maintains it. The argument between them is the useful part.</p>
+  </section>
+
+  <section class="page-break">
+    <div class="section-head">
+      <h2>Capture sheet</h2>
+      <p class="note">Movement 07. Becomes the first field note</p>
+    </div>
+    <div class="sheet">
+      <p class="lede">One sheet each. Written by hand, typed up later only if it earns it.</p>
+      <div class="fields">
+        <div class="field">
+          <label>Place, date, weather, hour</label>
+          <div class="lines"><i></i><i></i></div>
+        </div>
+        <div class="field">
+          <label>What I heard in the six minutes</label>
+          <div class="lines"><i></i><i></i><i></i></div>
+        </div>
+        <div class="field">
+          <label>Sense that dominated / sense that was shut down</label>
+          <div class="lines"><i></i><i></i></div>
+        </div>
+        <div class="field">
+          <label>Register I spoke from first, and why</label>
+          <div class="lines"><i></i><i></i></div>
+        </div>
+        <div class="field">
+          <label>Guide, key, and what it opened</label>
+          <div class="lines"><i></i><i></i><i></i></div>
+        </div>
+        <div class="field">
+          <label>What the agent reached that I could not</label>
+          <div class="lines"><i></i><i></i></div>
+        </div>
+        <div class="field">
+          <label>What it could not get near</label>
+          <div class="lines"><i></i><i></i></div>
+        </div>
+        <div class="field">
+          <label>One line I would keep</label>
+          <div class="lines"><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>What to bring</h2>
+      <p class="note">Tonight</p>
+    </div>
+    <ul class="kit">
+      <li>These pages printed. The guide cards cut apart so they can be drawn face down.</li>
+      <li>A bag the phones go into, and stay in.</li>
+      <li>A timer that is not a phone.</li>
+      <li>Pen and paper for both of you.</li>
+      <li>Two places: somewhere to sit still for movement 01, somewhere to walk for movement 04.</li>
+      <li>One place you have both never paid attention to, which is where movement 05 works best.</li>
+    </ul>
+  </section>
+
+  <footer class="page">
+    <p>Civic Interplay / RMIT University / Everything here is a draft.</p>
+  </footer>
+
+</div>
