@@ -41,9 +41,9 @@
     --heading: 'Fira Sans', system-ui, sans-serif;
     --body: 'Merriweather', Georgia, serif;
 
-    /* Written by the scroll handler. Blush at the top, purple through the
-       middle, sand by the end. */
-    --t-pink: 1;
+    /* Written by the scroll handler. Periwinkle at the top, purple through
+       the middle, sand by the end. */
+    --t-peri: 1;
     --t-purple: 0;
     --t-sand: 0;
   }
@@ -63,15 +63,15 @@
   .ground span { position: absolute; inset: 0; display: block; transition: opacity 300ms linear; }
 
   /* Full-strength ink, the same purple the plates are printed in, so the
-     paper sheet lifts off it. Pink at the top, purple through the middle,
-     sand by the end. */
-  .wash-pink {
-    opacity: var(--t-pink);
+     paper sheet lifts off it. Periwinkle at the top, purple through the
+     middle, sand by the end. */
+  .wash-peri {
+    opacity: var(--t-peri);
     background:
-      radial-gradient(90% 70% at 8% 0%, #F8DFF6, transparent 62%),
-      radial-gradient(75% 60% at 96% 18%, #E076DB, transparent 66%),
-      radial-gradient(85% 65% at 40% 104%, #B65BC8, transparent 70%),
-      linear-gradient(165deg, #E9A5E4 0%, #C978CE 52%, #9A5EC2 100%);
+      radial-gradient(90% 70% at 8% 0%, #E9ECFB, transparent 62%),
+      radial-gradient(75% 60% at 96% 18%, #A8B3E6, transparent 66%),
+      radial-gradient(85% 65% at 40% 104%, #7C86CE, transparent 70%),
+      linear-gradient(165deg, #BFC7EE 0%, #8E9BDD 52%, #7F76C9 100%);
   }
   .wash-purple {
     opacity: var(--t-purple);
@@ -584,7 +584,7 @@
 </style>
 
 <div class="ground" aria-hidden="true">
-  <span class="wash-pink"></span>
+  <span class="wash-peri"></span>
   <span class="wash-purple"></span>
   <span class="wash-sand"></span>
 </div>
@@ -1119,7 +1119,7 @@
     var h = document.body.scrollHeight - window.innerHeight;
     var p = h > 0 ? Math.min(1, Math.max(0, window.scrollY / h)) : 0;
     var clamp = function (v) { return Math.min(1, Math.max(0, v)); };
-    root.style.setProperty('--t-pink', String(clamp(1 - p * 2)));
+    root.style.setProperty('--t-peri', String(clamp(1 - p * 2)));
     root.style.setProperty('--t-purple', String(clamp(1 - Math.abs(p * 2 - 1))));
     root.style.setProperty('--t-sand', String(clamp(p * 2 - 1)));
   }
