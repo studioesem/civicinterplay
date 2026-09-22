@@ -5,7 +5,7 @@
   "readOn": "2026-09-19",
   "readAt": "10pm to 11pm",
   "runningOrder": "Open with 04 (the silence) or 11 (the paddock); both land without context. Build through 05, 06, 12. Close on 10, which reframes everything before it. Hold 03 back unless the caveat can travel with it.",
-  "draft": true,
+  "draft": false,
   "cards": [
     {
       "id": "01",

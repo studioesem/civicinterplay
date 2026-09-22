@@ -1,0 +1,1122 @@
+<title>Bells for the First Walk</title>
+
+<!-- ===========================================================
+     EDITING THIS FILE
+     All the words live in the markup below, not in the script.
+     - The eight points: <button class="point"> blocks in <div class="track">.
+       Change the minutes with data-mins, the wash colour with data-glow.
+     - The guides: <article class="guide"> blocks. Delete one to drop it.
+     - The script reads whatever is in the markup, so nothing else needs
+       touching when you rewrite the text.
+     The portrait plates are base64 at the very bottom. Leave that part alone.
+     =========================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght0,300;0,400;0,500;0,600;1,400;1,500&family=Merriweather:ital,wght0,300;0,400;0,700;1,300;1,400&display=swap">
+
+<style>
+  :root {
+    --paper: #FBF7ED;
+    --paper-deep: #F3EDDF;
+    --text: #1c1917;
+    --text-dim: rgba(28, 25, 23, 0.78);
+    --text-faint: rgba(28, 25, 23, 0.52);
+    --rule: rgba(28, 25, 23, 0.30);
+    --rule-soft: rgba(28, 25, 23, 0.14);
+
+    --purple: #7D50BD;
+    --ink-purple: #553380;
+    --pink: #E076DB;
+    --ink-pink: #86307F;
+    --blush: #F8DFF6;
+    --sand: #DACCBA;
+    --ink-cream: #6E5A3C;
+    --forest: #454E41;
+    --periwinkle: #8E9BDD;
+    --ink-periwinkle: #3C478A;
+    --terracotta: #D16D54;
+    --ink-terracotta: #8B3A25;
+
+    --heading: 'Fira Sans', system-ui, sans-serif;
+    --body: 'Merriweather', Georgia, serif;
+
+    /* Written by the scroll handler. Purple the whole way down, turning to
+       sand only at the end. */
+    --t-sand: 0;
+  }
+
+  body {
+    font-family: var(--body);
+    font-weight: 300;
+    background: var(--purple);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* --- The ground ------------------------------------------------------- */
+
+  .ground { position: fixed; inset: 0; z-index: -2; pointer-events: none; background: var(--purple); }
+  .ground span { position: absolute; inset: 0; display: block; transition: opacity 300ms linear; }
+
+  /* Full-strength ink, the same purple the plates are printed in, so the
+     paper sheet lifts off it. Periwinkle at the top, purple through the
+     middle, sand by the end. */
+  .wash-purple {
+    background:
+      radial-gradient(80% 62% at 92% 2%, #B38BE0, transparent 64%),
+      radial-gradient(85% 66% at 4% 46%, #9080D2, transparent 66%),
+      radial-gradient(80% 60% at 56% 102%, #553380, transparent 70%),
+      linear-gradient(170deg, #8E6BC8 0%, #7D50BD 48%, #6A45A4 100%);
+  }
+  .wash-sand {
+    opacity: var(--t-sand);
+    background:
+      radial-gradient(85% 65% at 14% 4%, #EFE4D2, transparent 66%),
+      radial-gradient(75% 58% at 94% 52%, #FBF7ED, transparent 64%),
+      radial-gradient(90% 70% at 44% 104%, #C6B49A, transparent 72%),
+      linear-gradient(170deg, #DED1BD 0%, #DACCBA 50%, #C9B79C 100%);
+  }
+
+  /* --- The sheet -------------------------------------------------------- */
+
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 2.6rem 1.6rem 5rem; }
+
+  /* The sheet: opaque paper on the ink, with enough shadow to sit above it. */
+  .frame {
+    border: 1px solid rgba(28, 25, 23, 0.22);
+    padding: 2rem 1.9rem 1.6rem;
+    position: relative;
+    background: var(--paper);
+    box-shadow: 0 1.4rem 4rem rgba(43, 20, 72, 0.34), 0 0.2rem 0.8rem rgba(43, 20, 72, 0.18);
+  }
+
+  @media (max-width: 620px) { .wrap { padding: 1rem 0.7rem 2.4rem; } }
+
+  .runner {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--heading);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    border-bottom: 1px solid var(--rule-soft);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.6rem;
+  }
+
+  h1 {
+    font-family: var(--heading);
+    font-size: clamp(2rem, 5.4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.04;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
+    text-wrap: balance;
+    margin: 0 0 0.7rem;
+  }
+
+  .lede {
+    font-size: 1rem;
+    color: var(--text-dim);
+    max-width: 54ch;
+    margin: 0;
+  }
+
+  h2 {
+    font-family: var(--heading);
+    font-size: 1.15rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .fig {
+    font-family: var(--heading);
+    font-style: italic;
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--text-faint);
+    line-height: 1.45;
+  }
+
+  section { margin-top: 2.6rem; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.4rem;
+    flex-wrap: wrap;
+  }
+  .section-head .fig { margin-left: auto; text-align: right; }
+
+  /* --- Controls --------------------------------------------------------- */
+
+  .controls { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.3rem; }
+
+  button {
+    font-family: var(--heading);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 0.5rem 1.05rem;
+    cursor: pointer;
+    transition: background 200ms, color 200ms, border-color 200ms;
+  }
+  button:hover { background: var(--purple); border-color: var(--purple); color: #fff; }
+  button:focus-visible { outline: 2px solid var(--purple); outline-offset: 3px; }
+  button[disabled] { opacity: 0.35; cursor: default; }
+  button[disabled]:hover { background: transparent; color: var(--text); border-color: var(--rule); }
+
+  .btn-go { background: var(--purple); border-color: var(--purple); color: #fff; }
+  .btn-go:hover { background: var(--ink-purple); border-color: var(--ink-purple); }
+  .btn-sound[aria-pressed="false"] { color: var(--text-faint); }
+
+  .total {
+    font-family: var(--heading);
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-variant-numeric: tabular-nums;
+    margin-left: auto;
+  }
+
+  /* --- The track -------------------------------------------------------- */
+
+  .track { position: relative; }
+  .track::before {
+    content: '';
+    position: absolute;
+    left: 2.2rem;
+    top: 1.4rem;
+    bottom: 1.4rem;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--rule-soft) 6%, var(--rule-soft) 94%, transparent);
+  }
+
+  /* A set of cards sitting on the line, at the point where it is used. */
+  .inset {
+    margin: 0.2rem 0 0.2rem 4.8rem;
+    padding: 1.1rem 0 1.4rem;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .inset .section-head {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 1rem;
+  }
+  .inset h2 { font-size: 0.95rem; letter-spacing: 0.12em; }
+  media (max-width: 620px) { .inset { margin-left: 0; } }
+
+  .point {
+    display: grid;
+    grid-template-columns: 3.6rem 1fr auto;
+    align-items: start;
+    gap: 1.2rem;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    border-top: 1px solid var(--rule-soft);
+    padding: 1.05rem 0.4rem;
+    font-size: 1rem;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--text);
+  }
+  .point:first-child { border-top: none; }
+  .point:hover { background: rgba(125, 80, 189, 0.05); color: var(--text); }
+
+  .blob-cell { display: flex; align-items: center; justify-content: center; height: 2.6rem; }
+
+  .blob {
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 34% 32%, #fff, var(--glow) 56%, transparent 74%);
+    filter: blur(1px);
+    opacity: 0.5;
+    transition: opacity 420ms, transform 420ms, box-shadow 420ms;
+  }
+  .point.is-done .blob { opacity: 0.28; }
+  .point.is-active .blob {
+    opacity: 1;
+    box-shadow: 0 0 2rem 0.4rem var(--glow), 0 0 4.4rem 1.1rem var(--glow);
+    animation: breathe 5s ease-in-out infinite;
+  }
+  keyframes breathe {
+    0%, 100% { transform: scale(1.4); filter: blur(1px); }
+    50% { transform: scale(1.75); filter: blur(2.6px); }
+  }
+
+  .point .num {
+    display: block;
+    font-family: var(--heading);
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-faint);
+  }
+  .point.is-active .num { color: var(--text); }
+
+  .point .name {
+    display: block;
+    font-family: var(--heading);
+    font-size: 1.02rem;
+    font-weight: 500;
+  }
+  .point .dur {
+    display: block;
+    font-family: var(--heading);
+    font-size: 0.64rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-top: 0.1rem;
+  }
+
+  .point .detail {
+    display: none;
+    font-size: 0.9rem;
+    line-height: 1.62;
+    color: var(--text-dim);
+    margin-top: 0.7rem;
+    max-width: 58ch;
+  }
+  .point.is-active .detail { display: block; }
+
+  .said {
+    display: block;
+    font-style: italic;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid var(--rule-soft);
+    border-left: 6px solid var(--glow);
+    padding: 0.6rem 0.9rem;
+    margin-top: 0.7rem;
+    max-width: 54ch;
+  }
+  .said b {
+    display: block;
+    font-family: var(--heading);
+    font-style: normal;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 0.2rem;
+  }
+
+  .screens {
+    display: inline-block;
+    font-family: var(--heading);
+    font-size: 0.56rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.18rem 0.5rem;
+    margin-top: 0.6rem;
+    border: 1px solid var(--rule);
+    color: var(--text-dim);
+  }
+  .screens.open { border-color: var(--purple); color: var(--ink-purple); background: rgba(125, 80, 189, 0.07); }
+
+  .point .count {
+    font-family: var(--heading);
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-faint);
+    padding-top: 0.5rem;
+    white-space: nowrap;
+  }
+  .point.is-active .count { font-size: 1.45rem; font-weight: 300; color: var(--text); }
+
+  /* --- Registers -------------------------------------------------------- */
+
+  .registers { display: grid; grid-template-columns: repeat(auto-fit, minmax(212px, 1fr)); gap: 1rem; }
+
+  .reg {
+    border: 1px solid var(--rule);
+    background: rgba(255, 255, 255, 0.55);
+    padding: 1rem 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .roundel {
+    width: 4.6rem;
+    height: 4.6rem;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.1rem auto 0.4rem;
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.5);
+  }
+  .roundel svg { width: 76%; height: 76%; }
+
+  .reg .kicker {
+    font-family: var(--heading);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-align: center;
+    margin: 0;
+  }
+  .reg h3 {
+    font-family: var(--heading);
+    font-size: 1.15rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0 0 0.2rem;
+  }
+  .reg .ask { font-size: 0.86rem; color: var(--text-dim); margin: 0; }
+  .reg ol { list-style: none; counter-reset: beat; display: grid; gap: 0.22rem; font-size: 0.8rem; color: var(--text-dim); margin: 0; padding: 0; }
+  .reg ol li { counter-increment: beat; padding-left: 1.25rem; position: relative; }
+  .reg ol li::before {
+    content: counter(beat);
+    position: absolute; left: 0;
+    font-family: var(--heading); font-size: 0.66rem; font-weight: 600; color: var(--ink);
+  }
+  .reg .trap {
+    font-family: var(--heading);
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--ink);
+    border-top: 1px solid var(--rule-soft);
+    padding-top: 0.45rem;
+    margin: auto 0 0;
+  }
+
+  .r-heart { --ink: var(--ink-pink); }
+  .r-body { --ink: var(--ink-terracotta); }
+  .r-mind { --ink: var(--ink-periwinkle); }
+  .r-agent { --ink: var(--ink-purple); }
+
+  /* --- Guides ----------------------------------------------------------- */
+  /* Plates are one ink on paper, the way the reference book prints them:
+     cream base, the photograph multiplied over it, purple lifting the blacks. */
+
+  .guides { display: grid; grid-template-columns: repeat(auto-fill, minmax(216px, 1fr)); gap: 1.6rem 1.4rem; }
+  /* Nine plates, so three to a row: nothing is left hanging on its own. */
+  media (min-width: 780px) { .guides { grid-template-columns: repeat(3, 1fr); } }
+
+  .guide { display: flex; flex-direction: column; }
+
+  .plate {
+    position: relative;
+    isolation: isolate;
+    aspect-ratio: 4 / 5;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+  }
+  .plate .img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center top;
+    filter: grayscale(1) contrast(1.12) brightness(1.06);
+    mix-blend-mode: multiply;
+  }
+  .plate .ink { position: absolute; inset: 0; background: var(--purple); mix-blend-mode: lighten; }
+
+  /* Tone, plate by plate. Some of the photographs are darker than others and
+     the duotone shows it. Raise brightness to lighten a plate, lower it to
+     deepen one. */
+  .plate .img.plate-benjamin { filter: grayscale(1) contrast(0.92) brightness(1.62); }
+  .plate .img.plate-graeber { filter: grayscale(1) contrast(1.06) brightness(1.18); }
+  .plate.no-photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-purple);
+    background:
+      repeating-linear-gradient(0deg, rgba(125,80,189,0.10) 0 1px, transparent 1px 14px),
+      repeating-linear-gradient(90deg, rgba(125,80,189,0.10) 0 1px, transparent 1px 14px),
+      var(--paper);
+  }
+  .plate.no-photo svg { width: 52%; height: 52%; }
+
+  .credit {
+    font-family: var(--heading);
+    font-style: italic;
+    font-size: 0.6rem;
+    line-height: 1.4;
+    color: var(--text-faint);
+    margin: 0.35rem 0 0;
+  }
+
+  .guide h3 {
+    font-family: var(--heading);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin: 0.5rem 0 0.1rem;
+  }
+
+  .guide .key {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--hue-ink);
+    margin: 0 0 0.5rem;
+  }
+
+  .spec { margin: 0; font-size: 0.83rem; }
+  .spec dt {
+    font-family: var(--heading);
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    border-top: 1px solid var(--rule-soft);
+    padding-top: 0.35rem;
+    margin-top: 0.45rem;
+  }
+  .spec dd { margin: 0.1rem 0 0; color: var(--text-dim); line-height: 1.5; }
+
+  .guide.is-drawn .plate { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(125, 80, 189, 0.25); }
+  .guide.is-drawn h3 { color: var(--ink-purple); }
+
+  .g-leguin { --hue-ink: var(--ink-pink); }
+  .g-benjamin { --hue-ink: var(--ink-purple); }
+  .g-ostrom { --hue-ink: var(--forest); }
+  .g-lovelock { --hue-ink: var(--ink-cream); }
+  .g-margulis { --hue-ink: var(--ink-periwinkle); }
+  .g-langton { --hue-ink: var(--ink-terracotta); }
+  .g-denes { --hue-ink: var(--forest); }
+  .g-rovelli { --hue-ink: var(--ink-periwinkle); }
+  .g-graeber { --hue-ink: var(--ink-terracotta); }
+
+  /* --- Specimen card ---------------------------------------------------- */
+
+  .specimen {
+    border: 1px solid var(--rule);
+    background: rgba(255, 255, 255, 0.5);
+    padding: 1.4rem 1.5rem 1.5rem;
+    max-width: 30rem;
+  }
+  .specimen .mark {
+    width: 2.4rem; height: 2.4rem;
+    border: 1px solid var(--purple); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--heading); font-size: 0.7rem; font-weight: 600;
+    color: var(--ink-purple); margin-bottom: 0.7rem;
+  }
+  .specimen h3 {
+    font-family: var(--body);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.5rem;
+    margin: 0 0 0.1rem;
+  }
+  .specimen .where { font-family: var(--heading); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); margin: 0 0 1rem; }
+  .specimen dl { display: grid; grid-template-columns: 8.5rem 1fr; gap: 0.55rem 1rem; margin: 0; font-size: 0.86rem; }
+  .specimen dt { font-family: var(--body); font-style: italic; color: var(--text-dim); text-align: right; }
+  .specimen dd { margin: 0; border-bottom: 1px solid var(--rule-soft); min-height: 1.5rem; }
+
+  svg use, symbol { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+
+  footer.page {
+    border-top: 1px solid var(--rule);
+    margin-top: 2.4rem;
+    padding-top: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--heading);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  media (max-width: 620px) {
+    .frame { padding: 1.2rem 0.9rem; }
+    .point { grid-template-columns: 2.4rem 1fr; gap: 0.7rem; }
+    .point .count { grid-column: 2; padding-top: 0.2rem; }
+    .specimen dl { grid-template-columns: 1fr; gap: 0.2rem; }
+    .specimen dt { text-align: left; }
+  }
+
+  media (prefers-reduced-motion: reduce) {
+    .point.is-active .blob { animation: none; transform: scale(1.5); }
+    .ground span { transition: none; }
+  }
+</style>
+
+<div class="ground" aria-hidden="true">
+  <span class="wash-purple"></span>
+  <span class="wash-sand"></span>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="r-heart" viewBox="0 0 96 52">
+    <path d="M30 48 q-8 -4 -9 -13 q-1 -7 3 -8 q3 -1 4 4 l1 5"/>
+    <path d="M29 36 V21 q0 -4 3.5 -4 t3.5 4 v13"/>
+    <path d="M36 34 V17 q0 -4 3.5 -4 t3.5 4 v17"/>
+    <path d="M43 34 V21 q0 -4 3.5 -4 t3.5 4 v14"/>
+    <path d="M50 35 V25 q0 -4 3.5 -4 t3.5 4 v11 q0 9 -6 12"/>
+    <path d="M30 48 q13 4 24 0"/>
+    <circle cx="66" cy="20" r="6"/>
+    <path d="M66 10 V5 M74 14 l4 -4 M74 27 l4 4"/>
+  </symbol>
+  <symbol id="r-body" viewBox="0 0 96 52">
+    <circle cx="48" cy="13" r="6"/><path d="M48 19 V35"/>
+    <path d="M48 23 L38 30 M48 23 L58 30"/><path d="M48 35 L42 47 M48 35 L54 47"/>
+    <path d="M26 10 q4 5 0 10 M20 6 q7 9 0 18"/><path d="M70 10 q-4 5 0 10 M76 6 q-7 9 0 18"/>
+  </symbol>
+  <symbol id="r-mind" viewBox="0 0 96 52">
+    <path d="M22 38 L36 16 L58 22 L74 12 M36 16 L48 40 L58 22 M48 40 L74 12"/>
+    <circle cx="36" cy="16" r="3.4"/><circle cx="58" cy="22" r="3.4"/>
+    <circle cx="48" cy="40" r="3.4"/><circle cx="22" cy="38" r="3.4"/><circle cx="74" cy="12" r="4.4"/>
+  </symbol>
+  <symbol id="r-agent" viewBox="0 0 96 52">
+    <rect x="20" y="10" width="42" height="32" rx="2"/><path d="M20 18 H62"/>
+    <circle cx="25" cy="14" r="1.3"/><path d="M27 27 H46 M27 33 H40"/><path d="M50 30 V37"/>
+    <path d="M62 26 H74" stroke-dasharray="2.5 2.5"/><circle cx="79" cy="26" r="4"/>
+  </symbol>
+  <symbol id="g-rovelli" viewBox="0 0 64 48">
+    <circle cx="16" cy="24" r="11"/><path d="M16 24 V15"/><path d="M16 13 v-2"/>
+    <circle cx="38" cy="28" r="7.5"/><path d="M38 28 L43 24"/>
+    <circle cx="54" cy="32" r="4.5"/><path d="M54 32 V28.5"/>
+    <path d="M6 42 H58" stroke-dasharray="2 3"/>
+  </symbol>
+  <symbol id="g-graeber" viewBox="0 0 64 48">
+    <path d="M12 12 L48 8 L52 34 L16 38 Z"/><path d="M18 18 H40"/><path d="M18 24 H34"/>
+    <path d="M20 29 q4 -4 8 0 t8 0"/><circle cx="45" cy="27" r="5"/><path d="M42.5 27 H47.5 M45 24.5 V29.5"/>
+  </symbol>
+</svg>
+
+<div class="wrap">
+<div class="frame">
+
+  <p class="runner">
+    <span>Civic Interplay &middot; Steward onboarding</span>
+    <span>Copenhagen &middot; 15 September 2026</span>
+  </p>
+
+  <h1>If we were here</h1>
+  <p class="lede">How did we act? What role did we play? This exercise helps to bring us to the ground, where we live, with who we are.</p>
+
+  <div class="controls">
+    <button class="btn-go" id="go">Begin the walk</button>
+    <button id="next" disabled>Next point</button>
+    <button id="reset" disabled>Reset</button>
+    <button class="btn-sound" id="sound" aria-pressed="true">Bells on</button>
+    <span class="total" id="total"></span>
+  </div>
+
+  <!-- ============ THE EIGHT POINTS ============ -->
+  <section>
+    <div class="section-head">
+      <h2>The line</h2>
+      <p class="fig">Fig. 1. Eight points, with the cards where they are used. Tap any point to ring it and go there.</p>
+    </div>
+
+    <div class="track" id="track">
+
+      <button class="point" data-mins="2" data-glow="var(--pink)">
+        <span class="blob-cell"><span class="blob"></span></span>
+        <span>
+          <span class="num">00</span>
+          <span class="name">Begin</span>
+          <span class="dur">2 min</span>
+          <span class="detail">Phones into the bag. Where did you journey from to be here? Reflect on this journey and what it did to your body.
+            <span class="said"><b>Spoken</b>We are going to pay attention to this place before we ask a machine anything about it.</span>
+            <span class="screens">Screens away</span>
+          </span>
+        </span>
+        <span class="count"></span>
+      </button>
+
+      <button class="point" data-mins="6" data-glow="var(--pink)">
+        <span class="blob-cell"><span class="blob"></span></span>
+        <span>
+          <span class="num">01</span>
+          <span class="name">Listen to now</span>
+          <span class="dur">6 min</span>
+          <span class="detail">Standing or sitting, not walking. No talking, no notes. Make a sound in your mind, pay attention to that sound. Then add the sounds to each of your fingers. Did the sound change with each finger?
+            <span class="said"><b>Spoken</b>Listen to now. Three minutes. </span>
+            <span class="screens">Screens away</span>
+          </span>
+        </span>
+        <span class="count"></span>
+      </button>
+
+      <button class="point" data-mins="6" data-glow="var(--periwinkle)">
+        <span class="blob-cell"><span class="blob"></span></span>
+        <span>
+          <span class="num">02</span>
+          <span class="name">How do we sound this place?</span>
+          <span class="dur">6 min</span>
+          <span class="detail">What is the sense that is vying for your attention now? Sight or smell, touch or taste? How does it feel to hold this moment as if a sound?
+            <span class="said"><b>Spoken</b>What senses stand out? And which one did this place call out to?</span>
+            <span class="screens">Screens away</span>
+          </span>
+        </span>
+        <span class="count"></span>
+      </button>
+
+      <button class="point" data-mins="2" data-glow="var(--periwinkle)">
+        <span class="blob-cell"><span class="blob"></span></span>
+        <span>
+          <span class="num">03</span>
+          <span class="name">The walk</span>
+          <span class="dur">2 min</span>
+          <span class="detail">We&rsquo;re going to move through a space now. Before we do, choose what part of your being you elect to lead with.
+            <span class="said"><b>Spoken</b>Real life is not this simple, but let&rsquo;s pretend we can choose: Heart, Stomach, Pre-frontal cortex or agentic Agents. Walk for 2 mins and focus on how this part of you will respond.</span>
+            <span class="screens">Screens away</span>
+          </span>
+        </span>
+        <span class="count"></span>
+      </button>
+
+
+      <!-- ============ THE REGISTERS ============ -->
+  <div class="inset">
+    <div class="section-head">
+      <h2>The four selves</h2>
+      <p class="fig">Fig. 2. Point 03, then 04. One each, then swap.</p>
+    </div>
+    <div class="registers">
+
+      <article class="reg r-heart">
+        <div class="roundel"><svg viewBox="0 0 96 52" aria-hidden="true"><use href="#r-heart"/></svg></div>
+        <p class="kicker">Self 1</p>
+        <h3>The Heart</h3>
+        <p class="ask">The heart drives your blood.</p>
+        <ol><li>It becomes attached</li><li>It pulses, it coarses, it feels everything</li><li>It can break. It cries out. It knows no rationality</li></ol>
+        <p class="trap">Trap: feeling standing in for awareness.</p>
+      </article>
+
+      <article class="reg r-body">
+        <div class="roundel"><svg viewBox="0 0 96 52" aria-hidden="true"><use href="#r-body"/></svg></div>
+        <p class="kicker">Self 2</p>
+        <h3>Stomach</h3>
+        <p class="ask">The stomach connects to the brain, but it knows more.</p>
+        <ol><li>The stomach has a deeper wisdowm</li><li>It knows everything.</li><li>But it will stay silent</li></ol>
+        <p class="trap">Trap: holding on to knowledge without change</p>
+      </article>
+
+      <article class="reg r-mind">
+        <div class="roundel"><svg viewBox="0 0 96 52" aria-hidden="true"><use href="#r-mind"/></svg></div>
+        <p class="kicker">Self</p>
+        <h3>Mind</h3>
+        <p class="ask">The Pre-frontal cortex is in control.</p>
+        <ol><li>It is decisive</li><li>It filters</li><li>It achieves what it needs to.</li></ol>
+        <p class="trap">Trap: losing a capacity to care</p>
+      </article>
+
+      <article class="reg r-agent">
+        <div class="roundel"><svg viewBox="0 0 96 52" aria-hidden="true"><use href="#r-agent"/></svg></div>
+        <p class="kicker">Self</p>
+        <h3>Agent</h3>
+        <p class="ask">The agent is there to help</p>
+        <ol><li>Loves a delegating human.</li><li>Craves the context it cannot have.</li><li>Consumes all data without question</li></ol>
+        <p class="trap">Trap: trusting in artefacts over process</p>
+      </article>
+
+    </div>
+  </div>
+
+      <button class="point" data-mins="10" data-glow="var(--purple)">
+        <span class="blob-cell"><span class="blob"></span></span>
+        <span>
+          <span class="num">04</span>
+          <span class="name">Walk the register</span>
+          <span class="dur">10 min</span>
+          <span class="detail">Take the walk with a sensing self. Consider the trap. What else is a trap? What is a gift?
+            <span class="screens">Screens away</span>
+          </span>
+        </span>
+        <span class="count"></span>
+      </button>
+
+      <button class="point" data-mins="8" data-glow="var(--purple)">
+        <span class="blob-cell"><span class="blob"></span></span>
+        <span>
+          <span class="num">05</span>
+          <span class="name">Find a Guide</span>
+          <span class="dur">8 min</span>
+          <span class="detail">We are going to explore the terrain through the senses that one of the Guides can offer. Each Guide offers a Key.
+            <span class="said"><b>Spoken</b>The key does not explain the place. It opens a part of it you were not looking at.</span>
+            <span class="screens">Screens away</span>
+          </span>
+        </span>
+        <span class="count"></span>
+      </button>
+
+
+      <!-- ============ THE GUIDES ============ -->
+  <div class="inset">
+    <div class="section-head">
+      <h2>The guides</h2>
+      <p class="fig">Fig. 3. <button id="draw" style="padding:0.3rem 0.7rem;font-size:0.6rem;margin-left:0.5rem">Draw a guide</button></p>
+    </div>
+    <div class="guides" id="guides">
+
+      <article class="guide g-leguin">
+        <div class="plate"><div class="img plate-leguin"></div><div class="ink"></div></div>
+        <p class="credit">Ursula K. Le Guin. Source: The Marginalian.</p>
+        <h3>Ursula Le Guin</h3>
+        <p class="key">Key: The Fable</p>
+        <dl class="spec">
+          <dt>Terrain</dt><dd>The Fable is the story that senses the place from another worldly vantage point.</dd>
+          <dt>The act</dt><dd>Can you write a fable about this place?</dd>
+        </dl>
+      </article>
+
+      <article class="guide g-benjamin">
+        <div class="plate"><div class="img plate-benjamin"></div><div class="ink"></div></div>
+        <p class="credit">Walter Benjamin. Source to confirm.</p>
+        <h3>Walter Benjamin</h3>
+        <p class="key">Key: The Fragment</p>
+        <dl class="spec">
+          <dt>Terrain</dt><dd>what ruin is left in the landscaoe? What did the rush to be modern forget to destroy?</dd>
+          <dt>The act</dt><dd>What role do the fragments play in revealing a place we forgot to see?</dd>
+        </dl>
+      </article>
+
+      <article class="guide g-ostrom">
+        <div class="plate"><div class="img plate-ostrom"></div><div class="ink"></div></div>
+        <p class="credit">Elinor Ostrom. Source to confirm.</p>
+        <h3>Elinor Ostrom</h3>
+        <p class="key">Key: The unspoken agreement</p>
+        <dl class="spec">
+          <dt>Terrain</dt><dd>What rules are in use, as distinct from rules on paper. What is implicitly agreed to, without speaking, without explicit acknowledgement?</dd>
+          <dt>The act</dt><dd>What unspoken generosity is present, without acknowledgement or attribution?</dd>
+        </dl>
+      </article>
+
+      <article class="guide g-lovelock">
+        <div class="plate"><div class="img plate-lovelock"></div><div class="ink"></div></div>
+        <p class="credit">James Lovelock. Source to confirm.</p>
+        <h3>James Lovelock</h3>
+        <p class="key">Key: the instrument</p>
+        <dl class="spec">
+          <dt>Terrain</dt><dd>Metabolism. Heat, water, air, load.</dd>
+          <dt>The act</dt><dd>What devices are in service of metabolic performance? Does anyone even care? What if they were taken away?</dd>
+        </dl>
+      </article>
+
+      <article class="guide g-margulis">
+        <div class="plate"><div class="img plate-margulis"></div><div class="ink"></div></div>
+        <p class="credit">Lynn Margulis. Source to confirm.</p>
+        <h3>Lynn Margulis</h3>
+        <p class="key">Key: the merger</p>
+        <dl class="spec">
+          <dt>Terrain</dt><dd>What looks like one thing here and is two that can no longer be separated.</dd>
+          <dt>The act</dt><dd>Name a partnership wearing a single name. Say who is living inside whom.</dd>
+        </dl>
+      </article>
+
+      <article class="guide g-langton">
+        <div class="plate"><div class="img plate-langton"></div><div class="ink"></div></div>
+        <p class="credit">Marcia Langton. Source: The Howling Infinite.</p>
+        <h3>Marcia Langton</h3>
+        <p class="key">Key: the custodian</p>
+        <dl class="spec">
+          <dt>Terrain</dt><dd>Whose country this is, and what has been negotiated on whose behalf.</dd>
+          <dt>The act</dt><dd>Name who speaks for this place, by what authority, and who was not at the table when they staked their claim.</dd>
+        </dl>
+      </article>
+
+      <article class="guide g-denes">
+        <div class="plate"><div class="img plate-denes"></div><div class="ink"></div></div>
+        <p class="credit">Agnes Denes, Rice/Tree/Burial, 1968. Artist&rsquo;s documentation.</p>
+        <h3>Agnes Denes</h3>
+        <p class="key">Key: the planting</p>
+        <dl class="spec">
+          <dt>Terrain</dt><dd>What would grow here if somebody insisted, and what the growing would heal.</dd>
+          <dt>The act</dt><dd>Choose the most valuable ground in sight. Say what you would plant on it. How could it look, and who would care for it?</dd>
+        </dl>
+      </article>
+
+      <article class="guide g-rovelli">
+        <div class="plate"><div class="img plate-rovelli"></div><div class="ink"></div></div>
+        <p class="credit">Carlo Rovelli. Source: The Guardian.</p>
+        <h3>Carlo Rovelli</h3>
+        <p class="key">Key: the interval</p>
+        <dl class="spec">
+          <dt>Terrain</dt><dd>The durations layered in one site. Tidal, budgetary, electoral, a training run.</dd>
+          <dt>The act</dt><dd>Name three clocks running here at different speeds. Say which one governs.</dd>
+        </dl>
+      </article>
+
+      <article class="guide g-graeber">
+        <div class="plate"><div class="img plate-graeber"></div><div class="ink"></div></div>
+        <p class="credit">David Graeber. Source: The New York Times.</p>
+        <h3>David Graeber</h3>
+        <p class="key">Key: the IOU</p>
+        <dl class="spec">
+          <dt>Terrain</dt><dd>What value is being extracted? How is this value being measured, and who loses?</dd>
+          <dt>The act</dt><dd>Name one rule everybody here obeys that somebody made up for their own benefit.</dd>
+        </dl>
+      </article>
+
+    </div>
+  </div>
+
+      <button class="point" data-mins="8" data-glow="var(--sand)">
+        <span class="blob-cell"><span class="blob"></span></span>
+        <span>
+          <span class="num">06</span>
+          <span class="name">The context window</span>
+          <span class="dur">8 min</span>
+          <span class="detail">Use your guide as a context window to inform how you navigate and absorb this place. What are you seeing that you might otherwise possibly miss?
+            <span class="said"><b>Spoken</b>Write down what comes to mind. Take photos. Document. Map. Think what you think your guide might think. Try, at least.</span>
+            <span class="screens open">Screens open</span>
+          </span>
+        </span>
+        <span class="count"></span>
+      </button>
+
+      <button class="point" data-mins="3" data-glow="var(--sand)">
+        <span class="blob-cell"><span class="blob"></span></span>
+        <span>
+          <span class="num">07</span>
+          <span class="name">The return</span>
+          <span class="dur">3 min</span>
+          <span class="detail">What now? The plasticity of perception is something to be acknowledged, to be cared for.
+            <span class="screens">Screens away</span>
+          </span>
+        </span>
+        <span class="count"></span>
+      </button>
+
+      <!-- ============ THE SPECIMEN CARD ============ -->
+      <div class="inset">
+        <div class="section-head">
+          <h2>The specimen card</h2>
+          <p class="fig">Fig. 4. Point 07. Filled in by hand, on paper.</p>
+        </div>
+        <div class="specimen">
+          <div class="mark">CI</div>
+          <h3>First Walk</h3>
+          <p class="where">Copenhagen &middot; Steward onboarding</p>
+          <dl>
+            <dt>Place, hour, weather</dt><dd></dd>
+            <dt>Heard in the six minutes</dt><dd></dd>
+            <dt>Sense that dominated</dt><dd></dd>
+            <dt>Sense that was shut down</dt><dd></dd>
+            <dt>Register spoken from first</dt><dd></dd>
+            <dt>Guide and key</dt><dd></dd>
+            <dt>What the key opened</dt><dd></dd>
+            <dt>What the agent reached</dt><dd></dd>
+            <dt>What it could not get near</dt><dd></dd>
+            <dt>One line kept</dt><dd></dd>
+            <dt>Walked by</dt><dd></dd>
+          </dl>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  
+
+  
+
+
+  <p class="fig" style="margin-top:2rem;max-width:62ch">
+    The nine plates are reproduced here to discuss each thinker&rsquo;s work, and are
+    credited where the source is known. If a credit is wrong or missing, tell us and it
+    will be corrected or the plate removed.
+  </p>
+
+  <footer class="page">
+    <span>Civic Interplay &middot; RMIT University</span>
+    <span><a href="stewards-first-walk.pdf" style="color:inherit">The printable deck (PDF)</a></span>
+    <span>Everything here is a draft</span>
+  </footer>
+
+</div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.point'));
+  var MINS = rows.map(function (r) { return parseFloat(r.dataset.mins) || 5; });
+
+  rows.forEach(function (r) { r.style.setProperty('--glow', r.dataset.glow || 'var(--purple)'); });
+
+  /* ---- Bells ----------------------------------------------------------
+     Synthesised, so there are no audio files to load and it works offline.
+     Nothing sounds until a button is pressed: no autoplay, and a visible
+     switch to turn it off. */
+
+  var ctx = null;
+  var soundOn = true;
+  try { if (localStorage.getItem('bells') === 'off') soundOn = false; } catch (e) {}
+
+  var PITCHES = [523.25, 493.88, 440.00, 392.00, 349.23, 329.63, 293.66, 261.63];
+
+  function strike(freq, at) {
+    var out = ctx.createGain();
+    out.gain.value = 0.2;
+    out.connect(ctx.destination);
+    // A bell is inharmonic partials, each decaying at its own rate.
+    [[1, 1, 3.8], [2, 0.42, 2.5], [2.76, 0.28, 1.9], [3.98, 0.17, 1.3], [5.42, 0.09, 0.9]]
+      .forEach(function (p) {
+        var osc = ctx.createOscillator(), g = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq * p[0];
+        g.gain.setValueAtTime(0.0001, at);
+        g.gain.exponentialRampToValueAtTime(p[1], at + 0.008);
+        g.gain.exponentialRampToValueAtTime(0.0001, at + p[2]);
+        osc.connect(g); g.connect(out);
+        osc.start(at); osc.stop(at + p[2] + 0.1);
+      });
+  }
+
+  function bell(i, times) {
+    if (!soundOn) return;
+    if (!ctx) {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      ctx = new AC();
+    }
+    if (ctx.state === 'suspended') ctx.resume();
+    var n = times || 1;
+    for (var k = 0; k < n; k++) strike(PITCHES[i % PITCHES.length], ctx.currentTime + k * 1.15);
+  }
+
+  /* ---- The track ------------------------------------------------------- */
+
+  var current = -1, endsAt = 0, ticker = null;
+  var go = document.getElementById('go');
+  var nextBtn = document.getElementById('next');
+  var resetBtn = document.getElementById('reset');
+
+  function fmt(ms) {
+    var s = Math.max(0, Math.round(ms / 1000));
+    return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+  }
+
+  function paint() {
+    rows.forEach(function (r, i) {
+      r.classList.toggle('is-active', i === current);
+      r.classList.toggle('is-done', i < current);
+      r.setAttribute('aria-current', i === current ? 'step' : 'false');
+      if (i !== current) r.querySelector('.count').textContent = fmt(MINS[i] * 60000);
+    });
+  }
+
+  function tick() {
+    if (current < 0) return;
+    var left = endsAt - Date.now();
+    rows[current].querySelector('.count').textContent = fmt(left);
+    if (left <= 0) {
+      if (current < rows.length - 1) goTo(current + 1, true);
+      else { bell(current, 3); stop(); }
+    }
+  }
+
+  function goTo(i, sound) {
+    current = i;
+    endsAt = Date.now() + MINS[i] * 60000;
+    paint();
+    if (sound) bell(i, i === 6 ? 3 : 1);
+    if (!ticker) ticker = setInterval(tick, 250);
+    tick();
+    nextBtn.disabled = false;
+    resetBtn.disabled = false;
+    go.textContent = 'Walking';
+    rows[i].scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+
+  function stop() {
+    clearInterval(ticker);
+    ticker = null;
+    go.textContent = 'Begin the walk';
+  }
+
+  rows.forEach(function (r, i) { r.addEventListener('click', function () { goTo(i, true); }); });
+  go.addEventListener('click', function () { goTo(0, true); });
+  nextBtn.addEventListener('click', function () { if (current < rows.length - 1) goTo(current + 1, true); });
+  resetBtn.addEventListener('click', function () {
+    stop(); current = -1; paint();
+    nextBtn.disabled = true; resetBtn.disabled = true;
+  });
+
+  var soundBtn = document.getElementById('sound');
+  function paintSound() {
+    soundBtn.textContent = soundOn ? 'Bells on' : 'Bells off';
+    soundBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false');
+  }
+  soundBtn.addEventListener('click', function () {
+    soundOn = !soundOn;
+    try { localStorage.setItem('bells', soundOn ? 'on' : 'off'); } catch (e) {}
+    paintSound();
+    if (soundOn) bell(current < 0 ? 0 : current);
+  });
+  paintSound();
+
+  var mins = MINS.reduce(function (a, b) { return a + b; }, 0);
+  document.getElementById('total').textContent = (mins < 60
+    ? mins + ' min'
+    : Math.floor(mins / 60) + ' hr ' + (mins % 60 ? (mins % 60) + ' min' : '')) + ' in all';
+
+  /* ---- Draw a guide ---------------------------------------------------- */
+
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.guide'));
+  document.getElementById('draw').addEventListener('click', function (e) {
+    e.stopPropagation();
+    var pick = Math.floor(Math.random() * cards.length);
+    cards.forEach(function (c, i) { c.classList.toggle('is-drawn', i === pick); });
+    bell(5);
+    cards[pick].scrollIntoView({ block: 'center', behavior: 'smooth' });
+  });
+
+  /* ---- The ground shifts as you go down -------------------------------- */
+
+  var root = document.documentElement, queued = false;
+
+  function wash() {
+    queued = false;
+    var h = document.body.scrollHeight - window.innerHeight;
+    var p = h > 0 ? Math.min(1, Math.max(0, window.scrollY / h)) : 0;
+    var clamp = function (v) { return Math.min(1, Math.max(0, v)); };
+    // Sand holds off until the last stretch, so the page is purple throughout.
+    root.style.setProperty('--t-sand', String(clamp((p - 0.62) / 0.38)));
+  }
+
+  window.addEventListener('scroll', function () {
+    if (!queued) { queued = true; requestAnimationFrame(wash); }
+  }, { passive: true });
+  window.addEventListener('resize', wash);
+
+  wash();
+  paint();
+})();
+</script>

@@ -66,8 +66,9 @@ const { label, addHref, addLabel = 'Add your card here' } = Astro.props;
     grid-auto-flow: column;
     /* Three across, with the fourth peeking so the row reads as scrollable. */
     grid-auto-columns: calc((100% - 3 * 1.4rem) / 3.15);
-    /* Equal heights. Keep the cards short (see the dev word-count warning
-       below) or the longest one sets the height for the whole row. */
+    /* Equal heights across the row. The longest card sets it, so keep the copy
+       even (see the dev word-count warning below) or the short cards carry
+       dead space under them. */
     align-items: stretch;
     gap: 1.4rem;
     overflow-x: auto;
@@ -94,7 +95,11 @@ const { label, addHref, addLabel = 'Add your card here' } = Astro.props;
     transform: none;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    /* Cards share a height, so a five-word card sits beside a sixty-word one
+       and carries the difference as slack. Centred, that slack splits evenly
+       above and below and the short card reads as a deliberate statement
+       rather than a card someone forgot to finish. */
+    justify-content: center;
     padding: 1.6rem 1.8rem;
     background: var(--card-bg, #f8f8f8);
     color: var(--card-ink, var(--text));
@@ -121,33 +126,34 @@ const { label, addHref, addLabel = 'Add your card here' } = Astro.props;
     font-style: italic;
   }
 
-  /* Everything else is body, in Merriweather, wherever it sits. */
+  /* Every line on a card is a statement, so every line is set as one: heading
+     face, full weight, full-strength ink. Nothing drops back to dimmed body
+     copy, and the card carries a single voice from top to bottom. */
   .card-scroller .callout p {
-    font-family: var(--body);
-    font-size: 0.88rem;
-    font-weight: 300;
-    line-height: 1.65;
-    color: var(--card-ink-dim, var(--text-dim));
+    font-family: var(--heading);
+    font-size: clamp(0.92rem, 1.15vw, 1.04rem);
+    font-weight: 600;
+    line-height: 1.42;
+    letter-spacing: 0.005em;
+    color: var(--card-ink, var(--text));
+  }
+
+  .card-scroller .callout p + p {
+    margin-top: 0.7rem;
+  }
+
+  .card-scroller .callout p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Inline emphasis keeps its italic without dropping weight. */
+  .card-scroller .callout em {
+    font-style: italic;
+    font-weight: 600;
   }
 
   .card-scroller .callout a {
     color: var(--card-kicker, var(--purple));
-  }
-
-  /* A card that is only a statement runs as display type end to end, so the
-     block-heading rule above is switched off and the whole line stays joined. */
-  .card-scroller .callout:has(p:only-child):not(:has(br)) > p {
-    font-family: var(--heading);
-    font-size: clamp(1.35rem, 1.9vw, 1.7rem);
-    font-weight: 500;
-    line-height: 1.2;
-    color: var(--card-ink, var(--text));
-    text-wrap: balance;
-  }
-
-  .card-scroller .callout:has(p:only-child):not(:has(br)) > p strong {
-    font-size: inherit;
-    line-height: inherit;
   }
 
   /* Rotate through the tints, the way the callout borders always have.
@@ -172,6 +178,65 @@ const { label, addHref, addLabel = 'Add your card here' } = Astro.props;
   .card-scroller .callout:nth-child(5n + 5) {
     --card-bg: var(--tint-pink-a);
     --card-kicker: var(--ink-pink);
+  }
+
+
+  /* The invitation that closes a row. Dashed rather than solid, and off the
+     tint rotation, so it reads as a way out of the deck rather than as one
+     more statement in it. */
+  .card-scroller .callout.card-add {
+    --card-bg: transparent;
+    --card-kicker: var(--purple);
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.9rem;
+    text-align: left;
+    text-decoration: none;
+    border: 2px dashed var(--border);
+    border-left: 2px dashed var(--border);
+    color: var(--text-dim);
+    transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  }
+
+  .card-scroller .callout.card-add:hover,
+  .card-scroller .callout.card-add:focus-visible {
+    background: var(--tint-purple-a);
+    border-color: var(--ink-purple);
+    color: var(--ink-purple);
+  }
+
+  .card-scroller .card-add-plus {
+    font-family: var(--heading);
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  .card-scroller .card-add-label {
+    font-family: var(--heading);
+    font-size: clamp(0.92rem, 1.15vw, 1.04rem);
+    font-weight: 600;
+    line-height: 1.42;
+    letter-spacing: 0.005em;
+    text-wrap: balance;
+  }
+
+  /* A card that is only a statement runs as display type end to end, so the
+     block-heading rule above is switched off and the whole line stays joined.
+     Sized so that even the longest statement card does not tower over the
+     heading-plus-body cards and drag the whole row taller. */
+  .card-scroller .callout:has(p:only-child):not(:has(br)) > p {
+    font-family: var(--heading);
+    font-size: clamp(1.08rem, 1.45vw, 1.3rem);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--card-ink, var(--text));
+    text-wrap: balance;
+  }
+
+  .card-scroller .callout:has(p:only-child):not(:has(br)) > p strong {
+    font-size: inherit;
+    line-height: inherit;
   }
 
 
@@ -217,7 +282,7 @@ const { label, addHref, addLabel = 'Add your card here' } = Astro.props;
     .card-scroller { grid-auto-columns: 86%; gap: 1rem; }
     .card-scroller .callout { padding: 1.2rem 1.3rem; }
     .card-scroller .callout > p:first-child strong { font-size: 1.02rem; }
-    .card-scroller .callout:has(p:only-child):not(:has(br)) > p { font-size: 1.35rem; }
+    .card-scroller .callout:has(p:only-child):not(:has(br)) > p { font-size: 1.14rem; }
   .scroller-controls { justify-content: center; }
   }
 
@@ -233,8 +298,9 @@ const { label, addHref, addLabel = 'Add your card here' } = Astro.props;
 <script>
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Authoring aid, dev only. A statement card stops being a statement somewhere
-  // north of ~80 words, and starts setting the height of every card beside it.
+  // Authoring aid, dev only. Cards size to their own copy now, so a long one no
+  // longer drags its neighbours taller. It does stop being a statement somewhere
+  // north of ~80 words, and towers over the cards either side of it.
   if (import.meta.env.DEV) {
     const LIMIT = 80;
     document.querySelectorAll('.card-scroller').forEach((track, ti) => {

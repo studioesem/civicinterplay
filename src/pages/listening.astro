@@ -1,0 +1,329 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// A links page, deliberately. Every query below is a live search you can run
+// yourself, on indexes that publish their terms openly. Nothing here is
+// scraped and nothing is cached: the counts are a dated snapshot, the links
+// are the real thing.
+//
+// OpenAlex is the spine. Free, no API key, and its data is CC0, which is the
+// only reason it can sit on a page that licenses its own methodology CC BY.
+// Google Scholar has no API and its terms forbid scraping, so Scholar appears
+// here as a link you click and an alert you set up, never as something this
+// site fetches.
+
+const SNAPSHOT = '13 September 2026';
+const SINCE = '2025-01-01';
+const MAILTO = 'sarah@sitelines.media';
+
+type Term = { term: string; label: string; count: number; note?: string; definition?: string };
+
+const terms: Term[] = [
+  { term: '"AI sovereignty"', label: 'AI sovereignty', count: 330,
+    note: 'How AI sovereignty is being claimed and assessed.' },
+  { term: '"AI governance"', label: 'AI governance', count: 16983,
+    note: 'The broad field. Everything from model safety to procurement, most of it some distance from infrastructure.' },
+  { term: '"algorithmic governance"', label: 'Algorithmic governance', count: 2922,
+    note: 'Rules and protocols relating to algorithms, not specifically AI ecosystems.' },
+  { term: '"sovereign AI"', label: 'Sovereign AI', count: 1615,
+    note: 'Industry framing. Tracks the term the Tracker charts the rise of.' },
+  { term: '"public AI"', label: 'Public AI', count: 497 },
+  { term: '"public participation" AND "artificial intelligence"', label: 'Public participation + AI', count: 300,
+    note: 'Broader considerations of the intersection between public participation and AI.' },
+  { term: '"participatory AI"', label: 'Participatory AI', count: 200,
+    note: 'Participatory methods for AI enablement, agencies and governance. A key forum is the India AI Impact Summit, New Delhi, February 2026, the first global AI summit hosted in the Global South.' },
+  { term: '"civic AI"', label: 'Civic AI', count: 50,
+    note: 'Multiple emergent definitions that consider AI governance practices as civic participation.' },
+  { term: '"civic technology" AND "artificial intelligence"', label: 'Civic technology + AI', count: 25 },
+  { term: '"data center" AND "community benefit"', label: 'Data centres + community benefit', count: 20,
+    note: 'Works considering how data centres can deliberately be built with local community benefit in mind.' },
+  { term: '"agentic civics"', label: 'Agentic civics', count: 0,
+    definition: "Agentic Civics examines how agent-based workflows can be designed in ways that reflect the capabilities of civic intelligence and civic enquiry, whether in relation to established governance models or more relational practices of everyday citizenship. The practices include agentic-listening (recursively monitoring public policy and decision-making transparency within democratic contexts) and agentic-civics coordination (strategic co-ordination by public and private actors of AI-focused data ecosystems for public benefit)." },
+];
+
+const openAlex = (t: string) =>
+  `https://openalex.org/works?filter=title_and_abstract.search:${encodeURIComponent(t)},from_publication_date:${SINCE}`;
+const openAlexApi = (t: string) =>
+  `https://api.openalex.org/works?filter=title_and_abstract.search:${encodeURIComponent(t)},from_publication_date:${SINCE}&mailto=${MAILTO}`;
+const scholar = (t: string) =>
+  `https://scholar.google.com/scholar?q=${encodeURIComponent(t)}&as_ylo=2025`;
+const arxiv = (t: string) =>
+  `https://arxiv.org/a/search?searchtype=all&query=${encodeURIComponent(t)}`;
+const semantic = (t: string) =>
+  `https://www.semanticscholar.org/search?q=${encodeURIComponent(t)}&year%5B0%5D=2025`;
+---
+<BaseLayout
+  title="Listening to an emergent field"
+  description="Live searches across OpenAlex, Google Scholar, arXiv and Semantic Scholar for the vocabulary of civic AI: participatory AI, AI sovereignty, agentic civics. A dated snapshot of how big each literature is, and links to run every search yourself."
+>
+  <main class="container lis">
+
+    <header class="lis-header">
+      <p class="lis-eyebrow">Civic Interplay / Listening</p>
+      <h1>Listening to an emergent field</h1>
+      <p class="lis-intro">
+        Agentic listening to an emerging literature. The counts are a snapshot
+        in time. Last snapshot: {SNAPSHOT}, covering work published since
+        January 2025.
+      </p>
+    </header>
+
+    <section class="lis-section">
+      <ol class="lis-terms">
+        {terms.map((t) => (
+          <li class:list={['lis-term', t.count === 0 && 'is-empty']}>
+            <div class="lis-term-head">
+              <h3>{t.label}</h3>
+              <span class="lis-count">{t.count === 0 ? 'none' : t.count.toLocaleString('en-AU')}</span>
+            </div>
+            {t.note && <p class="lis-note">{t.note}</p>}
+            {t.definition && (
+              <div class="lis-def">
+                <p class="lis-def-label">Working definition</p>
+                <p class="lis-def-body">{t.definition}</p>
+              </div>
+            )}
+            <p class="lis-links">
+              <a href={openAlex(t.term)} target="_blank" rel="noopener external">OpenAlex</a>
+              <a href={scholar(t.term)} target="_blank" rel="noopener external">Scholar</a>
+              <a href={arxiv(t.term)} target="_blank" rel="noopener external">arXiv</a>
+              <a href={semantic(t.term)} target="_blank" rel="noopener external">Semantic Scholar</a>
+              <a class="lis-api" href={openAlexApi(t.term)} target="_blank" rel="noopener external">API</a>
+            </p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <footer class="lis-footer">
+      <p class="lis-eyebrow">Civic Interplay / Listening</p>
+      <p>
+        For the curated reading visit:
+        <a href="/reading/">Friends of Civic Interplay</a>.
+      </p>
+      <p>
+        Counts from <a href="https://openalex.org/" target="_blank" rel="noopener external">OpenAlex</a>, CC0.
+        Corrections and missing terms welcome.
+      </p>
+    </footer>
+
+  </main>
+
+  <style>
+    .lis {
+      padding: 3rem 2rem 4rem;
+      max-width: 880px;
+    }
+
+    .lis-header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .lis-eyebrow {
+      font-family: var(--heading);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.6rem;
+    }
+
+    .lis-header h1 {
+      font-family: var(--heading);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.8rem;
+    }
+
+    .lis-intro {
+      font-family: var(--body);
+      font-size: 0.95rem;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--text-dim);
+      max-width: 62ch;
+    }
+
+    .lis-section {
+      margin-top: 2rem;
+    }
+
+    .lis-section h2 {
+      font-family: var(--heading);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.8rem;
+    }
+
+    .lis-section > p {
+      font-family: var(--body);
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text);
+      max-width: 65ch;
+      margin-bottom: 1rem;
+    }
+
+    .lis-section a,
+    .lis-footer a {
+      color: var(--purple);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .lis-terms {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-width: 68ch;
+    }
+
+    /* The section heading above this list is gone, so the first row's rule sat
+       directly under the header's, reading as a double line. */
+    .lis-term:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .lis-term {
+      padding: 1.1rem 0;
+      border-top: 2px solid var(--border);
+    }
+
+    .lis-term:last-child {
+      border-bottom: 2px solid var(--border);
+    }
+
+    /* The zero row is the point of the table, so it is allowed to look it. */
+    .lis-term.is-empty {
+      background: var(--tint-purple-a);
+      padding-left: 1rem;
+      padding-right: 1rem;
+      border-left: 6px solid var(--purple);
+    }
+
+    .lis-term-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .lis-term h3 {
+      font-family: var(--heading);
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .lis-count {
+      font-family: var(--heading);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-faint);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .lis-term.is-empty .lis-count {
+      color: var(--purple);
+    }
+
+    .lis-note {
+      font-family: var(--body);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--text-dim);
+      max-width: 60ch;
+      margin: 0.5rem 0 0;
+    }
+
+    /* The term with no literature is the one that needs saying out loud. */
+    .lis-def {
+      margin: 0.9rem 0 0;
+      padding: 0.9rem 1rem;
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .lis-def-label {
+      font-family: var(--heading);
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin: 0 0 0.4rem;
+    }
+
+    .lis-def-body {
+      font-family: var(--body);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: var(--text);
+      margin: 0;
+      max-width: 60ch;
+    }
+
+    .lis-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.1rem;
+      margin: 0.7rem 0 0;
+      font-family: var(--heading);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+    }
+
+    .lis-links a {
+      color: var(--text-dim);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .lis-links a:hover {
+      color: var(--purple);
+    }
+
+    .lis-links .lis-api {
+      color: var(--text-faint);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .lis-footer {
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 2px solid var(--border);
+    }
+
+    .lis-footer p {
+      font-family: var(--body);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-dim);
+      max-width: 62ch;
+      margin-bottom: 0.6rem;
+    }
+
+    @media (max-width: 620px) {
+      .lis {
+        padding: 2rem 1.2rem 3rem;
+      }
+
+      .lis-term-head {
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+    }
+  </style>
+</BaseLayout>

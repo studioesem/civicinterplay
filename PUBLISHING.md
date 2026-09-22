@@ -10,10 +10,13 @@ Everything is a draft. Take your time.
 2. Sign in with your GitHub account (the one invited to this repository)
 3. Choose **studioesem/civicinterplay** from the list
 
-You'll see two sections in the sidebar:
+You'll see these sections in the sidebar:
 
 - **Posts**: the site's articles. This is where you'll spend your time.
-- **Embeds**: video and audio clips that can be reused across posts. Leave these alone unless you know what you're doing.
+- **Friends of Civic Interplay**: the reading list of other people's work, shown on the Reading page.
+- **Home page**: the hero questions and the What's New cards.
+- **Field notes**: the diagram cards, e.g. the infrastructural-AI stack.
+- **Embeds**: video and audio clips reused across posts. Leave these alone unless you know what you're doing.
 
 ## Writing a new post
 
@@ -37,14 +40,11 @@ Fields you can usually ignore: subtitle, updated at, the feature video/audio fie
 ### The categories
 
 - **Foundational Docs** (purple): orientation pieces about what Civic Interplay is
-- **Training Grounds** (terracotta): exercises, workshops, practice
-- **Essays & Readings** (periwinkle): essays, resources, people and ideas that guide the work
+- **Training Grounds** (terracotta): exercises, workshops, practice, and work on the data centre build-out
+- **Essays & Readings** (periwinkle): longer essays and reflection
 - **The Portals** (pink): media pieces, video and audio portals
 
-Tick every category that fits under **Categories**, then pick the one that should
-colour the card under **Primary category**. Live tools and worksheets use the
-cream **Card colour** whatever their category, so a card reads as what it is
-rather than only where it sits.
+Live tools and worksheets use the cream accent whatever their category.
 
 ## Saving and drafts
 
@@ -81,6 +81,9 @@ Step one, once per post: in Source mode, put the lines you need at the very top 
 ```
 import Callout from '../../components/Callout.astro';
 import VideoEmbed from '../../components/VideoEmbed.astro';
+import CardScroller from '../../components/CardScroller.astro';
+import LinkCallout from '../../components/LinkCallout.astro';
+import SlideShow from '../../components/SlideShow.astro';
 ```
 
 ### A callout card
@@ -109,6 +112,19 @@ The blank lines above and below the text matter. Keep them.
 The poster is a normal image from the site's image library. The video itself lives at media.civicinterplay.io; ask Sarah to upload new clips there. For tall phone-shaped clips, add `portrait` on its own line before the closing `/>`.
 
 Golden rule: once a post contains any of these blocks, do all future edits to that post in Source mode.
+
+## The reading list
+
+**Friends of Civic Interplay** on the Reading page is a list of other people's work: source materials on civic AI and civic AI governance. Edit it in Pages CMS under **Friends of Civic Interplay**.
+
+Each entry has a title, authors, publisher, year, a link, a colour and a note. The note is the part that matters. Two or three sentences in your own voice on why the work belongs; without it the page is just a list of links.
+
+Two conventions worth keeping:
+
+- **No images.** Book covers and publisher artwork are copyrighted, they look a mess side by side, and this site publishes its own licence terms. The absence of a picture is how a reader tells someone else's work from ours.
+- **Check the link resolves** before saving. A reading list with a dead link is worse than a shorter one.
+
+Below Friends sits **Musings**, which is Sarah's own posts and field notes. That half fills itself from Posts; there is nothing to edit.
 
 ## Facts and Moments
 
@@ -224,6 +240,29 @@ The two grounds on the web page are `.accent-fieldnote` and
 measured for contrast like the six brand tints beside them. Change a ground in
 one place and both the page and the images follow, because the field the card
 carries is the same field.
+
+## Pages that are not in the CMS
+
+Some pages are built by hand and can only be changed in the code. If you need something altered on one of these, ask Sarah rather than hunting for it in Pages CMS.
+
+| Page | What it is |
+|---|---|
+| `/sovereignties/` | The Data Centres Sovereignty Tracker: the live map, the charts, methods and citation |
+| `/submission/` | The Senate submission, its recommendations and the hosted PDF |
+| `/listening/` | The search terms and counts across the civic AI literature |
+| `/doing/`, `/about/`, `/reading/` | Section pages, which pull their content from the CMS but whose furniture is fixed |
+
+The **Listening** page carries a table of counts taken from OpenAlex on a fixed date. Those numbers are a snapshot and will drift. The date is printed on the page so a reader can tell how stale they are; when they get too old, they need refreshing in the code.
+
+## The card images
+
+The cards on the home page and the Do page use images from `public/images/tiles/`. Most are generated from `scripts/build-tiles.mjs`, not drawn by hand. To change the words on one, edit that file and run:
+
+```
+npm run tiles:build
+```
+
+Two things follow from this. The alt text lives separately in the CMS, so **if you change the words on a tile, change its alt text too** or the two will disagree. And What's New holds four cards, which is one full row; a fifth wraps and leaves a card hanging on its own. Set the extra one to Draft rather than letting it wrap.
 
 ## Editing an existing post
 

@@ -49,22 +49,49 @@
   "titleDot": true,
   "tiles": [
     {
+      "id": "submission",
+      "type": "field-note",
+      "kicker": "New",
+      "cta": "Submission to the AI and Data Centres inquiry",
+      "href": "/submission/",
+      "alt": "Field note card reading: The Senate Submission. Key recommendations.",
+      "draft": false
+    },
+    {
+      "id": "listening",
+      "type": "field-note",
+      "kicker": "New",
+      "cta": "See what the field is writing about civic AI",
+      "href": "/listening/",
+      "alt": "Field note card reading: Listening to an emergent field. The vocabulary of civic AI, counted.",
+      "draft": false
+    },
+    {
+      "id": "friends",
+      "type": "field-note",
+      "kicker": "New",
+      "cta": "Read the source materials on civic AI governance",
+      "href": "/reading/",
+      "alt": "Field note card reading: Source materials on civic AI. What the field is writing now.",
+      "draft": false
+    },
+    {
       "id": "map",
       "type": "tool",
       "kicker": "Live tool",
       "cta": "See who is building AI infrastructure in Australia",
       "href": "/sovereignties/",
-      "alt": "Field note card reading: I spent the past five months building a data centre map to track the super cycle transforming energy, water and land infrastructure.",
+      "alt": "Field note card reading: Tracking the super cycle. Energy, water and land, site by site.",
       "draft": false
     },
     {
       "id": "stack",
       "type": "field-note",
       "kicker": "Field note",
-      "cta": "Find out who holds each layer of the AI stack",
+      "cta": "See who holds each layer of the infrastructural-AI stack",
       "href": "/field-notes/ai-stack/",
       "alt": "Field note diagram titled Who holds each layer of the Australian AI stack. Six layers, from minerals at the bottom to value and returns at the top, each labelled with who holds it: Washington and Beijing, Australia, global funds, hyperscalers, US labs, offshore.",
-      "draft": false
+      "draft": true
     },
     {
       "id": "ladder",
@@ -73,7 +100,7 @@
       "cta": "See what a community could actually ask for",
       "href": "/field-notes/benefit-ladder/",
       "alt": "Field note diagram titled The local benefit ladder. Eight rungs running from reserved capacity at the bottom to standing at the top, arranged as a climb from compensation to co-ownership.",
-      "draft": false
+      "draft": true
     },
     {
       "id": "method",
