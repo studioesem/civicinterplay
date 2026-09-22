@@ -141,7 +141,8 @@ on the page look like the files you hand out.
 Every card on that page has its own link and its own download, so a card can be
 shared on its own rather than only as part of the set. Clicking the small
 `CLAIM` label jumps to that card and puts it in the address bar; **Copy link**
-does the same without moving the page. A held card has no download.
+does the same without moving the page. A held card has no image to hand out,
+so it has a link but no download.
 
 ### Writing one
 
@@ -200,10 +201,15 @@ made, not on it.
 ### Holding a card back
 
 Turn **Hold this card** on for anything that needs a question asked before it
-goes out, and write the question in **Note if used**. A held card still shows on
-the page, marked as held, but the image export refuses to cut it. The thing that
-makes the image is the thing that knows the status, so a claim cannot quietly go
-out above it.
+goes out, and write the question in **Note if used**. The image export then
+refuses to cut it, so there is no card to post until you clear it. The thing
+that makes the image is the thing that knows the status, so a claim cannot
+quietly go out above it.
+
+Nothing on the page says a card is held. The claim, its sources and its fine
+print all show as normal and it keeps its link; it just has no download. Held
+is a note to yourself about what to ask first, not something a reader needs to
+decode.
 
 ### Cutting the images
 

@@ -80,16 +80,16 @@ const accent = ground === 'ink' ? 'accent-fieldnote-ink' : 'accent-fieldnote';
   {note && <p class="claim-card-note"><span>The fine print</span> {note}</p>}
 
   <div class="claim-card-foot">
-    {hold ? (
-      <span class="claim-card-held">Held until the caveat can travel with it</span>
-    ) : (
-      <>
-        {artwork && <a href={artwork} download={`civic-interplay-${anchor}.png`}>Download</a>}
-        <button type="button" class="claim-card-copy" data-copy={`#${anchor}`}>
-          Copy link
-        </button>
-      </>
+    {/* A held card has no artwork to hand out, so it gets no Download. It is
+        still a card someone can link to, so it keeps Copy link. Nothing on the
+        page says it is held: that is a note to Sarah about what to ask before
+        posting, not something a reader needs to decode. */}
+    {!hold && artwork && (
+      <a href={artwork} download={`civic-interplay-${anchor}.png`}>Download</a>
     )}
+    <button type="button" class="claim-card-copy" data-copy={`#${anchor}`}>
+      Copy link
+    </button>
   </div>
 </article>
 
@@ -310,10 +310,6 @@ const accent = ground === 'ink' ? 'accent-fieldnote-ink' : 'accent-fieldnote';
   .claim-card-copy[data-copied] {
     text-decoration: none;
     cursor: default;
-  }
-
-  .claim-card-held {
-    color: var(--card-ink-dim);
   }
 </style>
 

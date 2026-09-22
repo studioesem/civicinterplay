@@ -72,8 +72,8 @@ outside that block.
 
 The export goes through satori rather than hand-placed SVG, because claims vary
 too much in length to position by hand and a highlight has to survive being
-wrapped mid-phrase. Every card carries a status, and a card marked **hold** does
-not render and gets no download until its caveat has a way to travel with it.
+wrapped mid-phrase. Every card carries a status, and a card marked **hold** is
+not cut, so it has a link on the page but no download.
 
 Node 20+ recommended.
 
