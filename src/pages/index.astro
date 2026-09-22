@@ -165,7 +165,18 @@ function categoryLabelsFor(post: (typeof allPosts)[number]) {
       text-underline-offset: 4px;
     }
 
+    /* Five tiles need more room than the 1036px of text column the container
+       gives, so the row breaks out a little wider, the same move CardScroller
+       makes. Same trick, same reason: the cards have to stay wide enough that
+       the call to action underneath reads on two lines. */
     .tiles-section {
+      --shelf: min(1240px, calc(100vw - 3rem));
+      width: var(--shelf);
+      /* Centred with a negative margin rather than a transform. CardScroller
+         does this with translateX, but it can't be done here: global.css
+         animates `transform` on every <section> to fade it in, and the
+         keyframe's translateY(0) wins at the end state. */
+      margin-left: calc((100% - var(--shelf)) / 2);
       margin-bottom: 3.5rem;
     }
 
@@ -180,8 +191,25 @@ function categoryLabelsFor(post: (typeof allPosts)[number]) {
       margin: 0;
       padding: 0;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      /* Explicit rather than auto-fit. Five tiles through an auto-fit grid
+         pass through a four-column step on the way down, which leaves the
+         fifth card hanging on a row of its own. These steps go 5, 3, 2, 1 and
+         skip four entirely. Add a sixth tile and this needs revisiting, which
+         is the point: the row's shape should be a decision, not a side effect. */
+      grid-template-columns: repeat(5, 1fr);
       gap: 1.6rem;
+    }
+
+    @media (max-width: 1150px) {
+      .tile-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 820px) {
+      .tile-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     /* Two 4:5 tiles side by side on a phone leaves ~160px each, which is too

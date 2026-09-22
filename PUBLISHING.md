@@ -262,7 +262,9 @@ The cards on the home page and the Do page use images from `public/images/tiles/
 npm run tiles:build
 ```
 
-Two things follow from this. The alt text lives separately in the CMS, so **if you change the words on a tile, change its alt text too** or the two will disagree. And What's New holds four cards, which is one full row; a fifth wraps and leaves a card hanging on its own. Set the extra one to Draft rather than letting it wrap.
+Two things follow from this. The alt text lives separately in the CMS, so **if you change the words on a tile, change its alt text too** or the two will disagree. And What's New holds five cards, which is one full row on a wide screen and three-plus-two on a narrower one. A sixth would leave a card hanging on its own, so set the extra one to Draft rather than letting it wrap.
+
+Not every tile is generated. A tile can take a photograph across the top with the words underneath (the Tracker does, using the tracker's own map), and a claim card is already the right shape to be a tile on its own (Facts and Moments uses one). Both are set up in `scripts/build-tiles.mjs`.
 
 ## Editing an existing post
 
