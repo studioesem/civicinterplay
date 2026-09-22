@@ -56,7 +56,7 @@
       "status": "UNVERIFIED",
       "ground": "cream",
       "highlight": "default",
-      "note": "This project's own query. The index was verified working against controls (DWELLING 3,302, INDUSTR 402), but has not been independently checked. The council hosts Supernode, a data centre and battery campus reported at $2.5 to 3bn whose planning approval was announced by the Deputy Premier. The count is over application descriptions, not permit documents.",
+      "note": "The index was verified working against controls (DWELLING 3,302, INDUSTR 402), but has not been independently checked. The council hosts Supernode, a data centre and battery campus reported at $2.5 to 3bn whose planning approval was announced by the Deputy Premier. The count is over application descriptions, not permit documents.",
       "hold": false
     },
     {
@@ -82,7 +82,7 @@
       "status": "UNVERIFIED",
       "ground": "cream",
       "highlight": "default",
-      "note": "SOURCED for the figure; UNVERIFIED for the absence, so the card sits at the lower of the two. No PUE, no WUE, no kWh, no MWh anywhere in 113 pages. A connection size is how big the pipe is, not how much flows through it, and with no efficiency figure stated, one cannot be derived from the other.",
+      "note": "No PUE, no WUE, no kWh, no MWh anywhere in 113 pages. A connection size is how big the pipe is, not how much flows through it, and with no efficiency figure stated, one cannot be derived from the other.",
       "hold": false
     },
     {
@@ -95,7 +95,7 @@
       "status": "SOURCED",
       "ground": "cream",
       "highlight": "purple",
-      "note": "Construction demand is around 322 kL/day plus around 200 kL/day dust suppression, and 26.9 ML one-off per building to commission the closed loop. Both figures are real; the audit counts operating water only, and says so.",
+      "note": "Construction demand is around 322 kL/day plus around 200 kL/day dust suppression, and 26.9 ML one-off per building to commission the closed loop.",
       "hold": false
     },
     {
@@ -108,7 +108,7 @@
       "status": "SOURCED",
       "ground": "ink",
       "highlight": "purple",
-      "note": "Important. The figure is from the statutory feed and is almost certainly correct as the regulation defines it. The claim is not that anyone understated anything; it is that the statutory figure and what a hyperscaler actually spends are different measurements, and only one of them is recorded. Check what NSW CIV excludes before publishing.",
+      "note": "Important. The figure is from the statutory feed and is almost certainly correct as the regulation defines it. The claim is not that anyone understated anything; it is that the statutory figure and what a hyperscaler actually spends are different measurements.",
       "hold": true
     },
     {
@@ -121,7 +121,7 @@
       "status": "UNVERIFIED",
       "ground": "cream",
       "highlight": "default",
-      "note": "This project's own coverage, and partly a statement about the tracker rather than the world. Six rows carry an investment figure, eight an approval date. Be explicit that this is harvesting coverage, not proof no record exists.",
+      "note": "Partly a statement about the tracker rather than the world.",
       "hold": false
     },
     {
@@ -134,7 +134,7 @@
       "status": "VERIFIED",
       "ground": "ink",
       "highlight": "default",
-      "note": "Primary source, ministerial statement, date on the document. The consent now underwriting a hyperscale AI campus was granted before the public conversation about AI infrastructure existed. Whatever conditions it carries were written for a different thing.",
+      "note": "Primary source, ministerial statement, date on the document. The consent now underwriting a hyperscale AI campus was granted before the public conversation about AI infrastructure existed.",
       "hold": false
     },
     {
@@ -147,7 +147,6 @@
       "status": "SOURCED",
       "ground": "cream",
       "highlight": "magenta",
-      "note": "SOURCED for the value. Google's imagery, reproduced with source and date named; consider a photograph taken on the public road if this goes to print. The strongest image of the night and the whole siting argument in one frame. Land, water, energy is the one layer Australia holds, and the energy part is allocated by a contract that appears in no planning record.",
       "hold": false,
       "image": "ai-sovereignties/docs/figures/supernode-brendale-paddock-streetview-2026.png",
       "imageCrop": "0,62,1120,560",
@@ -163,7 +162,7 @@
       "status": "SOURCED",
       "ground": "cream",
       "highlight": "purple",
-      "note": "This is the subtle one and possibly the most important. These facilities run flat, day and night. They are not a bigger version of existing demand; they are a different kind of load, and they change the hardest problem in a solar-heavy grid.",
+      "note": "They are not a bigger version of existing demand; they are a different kind of load, and they change the hardest problem in a solar-heavy grid.",
       "hold": false
     },
     {
@@ -176,7 +175,7 @@
       "status": "SOURCED",
       "ground": "ink",
       "highlight": "default",
-      "note": "Verbatim. The full sentence is \"with minimal enquiries or developments progressing beyond preliminary stages\", and the conclusion is \"Powerlink has not included specific data centre projects into the current load forecast.\" This is the network planner for the state that now hosts both Supernode and the largest data centre proposed in Australia.",
+      "note": "The full sentence is \"with minimal enquiries or developments progressing beyond preliminary stages\", and the conclusion is \"Powerlink has not included specific data centre projects into the current load forecast.\" This is the network planner for the state that now hosts both Supernode and the largest data centre proposed in Australia.",
       "hold": false
     },
     {
@@ -202,7 +201,7 @@
       "status": "UNVERIFIED",
       "ground": "cream",
       "highlight": "default",
-      "note": "SOURCED for the quote; UNVERIFIED that no 2026 edition exists, which rests on a search rather than on a statement from Powerlink. Be fair: annual reports are annual, and this is not a claim that Powerlink is unaware. They almost certainly hold current enquiry data they have not published. The claim is about the public record: the forecast a citizen or a council can read today excludes a facility lodged in August 2026 at roughly a hundred times the statewide projection. Ask Powerlink before publishing.",
+      "note": "SOURCED for the quote; UNVERIFIED that no 2026 edition exists, which rests on a search rather than on a statement from Powerlink. This is not a claim that Powerlink is unaware. They almost certainly hold current enquiry data they have not published.",
       "hold": true
     },
     {
@@ -215,7 +214,7 @@
       "status": "SOURCED",
       "ground": "ink",
       "highlight": "purple",
-      "note": "Both figures verbatim, both dated. These are the same measure at two points in time, not a discrepancy. The March submission also says around 6 GW of that was \"progressing at pace\" to a formal application, which is the honest answer to how much of the 20 GW is real, and Transgrid compares that 6 GW to building a Renewable Energy Zone the size of Central-West Orana.",
+      "note": "The March submission also says around 6 GW of that was \"progressing at pace\" to a formal application, which is the honest answer to how much of the 20 GW is real, and Transgrid compares that 6 GW to building a Renewable Energy Zone the size of Central-West Orana.",
       "hold": false
     },
     {
@@ -228,7 +227,7 @@
       "status": "SOURCED",
       "ground": "cream",
       "highlight": "default",
-      "note": "This is the threshold at which a facility stops being visible to the network that plans and prices for households. Above it, a data centre connects straight to transmission, which is what both Queensland sites do, and why Victoria's planner separately counts \"small distribution connected data centres\".",
+      "note": "A data centre connects straight to transmission, which is what both Queensland sites do, and why Victoria's planner separately counts \"small distribution connected data centres\".",
       "hold": false
     }
   ]
