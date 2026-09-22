@@ -1,0 +1,347 @@
+---
+// One claim from a tracking night, set on the page the way it is set in the
+// image, so scrolling the run is reading the set rather than reading a
+// stand-in for it.
+//
+// Ground and highlight come from the same JSON that feeds
+// scripts/build-claim-cards.mjs, parsed by the same module, so a card cannot
+// look one way on the page and another in the file you post.
+//
+// The card is an article rather than a link: a claim is not a destination, and
+// the only interactive things are its permalink and its download. It is
+// deliberately not a <section> either, because global.css fades every section
+// in on load with a stagger on the first four. That reads well on a page with
+// three or four bands and badly on a grid of seventeen cards, where it leaves
+// half the set mid-fade.
+import { parseClaim, plainClaim } from '../../scripts/lib/claim-text.mjs';
+import { CLAIM_STATUS_MEANS } from '../content/config';
+
+interface Props {
+  anchor: string;
+  /** Not printed. It names the image file and the anchor. */
+  id: string;
+  /** Working title, not printed either. Used to label the permalink. */
+  title?: string;
+  kind?: 'CLAIM' | 'ARCHIVE';
+  claim: string;
+  source: string;
+  meta?: string;
+  status: 'VERIFIED' | 'SOURCED' | 'UNVERIFIED';
+  ground?: 'cream' | 'ink';
+  highlight?: 'default' | 'magenta' | 'purple';
+  note?: string;
+  hold?: boolean;
+  /** Path to the cut artwork, when the card is not being held. */
+  artwork?: string;
+  /** Web copy of an ARCHIVE card's photograph, written by cards:build. */
+  photo?: string;
+  photoAlt?: string;
+}
+
+const {
+  anchor, id, title, kind = 'CLAIM', claim, source, meta, status,
+  ground = 'cream', highlight = 'default', note, hold = false, artwork,
+  photo, photoAlt = '',
+} = Astro.props;
+
+const runs = parseClaim(claim);
+
+// Cream ground takes .accent-fieldnote, ink takes the inverted one. Both are
+// declared in the Card accents block in global.css; nothing here sets a colour.
+const accent = ground === 'ink' ? 'accent-fieldnote-ink' : 'accent-fieldnote';
+---
+<article
+  class={`claim-card ${accent} ground-${ground} hl-${highlight} status-${status.toLowerCase()}`}
+  id={anchor}
+  aria-label={plainClaim(claim)}
+>
+  {photo && (
+    <img class="claim-card-photo" src={photo} alt={photoAlt} loading="lazy" decoding="async" />
+  )}
+
+  <div class="claim-card-head">
+    <a
+      class="claim-card-tag"
+      href={`#${anchor}`}
+      aria-label={`Link to this card: ${title ?? plainClaim(claim)}`}
+    >{kind}</a>
+    <span class="claim-card-status" title={CLAIM_STATUS_MEANS[status]}>{status}</span>
+  </div>
+
+  <p class="claim-card-claim">
+    {runs.map((run) => (run.highlight ? <mark>{run.text}</mark> : run.text))}
+  </p>
+
+  <ul class="claim-card-source">
+    <li>{source}</li>
+    {meta && <li>{meta}</li>}
+  </ul>
+
+  {note && <p class="claim-card-note"><span>The fine print</span> {note}</p>}
+
+  <div class="claim-card-foot">
+    {hold ? (
+      <span class="claim-card-held">Held until the caveat can travel with it</span>
+    ) : (
+      <>
+        {artwork && <a href={artwork} download={`civic-interplay-${anchor}.png`}>Download</a>}
+        <button type="button" class="claim-card-copy" data-copy={`#${anchor}`}>
+          Copy link
+        </button>
+      </>
+    )}
+  </div>
+</article>
+
+<style>
+  /* Same chrome as PostCard and the home-page tiles: 2px rule, hard offset
+     shadow. The accent class supplies the fill and the ink. */
+  .claim-card {
+    background: var(--card-bg);
+    color: var(--card-ink);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 4px 4px 0 var(--border);
+    padding: 1.3rem 1.3rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    /* So a shared link does not land the card under the site header. */
+    scroll-margin-top: 6rem;
+  }
+
+  /* An inverted card's own black border is invisible against the ink ground, so
+     it borrows the cream edge instead and keeps the shadow to sit off the page. */
+  .ground-ink {
+    border-color: var(--card-edge);
+  }
+
+  .claim-card:target {
+    outline: 3px solid var(--purple);
+    outline-offset: 4px;
+  }
+
+  /* An archive card gives its top to the photograph, the way the image does.
+     Inset inside the padding with its own rule, the same treatment PostCard
+     gives a feature image, rather than bleeding to the card edge. */
+  .claim-card-photo {
+    display: block;
+    width: 100%;
+    height: 170px;
+    margin-bottom: 1rem;
+    object-fit: cover;
+    object-position: center;
+    border: 2px solid var(--card-edge);
+    border-radius: 6px;
+    background: var(--card-edge);
+  }
+
+  .claim-card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .claim-card-tag {
+    font-family: var(--heading);
+    font-size: 0.62rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--card-kicker);
+    text-decoration: none;
+  }
+
+  .claim-card-tag:hover {
+    color: var(--card-hover-ink);
+    text-decoration: underline;
+  }
+
+  /* The status chip carries the colour, not the card ground, so the category
+     colour system keeps meaning what it means everywhere else on the site.
+     The ink ground needs lighter values: the forest and terracotta that read
+     on cream disappear against black. */
+  .claim-card-status {
+    font-family: var(--heading);
+    font-size: 0.56rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+    padding: 0.2rem 0.5rem;
+    border: 1.5px solid currentColor;
+    border-radius: 3px;
+  }
+
+  .ground-cream.status-verified .claim-card-status { color: var(--forest); }
+  .ground-cream.status-sourced .claim-card-status { color: var(--ink-periwinkle); }
+  .ground-cream.status-unverified .claim-card-status { color: var(--terracotta); }
+
+  .ground-ink.status-verified .claim-card-status { color: #a8b59e; }
+  .ground-ink.status-sourced .claim-card-status { color: var(--periwinkle); }
+  .ground-ink.status-unverified .claim-card-status { color: #e89b82; }
+
+  .claim-card-claim {
+    font-family: var(--heading);
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.34;
+    letter-spacing: -0.005em;
+    margin: 0 0 1.1rem;
+  }
+
+  /* box-decoration-break keeps the bar whole when a highlight wraps, which is
+     what the image export builds by hand out of word boxes. A coloured
+     knockout always carries cream text: one rule, not a table. */
+  .claim-card-claim mark {
+    background: var(--knockout-bg);
+    color: var(--knockout-ink);
+    padding: 0.05em 0.24em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .ground-cream {
+    --knockout-bg: var(--text);
+    --knockout-ink: #f4ecd7;
+  }
+
+  .ground-ink {
+    --knockout-bg: #f4ecd7;
+    --knockout-ink: #111111;
+  }
+
+  .hl-magenta {
+    --knockout-bg: #b8317b;
+    --knockout-ink: #f4ecd7;
+  }
+
+  .hl-purple {
+    --knockout-bg: #7d50bd;
+    --knockout-ink: #f4ecd7;
+  }
+
+  .claim-card-source {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    font-family: var(--heading);
+    font-size: 0.66rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+    color: var(--card-ink-dim);
+  }
+
+  .claim-card-source li {
+    position: relative;
+    padding-left: 1.15em;
+  }
+
+  /* Drawn rather than typed, for the same reason the image export draws it:
+     the \25B8 glyph is not in Fira Sans, sets tiny in whatever the browser
+     falls back to, and reads as a dot instead of a marker. */
+  .claim-card-source li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.52em;
+    width: 0;
+    height: 0;
+    border-left: 0.44em solid #b8317b;
+    border-top: 0.27em solid transparent;
+    border-bottom: 0.27em solid transparent;
+  }
+
+  .claim-card-note {
+    font-family: var(--body);
+    font-size: 0.78rem;
+    font-weight: 300;
+    line-height: 1.55;
+    color: var(--card-ink-dim);
+    margin: 0 0 1rem;
+    padding-top: 0.85rem;
+    border-top: 1.5px solid var(--card-edge);
+  }
+
+  .claim-card-note span {
+    font-family: var(--heading);
+    font-size: 0.6rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--card-kicker);
+    margin-right: 0.35em;
+  }
+
+  .claim-card-foot {
+    margin: auto 0 0;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-family: var(--heading);
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .claim-card-foot a,
+  .claim-card-copy {
+    color: var(--card-kicker);
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .claim-card-foot a:hover,
+  .claim-card-copy:hover {
+    color: var(--card-hover-ink);
+  }
+
+  .claim-card-copy[data-copied] {
+    text-decoration: none;
+    cursor: default;
+  }
+
+  .claim-card-held {
+    color: var(--card-ink-dim);
+  }
+</style>
+
+<script>
+  // One listener for every card on the page. Falls back to doing nothing
+  // visible if the clipboard is unavailable, which is why the button sits next
+  // to a tag that is already a plain anchor to the same place.
+  document.addEventListener('click', async (event) => {
+    const button = (event.target as HTMLElement)?.closest<HTMLButtonElement>(
+      '.claim-card-copy'
+    );
+    if (!button) return;
+
+    const hash = button.dataset.copy;
+    if (!hash) return;
+
+    const url = `${location.origin}${location.pathname}${hash}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      const previous = button.textContent;
+      button.textContent = 'Link copied';
+      button.dataset.copied = 'true';
+      window.setTimeout(() => {
+        button.textContent = previous;
+        delete button.dataset.copied;
+      }, 2000);
+    } catch {
+      location.hash = hash;
+    }
+  });
+</script>

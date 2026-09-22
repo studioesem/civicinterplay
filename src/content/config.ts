@@ -110,4 +110,90 @@ const fieldnotes = defineCollection({
   }),
 });
 
-export const collections = { posts, embeds, fieldnotes };
+// Claim cards: one file per tracking night, holding the headline claims that
+// night produced. Not posts. These are the claims a post could be built from,
+// with their source, page and date recorded at the moment the document was read.
+//
+// The same file feeds two renderers: the running page at /facts-and-moments/ and the image
+// export in scripts/build-claim-cards.mjs. The text lives here once so a claim
+// cannot say one thing on the site and another on the card.
+//
+// See ai-sovereignties/docs/cards/README.md for the format this encodes.
+
+/** Every card carries a status. Post nothing above its status. */
+export const CLAIM_STATUS = ['VERIFIED', 'SOURCED', 'UNVERIFIED'] as const;
+
+// A set of seventeen identical cards reads as wallpaper, so the ground flips
+// between cream and ink across the run and the knockout takes one of three
+// colours. The magenta rule under the asterisk stays magenta on every card,
+// whatever the ground: it is the one constant that holds the series together.
+//
+// Inverting a card already means something in this project. build-tiles.mjs
+// inverts the `method` tile because it is a door rather than a document. Here
+// it is rhythm rather than category, so it is set per card rather than derived,
+// and can be shuffled without anything breaking.
+export const CLAIM_GROUNDS = ['cream', 'ink'] as const;
+
+/** A coloured knockout always carries cream text. `default` is the ground inverted. */
+export const CLAIM_HIGHLIGHTS = ['default', 'magenta', 'purple'] as const;
+
+export const CLAIM_STATUS_MEANS: Record<(typeof CLAIM_STATUS)[number], string> = {
+  VERIFIED: 'A person has walked it to the primary document.',
+  SOURCED: 'Quoted correctly from a named document; nobody has independently checked it.',
+  UNVERIFIED: "Rests on this project's own computation, with no adversarial pass.",
+};
+
+const claimcards = defineCollection({
+  type: 'data',
+  schema: z.object({
+    // The night the documents were read. Not the night a post goes out, and not
+    // the date on the source. Becomes the filename and the URL.
+    set: z.string(),
+    title: z.string(),
+    standfirst: z.string().optional(),
+    readOn: z.string().optional(),
+    // The time of the sitting, in plain words. Free text rather than a clock
+    // value because what matters is that it was one evening, not a precise
+    // minute, and because anything more exact than the record supports would be
+    // a figure this project could not stand behind.
+    readAt: z.string().optional(),
+    // A working note about how the set plays as a sequence. Written in card
+    // numbers, which are not printed on the cards, so it is not rendered.
+    runningOrder: z.string().optional(),
+    draft: z.boolean().default(false),
+    cards: z
+      .array(
+        z.object({
+          id: z.string(),
+          kind: z.enum(['CLAIM', 'ARCHIVE']).default('CLAIM'),
+          // A working title, for finding the card again. Never printed.
+          title: z.string().optional(),
+          // One sentence. [[Double square brackets]] mark the knockout
+          // highlight; see scripts/lib/claim-text.mjs.
+          claim: z.string(),
+          source: z.string(),
+          meta: z.string().optional(),
+          // The ceiling, not the average. A card that is SOURCED for its figure
+          // and UNVERIFIED for its comparison sits at UNVERIFIED.
+          status: z.enum(CLAIM_STATUS),
+          ground: z.enum(CLAIM_GROUNDS).default('cream'),
+          highlight: z.enum(CLAIM_HIGHLIGHTS).default('default'),
+          // The caveat that must travel with the claim. Shown on the page,
+          // never printed on the card: small type on a card is not a caveat.
+          note: z.string().optional(),
+          // Keeps the card out of the image export until its caveat can travel.
+          hold: z.boolean().default(false),
+          // Artwork for an ARCHIVE card, relative to the sibling project root
+          // (the same tree build-tiles.mjs reads, overridable with TILE_SRC).
+          image: z.string().optional(),
+          // "left,top,width,height" in source pixels, for trimming the
+          // interface out of a screen capture. Omit to centre-crop.
+          imageCrop: z.string().optional(),
+          imageAlt: z.string().optional(),
+        })
+      )
+      .default([]),
+  }),
+});
+
+export const collections = { posts, embeds, fieldnotes, claimcards };

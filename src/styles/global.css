@@ -395,6 +395,38 @@ section:nth-child(4) { animation-delay: 0.60s; }
   --card-pulse: rgba(224, 118, 219, 0.6);
 }
 
+/* The two Field Notes grounds. These are not tints of a brand hue like the six
+   above; they are the cream and ink of the printed Field Notes cards, so a
+   claim card on the page reads as the thing that gets posted rather than as a
+   stand-in for it. The pair is deliberately the loudest contrast on the site,
+   which is why it is reserved for the claim cards and the `method` tile and
+   should not be reached for as a seventh general-purpose accent.
+
+   Measured on the same basis as the block above. Cream ground: body 14.6:1,
+   kicker 5.2:1. Ink ground: body 16.1:1, kicker 6.4:1. Inverting a card is what
+   gives a run of seventeen a rhythm, so both grounds carry a full set of the
+   seven properties and nothing downstream needs to know which one it got. */
+
+.accent-fieldnote {
+  --card-bg: #f4ecd7;
+  --card-edge: #ddd2b8;
+  --card-ink: var(--text);
+  --card-ink-dim: rgba(28, 25, 23, 0.74);
+  --card-kicker: var(--ink-cream);
+  --card-hover-ink: var(--ink-cream);
+  --card-pulse: color-mix(in srgb, var(--ink-cream) 35%, transparent);
+}
+
+.accent-fieldnote-ink {
+  --card-bg: #111111;
+  --card-edge: #3a352e;
+  --card-ink: #f4ecd7;
+  --card-ink-dim: rgba(244, 236, 215, 0.72);
+  --card-kicker: #9a9186;
+  --card-hover-ink: #f4ecd7;
+  --card-pulse: rgba(244, 236, 215, 0.45);
+}
+
 /* --- Post grids --------------------------------------------------------- */
 
 .post-grid {

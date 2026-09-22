@@ -130,46 +130,60 @@ function methodTileSvg() {
 
 // --- Generated cream field notes, for tools with no artwork of their own ----
 
-function creamTileSvg({ headline, knockout, sub, signoff }) {
+// The generated field note, on either ground.
+//
+// Four of these sat in What's New together and the row read as four identical
+// pale rectangles. Same fix as the claim cards in build-claim-cards.mjs: flip
+// the ground on some of them. The magenta rule stays magenta on both, which is
+// what lets the rest move.
+function generatedTileSvg({ headline, knockout, sub, signoff, ground = 'cream' }) {
   const W = 1080, H = 1350, M = 90;
+  const ink = ground === 'ink';
+  const bg = ink ? FN.ink : FN.cream;
+  const fg = ink ? FN.cream : FN.ink;
+  const mute = ink ? '#9a9186' : '#8b8378';
+  const subMute = ink ? '#9a9186' : '#7d766c';
+
   const mark = (x, y) =>
-    `<g stroke="${FN.ink}" stroke-width="3" opacity="0.28">
+    `<g stroke="${fg}" stroke-width="3" opacity="${ink ? 0.45 : 0.28}">
        <line x1="${x - 14}" y1="${y}" x2="${x + 14}" y2="${y}"/>
        <line x1="${x}" y1="${y - 14}" x2="${x}" y2="${y + 14}"/>
      </g>`;
   const kw = knockout.length * 44 + 40;
+
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
-  <rect width="${W}" height="${H}" fill="${FN.cream}"/>
+  <rect width="${W}" height="${H}" fill="${bg}"/>
   ${mark(48, 190)} ${mark(W - 48, 190)} ${mark(48, H - 90)} ${mark(W - 48, H - 90)}
 
-  <rect x="${M}" y="${M}" width="760" height="58" fill="${FN.ink}"/>
-  <rect x="${M + 22}" y="${M + 23}" width="13" height="13" fill="${FN.cream}"/>
+  <rect x="${M}" y="${M}" width="760" height="58" fill="${fg}"/>
+  <rect x="${M + 22}" y="${M + 23}" width="13" height="13" fill="${bg}"/>
   <text x="${M + 50}" y="${M + 39}" font-family="Menlo, Consolas, monospace"
         font-size="23" font-weight="500" letter-spacing="4.2"
-        fill="${FN.cream}">FIELD NOTES FROM HISTORY IN THE MAKING</text>
+        fill="${bg}">FIELD NOTES FROM HISTORY IN THE MAKING</text>
 
   <text x="${M + 20}" y="380" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
-        font-size="96" font-weight="700" fill="${FN.ink}">*</text>
+        font-size="96" font-weight="700" fill="${fg}">*</text>
   <rect x="${M + 20}" y="440" width="112" height="13" fill="${FN.magenta}"/>
 
   <text x="${M + 18}" y="600" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
-        font-size="76" font-weight="700" letter-spacing="-1" fill="${FN.ink}">${headline}</text>
-  <rect x="${M + 8}" y="628" width="${kw}" height="98" fill="${FN.ink}"/>
+        font-size="76" font-weight="700" letter-spacing="-1" fill="${fg}">${headline}</text>
+  <rect x="${M + 8}" y="628" width="${kw}" height="98" fill="${fg}"/>
   <text x="${M + 26}" y="704" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
-        font-size="76" font-weight="700" letter-spacing="-1" fill="${FN.cream}">${knockout}</text>
+        font-size="76" font-weight="700" letter-spacing="-1" fill="${bg}">${knockout}</text>
 
   <text x="${M + 18}" y="808" font-family="Menlo, Consolas, monospace"
-        font-size="27" fill="#7d766c">${sub}</text>
+        font-size="27" fill="${subMute}">${sub}</text>
 
   <text x="${M + 18}" y="1258" font-family="Menlo, Consolas, monospace"
-        font-size="22" letter-spacing="2.6" fill="#8b8378">${signoff}</text>
+        font-size="22" letter-spacing="2.6" fill="${mute}">${signoff}</text>
 </svg>`;
 }
 
 const GENERATED = [
   {
     id: 'map',
+    ground: 'ink',
     headline: 'Tracking the',
     knockout: 'super cycle',
     sub: 'energy, water and land, site by site',
@@ -177,6 +191,7 @@ const GENERATED = [
   },
   {
     id: 'submission',
+    ground: 'ink',
     headline: 'The Senate',
     knockout: 'Submission',
     sub: 'key recommendations',
@@ -269,9 +284,9 @@ async function main() {
   await writeVariants(Buffer.from(svg), 'method', 'method  <-  generated (inverted field note)');
 
   for (const g of GENERATED) {
-    const gsvg = creamTileSvg(g);
+    const gsvg = generatedTileSvg(g);
     await fs.writeFile(path.join(OUT_DIR, `${g.id}.svg`), gsvg, 'utf8');
-    await writeVariants(Buffer.from(gsvg), g.id, `${g.id}  <-  generated (cream field note)`);
+    await writeVariants(Buffer.from(gsvg), g.id, `${g.id}  <-  generated (${g.ground === 'ink' ? 'inverted' : 'cream'} field note)`);
   }
 
   console.log(`\nDone. Tiles in ${path.relative(ROOT, OUT_DIR)}/`);

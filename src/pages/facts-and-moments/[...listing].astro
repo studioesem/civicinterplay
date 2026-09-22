@@ -1,0 +1,313 @@
+---
+// The running page: every claim card, newest tracking night first.
+//
+// One page rather than one page per night, because the set is meant to be
+// scrolled and because two routes holding the same seventeen cards is two
+// things to keep in step. Each night gets a heading and each card an anchor, so
+// "the set from 19 September" and "card 03" are both linkable.
+//
+// The set's `runningOrder` is deliberately not rendered. It is a working note
+// about how the cards play as a sequence, written in card numbers, and the
+// numbers are not printed on the cards. It stays in the CMS for Sarah.
+//
+// A rest route rather than index.astro so the page can decline to exist. With
+// every set still in draft there is nothing to list, and an empty index is
+// worse than no index: it is a live page that says nothing.
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ClaimCard from '../../components/ClaimCard.astro';
+import { CLAIM_STATUS, CLAIM_STATUS_MEANS } from '../../content/config';
+
+export const getStaticPaths = (async () => {
+  const sets = await getCollection(
+    'claimcards',
+    (s) => import.meta.env.DEV || !s.data.draft
+  );
+  return sets.length > 0 ? [{ params: { listing: undefined } }] : [];
+}) satisfies GetStaticPaths;
+
+const sets = (
+  await getCollection('claimcards', (s) => import.meta.env.DEV || !s.data.draft)
+).sort((a, b) => b.data.set.localeCompare(a.data.set));
+
+// The weekday is what turns a date into a night. These were read on a Saturday
+// evening, and that is part of what the set is: one person, one sitting, with
+// the documents open.
+const formatSet = (iso: string) =>
+  new Date(`${iso}T00:00:00`).toLocaleDateString('en-AU', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+
+const total = sets.reduce((n, s) => n + s.data.cards.length, 0);
+const held = sets.reduce((n, s) => n + s.data.cards.filter((c) => c.hold).length, 0);
+---
+<BaseLayout
+  title="Facts and Moments"
+  description="Cards generated from a close reading of Transmission Planning Reports from Australian state governments. Moments and observations on a fast changing field, each with the time of observation captured."
+>
+  <main class="container claims">
+    <header class="claims-header">
+      <p class="claims-eyebrow">Civic Interplay / Facts and Moments</p>
+      <h1>Facts and Moments</h1>
+      <p class="claims-intro">
+        The following cards have been generated from a close reading of
+        Transmission Planning Reports from Australian State Governments. They are
+        saved as moments and observations on a fast changing field. The time of
+        observation is captured.
+      </p>
+      <p class="claims-count">
+        {total} cards{held > 0 && `, ${held} held`} · {sets.length}
+        {sets.length === 1 ? 'night' : 'nights'} of tracking
+      </p>
+    </header>
+
+    {sets.map((entry) => (
+      <section class="claims-set">
+        <div class="claims-set-head" id={entry.data.set}>
+          <h2>
+            <a href={`#${entry.data.set}`}>{formatSet(entry.data.readOn ?? entry.data.set)}</a>
+          </h2>
+          {entry.data.readAt && <span class="claims-time">{entry.data.readAt}</span>}
+          {entry.data.draft && <span class="claims-draft">Draft</span>}
+        </div>
+        <div class="post-grid claims-grid">
+          {entry.data.cards.map((card) => (
+            <ClaimCard
+              anchor={`${entry.data.set}-${card.id}`}
+              id={card.id}
+              title={card.title}
+              kind={card.kind}
+              claim={card.claim}
+              source={card.source}
+              meta={card.meta}
+              status={card.status}
+              ground={card.ground}
+              highlight={card.highlight}
+              note={card.note}
+              hold={card.hold}
+              artwork={card.hold ? undefined : `/images/cards/${entry.data.set}/${card.id}.png`}
+              photo={card.image ? `/images/cards/${entry.data.set}/${card.id}-photo.webp` : undefined}
+              photoAlt={card.imageAlt}
+            />
+          ))}
+        </div>
+
+      </section>
+    ))}
+
+    <section class="claims-key">
+      <h2>What the statuses mean</h2>
+      <dl>
+        {CLAIM_STATUS.map((s) => (
+          <div class={`claims-key-row status-${s.toLowerCase()}`}>
+            <dt>{s}</dt>
+            <dd>{CLAIM_STATUS_MEANS[s]}</dd>
+          </div>
+        ))}
+      </dl>
+      <p class="claims-key-rule">
+        Post nothing above its status. A card held back is one whose caveat has
+        not yet been given a way to travel with it, so it has no download.
+      </p>
+    </section>
+  </main>
+
+  <style>
+    .claims {
+      padding: 3rem 2rem 4rem;
+      max-width: 1100px;
+    }
+
+    .claims-header {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .claims-eyebrow {
+      font-family: var(--heading);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.6rem;
+    }
+
+    .claims-header h1 {
+      font-family: var(--heading);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .claims-intro {
+      font-family: var(--body);
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--text-dim);
+      max-width: 62ch;
+      margin-bottom: 0.8rem;
+    }
+
+    .claims-count {
+      font-family: var(--heading);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-top: 1.2rem;
+    }
+
+    /* Each night is its own band, marked by a rule rather than a heavier
+       heading, so the cards stay the loudest thing on the page. */
+    .claims-set {
+      margin-bottom: 3.5rem;
+    }
+
+    .claims-set-head {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      padding-bottom: 0.7rem;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 1.8rem;
+      scroll-margin-top: 5rem;
+    }
+
+    .claims-set-head h2 {
+      font-family: var(--heading);
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .claims-set-head h2 a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .claims-set-head h2 a:hover {
+      color: var(--purple);
+    }
+
+    .claims-time {
+      font-family: var(--heading);
+      font-size: 0.66rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+
+    .claims-draft {
+      font-family: var(--heading);
+      font-size: 0.6rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--terracotta);
+      border: 1.5px solid currentColor;
+      border-radius: 3px;
+      padding: 0.15rem 0.45rem;
+    }
+
+    /* Tighter than .post-grid, and start-aligned rather than stretched. Notes
+       vary from one line to ten, so equal-height rows left long voids inside
+       the shorter cards. A ragged bottom edge reads as a set of separate cards,
+       which is what they are. */
+    .claims-grid {
+      gap: 1.4rem;
+      margin-bottom: 1.8rem;
+      align-items: start;
+    }
+
+    .claims-key {
+      margin-top: 1rem;
+      padding: 1.5rem;
+      background: #fffefc;
+      border: 2px solid var(--border);
+      border-left: 8px solid var(--forest);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--border);
+    }
+
+    .claims-key h2 {
+      font-family: var(--heading);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.8rem;
+    }
+
+    .claims-key dl {
+      margin: 0;
+    }
+
+    .claims-key-row {
+      display: grid;
+      grid-template-columns: 8rem 1fr;
+      gap: 0.75rem;
+      padding: 0.45rem 0;
+      align-items: baseline;
+    }
+
+    .claims-key-row dt {
+      font-family: var(--heading);
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border: 1.5px solid currentColor;
+      border-radius: 3px;
+      padding: 0.2rem 0.5rem;
+      justify-self: start;
+    }
+
+    .claims-key-row dd {
+      margin: 0;
+      font-family: var(--body);
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--text-dim);
+    }
+
+    .claims-key-row.status-verified dt { color: var(--forest); }
+    .claims-key-row.status-sourced dt { color: var(--ink-periwinkle); }
+    .claims-key-row.status-unverified dt { color: var(--terracotta); }
+
+    .claims-key-rule {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1.5px solid var(--border-light);
+      font-family: var(--body);
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--text-dim);
+      max-width: 70ch;
+    }
+
+    @media (max-width: 640px) {
+      .claims {
+        padding: 2rem 1rem 3rem;
+      }
+
+      .claims-key-row {
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+      }
+    }
+  </style>
+</BaseLayout>

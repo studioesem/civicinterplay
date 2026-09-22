@@ -28,6 +28,7 @@ npm run build        # → dist/
 npm run preview      # serves the built dist/ locally
 npm run ghost:convert # re-runs the Ghost JSON → MDX conversion
 npm run tiles:build   # rebuilds the home-page Field Note tiles
+npm run cards:build   # cuts the Facts and Moments cards to PNG
 ```
 
 ### Field Note tiles
@@ -43,6 +44,36 @@ door rather than a document reads as deliberately different.
 
 Tile copy lives in `src/data/tiles.ts` as real text, never baked into the image,
 so a call to action can be edited without re-exporting a PNG.
+
+### Facts and Moments
+
+The page at `/facts-and-moments/`. One card is one headline claim from a night of
+tracking: a label chip, the claim with one phrase highlighted, two attribution
+lines. The page is named for what it is; the code still calls the objects claim
+cards, which is what they are. `src/content/claimcards/{night}.json`
+is the only copy of the text, and it feeds two renderers:
+
+- the running page, every night newest first, each card anchored at
+  `#{night}-{id}` with its own permalink and download
+- `npm run cards:build`, which cuts 1080x1350 PNGs into `public/images/cards/{night}/`
+
+Both parse the `[[highlight]]` markers through `scripts/lib/claim-text.mjs` and
+both read the same `ground` and `highlight` fields, so a claim cannot say or look
+one way on the site and another on the card. Editable in Pages CMS under
+**Facts and Moments**; see [PUBLISHING.md](./PUBLISHING.md).
+
+`ground` flips a card between cream and inverted and `highlight` sets the colour
+behind the knockout, because a run of seventeen identical cards reads as
+wallpaper. The magenta rule under the asterisk does not vary, which is what holds
+the series together while everything else moves. On the page the two grounds are
+`.accent-fieldnote` and `.accent-fieldnote-ink`, declared in the Card accents
+block in `global.css` alongside the six brand tints; nothing sets a card colour
+outside that block.
+
+The export goes through satori rather than hand-placed SVG, because claims vary
+too much in length to position by hand and a highlight has to survive being
+wrapped mid-phrase. Every card carries a status, and a card marked **hold** does
+not render and gets no download until its caveat has a way to travel with it.
 
 Node 20+ recommended.
 

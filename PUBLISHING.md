@@ -126,6 +126,121 @@ Two conventions worth keeping:
 
 Below Friends sits **Musings**, which is Sarah's own posts and field notes. That half fills itself from Posts; there is nothing to edit.
 
+## Facts and Moments
+
+A claim card is one headline claim from a night of tracking: a label chip, the
+claim with one phrase highlighted, and two attribution lines. These are not
+posts. They are the claims a post could be built from, recorded with their
+source, page and date at the moment the document was read, while the provenance
+is still in hand rather than being reconstructed weeks later from memory.
+
+One entry in **Facts and Moments** holds one night's worth. The same entry produces
+both the running page at `/facts-and-moments/` and the images ready to post, so the cards
+on the page look like the files you hand out.
+
+Every card on that page has its own link and its own download, so a card can be
+shared on its own rather than only as part of the set. Clicking the small
+`CLAIM` label jumps to that card and puts it in the address bar; **Copy link**
+does the same without moving the page. A held card has no download.
+
+### Writing one
+
+Click **Facts and Moments**, then **Add an entry**. Set the **Tracking night** to the
+date you read the documents, then add a card for each claim. Per card:
+
+| Field | What to do |
+|---|---|
+| Number | Two digits, `01`. Never printed on the card, but it names the image file and the card's web address, so don't renumber a card that has already gone out. |
+| Working title | Never printed either. It is how you find the card again in a long list. |
+| Label | `CLAIM`, or `ARCHIVE` for a card built around a photograph. |
+| The claim | One sentence. Put `[[double square brackets]]` around the words that get the highlight: `totalling [[20 gigawatts]]`. More than one highlight is fine. |
+| Attribution line 1 | The document, in capitals. |
+| Attribution line 2 | Where in it and when you read it. |
+| Status | The ceiling, not the average. A claim sourced for its figure and unverified for its comparison is **unverified**. |
+| Ground | Cream or inverted. See below. |
+| Highlight colour | What sits behind the bracketed words. Default, magenta or purple. |
+| Note if used | The caveat. It shows on the page under **The fine print**, and never on the image. |
+| Hold this card | Keeps the card out of the image export. |
+
+### Giving the set a rhythm
+
+Seventeen cards on the same ground read as wallpaper, so a set should mix them.
+
+- **Ground** flips the card between cream with black type and black with cream
+  type. Roughly one in three inverted is about right. Try not to leave two
+  inverted cards next to each other in the list, because on the page they land
+  side by side.
+- **Highlight colour** is what sits behind the bracketed words. *Default* is
+  simply the ground inverted, so black on a cream card and cream on a black one.
+  *Magenta* is the Field Notes accent, the same colour as the small rule under
+  the asterisk. *Purple* is the site's own. A coloured highlight always carries
+  cream text, so there is one rule rather than a table to remember.
+
+The magenta rule under the asterisk stays magenta on every card whatever you
+choose. It is the one thing that does not vary, which is what lets everything
+else vary without the set falling apart.
+
+Reorder the cards in the list and the rhythm changes with them. Nothing breaks:
+the numbers stay attached to their claims.
+
+### Every card carries a status
+
+- **VERIFIED**: a person has walked it to the primary document
+- **SOURCED**: quoted correctly from a named document; nobody has independently checked it
+- **UNVERIFIED**: rests on this project's own computation, with no adversarial pass
+
+Post nothing above its status. The notes matter more than the claims: a card
+without its note is a card that will be corrected in public, which is why the
+note lives in the same field set as the claim rather than in someone's memory.
+
+The caveat never gets printed on the card. Small type on a card is not a
+caveat, it is small type nobody reads. The check happens before the card is
+made, not on it.
+
+### Holding a card back
+
+Turn **Hold this card** on for anything that needs a question asked before it
+goes out, and write the question in **Note if used**. A held card still shows on
+the page, marked as held, but the image export refuses to cut it. The thing that
+makes the image is the thing that knows the status, so a claim cannot quietly go
+out above it.
+
+### Cutting the images
+
+The images are built on a computer with the repository checked out, not in the
+browser:
+
+```bash
+npm run cards:build
+```
+
+That writes one PNG per card into `public/images/cards/{night}/` and names the
+held ones it skipped. Some useful variations:
+
+```bash
+npm run cards:build -- --set 2026-09-19    # one night
+npm run cards:build -- --only 03,13        # named cards, while you design
+npm run cards:build -- --include-held      # cut the held ones anyway
+```
+
+Change a claim and re-run it. There is no second copy of the text to keep in
+step: the page and the image are cut from the same field.
+
+### Changing how the cards look
+
+Ground and highlight are per card and you set them in the form. Everything
+else, the palette and the type sizes and the furniture, sits in one block at the
+top of `scripts/build-claim-cards.mjs`. Changing all the cards at once is
+changing a number there and re-running the build. Don't reset type sizes card by
+card; if a claim is overrunning, either shorten the claim or move the whole size
+ladder.
+
+The two grounds on the web page are `.accent-fieldnote` and
+`.accent-fieldnote-ink` in the Card accents block in `src/styles/global.css`,
+measured for contrast like the six brand tints beside them. Change a ground in
+one place and both the page and the images follow, because the field the card
+carries is the same field.
+
 ## Pages that are not in the CMS
 
 Some pages are built by hand and can only be changed in the code. If you need something altered on one of these, ask Sarah rather than hunting for it in Pages CMS.
