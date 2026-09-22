@@ -1,0 +1,158 @@
+{
+  "set": "2026-09-19",
+  "cards": [
+    {
+      "id": "01",
+      "kind": "CLAIM",
+      "status": "SOURCED",
+      "hold": false,
+      "claim": "Data centre load accounts for 66 per cent of the growth in NSW end-use energy consumption from FY26 to FY35.",
+      "image": "01.png",
+      "photo": null
+    },
+    {
+      "id": "02",
+      "kind": "CLAIM",
+      "status": "SOURCED",
+      "hold": false,
+      "claim": "In twelve months, Transgrid's forecast of data centre load growth to 2035 went up four times.",
+      "image": "02.png",
+      "photo": null
+    },
+    {
+      "id": "03",
+      "kind": "CLAIM",
+      "status": "SOURCED",
+      "hold": true,
+      "claim": "NSW's grid operator has received data centre connection enquiries totalling 20 gigawatts, roughly twice the entire state's peak demand.",
+      "image": null,
+      "photo": null
+    },
+    {
+      "id": "04",
+      "kind": "CLAIM",
+      "status": "UNVERIFIED",
+      "hold": false,
+      "claim": "City of Moreton Bay has published 16,519 development applications since 2016. The word \"data\" appears in none of them.",
+      "image": "04.png",
+      "photo": null
+    },
+    {
+      "id": "05",
+      "kind": "CLAIM",
+      "status": "UNVERIFIED",
+      "hold": false,
+      "claim": "One grid operator's annual report says \"data centre\" 187 times. A decade of one council's planning applications says it zero.",
+      "image": "05.png",
+      "photo": null
+    },
+    {
+      "id": "06",
+      "kind": "CLAIM",
+      "status": "UNVERIFIED",
+      "hold": false,
+      "claim": "A 113-page engineering report for Australia's largest proposed data centre states its grid connection, 2,160 MVA, and never once states how much electricity it will use.",
+      "image": "06.png",
+      "photo": null
+    },
+    {
+      "id": "07",
+      "kind": "CLAIM",
+      "status": "SOURCED",
+      "hold": false,
+      "claim": "The same report discloses 16.5 kilolitres a day of operating water. It discloses twenty times that for construction.",
+      "image": "07.png",
+      "photo": null
+    },
+    {
+      "id": "08",
+      "kind": "CLAIM",
+      "status": "SOURCED",
+      "hold": true,
+      "claim": "The capital investment value recorded for an Amazon data centre in Western Sydney is $14.7 million.",
+      "image": null,
+      "photo": null
+    },
+    {
+      "id": "09",
+      "kind": "CLAIM",
+      "status": "UNVERIFIED",
+      "hold": false,
+      "claim": "Of 94 Australian data centres tracked, one has both a disclosed value and a recorded approval date.",
+      "image": "09.png",
+      "photo": null
+    },
+    {
+      "id": "10",
+      "kind": "CLAIM",
+      "status": "VERIFIED",
+      "hold": false,
+      "claim": "Supernode's planning approval was announced in July 2022. ChatGPT launched that November.",
+      "image": "10.png",
+      "photo": null
+    },
+    {
+      "id": "11",
+      "kind": "ARCHIVE",
+      "status": "SOURCED",
+      "hold": false,
+      "claim": "Street View, 2026. The site of a $3 billion data centre campus. The transmission towers on the horizon are the reason it is worth anything.",
+      "image": "11.png",
+      "photo": "11-photo.webp"
+    },
+    {
+      "id": "12",
+      "kind": "CLAIM",
+      "status": "SOURCED",
+      "hold": false,
+      "claim": "NSW minimum demand stops falling in 2029 and turns back up, because of data centre load.",
+      "image": "12.png",
+      "photo": null
+    },
+    {
+      "id": "13",
+      "kind": "CLAIM",
+      "status": "SOURCED",
+      "hold": false,
+      "claim": "In 2025 Queensland's transmission planner reported \"limited interest from data centre proponents\" and left them out of its load forecast entirely.",
+      "image": "13.png",
+      "photo": null
+    },
+    {
+      "id": "14",
+      "kind": "CLAIM",
+      "status": "UNVERIFIED",
+      "hold": false,
+      "claim": "AEMO projected 90 GWh a year of data centre consumption for all of Queensland. One proposed site is around a hundred times that.",
+      "image": "14.png",
+      "photo": null
+    },
+    {
+      "id": "15",
+      "kind": "CLAIM",
+      "status": "UNVERIFIED",
+      "hold": true,
+      "claim": "Queensland's current published transmission forecast contains no data centre projects. Its data is current as at September 2025.",
+      "image": null,
+      "photo": null
+    },
+    {
+      "id": "16",
+      "kind": "CLAIM",
+      "status": "SOURCED",
+      "hold": false,
+      "claim": "In March 2026 NSW's grid operator reported 10 GW of data centre connection enquiries. By its annual report later that year: 20 GW.",
+      "image": "16.png",
+      "photo": null
+    },
+    {
+      "id": "17",
+      "kind": "CLAIM",
+      "status": "SOURCED",
+      "hold": false,
+      "claim": "Data centres connecting to NSW transmission range from 250 MW to over 1,200 MW, averaging 650 MW. Smaller ones connect to the distribution network instead.",
+      "image": "17.png",
+      "photo": null
+    }
+  ]
+}

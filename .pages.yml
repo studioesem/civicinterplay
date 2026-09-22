@@ -203,6 +203,144 @@ content:
         type: rich-text
         description: Prose only. Use a blockquote for a caveat, it renders as the pink note panel.
 
+  - name: claimcards
+    label: Claim cards
+    type: collection
+    path: src/content/claimcards
+    extension: json
+    format: json
+    filename: "{fields.set}.json"
+    view:
+      fields: [title, set, draft]
+      default:
+        sort: set
+        order: desc
+    fields:
+      - name: set
+        label: Tracking night
+        type: string
+        required: true
+        description: The night the documents were read, as 2026-09-19. Not the night a post goes out, and not the date on the source. Becomes the filename and the web address.
+      - name: title
+        label: Title
+        type: string
+        required: true
+        description: How the set is named on the page, e.g. 19 September 2026.
+      - name: standfirst
+        label: Standfirst
+        type: text
+        description: Not shown on the page. Kept as a note to yourself about what the night was.
+      - name: readOn
+        label: Date read
+        type: string
+        description: Same as the tracking night, as 2026-09-19. Drives the date shown on the page, weekday and all.
+      - name: readAt
+        label: Time of the sitting
+        type: string
+        description: 'In plain words, e.g. 10pm to 11pm. Optional, and better left out than guessed at. Only put a time here if you know it.'
+      - name: runningOrder
+        label: Running order
+        type: text
+        description: A working note to yourself about how the set plays if posted together. Written in card numbers, and the numbers are not printed, so it is not shown on the page or on a card.
+      - name: draft
+        label: Draft
+        type: boolean
+        default: true
+        description: Keep this ON while you are working. Drafts can be read locally and never reach the live site.
+      - name: cards
+        label: Cards
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: Number
+            type: string
+            required: true
+            description: Two digits, as 01. Becomes the card's filename, so do not renumber a card once it has been posted.
+          - name: kind
+            label: Label
+            type: select
+            default: CLAIM
+            description: Printed in the black bar at the top of the card.
+            options:
+              values: [CLAIM, ARCHIVE]
+          - name: title
+            label: Working title
+            type: string
+            description: For finding the card again. Never printed on it.
+          - name: claim
+            label: The claim
+            type: text
+            required: true
+            description: "One sentence. Put [[double square brackets]] around the words that get the black highlight, e.g. totalling [[20 gigawatts]]. You can highlight more than one phrase."
+          - name: source
+            label: Attribution line 1
+            type: string
+            required: true
+            description: The document. Set in capitals, e.g. TRANSGRID · 2026 TRANSMISSION ANNUAL PLANNING REPORT
+          - name: meta
+            label: Attribution line 2
+            type: string
+            description: Where in it, and when you read it, e.g. PAGE 20 · READ 19·09·2026
+          - name: status
+            label: Status
+            type: select
+            required: true
+            description: The ceiling, not the average. A claim that is sourced for its figure and unverified for its comparison sits at unverified.
+            options:
+              values:
+                - value: VERIFIED
+                  label: VERIFIED, walked to the primary document by a person
+                - value: SOURCED
+                  label: SOURCED, quoted correctly, nobody has independently checked it
+                - value: UNVERIFIED
+                  label: UNVERIFIED, rests on this project's own computation
+          - name: ground
+            label: Ground
+            type: select
+            default: cream
+            description: Cream or inverted. Seventeen cards on one ground read as wallpaper, so flip roughly one in three. Try not to put two inverted cards next to each other in the list.
+            options:
+              values:
+                - value: cream
+                  label: Cream, black type
+                - value: ink
+                  label: Black, cream type
+          - name: highlight
+            label: Highlight colour
+            type: select
+            default: default
+            description: The colour behind the [[bracketed]] words. Default is the ground inverted, so black on a cream card and cream on a black one. Magenta is the Field Notes accent. A coloured highlight always carries cream text.
+            options:
+              values:
+                - value: default
+                  label: Default, the ground inverted
+                - value: magenta
+                  label: Magenta
+                - value: purple
+                  label: Purple
+          - name: note
+            label: Note if used
+            type: text
+            description: The caveat that must travel with this claim. Shown on the page, never printed on the card, because small type on a card is not a caveat.
+          - name: hold
+            label: Hold this card
+            type: boolean
+            default: false
+            description: Keeps the card out of the image export until the caveat can travel with it. Turn this on for anything that needs a question asked before it goes out.
+          - name: image
+            label: Artwork
+            type: string
+            description: For an ARCHIVE card. A path inside the sibling project folders, e.g. ai-sovereignties/docs/figures/name.png. Leave blank and the card is set as type.
+          - name: imageCrop
+            label: Artwork crop
+            type: string
+            description: "Optional, as left,top,width,height in the source image's own pixels. Use it to trim an interface out of a screen capture. Leave blank to crop from the centre."
+          - name: imageAlt
+            label: Artwork alt text
+            type: text
+            description: Describe what the photograph shows. This is the only text a screen reader gets for it.
+
   - name: posts
     label: Posts
     type: collection

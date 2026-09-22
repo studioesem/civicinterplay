@@ -11,7 +11,8 @@
     "astro": "astro",
     "ghost:convert": "node scripts/ghost-to-mdx.mjs",
     "og:generate": "node scripts/generate-og.mjs",
-    "tiles:build": "node scripts/build-tiles.mjs"
+    "tiles:build": "node scripts/build-tiles.mjs",
+    "cards:build": "node scripts/build-claim-cards.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.0.0",
@@ -22,6 +23,8 @@
     "remark-breaks": "^4.0.0"
   },
   "devDependencies": {
+    "@fontsource/fira-mono": "^5.3.0",
+    "satori": "^0.33.4",
     "sharp": "^0.34.5",
     "turndown": "^7.2.0",
     "typescript": "^5.7.0"
