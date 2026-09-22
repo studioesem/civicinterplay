@@ -204,7 +204,7 @@ content:
         description: Prose only. Use a blockquote for a caveat, it renders as the pink note panel.
 
   - name: claimcards
-    label: Claim cards
+    label: Facts and Moments
     type: collection
     path: src/content/claimcards
     extension: json

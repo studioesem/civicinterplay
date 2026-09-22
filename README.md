@@ -28,7 +28,7 @@ npm run build        # → dist/
 npm run preview      # serves the built dist/ locally
 npm run ghost:convert # re-runs the Ghost JSON → MDX conversion
 npm run tiles:build   # rebuilds the home-page Field Note tiles
-npm run cards:build   # cuts the claim cards to PNG
+npm run cards:build   # cuts the Facts and Moments cards to PNG
 ```
 
 ### Field Note tiles
@@ -45,20 +45,22 @@ door rather than a document reads as deliberately different.
 Tile copy lives in `src/data/tiles.ts` as real text, never baked into the image,
 so a call to action can be edited without re-exporting a PNG.
 
-### Claim cards
+### Facts and Moments
 
-One headline claim from a night of tracking: a label chip, the claim with one
-phrase highlighted, two attribution lines. `src/content/claimcards/{night}.json`
+The page at `/facts-and-moments/`. One card is one headline claim from a night of
+tracking: a label chip, the claim with one phrase highlighted, two attribution
+lines. The page is named for what it is; the code still calls the objects claim
+cards, which is what they are. `src/content/claimcards/{night}.json`
 is the only copy of the text, and it feeds two renderers:
 
-- the running page at `/claims/`, every night newest first, each card anchored at
+- the running page, every night newest first, each card anchored at
   `#{night}-{id}` with its own permalink and download
 - `npm run cards:build`, which cuts 1080x1350 PNGs into `public/images/cards/{night}/`
 
 Both parse the `[[highlight]]` markers through `scripts/lib/claim-text.mjs` and
 both read the same `ground` and `highlight` fields, so a claim cannot say or look
 one way on the site and another on the card. Editable in Pages CMS under
-**Claim cards**; see [PUBLISHING.md](./PUBLISHING.md).
+**Facts and Moments**; see [PUBLISHING.md](./PUBLISHING.md).
 
 `ground` flips a card between cream and inverted and `highlight` sets the colour
 behind the knockout, because a run of seventeen identical cards reads as

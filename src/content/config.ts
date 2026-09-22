@@ -114,7 +114,7 @@ const fieldnotes = defineCollection({
 // night produced. Not posts. These are the claims a post could be built from,
 // with their source, page and date recorded at the moment the document was read.
 //
-// The same file feeds two renderers: the running page at /claims/ and the image
+// The same file feeds two renderers: the running page at /facts-and-moments/ and the image
 // export in scripts/build-claim-cards.mjs. The text lives here once so a claim
 // cannot say one thing on the site and another on the card.
 //

@@ -110,7 +110,7 @@ The poster is a normal image from the site's image library. The video itself liv
 
 Golden rule: once a post contains any of these blocks, do all future edits to that post in Source mode.
 
-## Claim cards
+## Facts and Moments
 
 A claim card is one headline claim from a night of tracking: a label chip, the
 claim with one phrase highlighted, and two attribution lines. These are not
@@ -118,8 +118,8 @@ posts. They are the claims a post could be built from, recorded with their
 source, page and date at the moment the document was read, while the provenance
 is still in hand rather than being reconstructed weeks later from memory.
 
-One entry in **Claim cards** holds one night's worth. The same entry produces
-both the running page at `/claims/` and the images ready to post, so the cards
+One entry in **Facts and Moments** holds one night's worth. The same entry produces
+both the running page at `/facts-and-moments/` and the images ready to post, so the cards
 on the page look like the files you hand out.
 
 Every card on that page has its own link and its own download, so a card can be
@@ -129,7 +129,7 @@ does the same without moving the page. A held card has no download.
 
 ### Writing one
 
-Click **Claim cards**, then **Add an entry**. Set the **Tracking night** to the
+Click **Facts and Moments**, then **Add an entry**. Set the **Tracking night** to the
 date you read the documents, then add a card for each claim. Per card:
 
 | Field | What to do |
