@@ -184,6 +184,9 @@ const GENERATED = [
   {
     id: 'map',
     ground: 'ink',
+    // Already published as a post feature image, so its provenance is settled
+    // and it is literally this tracker's own map.
+    photo: 'public/images/sovereignties-map.png',
     headline: 'Tracking the',
     knockout: 'super cycle',
     sub: 'energy, water and land, site by site',
@@ -231,6 +234,87 @@ const GENERATED = [
     knockout: 'prompts, forkable',
     sub: 'everything here is a draft',
     signoff: 'CIVIC INTERPLAY \u00B7 TOOLKIT',
+  },
+];
+
+
+// The generated field note with a photograph across the top.
+//
+// Same idea as an ARCHIVE claim card: the image takes the top of the frame and
+// the furniture sits under it. This is how a real photograph gets into What's
+// New without losing the series look. The SVG here is an overlay with no
+// ground of its own; the photo and the ground are composited under it, because
+// librsvg cannot be relied on to load an embedded raster.
+const PHOTO_H = 600;
+
+function photoTileOverlaySvg({ headline, knockout, sub, signoff, ground = 'cream' }) {
+  const W = 1080, H = 1350, M = 90;
+  const ink = ground === 'ink';
+  const bg = ink ? FN.ink : FN.cream;
+  const fg = ink ? FN.cream : FN.ink;
+  const mute = ink ? '#9a9186' : '#8b8378';
+  const subMute = ink ? '#9a9186' : '#7d766c';
+
+  const mark = (x, y) =>
+    `<g stroke="${fg}" stroke-width="3" opacity="${ink ? 0.45 : 0.28}">
+       <line x1="${x - 14}" y1="${y}" x2="${x + 14}" y2="${y}"/>
+       <line x1="${x}" y1="${y - 14}" x2="${x}" y2="${y + 14}"/>
+     </g>`;
+  const kw = knockout.length * 44 + 40;
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
+  ${mark(48, PHOTO_H + 70)} ${mark(W - 48, PHOTO_H + 70)} ${mark(48, H - 90)} ${mark(W - 48, H - 90)}
+
+  <rect x="${M}" y="${PHOTO_H + 60}" width="760" height="58" fill="${fg}"/>
+  <rect x="${M + 22}" y="${PHOTO_H + 83}" width="13" height="13" fill="${bg}"/>
+  <text x="${M + 50}" y="${PHOTO_H + 99}" font-family="Menlo, Consolas, monospace"
+        font-size="23" font-weight="500" letter-spacing="4.2"
+        fill="${bg}">FIELD NOTES FROM HISTORY IN THE MAKING</text>
+
+  <rect x="${M + 20}" y="${PHOTO_H + 170}" width="112" height="13" fill="${FN.magenta}"/>
+
+  <text x="${M + 18}" y="${PHOTO_H + 300}" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="76" font-weight="700" letter-spacing="-1" fill="${fg}">${headline}</text>
+  <rect x="${M + 8}" y="${PHOTO_H + 328}" width="${kw}" height="98" fill="${fg}"/>
+  <text x="${M + 26}" y="${PHOTO_H + 404}" font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="76" font-weight="700" letter-spacing="-1" fill="${bg}">${knockout}</text>
+
+  <text x="${M + 18}" y="${PHOTO_H + 508}" font-family="Menlo, Consolas, monospace"
+        font-size="27" fill="${subMute}">${sub}</text>
+
+  <text x="${M + 18}" y="1258" font-family="Menlo, Consolas, monospace"
+        font-size="22" letter-spacing="2.6" fill="${mute}">${signoff}</text>
+</svg>`;
+}
+
+// Ground, then photograph, then furniture.
+async function photoTileBuffer(g) {
+  const photo = await sharp(path.join(ROOT, g.photo))
+    .resize(1080, PHOTO_H, { fit: 'cover', position: 'centre' })
+    .toBuffer();
+
+  return sharp({
+    create: {
+      width: 1080, height: 1350, channels: 4,
+      background: g.ground === 'ink' ? FN.ink : FN.cream,
+    },
+  })
+    .composite([
+      { input: photo, top: 0, left: 0 },
+      { input: Buffer.from(photoTileOverlaySvg(g)), top: 0, left: 0 },
+    ])
+    .png()
+    .toBuffer();
+}
+
+// Tiles whose artwork already exists in this repo at the right shape, so there
+// is nothing to generate. A claim card is already 1080x1350.
+const REPO_SOURCES = [
+  {
+    id: 'facts',
+    from: 'public/images/cards/2026-09-19/10.png',
+    note: 'claim card 10, the one VERIFIED card in the set',
   },
 ];
 
@@ -283,7 +367,16 @@ async function main() {
   await fs.writeFile(path.join(OUT_DIR, 'method.svg'), svg, 'utf8');
   await writeVariants(Buffer.from(svg), 'method', 'method  <-  generated (inverted field note)');
 
+  for (const src of REPO_SOURCES) {
+    const from = path.join(ROOT, src.from);
+    await writeVariants(from, src.id, `${src.id}  <-  ${src.from}  (${src.note})`);
+  }
+
   for (const g of GENERATED) {
+    if (g.photo) {
+      await writeVariants(await photoTileBuffer(g), g.id, `${g.id}  <-  ${g.photo}  (photo + field note)`);
+      continue;
+    }
     const gsvg = generatedTileSvg(g);
     await fs.writeFile(path.join(OUT_DIR, `${g.id}.svg`), gsvg, 'utf8');
     await writeVariants(Buffer.from(gsvg), g.id, `${g.id}  <-  generated (${g.ground === 'ink' ? 'inverted' : 'cream'} field note)`);

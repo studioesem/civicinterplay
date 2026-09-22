@@ -67,13 +67,22 @@
       "draft": false
     },
     {
+      "id": "facts",
+      "type": "field-note",
+      "kicker": "New",
+      "cta": "Read the facts and moments",
+      "href": "/facts-and-moments/",
+      "alt": "A claim card on a black ground. It reads: Supernode's planning approval was announced in July 2022. ChatGPT launched that November. Sourced to a Queensland Government media statement of 8 July 2022.",
+      "draft": false
+    },
+    {
       "id": "friends",
       "type": "field-note",
       "kicker": "New",
       "cta": "Read the source materials on civic AI governance",
       "href": "/reading/",
       "alt": "Field note card reading: Source materials on civic AI. What the field is writing now.",
-      "draft": false
+      "draft": true
     },
     {
       "id": "map",
