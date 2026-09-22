@@ -138,7 +138,7 @@ export const CLAIM_GROUNDS = ['cream', 'ink'] as const;
 export const CLAIM_HIGHLIGHTS = ['default', 'magenta', 'purple'] as const;
 
 export const CLAIM_STATUS_MEANS: Record<(typeof CLAIM_STATUS)[number], string> = {
-  VERIFIED: 'A person has walked it to the primary document.',
+  VERIFIED: 'Confirmed by the reader.',
   SOURCED: 'Quoted correctly from a named document; nobody has independently checked it.',
   UNVERIFIED: "Rests on this project's own computation, with no adversarial pass.",
 };

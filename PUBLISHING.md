@@ -185,7 +185,7 @@ the numbers stay attached to their claims.
 
 ### Every card carries a status
 
-- **VERIFIED**: a person has walked it to the primary document
+- **VERIFIED**: confirmed by the reader
 - **SOURCED**: quoted correctly from a named document; nobody has independently checked it
 - **UNVERIFIED**: rests on this project's own computation, with no adversarial pass
 

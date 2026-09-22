@@ -109,10 +109,6 @@ const held = sets.reduce((n, s) => n + s.data.cards.filter((c) => c.hold).length
           </div>
         ))}
       </dl>
-      <p class="claims-key-rule">
-        Post nothing above its status. A card held back is one whose caveat has
-        not yet been given a way to travel with it, so it has no download.
-      </p>
     </section>
   </main>
 
@@ -287,17 +283,6 @@ const held = sets.reduce((n, s) => n + s.data.cards.filter((c) => c.hold).length
     .claims-key-row.status-verified dt { color: var(--forest); }
     .claims-key-row.status-sourced dt { color: var(--ink-periwinkle); }
     .claims-key-row.status-unverified dt { color: var(--terracotta); }
-
-    .claims-key-rule {
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1.5px solid var(--border-light);
-      font-family: var(--body);
-      font-size: 0.85rem;
-      line-height: 1.7;
-      color: var(--text-dim);
-      max-width: 70ch;
-    }
 
     @media (max-width: 640px) {
       .claims {
