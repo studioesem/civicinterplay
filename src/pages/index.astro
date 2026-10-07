@@ -79,7 +79,7 @@ function categoryLabelsFor(post: (typeof allPosts)[number]) {
         <div class="post-grid">
           {foundationalPosts.map((p) => (
             <PostCard
-              href={`/${p.slug}/`}
+              href={p.data.cardHref ?? `/${p.slug}/`}
               title={p.data.title}
               excerpt={p.data.excerpt}
               category={p.data.primaryCategory}
@@ -106,7 +106,7 @@ function categoryLabelsFor(post: (typeof allPosts)[number]) {
         <div class="post-grid">
           {trainingGroundsPosts.map((p) => (
             <PostCard
-              href={`/${p.slug}/`}
+              href={p.data.cardHref ?? `/${p.slug}/`}
               title={p.data.title}
               excerpt={p.data.excerpt}
               category={p.data.primaryCategory}
@@ -133,7 +133,7 @@ function categoryLabelsFor(post: (typeof allPosts)[number]) {
         <div class="post-grid">
           {portalsPosts.map((p) => (
             <PostCard
-              href={`/${p.slug}/`}
+              href={p.data.cardHref ?? `/${p.slug}/`}
               title={p.data.title}
               excerpt={p.data.excerpt}
               category={p.data.primaryCategory}

@@ -40,6 +40,9 @@ const posts = defineCollection({
     accent: z
       .enum(['cream', 'purple', 'terracotta', 'periwinkle', 'pink', 'plain'])
       .optional(),
+    // Where the post's card links on the home page, when that should be a
+    // landing page rather than the post itself (e.g. a tool's home).
+    cardHref: z.string().optional(),
     articleType: z.enum(['BlogPosting', 'Article', 'ScholarlyArticle', 'CreativeWork']).default('BlogPosting'),
     keywords: z.array(z.string()).optional(),
   }),
