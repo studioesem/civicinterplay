@@ -1,4 +1,5 @@
 ---
+import methodDiagram from '../assets/how-the-tracker-works.inline.svg?raw';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ToolEmbed from '../components/ToolEmbed.astro';
 ---
@@ -193,15 +194,62 @@ import ToolEmbed from '../components/ToolEmbed.astro';
       </p>
     </section>
 
+    <section class="sov-section" id="methodology">
+      <h2>Methodology: how the Data Tracker works</h2>
+      <p>
+        The Data Centres Tracker is designed to summarise available digital information on the changing governance
+        dynamics of infrastructural AI. It tests the application of a civic AI framework that uses AI tools to bring
+        greater transparency and legibility to public decision making around critical infrastructure planning. The
+        methodology is experimental, and designed to surface the capabilities of digital urban governance in balancing
+        different demands for accountability and transparency in decision making around infrastructural AI. In the
+        spirit of transparency, the methods are summarised below.
+      </p>
+      <p>
+        <strong>Agents propose; people decide what reaches the map.</strong> Nothing an AI agent proposes appears on
+        the map, the data sheets or the Trends page until a person has reviewed it. News feed items are the exception:
+        they are classified by an agent and published directly, marked when the agent&rsquo;s confidence is low.
+      </p>
+      <figure class="sov-figure">
+        <div class="sov-diagram" set:html={methodDiagram} />
+        <figcaption>
+          Every box is marked as done by a person or by an AI agent.
+          <a href="/images/how-the-tracker-works.svg" download>Download the diagram (SVG)</a>
+        </figcaption>
+      </figure>
+      <h3>Platform dependencies</h3>
+      <ul class="sov-deps">
+        <li>
+          <strong>Anthropic, as platform enabler.</strong> Claude is the frontier model behind the agents. Tracked sites
+          listed as hosting, or planned to host, Anthropic&rsquo;s models in Australia:
+          <a href="https://studio-esem.notion.site/33918df0b775813db5cccb163b3f15ef" target="_blank" rel="noopener external">AWS Asia Pacific (Sydney)</a>,
+          <a href="https://studio-esem.notion.site/32a18df0b775812f975ce9c8a8106691" target="_blank" rel="noopener external">Amazon&rsquo;s Sydney and Melbourne investment</a>,
+          <a href="https://studio-esem.notion.site/38d18df0b775816da977d4ce2d3c1ed3" target="_blank" rel="noopener external">Google Cloud Sydney and Melbourne</a>, and the proposed
+          <a href="https://studio-esem.notion.site/3c818df0b77581eb8935ccb900394d0e" target="_blank" rel="noopener external">Western Downs Digital Park</a> near Dalby (lease subject to FIRB approval).
+        </li>
+        <li><strong>Notion</strong> as database manager. The data exports at any time.</li>
+        <li><strong>MCP and APIs</strong> as the standards for data connections between tools.</li>
+        <li><strong>Cloudflare and Mapbox</strong> for hosting and base maps.</li>
+        <li><strong>Factiva</strong> for licensed news, through an RMIT licence; read by hand, never scraped.</li>
+        <li>
+          <strong>GitHub</strong> for hosting all project information, freely available, with each version deposited on
+          <a href="https://doi.org/10.5281/zenodo.21026429" target="_blank" rel="noopener external">Zenodo with a DOI</a>.
+        </li>
+      </ul>
+    </section>
+
     <section class="sov-section">
       <h2>Methods, citation and licence</h2>
       <p>
-        Formally, this is <em>a living atlas of contesting and curating AI sovereignties (Australian view)</em>. How each entry is sourced and classified is set out in the <a href="https://studio-esem.notion.site/AI-Sovereignties-project-explainer-38d18df0b77581ab8465dcb65a6628ad" target="_blank" rel="noopener external">project explainer</a> and, in fuller form, the project's
-        <a href="https://github.com/civic-interplay/ai-sovereignties/blob/main/docs/METHODOLOGY.md" target="_blank" rel="noopener external">methodology statement</a>. Entries are coded by agent and flagged for human review (agent, human, or human-verified), so the basis of each classification stays visible. Findings are stress-tested by adversarial agent review before publication, and the
-        <a href="https://github.com/civic-interplay/ai-sovereignties/blob/main/docs/FACT-CHECKING-GUIDE.md" target="_blank" rel="noopener external">fact-checking protocol</a> used for human verification is published alongside the data.
+        This research is published as <em>A living atlas of contesting and curating AI sovereignties (Australian view)</em>.
+      </p>
+      <p class="sov-cite">
+        <strong>Cite as:</strong> Sarah Barns, <em>A living atlas of contesting and curating AI sovereignties (Australian view)</em>, Civic Interplay, 2026. <a href="https://doi.org/10.5281/zenodo.21026429" target="_blank" rel="noopener external">doi.org/10.5281/zenodo.21026429</a>
       </p>
       <p>
-        The project's methodology, classification and written analysis are openly licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener external">CC BY 4.0</a>. The underlying records are compiled from public sources, cited per entry; the facts themselves carry no such claim. Cite as: Sarah Barns, <em>A living atlas of contesting and curating AI sovereignties (Australian view)</em>, Civic Interplay, 2026. <a href="https://doi.org/10.5281/zenodo.21026430" target="_blank" rel="noopener external">doi.org/10.5281/zenodo.21026430</a>.
+        The project's methodology, classification and written analysis are openly licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener external">CC BY 4.0</a>. The underlying records are compiled from public sources, cited per entry; the facts themselves carry no such claim. How each entry is sourced and classified is set out in the <a href="https://studio-esem.notion.site/AI-Sovereignties-project-explainer-38d18df0b77581ab8465dcb65a6628ad" target="_blank" rel="noopener external">project explainer</a> and, in fuller form, the <a href="https://github.com/civic-interplay/ai-sovereignties/blob/main/docs/METHODOLOGY.md" target="_blank" rel="noopener external">methodology statement</a>.
+      </p>
+      <p>
+        More about the <a href="https://github.com/civic-interplay/ai-sovereignties/blob/main/docs/FACT-CHECKING-GUIDE.md" target="_blank" rel="noopener external">fact-checking protocol</a> used for human verification is published alongside the data. Details of the Civic Interplay research as a contribution to civic AI methodological research are in development. <a href="https://cur.org.au/people/dr-sarah-barns/" target="_blank" rel="noopener external">Get in touch</a> to discuss research partnerships, or use of this data for publication.
       </p>
     </section>
 
@@ -375,6 +423,84 @@ import ToolEmbed from '../components/ToolEmbed.astro';
       border-radius: var(--radius);
       box-shadow: 4px 4px 0 var(--border);
       background: #fafafa;
+    }
+
+    .sov-figure {
+      margin: 1.5rem 0 1.75rem;
+    }
+
+    /* The diagram is wider than the reading column: on desktop it breaks out
+       to the page width so its labels stay legible. */
+    @media (min-width: 1000px) {
+      .sov-figure {
+        width: min(1180px, calc(100vw - 4rem));
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    .sov-diagram {
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--border);
+      background: var(--bg);
+      padding: 0.75rem 0.5rem 0.25rem;
+      overflow-x: auto;
+    }
+
+    .sov-diagram :global(svg) {
+      display: block;
+      width: 100%;
+      min-width: 760px;
+      height: auto;
+      font-family: var(--heading);
+    }
+
+    .sov-figure figcaption {
+      font-family: var(--heading);
+      font-size: 0.78rem;
+      color: var(--text-faint);
+      margin-top: 0.8rem;
+    }
+
+    .sov-figure figcaption a {
+      color: var(--purple);
+      margin-left: 0.4rem;
+    }
+
+    .sov-section p.sov-cite {
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--border);
+      background: var(--tint-purple-a);
+      padding: 0.85rem 1rem;
+    }
+
+    .sov-section ul.sov-deps {
+      list-style: none;
+      padding: 0;
+      margin: 0.75rem 0 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .sov-section ul.sov-deps li:first-child {
+      grid-column: 1 / -1;
+    }
+
+    .sov-section ul.sov-deps li {
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--tint-terracotta-a);
+      padding: 0.7rem 0.9rem;
+      line-height: 1.55;
+    }
+
+    .sov-section ul.sov-deps li strong {
+      font-family: var(--heading);
+      color: var(--ink-terracotta);
     }
 
     .sov-section p.sov-chart-credit {

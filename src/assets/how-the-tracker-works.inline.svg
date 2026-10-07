@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 640" font-family="'Fira Sans', system-ui, Helvetica, Arial, sans-serif" role="img" aria-labelledby="ttw-t ttw-d">
+<title id="ttw-t">How the Data Tracker works</title>
+<desc id="ttw-d">Sources feed an automated scan. Agents can only propose new entries; a person reviews each before it reaches the map, sheets or Trends. News items are classified by an agent and go to the record without review. People verify rows against sources; skeptic agents test findings and a person judges them. The record is frozen as snapshots and published as a map, sheets, trends, a news feed and an open repository.</desc>
+<defs><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#333"/></marker><marker id="ahr" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#8B3A25"/></marker><marker id="ahp" markerWidth="10" markerHeight="10" refX="8" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 Z" fill="#553380"/></marker></defs>
+<rect x="24" y="18" width="16" height="16" rx="4" fill="#FBF7ED" stroke="#333" stroke-width="1.6"/><text x="47" y="31" font-size="12.5" fill="#4a4541">Open and Movable</text>
+<rect x="181.4" y="18" width="16" height="16" rx="4" fill="#FAE7DD" stroke="#333" stroke-width="1.6"/><text x="204.4" y="31" font-size="12.5" fill="#4a4541">Outside Dependency</text>
+<rect x="352.6" y="18" width="16" height="16" rx="4" fill="#E9ECFB" stroke="#333" stroke-width="1.6"/><text x="375.6" y="31" font-size="12.5" fill="#4a4541">Automated Step</text>
+<rect x="496.20000000000005" y="18" width="16" height="16" rx="4" fill="#EFE6FA" stroke="#333" stroke-width="1.6"/><text x="519.2" y="31" font-size="12.5" fill="#4a4541">Critical Review</text>
+<g transform="translate(650.7,18)"><circle cx="7" cy="4.5" r="3.6" fill="#fff" stroke="#1c1917" stroke-width="1.5"/><path d="M0.8,15 C0.8,9.5 13.2,9.5 13.2,15 Z" fill="#fff" stroke="#1c1917" stroke-width="1.5"/></g><text x="671.7" y="31" font-size="12.5" fill="#4a4541">Done by a Person</text>
+<g transform="translate(803.7,18)"><line x1="7" y1="0.5" x2="7" y2="3.2" stroke="#1c1917" stroke-width="1.5"/><circle cx="7" cy="0.8" r="1.4" fill="#1c1917"/><rect x="0.8" y="3.2" width="12.4" height="10.6" rx="2.6" fill="#1c1917"/><circle cx="4.6" cy="8.4" r="1.5" fill="#fff"/><circle cx="9.4" cy="8.4" r="1.5" fill="#fff"/></g><text x="824.7" y="31" font-size="12.5" fill="#4a4541">Done by an AI Agent</text>
+<text x="24" y="84" font-size="12" font-weight="600" letter-spacing="1.5" fill="#1c1917">1 · SOURCES</text>
+<text x="254" y="84" font-size="12" font-weight="600" letter-spacing="1.5" fill="#1c1917">2 · AGENTS PROPOSE</text>
+<text x="484" y="84" font-size="12" font-weight="600" letter-spacing="1.5" fill="#1c1917">3 · CRITICAL REVIEW</text>
+<text x="714" y="84" font-size="12" font-weight="600" letter-spacing="1.5" fill="#1c1917">4 · THE RECORD</text>
+<text x="944" y="84" font-size="12" font-weight="600" letter-spacing="1.5" fill="#1c1917">5 · PUBLISHED</text>
+<path d="M214,172.0 C231.5,172.0 231.5,152.0 249,152.0" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M214,268.0 C231.5,268.0 231.5,164.0 249,164.0" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M214,356.0 C231.5,356.0 231.5,176.0 249,176.0" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M214,452.0 H232 V492 H460 V166.0 H479" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M214,540.0 H240 V501 H468 V174.0 H479" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M444,260.0 C461.5,260.0 461.5,150.0 479,150.0" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M444,348.0 C461.5,348.0 461.5,260.0 479,260.0" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M349.0,400 V389" stroke="#8B3A25" stroke-width="1.6" stroke-dasharray="4 3" fill="none"/>
+<path d="M674,156.0 C691.5,156.0 691.5,158.0 709,158.0" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M678,260.0 C693.5,260.0 693.5,178.0 709,178.0" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M712,192.0 C693.5,192.0 693.5,272.0 683,272.0" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M400,120 V106 H809.0 V115" fill="none" stroke="#8B3A25" stroke-width="1.6" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#ahr)"/>
+<text x="581.0" y="99" text-anchor="middle" font-size="11.5" font-weight="500" fill="#8B3A25">News items go straight to the record, with no review step</text>
+<path d="M809.0,228 V236" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M809.0,332 V340" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M908,172.0 C923.5,172.0 923.5,156.0 939,156.0" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M908,172.0 C923.5,172.0 923.5,244.0 939,244.0" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M908,172.0 C923.5,172.0 923.5,332.0 939,332.0" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M908,172.0 C923.5,172.0 923.5,412.0 939,412.0" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M908,284.0 C923.5,284.0 923.5,492.0 939,492.0" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M678,372.0 H698 V420 H926 V502.0 H939" fill="none" stroke="#333" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M1039.0,532 V610 H119.0 V585" fill="none" stroke="#553380" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ahp)"/>
+<text x="579.0" y="629" text-anchor="middle" font-size="12" font-weight="500" fill="#553380">Corrections and missing sites come back in through the contribute form</text>
+<rect x="28" y="124" width="190" height="104" rx="10" fill="#333"/>
+<rect x="24" y="120" width="190" height="104" rx="10" fill="#FBF7ED" stroke="#333" stroke-width="2"/>
+<text x="37" y="143" font-size="14" font-weight="600" fill="#1c1917">Planning Registers</text>
+<text x="37" y="162" font-size="11.8" fill="#4a4541">NSW ePlanning (Public API)</text>
+<text x="37" y="178" font-size="11.8" fill="#4a4541">VIC Ministerial Permits</text>
+<text x="37" y="194" font-size="11.8" fill="#4a4541">Local Government Development</text>
+<text x="37" y="210" font-size="11.8" fill="#4a4541">Application Registers</text>
+<rect x="28" y="244" width="190" height="56" rx="10" fill="#333"/>
+<rect x="24" y="240" width="190" height="56" rx="10" fill="#FBF7ED" stroke="#333" stroke-width="2"/>
+<text x="37" y="263" font-size="14" font-weight="600" fill="#1c1917">News</text>
+<text x="37" y="282" font-size="11.8" fill="#4a4541">GDELT Open News Index</text>
+<rect x="28" y="316" width="190" height="88" rx="10" fill="#333"/>
+<rect x="24" y="312" width="190" height="88" rx="10" fill="#FBF7ED" stroke="#333" stroke-width="2"/>
+<text x="37" y="335" font-size="14" font-weight="600" fill="#1c1917">Public Documents</text>
+<text x="37" y="354" font-size="11.8" fill="#4a4541">Inquiry Submissions</text>
+<text x="37" y="370" font-size="11.8" fill="#4a4541">Local Government Minutes</text>
+<text x="37" y="386" font-size="11.8" fill="#4a4541">Company Media Releases</text>
+<rect x="28" y="420" width="190" height="72" rx="10" fill="#333"/>
+<rect x="24" y="416" width="190" height="72" rx="10" fill="#FAE7DD" stroke="#333" stroke-width="2"/>
+<text x="37" y="439" font-size="14" font-weight="600" fill="#1c1917">Factiva via RMIT</text>
+<text x="37" y="458" font-size="11.8" fill="#4a4541">Licensed News Archive</text>
+<text x="37" y="474" font-size="11.8" fill="#4a4541">Read by Hand, Never Scraped</text>
+<g transform="translate(190,425)"><circle cx="7" cy="4.5" r="3.6" fill="#fff" stroke="#1c1917" stroke-width="1.5"/><path d="M0.8,15 C0.8,9.5 13.2,9.5 13.2,15 Z" fill="#fff" stroke="#1c1917" stroke-width="1.5"/></g>
+<rect x="28" y="508" width="190" height="72" rx="10" fill="#333"/>
+<rect x="24" y="504" width="190" height="72" rx="10" fill="#FBF7ED" stroke="#333" stroke-width="2"/>
+<text x="37" y="527" font-size="14" font-weight="600" fill="#1c1917">Contributions</text>
+<text x="37" y="546" font-size="11.8" fill="#4a4541">Direct Contributions from</text>
+<text x="37" y="562" font-size="11.8" fill="#4a4541">Members of the Public</text>
+<g transform="translate(190,513)"><circle cx="7" cy="4.5" r="3.6" fill="#fff" stroke="#1c1917" stroke-width="1.5"/><path d="M0.8,15 C0.8,9.5 13.2,9.5 13.2,15 Z" fill="#fff" stroke="#1c1917" stroke-width="1.5"/></g>
+<rect x="258" y="124" width="190" height="88" rx="10" fill="#333"/>
+<rect x="254" y="120" width="190" height="88" rx="10" fill="#E9ECFB" stroke="#333" stroke-width="2"/>
+<text x="267" y="143" font-size="14" font-weight="600" fill="#1c1917">Fortnightly Scan</text>
+<text x="267" y="162" font-size="11.8" fill="#4a4541">1st and 15th of Each Month</text>
+<text x="267" y="178" font-size="11.8" fill="#4a4541">Finds and Classifies News</text>
+<text x="267" y="194" font-size="11.8" fill="#4a4541">and Planning Items</text>
+<g transform="translate(420,129)"><line x1="7" y1="0.5" x2="7" y2="3.2" stroke="#1c1917" stroke-width="1.5"/><circle cx="7" cy="0.8" r="1.4" fill="#1c1917"/><rect x="0.8" y="3.2" width="12.4" height="10.6" rx="2.6" fill="#1c1917"/><circle cx="4.6" cy="8.4" r="1.5" fill="#fff"/><circle cx="9.4" cy="8.4" r="1.5" fill="#fff"/></g>
+<rect x="258" y="228" width="190" height="72" rx="10" fill="#333"/>
+<rect x="254" y="224" width="190" height="72" rx="10" fill="#E9ECFB" stroke="#333" stroke-width="2"/>
+<text x="267" y="247" font-size="14" font-weight="600" fill="#1c1917">Discovery Agent</text>
+<text x="267" y="266" font-size="11.8" fill="#4a4541">Proposes New Entries Only,</text>
+<text x="267" y="282" font-size="11.8" fill="#4a4541">with No Type and No Map Pin</text>
+<g transform="translate(420,233)"><line x1="7" y1="0.5" x2="7" y2="3.2" stroke="#1c1917" stroke-width="1.5"/><circle cx="7" cy="0.8" r="1.4" fill="#1c1917"/><rect x="0.8" y="3.2" width="12.4" height="10.6" rx="2.6" fill="#1c1917"/><circle cx="4.6" cy="8.4" r="1.5" fill="#fff"/><circle cx="9.4" cy="8.4" r="1.5" fill="#fff"/></g>
+<rect x="258" y="316" width="190" height="72" rx="10" fill="#333"/>
+<rect x="254" y="312" width="190" height="72" rx="10" fill="#E9ECFB" stroke="#333" stroke-width="2"/>
+<text x="267" y="335" font-size="14" font-weight="600" fill="#1c1917">Quality Check</text>
+<text x="267" y="354" font-size="11.8" fill="#4a4541">Flags Rows for a Person</text>
+<text x="267" y="370" font-size="11.8" fill="#4a4541">Never Publishes Anything</text>
+<g transform="translate(420,321)"><line x1="7" y1="0.5" x2="7" y2="3.2" stroke="#1c1917" stroke-width="1.5"/><circle cx="7" cy="0.8" r="1.4" fill="#1c1917"/><rect x="0.8" y="3.2" width="12.4" height="10.6" rx="2.6" fill="#1c1917"/><circle cx="4.6" cy="8.4" r="1.5" fill="#fff"/><circle cx="9.4" cy="8.4" r="1.5" fill="#fff"/></g>
+<rect x="258" y="404" width="190" height="72" rx="10" fill="#333"/>
+<rect x="254" y="400" width="190" height="72" rx="10" fill="#FAE7DD" stroke="#333" stroke-width="2"/>
+<text x="267" y="423" font-size="14" font-weight="600" fill="#1c1917">Claude (Anthropic)</text>
+<text x="267" y="442" font-size="11.8" fill="#4a4541">The Frontier Model</text>
+<text x="267" y="458" font-size="11.8" fill="#4a4541">Behind the Agents</text>
+<rect x="488" y="124" width="190" height="72" rx="10" fill="#333"/>
+<rect x="484" y="120" width="190" height="72" rx="10" fill="#EFE6FA" stroke="#333" stroke-width="2"/>
+<text x="497" y="143" font-size="14" font-weight="600" fill="#1c1917">Review</text>
+<text x="497" y="162" font-size="11.8" fill="#4a4541">A Person Accepts or Rejects</text>
+<text x="497" y="178" font-size="11.8" fill="#4a4541">Every Proposed Entry</text>
+<g transform="translate(650,129)"><circle cx="7" cy="4.5" r="3.6" fill="#fff" stroke="#1c1917" stroke-width="1.5"/><path d="M0.8,15 C0.8,9.5 13.2,9.5 13.2,15 Z" fill="#fff" stroke="#1c1917" stroke-width="1.5"/></g>
+<rect x="488" y="212" width="190" height="104" rx="10" fill="#333"/>
+<rect x="484" y="208" width="190" height="104" rx="10" fill="#EFE6FA" stroke="#333" stroke-width="2"/>
+<text x="497" y="231" font-size="14" font-weight="600" fill="#1c1917">Verification</text>
+<text x="497" y="250" font-size="11.8" fill="#4a4541">A Person Checks Any Row</text>
+<text x="497" y="266" font-size="11.8" fill="#4a4541">Against Its Source:</text>
+<text x="497" y="282" font-size="11.8" fill="#4a4541">Primary Record: Human-Verified</text>
+<text x="497" y="298" font-size="11.8" fill="#4a4541">Press or Company: Checked Only</text>
+<g transform="translate(650,217)"><circle cx="7" cy="4.5" r="3.6" fill="#fff" stroke="#1c1917" stroke-width="1.5"/><path d="M0.8,15 C0.8,9.5 13.2,9.5 13.2,15 Z" fill="#fff" stroke="#1c1917" stroke-width="1.5"/></g>
+<rect x="488" y="332" width="190" height="88" rx="10" fill="#333"/>
+<rect x="484" y="328" width="190" height="88" rx="10" fill="#EFE6FA" stroke="#333" stroke-width="2"/>
+<text x="497" y="351" font-size="14" font-weight="600" fill="#1c1917">Claim Checks</text>
+<text x="497" y="370" font-size="11.8" fill="#4a4541">Skeptic Agents Try to Refute</text>
+<text x="497" y="386" font-size="11.8" fill="#4a4541">Each Finding; a Person</text>
+<text x="497" y="402" font-size="11.8" fill="#4a4541">Judges the Result</text>
+<g transform="translate(650,337)"><circle cx="7" cy="4.5" r="3.6" fill="#fff" stroke="#1c1917" stroke-width="1.5"/><path d="M0.8,15 C0.8,9.5 13.2,9.5 13.2,15 Z" fill="#fff" stroke="#1c1917" stroke-width="1.5"/></g>
+<g transform="translate(631,337)"><line x1="7" y1="0.5" x2="7" y2="3.2" stroke="#1c1917" stroke-width="1.5"/><circle cx="7" cy="0.8" r="1.4" fill="#1c1917"/><rect x="0.8" y="3.2" width="12.4" height="10.6" rx="2.6" fill="#1c1917"/><circle cx="4.6" cy="8.4" r="1.5" fill="#fff"/><circle cx="9.4" cy="8.4" r="1.5" fill="#fff"/></g>
+<rect x="718" y="124" width="190" height="104" rx="10" fill="#333"/>
+<rect x="714" y="120" width="190" height="104" rx="10" fill="#FAE7DD" stroke="#333" stroke-width="2"/>
+<text x="727" y="143" font-size="14" font-weight="600" fill="#1c1917">The Tracker (Notion)</text>
+<text x="727" y="162" font-size="11.8" fill="#4a4541">Sites, Owners, Status, Pathway,</text>
+<text x="727" y="178" font-size="11.8" fill="#4a4541">Public Notice, Power, Water,</text>
+<text x="727" y="194" font-size="11.8" fill="#4a4541">News Items</text>
+<text x="727" y="210" font-size="11.8" fill="#4a4541">Exports Any Time</text>
+<rect x="718" y="244" width="190" height="88" rx="10" fill="#333"/>
+<rect x="714" y="240" width="190" height="88" rx="10" fill="#FBF7ED" stroke="#333" stroke-width="2"/>
+<text x="727" y="263" font-size="14" font-weight="600" fill="#1c1917">Snapshots</text>
+<text x="727" y="282" font-size="11.8" fill="#4a4541">Whole Dataset Frozen Each</text>
+<text x="727" y="298" font-size="11.8" fill="#4a4541">Run, Kept in the Public</text>
+<text x="727" y="314" font-size="11.8" fill="#4a4541">Repository, with What Changed</text>
+<rect x="718" y="348" width="190" height="56" rx="10" fill="#333"/>
+<rect x="714" y="344" width="190" height="56" rx="10" fill="#FBF7ED" stroke="#333" stroke-width="2"/>
+<text x="727" y="367" font-size="14" font-weight="600" fill="#1c1917">Zenodo Deposits</text>
+<text x="727" y="386" font-size="11.8" fill="#4a4541">Citable Versions with a DOI</text>
+<rect x="948" y="124" width="190" height="72" rx="10" fill="#333"/>
+<rect x="944" y="120" width="190" height="72" rx="10" fill="#FAE7DD" stroke="#333" stroke-width="2"/>
+<text x="957" y="143" font-size="14" font-weight="600" fill="#1c1917">Map</text>
+<text x="957" y="162" font-size="11.8" fill="#4a4541">Hosted on Cloudflare,</text>
+<text x="957" y="178" font-size="11.8" fill="#4a4541">Base Map from Mapbox</text>
+<rect x="948" y="212" width="190" height="72" rx="10" fill="#333"/>
+<rect x="944" y="208" width="190" height="72" rx="10" fill="#FBF7ED" stroke="#333" stroke-width="2"/>
+<text x="957" y="231" font-size="14" font-weight="600" fill="#1c1917">Data Sheets and Glossary</text>
+<text x="957" y="250" font-size="11.8" fill="#4a4541">By State, with the</text>
+<text x="957" y="266" font-size="11.8" fill="#4a4541">Definitions Behind Them</text>
+<rect x="948" y="300" width="190" height="72" rx="10" fill="#333"/>
+<rect x="944" y="296" width="190" height="72" rx="10" fill="#FBF7ED" stroke="#333" stroke-width="2"/>
+<text x="957" y="319" font-size="14" font-weight="600" fill="#1c1917">Trends</text>
+<text x="957" y="338" font-size="11.8" fill="#4a4541">Operating vs Proposed,</text>
+<text x="957" y="354" font-size="11.8" fill="#4a4541">Disclosure, the Record Over Time</text>
+<rect x="948" y="388" width="190" height="56" rx="10" fill="#333"/>
+<rect x="944" y="384" width="190" height="56" rx="10" fill="#FBF7ED" stroke="#333" stroke-width="2"/>
+<text x="957" y="407" font-size="14" font-weight="600" fill="#1c1917">News Feed</text>
+<text x="957" y="426" font-size="11.8" fill="#4a4541">and RSS</text>
+<rect x="948" y="460" width="190" height="72" rx="10" fill="#333"/>
+<rect x="944" y="456" width="190" height="72" rx="10" fill="#FBF7ED" stroke="#333" stroke-width="2"/>
+<text x="957" y="479" font-size="14" font-weight="600" fill="#1c1917">Open Repository (GitHub)</text>
+<text x="957" y="498" font-size="11.8" fill="#4a4541">Code, Method, Fact-Checking</text>
+<text x="957" y="514" font-size="11.8" fill="#4a4541">Guide, Verification Record</text>
+</svg>
