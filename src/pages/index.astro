@@ -108,7 +108,7 @@ const publications = readingsData.readings.slice(0, 3);
     </div>
 
     <!-- C. Credit -->
-    <div class="credit">
+    <div class="credit credit--top">
       <a href="https://www.rmit.edu.au/" class="credit-logo">
         <img src="/images/partners/rmit-university.png" alt="RMIT University" width="720" height="253" loading="lazy" />
       </a>
@@ -148,6 +148,18 @@ const publications = readingsData.readings.slice(0, 3);
           </div>
         </div>
       </section>
+
+    <!-- C. Credit, phone position: after Why -->
+      <div class="credit credit--below-why">
+        <a href="https://www.rmit.edu.au/" class="credit-logo">
+          <img src="/images/partners/rmit-university.png" alt="RMIT University" width="720" height="253" loading="lazy" />
+        </a>
+        <p>
+          Civic Interplay is being explored by Dr Sarah Barns and collaborators,
+          through a Vice-Chancellor's Senior Research Fellowship at RMIT
+          University's <a href="https://cur.org.au/">Centre for Urban Research</a>.
+        </p>
+      </div>
 
       <!-- E. Projects -->
       <section class="sec" aria-labelledby="projects-h">
@@ -708,6 +720,15 @@ const publications = readingsData.readings.slice(0, 3);
       .pubs { grid-template-columns: minmax(0, 1fr); }
       .slide { grid-template-columns: minmax(0, 1fr); }
       .slide-shot { border-right: 0; border-bottom: 2px solid var(--border); aspect-ratio: 4 / 3; }
+    }
+
+    /* On a phone the credit reads like a footer under the hero, so it moves
+       below Why. Same markup, shown in one place at a time. */
+    .credit--below-why { display: none; }
+
+    @media (max-width: 860px) {
+      .credit--top { display: none; }
+      .credit--below-why { display: flex; margin-top: 2rem; }
     }
 
     @media (max-width: 620px) {
