@@ -1,0 +1,72 @@
+---
+// Embeddable hero (PubPub and elsewhere): the front-page illustration with
+// its hover questions, wordmark and tagline. /embed/* may be framed by any
+// site (public/_headers).
+import Hero from '../../components/Hero.astro';
+import home from '../../data/home.json';
+import '../../styles/fonts.ts';
+import '../../styles/global.css';
+
+const heroImage = '/images/CivicAI_Visualisation_v2-03_FLAT.jpg';
+const heroAlt =
+  'Illustration of a street where civic AI is already at work: air quality, road, soil and tree sensors mounted on light poles, with people walking, cycling and using wheelchairs moving through it, picked out in magenta and purple.';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Civic Interplay</title>
+  <meta name="robots" content="noindex" />
+  <base target="_blank" />
+</head>
+<body class="embed">
+  <div class="frame">
+    <Hero
+      image={heroImage}
+      imageAlt={heroAlt}
+      beforeGlitch="Civic "
+      glitchWord="Interplay"
+      tagline="Place-based civic enquiry with digital and AI methods"
+      hotspots={home.hotspots}
+      titleDot={home.titleDot}
+    >
+      <a class="embed-link" href="https://civicinterplay.io/">civicinterplay.io <span aria-hidden="true">&rarr;</span></a>
+    </Hero>
+  </div>
+
+  <style is:global>
+    html, body.embed {
+      height: 100%;
+      margin: 0;
+      background: #1f1d24;
+    }
+
+    .embed .frame,
+    .embed .hero {
+      height: 100%;
+      margin: 0;
+    }
+
+    .embed .hero-image {
+      height: 100%;
+    }
+
+    .embed .hero-overlay h1 {
+      font-size: clamp(1.6rem, 5vw, 3rem);
+    }
+
+    .embed-link {
+      display: inline-block;
+      margin-top: 0.9rem;
+      font-family: var(--heading);
+      font-weight: 500;
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 2px solid var(--pink);
+    }
+
+    .embed section { opacity: 1; animation: none; }
+  </style>
+</body>
+</html>

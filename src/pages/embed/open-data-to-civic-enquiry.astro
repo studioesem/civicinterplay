@@ -1,0 +1,57 @@
+---
+// Embeddable infographic: open data → platform technology → infrastructural
+// AI → civic enquiry. /embed/* may be framed by any site (public/_headers).
+import OpenDataShift from '../../components/OpenDataShift.astro';
+import '../../styles/fonts.ts';
+import '../../styles/global.css';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Open data to civic enquiry · Civic Interplay</title>
+  <meta name="robots" content="noindex" />
+  <base target="_blank" />
+</head>
+<body class="embed">
+  <main class="wrap">
+    <OpenDataShift />
+    <p class="credit">
+      Civic Interplay, after Barns, <em>Platform Urbanism</em> (2020).
+      <a href="https://civicinterplay.io/proposition/">Read the proposition <span aria-hidden="true">&rarr;</span></a>
+    </p>
+  </main>
+
+  <style is:global>
+    body.embed {
+      margin: 0;
+      background: #fff;
+    }
+
+    .embed .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    /* Inside a frame the outer card chrome is the host's job. */
+    .embed .shift {
+      margin: 0 !important;
+      box-shadow: none;
+    }
+
+    .embed .credit {
+      margin: 0.8rem 0 0;
+      font-family: var(--heading);
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .embed .credit a {
+      color: var(--purple);
+      margin-left: 0.3rem;
+    }
+  </style>
+</body>
+</html>
