@@ -27,14 +27,17 @@ interface Props {
   ogImage?: string;
   article?: ArticleMeta;
   dataset?: DatasetMeta;
+  /** Keeps a page out of search results (mockups, drafts). */
+  noindex?: boolean;
 }
 
 const {
   title = 'Civic Interplay',
-  description = 'A think and do space for agentic civics and civic AI.',
+  description = 'Place-based civic enquiry with digital and AI methods.',
   ogImage,
   article,
   dataset,
+  noindex = false,
 } = Astro.props;
 
 const fullTitle = title === 'Civic Interplay' ? title : `${title} · Civic Interplay`;
@@ -71,6 +74,7 @@ const structuredDataset = dataset ? { ...dataset, url: canonical } : undefined;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
 
     <meta property="og:type" content={article ? 'article' : 'website'} />
@@ -80,7 +84,7 @@ const structuredDataset = dataset ? { ...dataset, url: canonical } : undefined;
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Civic Interplay. A think and do space for agentic civics and civic AI." />
+    <meta property="og:image:alt" content="Civic Interplay. Place-based civic enquiry with digital and AI methods." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImageUrl} />
 

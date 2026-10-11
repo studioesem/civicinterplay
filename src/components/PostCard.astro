@@ -91,7 +91,7 @@ const cardImageAlt = image ? imageAlt : FALLBACK_ALT;
     color: var(--card-ink, var(--text));
     border: 2px solid var(--border);
     border-radius: var(--radius);
-    box-shadow: 4px 4px 0 var(--border);
+    box-shadow: 4px 4px 0 var(--card-shadow, var(--border));
     padding: 1.1rem;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     text-decoration: none;
@@ -102,7 +102,7 @@ const cardImageAlt = image ? imageAlt : FALLBACK_ALT;
 
   .post-card:hover {
     transform: translateY(-3px);
-    box-shadow: 7px 7px 0 var(--border);
+    box-shadow: 7px 7px 0 var(--card-shadow, var(--border));
   }
 
   .post-card:focus-visible {

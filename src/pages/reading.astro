@@ -5,187 +5,163 @@ import PostCard from '../components/PostCard.astro';
 import ReadingCard from '../components/ReadingCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import readingsData from '../data/readings.json';
-import { CATEGORY_LABEL } from '../content/config';
+
+// MOCKUP of Reading under the new menu: Publications on civic AI, Essays, Notes,
+// Field notes. Project posts move to Projects; "What can you do here?" is
+// retired from the listings (its page still exists).
 
 const posts = (await getCollection('posts'))
   .filter((p) => !p.data.draft)
   .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 
-const formatDate = (d: Date) =>
-  d.toLocaleDateString('en-AU', { year: 'numeric', month: 'long' });
+const ESSAYS = [
+  'can-we-shift-our-mindset',
+  'the-many-afterlives-of-albert-einstein',
+  'mystical-language-loops-with-benjamin',
+  'the-active-interface',
+  'micro-political-imaginaries',
+  'digital-ecological-footprint',
+  'you-me-data-and-the-city',
+  'learning-to-be-planetary-citizens',
+  'what-is-civic-interplay',
+];
+const NOTES = ['anthropic-founders', 'jack-clark-on-ai', 'what-time-are-we-living-in', 'at-de-ceuvel'];
 
-// Field notes belong in the archive too. They are readings of a sort, and
-// otherwise they only exist on the home page and the About page.
-const fieldNotes = (await getCollection('fieldnotes'))
-  .filter((n) => !n.data.draft)
-  .map((n) => ({
-    href: `/field-notes/${n.slug}/`,
-    title: n.data.title,
-    excerpt: n.data.description,
-    categoryLabel: 'Field note',
-    accent: 'periwinkle' as const,
-    image: `/images/tiles/${n.data.tileId}-560.webp`,
-    imageAlt: n.data.imageAlt,
-    date: formatDate(n.data.publishedAt),
-    sortKey: n.data.publishedAt.valueOf(),
-    category: undefined,
-  }));
+// The old About manifesto becomes an essay under its own name.
+const RETITLE: Record<string, string> = { 'what-is-civic-interplay': 'The macro age' };
 
-const entries = [
-  ...posts.map((p) => ({
-    href: `/${p.slug}/`,
-    title: p.data.title,
-    excerpt: p.data.excerpt,
-    categoryLabel: p.data.primaryCategory ? CATEGORY_LABEL[p.data.primaryCategory] : undefined,
-    accent: p.data.accent,
-    image: p.data.featureImage,
-    imageAlt: p.data.featureImageAlt,
-    date: formatDate(p.data.publishedAt),
-    sortKey: p.data.publishedAt.valueOf(),
-    category: p.data.primaryCategory,
-    video: p.data.featureVideo,
-    videoWebm: p.data.featureVideoWebm,
-  })),
-  ...fieldNotes,
-].sort((a, b) => b.sortKey - a.sortKey);
+const formatDate = (d: Date) => d.toLocaleDateString('en-AU', { year: 'numeric', month: 'long' });
 
-const friends = readingsData.readings;
+const card = (p: (typeof posts)[number], label: string, accent: 'purple' | 'terracotta' | 'cream') => ({
+  href: `/${p.slug}/`,
+  title: RETITLE[p.slug] ?? p.data.title,
+  excerpt: p.data.excerpt,
+  label,
+  accent,
+  image: p.data.featureImage,
+  imageAlt: p.data.featureImageAlt,
+  date: formatDate(p.data.publishedAt),
+  video: p.data.featureVideo,
+  videoWebm: p.data.featureVideoWebm,
+});
+
+const essays = posts.filter((p) => ESSAYS.includes(p.slug)).map((p) => card(p, 'Essay', 'purple'));
+const notes = posts.filter((p) => NOTES.includes(p.slug)).map((p) => card(p, 'Note', 'terracotta'));
+
+const fieldNotes = [
+  ...(await getCollection('fieldnotes'))
+    .filter((n) => !n.data.draft)
+    .map((n) => ({
+      href: `/field-notes/${n.slug}/`,
+      title: n.data.title,
+      excerpt: n.data.description,
+      image: `/images/tiles/${n.data.tileId}-560.webp`,
+      imageAlt: n.data.imageAlt,
+      date: formatDate(n.data.publishedAt),
+    })),
+  {
+    href: '/listening/',
+    title: 'Listening to an emergent field',
+    excerpt: 'Live searches for the vocabulary of civic AI across the research literature: a dated snapshot of how the field is talking.',
+    image: '/images/tiles/listening-560.webp',
+    imageAlt: 'Field note card reading: Listening to an emergent field.',
+    date: undefined,
+  },
+];
+
+const publications = readingsData.readings;
 ---
-<BaseLayout
-  title="Reading"
-  description="Essays, resources and foundational documentation on civic agencies, planetary citizenship and co-intelligent technologies."
->
+<BaseLayout title="Reading" description="Publications on civic AI, essays, notes and field notes.">
+
   <main class="container reading">
     <header class="reading-header">
-      <p class="reading-eyebrow">Civic Interplay / Think</p>
+      <p class="eyebrow">Reading</p>
       <h1>Reading</h1>
-      <p class="reading-intro">
-        Essays, Resources and more.
-      </p>
+      <p class="standfirst">The field's work, and ours: publications on civic AI, essays, notes and field notes.</p>
     </header>
 
-    <section class="reading-section">
-      <SectionHeading title="Friends of Civic Interplay" />
-      <p class="reading-lede">
-        Source materials on civic AI and civic AI governance. This is an
-        emerging field, with essays and papers primarily from 2024 onwards.
-      </p>
-      <div class="friends-grid">
-        {friends.map((r) => (
-          <ReadingCard
-            title={r.title}
-            authors={r.authors}
-            publisher={r.publisher}
-            year={r.year}
-            href={r.href}
-            note={r.note}
-            accent={r.accent}
-          />
+    <section>
+      <SectionHeading title="Publications on civic AI" />
+      <div class="post-grid">
+        {publications.map((r) => (
+          <ReadingCard title={r.title} authors={r.authors} publisher={r.publisher} year={r.year} href={r.href} note={r.note} accent={r.accent} />
         ))}
       </div>
-      <p class="reading-lede reading-lede-after">
-        For more related literature visit:
-        <a href="/listening/">Listening to an emergent field</a>.
-      </p>
     </section>
 
-    <section class="reading-section">
-      <SectionHeading title="Musings" />
-      <p class="reading-lede">
-        Thinking out in the open, without an algorithm.
-      </p>
+    <section>
+      <SectionHeading title="Essays" />
       <div class="post-grid">
-      {entries.map((e) => (
-        <PostCard
-          href={e.href}
-          title={e.title}
-          excerpt={e.excerpt}
-          category={e.category}
-          categoryLabel={e.categoryLabel}
-          accent={e.accent}
-          date={e.date}
-          image={e.image}
-          imageAlt={e.imageAlt}
-          video={e.video}
-          videoWebm={e.videoWebm}
-        />
-      ))}
+        {essays.map((c) => (
+          <PostCard href={c.href} title={c.title} excerpt={c.excerpt} categoryLabel={c.label} accent={c.accent} image={c.image} imageAlt={c.imageAlt} date={c.date} video={c.video} videoWebm={c.videoWebm} />
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <SectionHeading title="Notes" />
+      <div class="post-grid">
+        {notes.map((c) => (
+          <PostCard href={c.href} title={c.title} excerpt={c.excerpt} categoryLabel={c.label} accent={c.accent} image={c.image} imageAlt={c.imageAlt} date={c.date} video={c.video} videoWebm={c.videoWebm} />
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <SectionHeading title="Field notes" />
+      <div class="post-grid">
+        {fieldNotes.map((c) => (
+          <PostCard href={c.href} title={c.title} excerpt={c.excerpt} categoryLabel="Field note" accent="cream" image={c.image} imageAlt={c.imageAlt} date={c.date} />
+        ))}
       </div>
     </section>
   </main>
 
   <style>
-    .reading-section {
-      margin-bottom: 3.5rem;
-    }
-
-    .reading-lede {
-      font-family: var(--body);
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: var(--text-dim);
-      max-width: 64ch;
-      margin: 0 0 1.8rem;
-    }
-
-    .reading-lede-after {
-      margin: 1.8rem 0 0;
-    }
-
-    .reading-lede a {
-      color: var(--purple);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    .friends-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.4rem;
-    }
-
     .reading {
-      padding: 3rem 2rem 4rem;
-      max-width: 1100px;
+      padding-top: 2.5rem;
+      padding-bottom: 4rem;
     }
 
     .reading-header {
-      margin-bottom: 3rem;
-      padding-bottom: 2rem;
-      border-bottom: 2px solid var(--border);
+      max-width: 760px;
+      margin-bottom: 2.5rem;
     }
 
-    .reading-eyebrow {
+    .eyebrow {
       font-family: var(--heading);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
+      font-size: var(--fs-label);
+      font-weight: var(--w-medium);
+      letter-spacing: var(--track-label);
       text-transform: uppercase;
-      color: var(--text-faint);
-      margin-bottom: 0.6rem;
+      color: var(--purple);
+      margin: 0 0 0.5rem;
     }
 
-    .reading-header h1 {
+    h1 {
       font-family: var(--heading);
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 300;
-      line-height: 1.08;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
+      font-size: clamp(2rem, 4.5vw, 2.8rem);
+      font-weight: var(--w-bold);
+      line-height: 1.1;
+      margin: 0 0 1rem;
     }
 
-    .reading-intro {
+    .standfirst {
       font-family: var(--body);
-      font-size: 1rem;
-      color: var(--text-dim);
-      max-width: 60ch;
+      font-size: var(--fs-lead);
+      font-weight: var(--w-light);
+      line-height: 1.6;
+      margin: 0;
     }
 
-    @media (max-width: 640px) {
-      .reading {
-        padding: 2rem 1rem 3rem;
-      }
+    section {
+      margin-bottom: clamp(3rem, 6vw, 4.5rem);
+    }
+
+    .reading :global(.section-heading h2) {
+      font-size: var(--fs-h2);
+      font-weight: var(--w-bold);
+      letter-spacing: 0;
     }
   </style>
 </BaseLayout>

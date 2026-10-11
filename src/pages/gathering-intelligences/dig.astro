@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StepPage from '../../components/StepPage.astro';
+
+// MOCKUP: Begin your dig. Step 2 of the lines of enquiry.
+
+const lines = [
+  {
+    q: 'What was the core priority for your place twenty years ago?',
+    prompt: 'Using the begin-the-dig skill, find the core priorities set for {place} around twenty years ago. Quote the documents that set them, with dates, who set them, and source links.',
+  },
+  {
+    q: 'And ten years ago?',
+    prompt: 'Now do the same for {place} around ten years ago. What stayed, what changed, and what disappeared from the priorities?',
+  },
+  {
+    q: 'What were the key care factors?',
+    prompt: 'Across those priorities for {place}, what were the key care factors: what were the plans trying to look after? Use the documents’ own words where you can.',
+  },
+  {
+    q: 'How have flows of investment followed them?',
+    prompt: 'For each care factor in {place}, list what followed in date order: approvals, budgets, grants, capital works and private investment. Where did money or permission go that no priority asked for?',
+  },
+  {
+    q: 'What quietly lapsed?',
+    prompt: 'Which commitments for {place} were never withdrawn but have no record of being met, reviewed or reported on? List each with the date it was made and where you looked.',
+  },
+];
+---
+<BaseLayout title="Begin your dig" description="Gathering Intelligences, step 2: what was your place promised, and what followed?">
+  <StepPage
+    step={2}
+    title="Begin your dig"
+    standfirst="What was the core priority for your place twenty years ago? Or ten? Explore the key care factors that have shaped flows of investment over time."
+    skill={{ file: '/skills/begin-the-dig.md', blurb: 'It tells your agent to read a place in layers, oldest first: the priorities, what they were trying to look after, what followed, and what quietly lapsed.' }}
+    lines={lines}
+    next={{ href: '/gathering-intelligences/making-sense/', label: 'Next: Making sense' }}
+  >
+  </StepPage>
+</BaseLayout>

@@ -25,6 +25,9 @@ const posts = defineCollection({
     updatedAt: z.coerce.date().optional(),
     featureImage: z.string().optional(),
     featureImageAlt: z.string().optional(),
+    /** 'full' shows the whole image instead of a cropped banner. Use it for
+        square or portrait artwork, or anything with text or a face in it. */
+    featureImageFit: z.enum(['banner', 'full']).optional(),
     featureVideo: z.string().optional(),
     featureVideoWebm: z.string().optional(),
     featureAudio: z.string().optional(),

@@ -441,6 +441,12 @@ content:
       - name: featureImageAlt
         label: Feature image alt text
         type: string
+      - name: featureImageFit
+        label: Feature image fit
+        type: select
+        description: Banner crops the image to a wide strip. Full shows the whole image; use it for square or portrait artwork, or anything with a face or words in it.
+        options:
+          values: [banner, full]
       - name: featureVideo
         label: Feature video (mp4 URL)
         type: string

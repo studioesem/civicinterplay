@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StepPage from '../../components/StepPage.astro';
+
+// MOCKUP: Making sense. Step 3 of the lines of enquiry. Opens with worked
+// examples, one per way of showing the record, each with its own skill.
+
+const examples = [
+  {
+    kind: 'A map',
+    shows: 'Where things are, and how sites compare.',
+    title: 'Data Centres Transparency Project',
+    image: '/images/sovereignties-map.png',
+    imageAlt: 'Map of data centre sites around Sydney, sized and coloured by power draw.',
+    example: '/sovereignties/',
+    skill: '/skills/map-the-record.md',
+    fill: 'fill-ink',
+  },
+  {
+    kind: 'A diagram',
+    shows: 'Whether what was promised lines up with what was funded and what happened.',
+    title: 'A side angle on a place',
+    image: '/images/side-angle-plate.jpg',
+    imageAlt: 'Experimental drawing: a precinct pulled apart into three stacked sheets, value, flows and impact.',
+    example: '/experiments/side-angle-on-place-flows.html',
+    skill: '/skills/side-angle.md',
+    fill: 'fill-purple',
+  },
+  {
+    kind: 'A chart',
+    shows: 'How things moved over time, against the targets set.',
+    title: 'Example to come',
+    image: null,
+    imageAlt: '',
+    example: null,
+    skill: '/skills/chart-the-record.md',
+    fill: 'fill-terracotta',
+  },
+];
+
+const lines = [
+  {
+    q: 'A map, a diagram, or a chart?',
+    prompt: 'Look at the dated table we assembled for {place}. Which would show it best: a map, a diagram or a chart? Say what each would make visible, and what each would hide.',
+  },
+  {
+    q: 'What values are most evident in the data you assembled?',
+    prompt: 'Across the record for {place}, which values come through most clearly? Point to the rows that show them.',
+  },
+  {
+    q: 'Which values are hardest to see?',
+    prompt: 'Which values set for {place}, or said by people there, have little or nothing in the record to show for them? List each with where you looked.',
+  },
+];
+---
+<BaseLayout title="Making sense" description="Gathering Intelligences, step 3: a map, a diagram or a chart?">
+  <StepPage
+    step={3}
+    title="Making sense"
+    standfirst="What might be the most useful ways to interpret what you have assembled? Discuss it with others: a map, a diagram, or a chart? And what values are most evident in it?"
+    lines={lines}
+    linesHeading="Discuss what you found"
+    next={{ href: '/gathering-intelligences/sense-checking/', label: 'Next: Sense checking' }}
+  >
+
+    <section slot="before-place">
+      <h2><span class="n"></span>See examples</h2>
+      <p class="sub">Three ways to show a record. Each shows something different. Download the skill for the one that fits your question.</p>
+      <ul class="examples">
+        {examples.map((e) => (
+          <li class={e.fill}>
+            <div class="ex-shot">
+              {e.image ? (
+                <img src={e.image} alt={e.imageAlt} loading="lazy" />
+              ) : (
+                <span class="ex-empty" aria-hidden="true">Chart</span>
+              )}
+            </div>
+            <div class="ex-body">
+              <p class="ex-kind">{e.kind}</p>
+              <h3>{e.title}</h3>
+              <p class="ex-shows">{e.shows}</p>
+              <div class="actions">
+                {e.example && <a class="btn btn-light" href={e.example}>See the example</a>}
+                <a class="btn btn-ghost" href={e.skill} download>Download the skill</a>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </StepPage>
+</BaseLayout>
+
+<style is:global>
+  .step-page .examples {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .step-page .examples > li {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 4px 4px 0 var(--border);
+    overflow: hidden;
+    background: var(--fill);
+    color: #fff;
+  }
+
+  .step-page .fill-ink { --fill: #1f1d24; }
+  .step-page .fill-purple { --fill: var(--purple); }
+  .step-page .fill-terracotta { --fill: #B4553D; }
+
+  .step-page .ex-shot {
+    aspect-ratio: 4 / 3;
+    background: #fff;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .step-page .ex-shot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .step-page .ex-empty {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    font-family: var(--heading);
+    font-size: var(--fs-label);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--text-faint);
+    background: repeating-linear-gradient(0deg, transparent 0 23px, var(--border-light) 23px 24px);
+  }
+
+  .step-page .ex-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1rem 1.1rem 1.2rem;
+    flex: 1;
+  }
+
+  .step-page .ex-kind {
+    font-family: var(--heading);
+    font-size: var(--fs-label);
+    font-weight: var(--w-medium);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+  }
+
+  .step-page .examples h3 {
+    font-family: var(--heading);
+    font-size: var(--fs-lead);
+    font-weight: var(--w-bold);
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .step-page .ex-shows {
+    font-family: var(--body);
+    font-weight: var(--w-light);
+    font-size: var(--fs-small);
+    line-height: 1.5;
+    margin: 0;
+    flex: 1;
+  }
+
+  .step-page .btn-light {
+    background: #fff;
+    color: var(--text);
+  }
+
+  .step-page .examples .btn-ghost {
+    background: transparent;
+    color: #fff;
+    border-color: #fff;
+  }
+
+  @media (max-width: 760px) {
+    .step-page .examples { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

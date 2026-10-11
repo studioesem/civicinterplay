@@ -1,14 +1,47 @@
 <footer class="site-footer">
-  <div class="container">
-    <div class="footer-title">Civic Interplay</div>
-    <div class="footer-tagline">A think and do space for agentic civics and civic AI</div>
+  <div class="container container-wide footer-wf">
+    <div>
+      <div class="footer-title">Civic Interplay</div>
+      <div class="footer-tagline">Place-based civic enquiry with digital and AI methods</div>
+    </div>
     <nav aria-label="Footer">
       <ul class="footer-links">
-        <li><a href="/sovereignties/">Map</a></li>
+        <li><a href="/">Home</a></li>
         <li><a href="/reading/">Reading</a></li>
-        <li><a href="/doing/">Doing</a></li>
+        <li><a href="/projects/">Projects</a></li>
         <li><a href="/about/">About</a></li>
       </ul>
     </nav>
+    <p class="footer-credit"><a href="https://cur.org.au/">RMIT University · Centre for Urban Research</a></p>
   </div>
 </footer>
+
+<style>
+  .footer-wf {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    align-items: start;
+    text-align: left;
+  }
+
+  .footer-wf .footer-links {
+    justify-content: center;
+  }
+
+  .footer-credit {
+    margin: 0;
+    text-align: right;
+    font-family: var(--heading);
+    font-size: 0.82rem;
+  }
+
+  .footer-credit a {
+    color: inherit;
+  }
+
+  @media (max-width: 720px) {
+    .footer-wf { grid-template-columns: minmax(0, 1fr); text-align: center; }
+    .footer-credit { text-align: center; }
+  }
+</style>

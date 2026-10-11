@@ -1,0 +1,282 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StepPage from '../../components/StepPage.astro';
+
+// MOCKUP: Sense checking. Step 4 of the lines of enquiry, with a mock of the
+// Sightings field (studioesem/sightings) to contribute to. Nothing is saved.
+
+// From the Sightings sample data. Positions are fractions of the field.
+const sightings = [
+  { kind: 'ecological', text: 'A magpie calling from the fig tree, very insistent this morning', where: 'Back lane', x: 0.04, y: 0.2, layer: '' },
+  { kind: 'water', text: 'Stormwater rushing through the drain, brown and fast', where: 'End of the street', x: 0.68, y: 0.12, layer: 'Impact' },
+  { kind: 'social', text: 'Two elderly men playing chess under the awning, same table every week', where: 'Cafe strip', x: 0.3, y: 0.66, layer: '' },
+  { kind: 'cultural', text: 'Old sandstone wall with ferns growing in every crack', where: 'Railway cutting', x: 0.68, y: 0.56, layer: 'Value' },
+  { kind: 'sensory', text: 'No shade at all on the walk to school after nine', where: 'Vernon St', x: 0.36, y: 0.33, layer: 'Value', invest: true },
+];
+
+const KINDS = [
+  { id: 'ecological', label: 'Ecological', hint: 'more-than-human life and patterns' },
+  { id: 'social', label: 'Social', hint: 'human presence, behaviour, connection' },
+  { id: 'sensory', label: 'Sensory', hint: 'embodied perception' },
+  { id: 'cultural', label: 'Cultural', hint: 'memory, story, inscription' },
+  { id: 'water', label: 'Water', hint: 'hydrological flows and presence' },
+];
+
+const lines = [
+  {
+    q: 'How does your walk and your data assembling relate?',
+    prompt: 'Using the bring-it-back skill: here are my sightings from walking {place}: [paste them]. Compare them with the dated table we assembled. Where do they agree, and where do they differ?',
+  },
+  {
+    q: 'Can you see connections between the two?',
+    prompt: 'Which of my sightings in {place} connect to a specific record: a target, an approval or an investment? List each pair, with the source link.',
+  },
+  {
+    q: 'What’s worth bringing back to your digital resource?',
+    prompt: 'Which of my sightings in {place} are not held in any record? Draft each as a new row marked "observed, not recorded", with date and location, and note any I said need investment now.',
+  },
+];
+---
+<BaseLayout title="Sense checking" description="Gathering Intelligences, step 4: walk your place and bring it back.">
+  <StepPage
+    step={4}
+    title="Sense checking"
+    standfirst="Visit your place, and contribute to the terrain. Then bring the two together: how does your walk relate to what you assembled?"
+    skill={{ file: '/skills/bring-it-back.md', blurb: 'It helps your agent set what you noticed on the ground beside the record you assembled, and draft what is worth bringing back.' }}
+    lines={lines}
+    linesHeading="Bring it back"
+    next={{ href: '/gathering-intelligences/', label: 'Back to Gathering Intelligences' }}
+  >
+
+    <section slot="after-place">
+      <h2><span class="n"></span>Walk, and add your sightings</h2>
+      <p class="sub">Sightings is a shared field for what you notice on a walk: something you hear, or see, or feel. These are examples; add your own on Sightings.</p>
+
+      <div class="field" id="field" aria-label="Example sightings">
+        <div class="field-head">
+          <span class="field-title">SIGHTINGS</span>
+          <span class="field-sub">Civic Interplay · <span class="field-place">your place</span></span>
+        </div>
+        {sightings.map((s) => (
+          <article class={`sighting k-${s.kind}`} style={`left:${s.x * 100}%; top:${s.y * 100}%`}>
+            <p class="s-kind">{s.kind}</p>
+            <p class="s-text">{s.text}</p>
+            <p class="s-where">&#8627; {s.where}</p>
+            {(s.layer || s.invest) && (
+              <p class="s-tags">
+                {s.layer && <span>{s.layer}</span>}
+                {s.invest && <span>needs investment</span>}
+              </p>
+            )}
+          </article>
+        ))}
+        <a class="field-add" href="https://sightings.civicinterplay.io/">What do you notice?</a>
+      </div>
+
+      <p class="sight-go">
+        <a class="btn" href="https://sightings.civicinterplay.io/">Add your sightings on Sightings <span aria-hidden="true">&rarr;</span></a>
+      </p>
+    </section>
+  </StepPage>
+</BaseLayout>
+
+<style is:global>
+  /* The Sightings look: dark field, one colour per kind of noticing. */
+  .step-page .field {
+    position: relative;
+    height: 460px;
+    background: radial-gradient(ellipse at 30% 20%, #1c1824 0%, #0b0a0e 70%);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 6px 6px 0 var(--pink);
+    overflow: hidden;
+    
+  }
+
+  .step-page .field-head {
+    position: absolute;
+    top: 1rem;
+    left: 1.2rem;
+    font-family: Georgia, serif;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.3;
+    pointer-events: none;
+  }
+
+  .step-page .field-title {
+    display: block;
+    letter-spacing: 0.15em;
+    font-size: 0.95rem;
+  }
+
+  .step-page .field-sub {
+    font-size: 0.75rem;
+  }
+
+  .step-page .sighting {
+    position: absolute;
+    width: 210px;
+    padding: 0.7rem 0.85rem;
+    border-radius: 4px;
+    color: #fff;
+    background: var(--k);
+    border-left: 3px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+    cursor: default;
+  }
+
+  .step-page .k-ecological { --k: #454E41; }
+  .step-page .k-social { --k: #B4553D; }
+  .step-page .k-sensory { --k: #A7449F; }
+  .step-page .k-cultural { --k: #7D50BD; }
+  .step-page .k-water { --k: #5A68B8; }
+
+  .step-page .sighting p {
+    margin: 0;
+  }
+
+  .step-page .s-kind {
+    font-family: Georgia, serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+
+  .step-page .s-text {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    line-height: 1.35;
+    margin: 0.3rem 0 !important;
+  }
+
+  .step-page .s-where {
+    font-family: Georgia, serif;
+    font-size: 0.72rem;
+    opacity: 0.8;
+  }
+
+  .step-page .s-tags {
+    display: flex;
+    gap: 0.3rem;
+    margin-top: 0.4rem !important;
+  }
+
+  .step-page .s-tags span {
+    font-family: var(--heading);
+    font-size: 0.62rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    padding: 0.05rem 0.45rem;
+  }
+
+  .step-page .field-add {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    appearance: none;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: var(--pink);
+    font-family: Georgia, serif;
+    font-size: 0.9rem;
+    padding: 0.55rem 1rem;
+    cursor: pointer;
+  }
+
+  .step-page .sight-go {
+    margin-top: 1.25rem;
+  }
+
+  .step-page .sight-go .btn {
+    font-size: var(--fs-small);
+    padding: 0.55rem 1.1rem;
+  }
+
+  .step-page a.field-add {
+    text-decoration: none;
+  }
+
+  .step-page .sight-form {
+    margin-top: 1.25rem;
+    display: grid;
+    gap: 0.9rem;
+    max-width: 620px;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.4rem;
+  }
+
+  .step-page .sight-form[hidden] {
+    display: none;
+  }
+
+  .step-page .sight-form h3 {
+    font-family: var(--heading);
+    font-size: var(--fs-lead);
+    font-weight: var(--w-bold);
+    margin: 0;
+  }
+
+  .step-page .sight-form label:not(.radio) {
+    display: grid;
+    gap: 0.3rem;
+    font-family: var(--heading);
+    font-size: var(--fs-small);
+    font-weight: var(--w-medium);
+  }
+
+  .step-page .sight-form textarea,
+  .step-page .sight-form input[type='text'] {
+    font: inherit;
+    font-weight: 400;
+    padding: 0.55rem 0.7rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .step-page .sight-form fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  .step-page .sight-form legend {
+    font-family: var(--heading);
+    font-size: var(--fs-small);
+    font-weight: var(--w-medium);
+    margin-bottom: 0.3rem;
+  }
+
+  .step-page .radio {
+    font-family: var(--heading);
+    font-size: var(--fs-small);
+    color: var(--text-dim);
+  }
+
+  .step-page .radio strong {
+    color: var(--text);
+    font-weight: var(--w-medium);
+  }
+
+  .step-page .form-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .step-page .form-note {
+    font-family: var(--heading);
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .step-page .field { height: 560px; }
+    .step-page .sighting { width: 160px; }
+  }
+</style>

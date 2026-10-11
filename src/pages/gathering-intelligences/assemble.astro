@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StepPage from '../../components/StepPage.astro';
+
+// MOCKUP: Start assembling. Step 1 of the lines of enquiry, set up the way
+// Every (Dan Shipper) hands out agent skills: pick your model, add the skill,
+// then work through the questions with ready-made prompts.
+
+const lines = [
+  {
+    q: 'What are the most legible targets made for this place?',
+    prompt: 'Using the assemble-the-record skill, find the most legible targets made for {place}: targets, priorities and commitments set in plans, strategies or law. List each with the date it was set, who set it, and a source link.',
+  },
+  {
+    q: 'How accessible is its data?',
+    prompt: 'For each target you found for {place}, how accessible is the data needed to check progress? Say what is published, in what form, how often, and what sits behind a request or a paywall.',
+  },
+  {
+    q: 'Who are the major investors? Where do they come from?',
+    prompt: 'Who are the major investors in {place}, public and private? Where are they based, and how was each investment approved? Link every source.',
+  },
+  {
+    q: 'What can be found about the impact of investments through time?',
+    prompt: 'What can be found about the impact of investments in {place} through time? Work in date order from the earliest commitment, and mark clearly where the record goes quiet.',
+  },
+  {
+    q: 'Map what you’ve found',
+    prompt: 'Bring everything you have found about {place} into one dated table, with each row tagged Value, Flows or Impact and a source link. End with three lists: what is well recorded, what is thinly recorded, and what is missing.',
+  },
+];
+---
+<BaseLayout title="Start assembling" description="Gathering Intelligences, step 1: assemble the public record of a place.">
+  <StepPage
+    step={1}
+    title="Start assembling"
+    standfirst="Gather what is already on the public record about a project or precinct, through time. Add the skill to your agent, name your place, and work through the questions."
+    skill={{ file: '/skills/assemble-the-record.md', blurb: 'One file, written for any model. It tells your agent how to assemble a record the Civic Interplay way: question every source, link every claim, and record what is missing.' }}
+    lines={lines}
+    next={{ href: '/gathering-intelligences/dig/', label: 'Next: Begin your dig' }}
+  >
+  </StepPage>
+</BaseLayout>

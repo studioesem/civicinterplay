@@ -1,0 +1,411 @@
+---
+// Shared template for the Gathering Intelligences step pages. The place a
+// visitor names is kept in localStorage, so they name it once and every
+// step's prompts fill in with it.
+
+interface Line {
+  q: string;
+  prompt: string;
+}
+
+interface Props {
+  step: number;
+  title: string;
+  standfirst: string;
+  /** One skill for the whole step. Omit when the page offers its own (Making sense). */
+  skill?: { file: string; blurb: string };
+  lines: Line[];
+  linesHeading?: string;
+  next?: { href: string; label: string };
+}
+
+const { step, title, standfirst, skill, lines, linesHeading = 'Build your line of enquiry', next } = Astro.props;
+
+const models = [
+  { name: 'Claude', accent: 'accent-cream', how: 'Upload the file as a skill, or paste it into a Project’s instructions so every chat in that project uses it.' },
+  { name: 'ChatGPT', accent: 'accent-cream', how: 'Paste it into a Project’s instructions, or into the instructions of a custom GPT.' },
+  { name: 'Gemini', accent: 'accent-cream', how: 'Create a Gem and paste the file into its instructions.' },
+  { name: 'Use my own model', accent: 'accent-cream', how: 'Use the file as the system prompt for any model, including one running on your own machine. Give it web search, or the documents you have, so it has records to read.' },
+];
+const fileName = skill?.file.split('/').pop();
+---
+<article class="step-page">
+  <header>
+    <p class="eyebrow">Gathering Intelligences · Experimental · Step {step}</p>
+    <h1>{title}</h1>
+    <p class="standfirst">{standfirst}</p>
+    <slot name="note" />
+  </header>
+
+  {skill && (
+    <section>
+      <h2><span class="n"></span>Add the skill to your agent</h2>
+      <p class="sub">{skill.blurb}</p>
+      <ul class="models">
+        {models.map((m) => (
+          <li class={m.accent}>
+            <h3>{m.name}</h3>
+            <p>{m.how}</p>
+            <div class="actions">
+              <a class="btn" href={skill.file} download={fileName}>Download .md</a>
+              <button type="button" class="btn btn-ghost copy-skill" data-file={skill.file}>Copy text</button>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p class="sub"><a href={skill.file}>Read the skill file</a> before you add it. Everything in it is a draft: change it, and tell us what you changed.</p>
+    </section>
+  )}
+
+  <slot name="before-place" />
+
+  <section>
+    <h2><span class="n"></span>Name your place</h2>
+    <label class="place">
+      <span>A project or precinct, and the years to cover</span>
+      <input type="text" class="place-input" placeholder="e.g. City North precinct, Melbourne, 2005 to today" autocomplete="off" aria-describedby="place-hint" />
+      <small id="place-hint">The prompts below fill in as you type. Your place is remembered on this device, across the steps.</small>
+    </label>
+  </section>
+
+  <slot name="after-place" />
+
+  <section>
+    <h2><span class="n"></span>{linesHeading}</h2>
+    <ol class="lines">
+      {lines.map((l) => (
+        <li>
+          <h3>{l.q}</h3>
+          <div class="prompt">
+            <p class="prompt-text" data-template={l.prompt}>{l.prompt.replaceAll('{place}', 'your place')}</p>
+            <button type="button" class="btn btn-ghost copy-prompt">Copy prompt</button>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <slot />
+
+  {next && (
+    <nav class="next">
+      <a href={next.href}>{next.label} <span aria-hidden="true">&rarr;</span></a>
+    </nav>
+  )}
+</article>
+
+<style is:global>
+    .step-page {
+        counter-reset:sec;
+        max-width:860px;
+        margin:0 auto;
+        padding:2.5rem 1.5rem 4rem;
+    }
+
+    .step-page .eyebrow {
+        font-family:var(--heading);
+        font-size:var(--fs-label);
+        font-weight:var(--w-medium);
+        letter-spacing:var(--track-label);
+        text-transform:uppercase;
+        color:var(--purple);
+        margin:0 0 .5rem;
+    }
+
+    .step-page h1 {
+        font-family:var(--heading);
+        font-size:clamp(2rem,4.5vw,2.8rem);
+        font-weight:var(--w-bold);
+        line-height:1.1;
+        margin:0 0 1rem;
+    }
+
+    .step-page .standfirst {
+        font-family:var(--body);
+        font-size:var(--fs-lead);
+        font-weight:var(--w-light);
+        line-height:1.6;
+        margin:0;
+    }
+
+    .step-page section {
+        margin-top:2.75rem;
+        padding-top:1.75rem;
+        border-top:2px solid var(--border);
+    }
+
+    .step-page h2 {
+        display:flex;
+        align-items:center;
+        gap:.7rem;
+        font-family:var(--heading);
+        font-size:var(--fs-h2);
+        font-weight:var(--w-bold);
+        line-height:1.15;
+        margin:0 0 .75rem;
+    }
+
+    .step-page .n {
+        display:inline-grid;
+        place-items:center;
+        width:2rem;
+        height:2rem;
+        border-radius:50%;
+        background:var(--purple);
+        color:#fff;
+        font-size:1rem;
+        flex:none;
+    }
+
+    .step-page .sub {
+        font-family:var(--body);
+        font-weight:var(--w-light);
+        line-height:1.6;
+        margin:0 0 1.25rem;
+        max-width:62ch;
+    }
+
+    .step-page .sub a {
+        color:var(--purple);
+    }
+
+    .step-page .models {
+        list-style:none;
+        margin:0 0 1.25rem;
+        padding:0;
+        display:grid;
+        grid-template-columns:repeat(4,minmax(0,1fr));
+        gap:1rem;
+    }
+
+    .step-page .models li {
+        display:flex;
+        flex-direction:column;
+        gap:.5rem;
+        background:#fff;
+        border:2px solid var(--border);
+        border-radius:var(--radius);
+        box-shadow:4px 4px 0 var(--card-shadow);
+        padding:1rem;
+    }
+
+    .step-page .models h3 {
+        font-family:var(--heading);
+        font-size:var(--fs-lead);
+        font-weight:var(--w-bold);
+        line-height:1.2;
+        margin:0;
+    }
+
+    .step-page .models p {
+        font-family:var(--body);
+        font-weight:var(--w-light);
+        font-size:.82rem;
+        line-height:1.5;
+        margin:0;
+        flex:1;
+    }
+
+    .step-page .actions {
+        display:flex;
+        flex-wrap:wrap;
+        gap:.4rem;
+        margin-top:.4rem;
+    }
+
+    .step-page .btn {
+        display:inline-block;
+        appearance:none;
+        padding:.35rem .75rem;
+        background:var(--purple);
+        color:#fff;
+        border:2px solid var(--border);
+        border-radius:8px;
+        font-family:var(--heading);
+        font-size:.78rem;
+        font-weight:var(--w-medium);
+        text-decoration:none;
+        cursor:pointer;
+    }
+
+    .step-page .btn-ghost {
+        background:#fff;
+        color:var(--text);
+    }
+
+    .step-page .place {
+        display:grid;
+        gap:.5rem;
+        max-width:560px;
+        margin-top:.5rem;
+    }
+
+    .step-page .place span {
+        font-family:var(--heading);
+        font-size:var(--fs-small);
+        font-weight:var(--w-medium);
+    }
+
+    .step-page .place input {
+        font:inherit;
+        font-family:var(--heading);
+        font-size:var(--fs-body);
+        padding:.7rem .9rem;
+        border:2px solid var(--border);
+        border-radius:8px;
+        background:#fff;
+    }
+
+    .step-page .place small {
+        font-family:var(--heading);
+        font-size:var(--fs-small);
+        color:var(--text-faint);
+        margin-top:.15rem;
+    }
+
+    .step-page .place input:focus-visible {
+        outline:3px solid var(--purple);
+        outline-offset:2px;
+    }
+
+    .step-page .lines {
+        list-style:none;
+        counter-reset:q;
+        margin:0;
+        padding:0;
+        display:grid;
+        gap:1rem;
+    }
+
+    .step-page .lines li {
+        counter-increment:q;
+        background:#fff;
+        border:2px solid var(--border);
+        border-radius:var(--radius);
+        padding:1rem 1.2rem;
+    }
+
+    .step-page .lines h3 {
+        font-family:var(--heading);
+        font-size:var(--fs-lead);
+        font-weight:var(--w-bold);
+        line-height:1.25;
+        margin:0 0 .6rem;
+    }
+
+    .step-page .lines h3:before {
+        content:counter(q) ". ";
+        color:var(--purple);
+    }
+
+    .step-page .prompt {
+        display:flex;
+        gap:1rem;
+        align-items:flex-start;
+        background:var(--bg);
+        border:1px dashed var(--border-light);
+        border-radius:8px;
+        padding:.75rem .9rem;
+    }
+
+    .step-page .prompt-text {
+        flex:1;
+        margin:0;
+        font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+        font-size:.8rem;
+        line-height:1.55;
+    }
+
+    .step-page .next {
+        margin-top:2.5rem;
+        font-family:var(--heading);
+        font-weight:var(--w-bold);
+        font-size:var(--fs-lead);
+    }
+
+    .step-page .next a {
+        color:var(--purple);
+    }
+
+    @media(max-width:900px) {
+        .step-page .models {
+            grid-template-columns:minmax(0,1fr);
+            gap:.8rem;
+        }
+        .step-page .models li {
+            display:grid;
+            grid-template-columns:8rem minmax(0,1fr) auto;
+            gap:1rem;
+            align-items:center;
+        }
+        .step-page .models .actions {
+            margin-top:0;
+            flex-direction:column;
+            align-items:stretch;
+        }
+    }
+
+    @media(max-width:560px) {
+        .step-page .models li {
+            grid-template-columns:minmax(0,1fr);
+            gap:.5rem;
+        }
+        .step-page .models .actions {
+            flex-direction:row;
+        }
+        .step-page .prompt {
+            flex-direction:column;
+        }
+    }
+
+    .step-page>section {
+        counter-increment:sec;
+    }
+
+    .step-page .n:before {
+        content:counter(sec);
+    }
+
+</style>
+
+<script>
+  const KEY = 'ci-place';
+  const input = document.querySelector<HTMLInputElement>('.place-input');
+  const prompts = document.querySelectorAll<HTMLElement>('.prompt-text');
+
+  function fill() {
+    const place = input?.value.trim() || 'your place';
+    prompts.forEach((p) => {
+      p.textContent = (p.dataset.template ?? '').replaceAll('{place}', place);
+    });
+  }
+
+  if (input) {
+    input.value = localStorage.getItem(KEY) ?? '';
+    fill();
+    input.addEventListener('input', () => {
+      localStorage.setItem(KEY, input.value);
+      fill();
+    });
+  }
+
+  async function copy(text: string, btn: HTMLButtonElement) {
+    await navigator.clipboard.writeText(text);
+    const was = btn.textContent;
+    btn.textContent = 'Copied';
+    setTimeout(() => (btn.textContent = was), 1500);
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.copy-prompt').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      copy(btn.parentElement?.querySelector('.prompt-text')?.textContent ?? '', btn);
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('.copy-skill').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const res = await fetch(btn.dataset.file ?? '');
+      copy(await res.text(), btn);
+    });
+  });
+</script>

@@ -25,6 +25,24 @@
   --body: 'Merriweather', Georgia, serif;
   --radius: 12px;
 
+  /* Type scale, after the drawing studies (a-side-angle-on-place-flows).
+     Fira Sans names and labels things; Merriweather is anything read as a
+     sentence. Headings are Fira bold, sentence case. Reading text is
+     Merriweather light. See docs/type-system.md. */
+  --fs-label: 0.7rem;    /* uppercase, tracked --track-label, weight 500 */
+  --fs-small: 0.875rem;  /* meta, fine print, card excerpts, buttons */
+  --fs-body: 1rem;       /* UI copy, card text */
+  --fs-lead: 1.15rem;    /* card titles, standfirsts */
+  --fs-h2: clamp(1.35rem, 2.4vw, 1.7rem);
+  --fs-display: clamp(2.1rem, 4.4vw, 3.6rem);
+
+  --w-light: 300;    /* Merriweather reading text */
+  --w-regular: 400;  /* Fira UI copy */
+  --w-medium: 500;   /* Fira labels, card titles */
+  --w-bold: 700;     /* Fira headings */
+
+  --track-label: 0.12em;
+
   --space-xs: 0.5rem;
   --space-sm: 0.75rem;
   --space-md: 1rem;
@@ -106,6 +124,13 @@ button:focus-visible {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 2rem;
+}
+
+/* The 1200px grid from the home page wireframe. Mockups only, for now. */
+.container-wide {
+  max-width: none;
+  width: min(1200px, calc(100vw - 3rem));
+  padding: 0;
 }
 
 .narrow {
@@ -385,6 +410,30 @@ section:nth-child(4) { animation-delay: 0.60s; }
   --card-pulse: color-mix(in srgb, var(--ink-pink) 35%, transparent);
 }
 
+/* --- Sheets, not tints (October 2026 trial) ------------------------------
+   After the drawing studies: cards are white sheets with an ink border, and
+   the accent colour moves out of the fill and into the offset shadow and the
+   kicker. Overrides the tinted fills above; delete this block to go back. The
+   kickers keep their deepened inks, which clear AA on white with room. */
+
+.accent-cream,
+.accent-purple,
+.accent-terracotta,
+.accent-periwinkle,
+.accent-pink {
+  --card-bg: #fff;
+  --card-edge: rgba(28, 25, 23, 0.14);
+}
+
+/* Shadows keep to the strongest brand colours plus ink. Olive (forest) and
+   the pale periwinkle read as muddy at shadow size, so cream takes ink and
+   periwinkle takes purple. The periwinkle kicker ink stays. */
+.accent-cream      { --card-shadow: var(--border); }
+.accent-purple     { --card-shadow: var(--purple); }
+.accent-terracotta { --card-shadow: var(--terracotta); }
+.accent-periwinkle { --card-shadow: var(--purple); }
+.accent-pink       { --card-shadow: var(--pink); }
+
 .accent-plain {
   --card-bg: #fffefc;
   --card-edge: var(--border-light);
@@ -543,6 +592,16 @@ section:nth-child(4) { animation-delay: 0.60s; }
   object-fit: cover;
   border-radius: var(--radius);
   margin-bottom: 2.5rem;
+}
+
+/* The whole image, uncropped, for square or portrait artwork. Capped in
+   height so a square image doesn't fill the screen before the text starts. */
+.post-feature-image--full {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: min(78vh, 680px);
+  display: block;
 }
 
 .post-content {
@@ -804,4 +863,35 @@ section:nth-child(4) { animation-delay: 0.60s; }
   .narrow { padding: 0 1rem; }
   .section-heading { padding: 0.8rem 1.2rem; border-radius: 25px; }
   .header-inner { flex-wrap: wrap; gap: 0.8rem; }
+}
+
+/* --- Questions -------------------------------------------------------------
+   A question someone is being asked to sit with: Merriweather italic inside a
+   dashed pink outline, the same voice as the hero's hover questions. Use it
+   for real questions only, so it keeps meaning something. */
+
+.q-note {
+  display: block;
+  margin: 1rem 0;
+  padding: 0.8rem 1rem;
+  border: 1.5px dashed var(--pink);
+  border-radius: 8px;
+  background: #fff;
+  font-family: var(--body);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: var(--ink-pink);
+}
+
+/* Two questions in one box share the same size; only space separates them. */
+.q-note p {
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.q-note p + p {
+  margin-top: 0.6rem;
 }

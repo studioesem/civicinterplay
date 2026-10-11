@@ -1,224 +1,771 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import SectionHeading from '../components/SectionHeading.astro';
-import PostCard from '../components/PostCard.astro';
 import Tile from '../components/Tile.astro';
-import { CATEGORY_LABEL } from '../content/config';
+import ReadingCard from '../components/ReadingCard.astro';
 import home from '../data/home.json';
+import readingsData from '../data/readings.json';
+
+// Home page, built from the agreed wireframe (October 2026):
+// one 1200px, 12-column grid for every section, and one section pattern
+// (label, optional link on the right, thin rule).
 
 const tiles = home.tiles.filter((t) => !t.draft);
 
-const allPosts = (await getCollection('posts'))
-  .filter((p) => !p.data.draft)
-  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
-
-const byPrimary = (cat: string) =>
-  allPosts.filter((p) => p.data.primaryCategory === cat);
-
-// Six fills two complete rows of three. A seventh would hang alone on a row
-// of its own, so the overflow goes to the Reading page instead.
-const HOME_MAX = 6;
-const foundationalAll = byPrimary('foundational-docs');
-const trainingGroundsAll = byPrimary('training-grounds');
-const foundationalPosts = foundationalAll.slice(0, HOME_MAX);
-const trainingGroundsPosts = trainingGroundsAll.slice(0, HOME_MAX);
-const portalsPosts = byPrimary('the-portals');
-
-// The v2-03 FLAT visualisation carries no headline type of its own, so it does
-// not fight the wordmark sitting over it.
 const heroImage = '/images/CivicAI_Visualisation_v2-03_FLAT.jpg';
 const heroAlt =
   'Illustration of a street where civic AI is already at work: air quality, road, soil and tree sensors mounted on light poles, with people walking, cycling and using wheelchairs moving through it, picked out in magenta and purple.';
 
-function categoryLabelsFor(post: (typeof allPosts)[number]) {
-  const cats = post.data.categories ?? [];
-  if (cats.length > 0) {
-    return cats.map((c) => CATEGORY_LABEL[c]).join(' · ');
-  }
-  if (post.data.primaryCategory) {
-    return CATEGORY_LABEL[post.data.primaryCategory];
-  }
-  return undefined;
-}
+const slides = [
+  {
+    kicker: 'Shared records · Live',
+    title: 'Data Centres Transparency Project',
+    body: "A live map of the data centre build-out in Australia. Site by site: who owns the compute, what it draws in power and water, how it was approved, and what has been disclosed since. Records and method are published openly, with a DOI.",
+    image: '/images/sovereignties-map-1200.webp',
+    imageAlt: 'Map of data centre sites around Sydney, sized and coloured by power draw.',
+    fit: 'cover',
+    links: [
+      { href: '/sovereignties/', label: 'Open the map' },
+      { href: '/submission/', label: 'Read the Senate submission' },
+    ],
+    fill: '#1f1d24',
+    ink: '#1f1d24',
+  },
+  {
+    kicker: 'New project · A new kind of archive',
+    title: 'Tracing public value: A side angle on a place',
+    body: "A place pulled apart into three layers: what was promised for it, where money and approvals went, and what the public record shows happened next. Where the layers don't line up, there's a gap, and that is where the questions sit.",
+    image: '/images/side-angle-plate.jpg',
+    imageAlt: 'Experimental drawing: one precinct pulled apart into three stacked sheets. Value on top, flows in the middle, impact on the ground.',
+    fit: 'contain',
+    links: [{ href: '/experiments/side-angle-on-place-flows.html', label: 'Open the experiment' }],
+    fill: 'var(--purple)',
+    ink: 'var(--ink-purple)',
+  },
+  {
+    kicker: 'Place',
+    title: 'WeCare, City North',
+    body: "A participatory digital storytelling project for RMIT's City North Social Innovation Precinct. Values co-designed with the people of the precinct, in their own words and images.",
+    image: '/images/We-care-2.png',
+    imageAlt: 'Artwork from WeCare: a woman standing against a pink background, with a quote about bringing everyone forward together on Country.',
+    fit: 'contain',
+    links: [{ href: '/we-care-rmit/', label: 'See WeCare' }],
+    fill: 'var(--pink)',
+    ink: 'var(--ink-pink)',
+  },
+  {
+    kicker: 'Method',
+    title: 'Gathering Intelligences',
+    body: 'What if you could trace the relations of value that shape your place through time, and reflect on how these shape your own values and experiences? This is an experimental walking practice, assembling the digital and sensory conditions that shape attention to shared spaces in cities.',
+    image: '/images/tiles/toolkit-560.webp',
+    imageAlt: 'Field note card reading: Workflows and prompts, forkable.',
+    fit: 'contain',
+    links: [{ href: '/gathering-intelligences/', label: 'Start gathering' }],
+    fill: 'var(--terracotta)',
+    ink: 'var(--ink-terracotta)',
+  },
+];
+
+const publications = readingsData.readings.slice(0, 3);
 ---
-<BaseLayout
-  title="Civic Interplay"
-  description="A think and do space for agentic civics and civic AI."
-  ogImage={heroImage}
->
-  <Hero
-    image={heroImage}
-    imageAlt={heroAlt}
-    beforeGlitch="Civic "
-    glitchWord="Interplay"
-    tagline="A think and do space for agentic civics and civic AI"
-    hotspots={home.hotspots}
-    titleDot={home.titleDot}
-  />
+<BaseLayout title="Civic Interplay" description="Place-based civic enquiry with digital and AI methods.">
 
-  <main class="container sections">
+  <div class="wrap">
 
-    {tiles.length > 0 && (
-      <section class="tiles-section">
-        <SectionHeading title="What's New" />
-        <ul class="tile-grid">
-          {tiles.map((t) => (
-            <li>
-              <Tile id={t.id} type={t.type} kicker={t.kicker} cta={t.cta} href={t.href} alt={t.alt} />
-            </li>
-          ))}
-        </ul>
-      </section>
-    )}
+    <!-- B. Lead -->
+    <div class="lead">
+      <div class="lead-main">
+        <Hero
+          image={heroImage}
+          imageAlt={heroAlt}
+          beforeGlitch="Civic "
+          glitchWord="Interplay"
+          tagline="Place-based civic enquiry with digital and AI methods"
+          hotspots={home.hotspots}
+          titleDot={home.titleDot}
+        >
+          <a class="lead-arrow" href="/about/">
+            Learn more <span aria-hidden="true">&rarr;</span>
+          </a>
+        </Hero>
+      </div>
 
-    {foundationalPosts.length > 0 && (
-      <section>
-        <SectionHeading title="Foundational Docs" />
-        <div class="post-grid">
-          {foundationalPosts.map((p) => (
-            <PostCard
-              href={p.data.cardHref ?? `/${p.slug}/`}
-              title={p.data.title}
-              excerpt={p.data.excerpt}
-              category={p.data.primaryCategory}
-              categoryLabel={categoryLabelsFor(p)}
-              accent={p.data.accent}
-              image={p.data.featureImage}
-              imageAlt={p.data.featureImageAlt}
-              video={p.data.featureVideo}
-              videoWebm={p.data.featureVideoWebm}
-            />
-          ))}
-        </div>
-        {foundationalAll.length > HOME_MAX && (
-          <p class="section-more">
-            <a href="/reading/">View all in Reading</a>
-          </p>
-        )}
-      </section>
-    )}
+      {tiles.length > 0 && (
+        <aside class="lead-rail" aria-labelledby="rail-heading">
+          <h2 id="rail-heading" class="rail-heading">What's new</h2>
+          <ul class="rail-list" tabindex="0" aria-label="What's new, scrollable list">
+            {tiles.map((t) => (
+              <li>
+                <Tile id={t.id} type={t.type} kicker={t.kicker} cta={t.cta} href={t.href} alt={t.alt} />
+              </li>
+            ))}
+          </ul>
+          <button type="button" class="rail-more">
+            More <span aria-hidden="true">&darr;</span>
+          </button>
+        </aside>
+      )}
+    </div>
 
-    {trainingGroundsPosts.length > 0 && (
-      <section>
-        <SectionHeading title="Training Grounds" />
-        <div class="post-grid">
-          {trainingGroundsPosts.map((p) => (
-            <PostCard
-              href={p.data.cardHref ?? `/${p.slug}/`}
-              title={p.data.title}
-              excerpt={p.data.excerpt}
-              category={p.data.primaryCategory}
-              categoryLabel={categoryLabelsFor(p)}
-              accent={p.data.accent}
-              image={p.data.featureImage}
-              imageAlt={p.data.featureImageAlt}
-              video={p.data.featureVideo}
-              videoWebm={p.data.featureVideoWebm}
-            />
-          ))}
-        </div>
-        {trainingGroundsAll.length > HOME_MAX && (
-          <p class="section-more">
-            <a href="/reading/">View all in Reading</a>
-          </p>
-        )}
-      </section>
-    )}
+    <!-- C. Credit -->
+    <div class="credit">
+      <a href="https://www.rmit.edu.au/" class="credit-logo">
+        <img src="/images/partners/rmit-university.png" alt="RMIT University" width="720" height="253" loading="lazy" />
+      </a>
+      <p>
+        Civic Interplay is being explored by Dr Sarah Barns and collaborators,
+        through a Vice-Chancellor's Senior Research Fellowship at RMIT
+        University's <a href="https://cur.org.au/">Centre for Urban Research</a>.
+      </p>
+    </div>
 
-    {portalsPosts.length > 0 && (
-      <section>
-        <SectionHeading title="The Portals" />
-        <div class="post-grid">
-          {portalsPosts.map((p) => (
-            <PostCard
-              href={p.data.cardHref ?? `/${p.slug}/`}
-              title={p.data.title}
-              excerpt={p.data.excerpt}
-              category={p.data.primaryCategory}
-              categoryLabel={categoryLabelsFor(p)}
-              accent={p.data.accent}
-              image={p.data.featureImage}
-              imageAlt={p.data.featureImageAlt}
-              video={p.data.featureVideo}
-              videoWebm={p.data.featureVideoWebm}
-            />
-          ))}
+    <main>
+      <!-- D. Why -->
+      <section class="sec" aria-labelledby="why-h">
+        <div class="sec-head"><h2 id="why-h" class="sec-label">Why Civic Interplay</h2></div>
+        <div class="why">
+          <div class="why-left">
+            <p class="why-statement">There is more information about our places than ever before.</p>
+            <p class="why-sub">More of each place, its infrastructure and its services, is built through digital intelligence.</p>
+            <p class="why-asks">But who gets to make sense of this? And who gets to act on it?</p>
+          </div>
+          <div class="why-right">
+            <p class="why-body">
+              Civic Interplay explores how digital and AI methods can support
+              place-based civic enquiry. It looks at how places are assembled
+              as digital objects and governance ecosystems, and examines the
+              forms of accountability and legibility these systems foster.
+            </p>
+            <p class="why-body">
+              As a practice, Civic Interplay seeks <em>locations where digital
+              architectures, sense-making and civic participation can be
+              examined in more collaborative ways</em>. In this way, it aims to
+              bring greater legibility, accountability and trustworthiness to
+              the institutional systems and practices that shape and
+              govern places through time.
+            </p>
+            <p class="text-link"><a href="/proposition/">Learn more <span aria-hidden="true">&rarr;</span></a></p>
+          </div>
         </div>
       </section>
-    )}
 
-  </main>
+      <!-- E. Projects -->
+      <section class="sec" aria-labelledby="projects-h">
+        <div class="sec-head">
+          <h2 id="projects-h" class="sec-label">Projects</h2>
+          <a class="sec-link" href="/projects/">All projects <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div class="show" role="region" aria-roledescription="carousel" aria-label="Projects">
+          <div class="show-track" tabindex="0">
+            {slides.map((sl, i) => (
+              <article class="slide" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${slides.length}: ${sl.title}`} style={`--fill:${sl.fill}; --ink:${sl.ink}`}>
+                <div class={`slide-shot fit-${sl.fit}`}>
+                  <img src={sl.image} alt={sl.imageAlt} loading={i === 0 ? 'eager' : 'lazy'} />
+                </div>
+                <div class="slide-text">
+                  <p class="slide-kicker">{sl.kicker}</p>
+                  <h3>{sl.title}</h3>
+                  <p class="slide-body">{sl.body}</p>
+                  <p class="slide-links">
+                    {sl.links.map((l, j) => (
+                      <a class={j === 0 ? 'slide-btn' : 'slide-link'} href={l.href}>{l.label} <span aria-hidden="true">&rarr;</span></a>
+                    ))}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+          <div class="show-controls">
+            <button type="button" class="show-prev" aria-label="Previous project">&larr;</button>
+            <div class="show-dots">
+              {slides.map((sl, i) => (
+                <button type="button" class="show-dot" aria-label={`Show ${sl.title}`} aria-current={i === 0 ? 'true' : undefined}></button>
+              ))}
+            </div>
+            <button type="button" class="show-next" aria-label="Next project">&rarr;</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- F. Publications -->
+      <section class="sec" aria-labelledby="pubs-h">
+        <div class="sec-head">
+          <h2 id="pubs-h" class="sec-label">Publications on civic AI</h2>
+          <a class="sec-link" href="/reading/">Read more publications <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div class="pubs">
+          {publications.map((r) => (
+            <ReadingCard title={r.title} authors={r.authors} publisher={r.publisher} year={r.year} href={r.href} note={r.note} accent={r.accent} />
+          ))}
+        </div>
+      </section>
+    </main>
+  </div>
 
   <style>
-    .section-more {
-      margin: 1.4rem 0 0;
-      font-family: var(--heading);
-      font-size: 0.82rem;
-      letter-spacing: 0.03em;
+    /* One wrap, 1200px, for every section: the left edges line up. */
+    .wrap {
+      width: min(1200px, calc(100vw - 3rem));
+      margin: 0 auto;
+      padding-bottom: clamp(3rem, 6vw, 5rem);
     }
 
-    .section-more a {
+    /* --- The lead -----------------------------------------------------------
+       One big panel and a rail beside it, after the wireframe: the
+       illustration and the wordmark carry the page, and the rail of tiles
+       scrolls past alongside, so what's new is visible before any scrolling
+       of the page itself. */
+
+    .lead {
+      --lead-h: clamp(460px, 72vh, 660px);
+      margin: 1.75rem 0 0;
+      display: grid;
+      grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+      gap: 24px;
+      height: var(--lead-h);
+    }
+
+    .lead-main {
+      min-width: 0;
+      height: 100%;
+    }
+
+    .lead-main :global(.hero) {
+      height: 100%;
+      margin: 0;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--border);
+    }
+
+    .lead-main :global(.hero-image) {
+      height: 100%;
+    }
+
+    .lead-main :global(.hero-overlay) {
+      padding: 4rem clamp(1.5rem, 3vw, 2.75rem) clamp(1.5rem, 3vw, 2.5rem);
+      background: linear-gradient(transparent, rgba(28, 25, 23, 0.82) 55%);
+    }
+
+    .lead-main :global(.hero-overlay h1) {
+      font-size: var(--fs-display);
+      line-height: 1.1;
+    }
+
+    .lead-main :global(.hero-overlay .tagline) {
+      font-size: var(--fs-body);
+      font-weight: var(--w-regular);
+      max-width: 44ch;
+      margin-top: 0.6rem;
+    }
+
+    .lead-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 1.2rem;
+      font-family: var(--heading);
+      font-size: var(--fs-body);
+      font-weight: var(--w-medium);
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 2px solid var(--pink);
+      padding-bottom: 0.2rem;
+    }
+
+    .lead-arrow span {
+      font-size: 1.4em;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+
+    .lead-arrow:hover span,
+    .lead-arrow:focus-visible span {
+      transform: translateX(4px);
+    }
+
+    .lead-rail {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      min-width: 0;
+    }
+
+    .rail-heading {
+      font-family: var(--heading);
+      font-size: var(--fs-lead);
+      font-weight: var(--w-bold);
+      line-height: 1.2;
+      color: var(--text);
+      margin: 0 0 0.7rem;
+    }
+
+    .rail-list {
+      flex: 1;
+      min-height: 0;
+      list-style: none;
+      margin: 0;
+      /* Room on the right and bottom for the cards' offset shadows. */
+      padding: 2px 8px 2.5rem 2px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scroll-snap-type: y proximity;
+      scrollbar-width: thin;
+      /* The fade says there is more below, before anyone tries it. */
+      mask-image: linear-gradient(black calc(100% - 3rem), transparent);
+    }
+
+    .rail-list li {
+      scroll-snap-align: start;
+      flex: none;
+    }
+
+    .rail-list:focus-visible {
+      outline: 3px solid var(--purple);
+      outline-offset: 3px;
+    }
+
+    .rail-more {
+      align-self: flex-start;
+      margin-top: 0.4rem;
+      appearance: none;
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      box-shadow: 2px 2px 0 var(--border);
+      padding: 0.3rem 0.9rem;
+      font-family: var(--heading);
+      font-size: var(--fs-small);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .rail-more:hover {
       color: var(--purple);
-      text-decoration: underline;
+    }
+
+    /* Section headings set like the drawing-study titles: Fira bold. */
+    .sections :global(.section-heading h2) {
+      font-size: var(--fs-h2);
+      font-weight: var(--w-bold);
+      letter-spacing: 0;
+    }
+
+    /* The new sections need air between them; the post grids below bring
+       their own. */
+    .intro,
+    .projects,
+    .partner {
+      margin-bottom: clamp(3rem, 6vw, 4.5rem);
+    }
+
+    /* Four projects, so four across (or two by two), never three and one. */
+    .projects-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    @media (max-width: 1050px) {
+      .projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 620px) {
+      .projects-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+
+
+    /* --- C. Credit: one quiet line between thin rules ------------------------ */
+
+    .credit {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 1.75rem;
+      padding: 1rem 0;
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .credit-logo {
+      flex: none;
+      width: 130px;
+    }
+
+    .credit-logo img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .credit p {
+      margin: 0;
+      max-width: 62ch;
+      font-family: var(--heading);
+      font-size: var(--fs-small);
+      font-weight: var(--w-medium);
+      line-height: 1.5;
+      color: var(--text-dim);
+    }
+
+    .credit p a {
+      color: inherit;
+      text-underline-offset: 3px;
+    }
+
+    /* --- Section pattern: label, optional link, thin rule ------------------- */
+
+    .sec {
+      margin-top: clamp(3.5rem, 7vw, 5.5rem);
+    }
+
+    .sec-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      padding-bottom: 0.65rem;
+      margin-bottom: 1.75rem;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .sec-label {
+      margin: 0;
+      font-family: var(--heading);
+      font-size: 0.78rem;
+      font-weight: var(--w-medium);
+      letter-spacing: var(--track-label);
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .sec-link,
+    .text-link a {
+      font-family: var(--heading);
+      font-size: var(--fs-small);
+      font-weight: var(--w-bold);
+      color: var(--purple);
       text-underline-offset: 4px;
     }
 
-    /* Five tiles need more room than the 1036px of text column the container
-       gives, so the row breaks out a little wider, the same move CardScroller
-       makes. Same trick, same reason: the cards have to stay wide enough that
-       the call to action underneath reads on two lines. */
-    .tiles-section {
-      --shelf: min(1240px, calc(100vw - 3rem));
-      width: var(--shelf);
-      /* Centred with a negative margin rather than a transform. CardScroller
-         does this with translateX, but it can't be done here: global.css
-         animates `transform` on every <section> to fade it in, and the
-         keyframe's translateY(0) wins at the end state. */
-      margin-left: calc((100% - var(--shelf)) / 2);
-      margin-bottom: 3.5rem;
-    }
+    /* --- D. Why: read across, not down --------------------------------------- */
 
-
-
-
-
-
-
-    .tile-grid {
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    .why {
       display: grid;
-      /* Explicit rather than auto-fit. Five tiles through an auto-fit grid
-         pass through a four-column step on the way down, which leaves the
-         fifth card hanging on a row of its own. These steps go 5, 3, 2, 1 and
-         skip four entirely. Add a sixth tile and this needs revisiting, which
-         is the point: the row's shape should be a decision, not a side effect. */
-      grid-template-columns: repeat(5, 1fr);
-      gap: 1.6rem;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 24px;
+      align-items: start;
     }
 
-    @media (max-width: 1150px) {
-      .tile-grid {
-        grid-template-columns: repeat(3, 1fr);
+    .why-left {
+      grid-column: 1 / span 5;
+    }
+
+    .why-right {
+      grid-column: 7 / span 6;
+    }
+
+    .why-statement {
+      margin: 0 0 1rem;
+      font-family: var(--heading);
+      font-size: clamp(1.7rem, 3vw, 2.35rem);
+      font-weight: var(--w-bold);
+      line-height: 1.12;
+      text-wrap: balance;
+    }
+
+    .why-sub {
+      margin: 0 0 1rem;
+      font-family: var(--body);
+      font-weight: var(--w-light);
+      font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+      line-height: 1.5;
+      text-wrap: balance;
+    }
+
+    .why-asks {
+      margin: 0;
+      font-family: var(--body);
+      font-style: italic;
+      font-weight: var(--w-light);
+      font-size: 1.1rem;
+      line-height: 1.55;
+      color: var(--ink-pink);
+      text-wrap: balance;
+    }
+
+    .why-body {
+      margin: 0 0 1.1rem;
+      font-family: var(--body);
+      font-weight: var(--w-light);
+      line-height: 1.7;
+    }
+
+    .why-right .q-note {
+      margin: 0 0 1.1rem;
+    }
+
+    .text-link {
+      margin: 0;
+    }
+
+    /* --- E. Projects: image 7, text 5 ---------------------------------------- */
+
+    .show-track {
+      display: flex;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      gap: 24px;
+      padding: 2px 10px 12px 2px;
+    }
+
+    .show-track::-webkit-scrollbar { display: none; }
+
+    .show-track:focus-visible {
+      outline: 3px solid var(--purple);
+      outline-offset: 4px;
+    }
+
+    .slide {
+      flex: 0 0 calc(100% - 10px);
+      scroll-snap-align: start;
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      min-height: clamp(340px, 38vw, 480px);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 8px 8px 0 var(--fill);
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .slide-shot {
+      border-right: 2px solid var(--border);
+      background: var(--bg);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .slide-shot img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .fit-cover img { object-fit: cover; }
+    .fit-contain { padding: 1.5rem; }
+    .fit-contain img { object-fit: contain; max-height: 440px; }
+
+    .slide-text {
+      padding: clamp(1.5rem, 3.5vw, 2.75rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.85rem;
+    }
+
+    .slide-kicker {
+      margin: 0;
+      font-family: var(--heading);
+      font-size: var(--fs-label);
+      font-weight: var(--w-medium);
+      letter-spacing: var(--track-label);
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .slide h3 {
+      margin: 0;
+      font-family: var(--heading);
+      font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+      font-weight: var(--w-bold);
+      line-height: 1.12;
+    }
+
+    .slide-body {
+      margin: 0;
+      font-family: var(--body);
+      font-weight: var(--w-light);
+      line-height: 1.65;
+    }
+
+    .slide-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.9rem 1.2rem;
+      margin: 0.4rem 0 0;
+    }
+
+    .slide-btn {
+      display: inline-flex;
+      gap: 0.5rem;
+      padding: 0.6rem 1.15rem;
+      background: var(--ink);
+      color: #fff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 3px 3px 0 var(--border);
+      font-family: var(--heading);
+      font-weight: var(--w-bold);
+      text-decoration: none;
+    }
+
+    .slide-link {
+      font-family: var(--heading);
+      font-weight: var(--w-medium);
+      color: var(--ink);
+      text-underline-offset: 4px;
+    }
+
+    .show-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .show-prev,
+    .show-next {
+      appearance: none;
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 2px 2px 0 var(--border);
+      font-size: 1.05rem;
+      cursor: pointer;
+    }
+
+    .show-dots {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .show-dot {
+      appearance: none;
+      width: 0.75rem;
+      height: 0.75rem;
+      padding: 0;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .show-dot[aria-current='true'] {
+      background: var(--purple);
+    }
+
+    /* --- F. Publications: three across, imageless ---------------------------- */
+
+    .pubs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    /* --- Smaller screens ------------------------------------------------------ */
+
+    /* The rail drops under the hero and turns sideways on narrow screens. */
+    @media (max-width: 860px) {
+      .lead {
+        height: auto;
+        grid-template-columns: minmax(0, 1fr);
       }
-    }
 
-    @media (max-width: 820px) {
-      .tile-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .lead-main {
+        height: clamp(380px, 75vw, 520px);
       }
+
+      .rail-list {
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        padding: 2px 2.5rem 10px 2px;
+        mask-image: linear-gradient(90deg, black calc(100% - 3rem), transparent);
+      }
+
+      .rail-list li {
+        width: min(62vw, 260px);
+      }
+
+      .rail-more { display: none; }
     }
 
-    /* Two 4:5 tiles side by side on a phone leaves ~160px each, which is too
-       narrow for the call to action underneath. One column instead. */
+    @media (max-width: 900px) {
+      .why-left,
+      .why-right { grid-column: 1 / -1; }
+      .pubs { grid-template-columns: minmax(0, 1fr); }
+      .slide { grid-template-columns: minmax(0, 1fr); }
+      .slide-shot { border-right: 0; border-bottom: 2px solid var(--border); aspect-ratio: 4 / 3; }
+    }
+
     @media (max-width: 620px) {
-      .tile-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
+      .credit { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+      .sec-head { flex-wrap: wrap; }
     }
   </style>
+
+  <script>
+    // Assemble the mailto at runtime so the address isn't in the page source (anti-spam).
+    document.querySelectorAll('a.contact-button[data-u]').forEach((a) => {
+      a.setAttribute('href', 'mailto:' + a.getAttribute('data-u') + '@' + a.getAttribute('data-d'));
+    });
+
+    // The rail scrolls with a wheel, a swipe or the keyboard. The button is a
+    // visible hint as much as a control: one card further each press, and
+    // back to the top at the end.
+    const rail = document.querySelector<HTMLElement>('.rail-list');
+    document.querySelector('.rail-more')?.addEventListener('click', () => {
+      if (!rail) return;
+      const card = rail.querySelector('li');
+      const step = card ? card.getBoundingClientRect().height + 16 : rail.clientHeight;
+      const atEnd = rail.scrollTop + rail.clientHeight >= rail.scrollHeight - 4;
+      rail.scrollTo({ top: atEnd ? 0 : rail.scrollTop + step, behavior: 'smooth' });
+    });
+
+    // Projects slideshow: arrows, dots and keys move one slide; the dots
+    // follow whatever is in view, including after a swipe.
+    const track = document.querySelector<HTMLElement>('.show-track');
+    const slidesEls = Array.from(document.querySelectorAll<HTMLElement>('.slide'));
+    const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('.show-dot'));
+    let current = 0;
+
+    function go(i: number) {
+      if (!track) return;
+      current = (i + slidesEls.length) % slidesEls.length;
+      track.scrollTo({ left: slidesEls[current].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+    }
+
+    document.querySelector('.show-prev')?.addEventListener('click', () => go(current - 1));
+    document.querySelector('.show-next')?.addEventListener('click', () => go(current + 1));
+    dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
+    track?.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(current + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(current - 1); }
+    });
+
+    if (track && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting && en.intersectionRatio > 0.6) {
+            current = slidesEls.indexOf(en.target as HTMLElement);
+            dots.forEach((d, i) => d.toggleAttribute('aria-current', i === current));
+            dots.forEach((d, i) => i === current && d.setAttribute('aria-current', 'true'));
+          }
+        });
+      }, { root: track, threshold: 0.6 });
+      slidesEls.forEach((el) => io.observe(el));
+    }
+  </script>
 </BaseLayout>

@@ -38,7 +38,7 @@
     {
       "x": 80,
       "y": 46,
-      "label": "Who resourced by compute today?"
+      "label": "Who resourced my compute today?"
     },
     {
       "x": 50,
@@ -119,6 +119,24 @@
       "href": "/start/",
       "alt": "Inverted field note card, cream on black, reading: Run this where you live. Map the AI infrastructure in your own jurisdiction.",
       "draft": true
+    },
+    {
+      "id": "terrain",
+      "type": "tool",
+      "kicker": "Live tool",
+      "cta": "Walk a semantic terrain of texts and noticings",
+      "href": "/terrain/",
+      "alt": "Field note card reading: A walkable semantic terrain.",
+      "draft": false
+    },
+    {
+      "id": "toolkit",
+      "type": "method",
+      "kicker": "Method",
+      "cta": "Fork the Civic Interplay Toolkit",
+      "href": "/civic-interplay-toolkit/",
+      "alt": "Field note card reading: Workflows and prompts, forkable.",
+      "draft": false
     }
   ]
 }

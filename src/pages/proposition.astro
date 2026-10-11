@@ -1,0 +1,502 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import OpenDataShift from '../components/OpenDataShift.astro';
+
+// MOCKUP: The proposition. The research argument behind Civic Interplay, one
+// click from About, followed by Why now (the open data story).
+---
+<BaseLayout title="The proposition" description="In the context of AI services and systems, governing digital infrastructure well depends on greater legibility and accountability to place-based communities.">
+
+  <article class="about">
+    <header class="about-head">
+      <p class="eyebrow"><a href="/about/">About</a></p>
+      <h1>The proposition</h1>
+    </header>
+
+    <section class="argument">
+      <p>
+        The conditions of AI governance have traditionally been the domain of
+        technical and policy experts, not citizens or placemakers. Yet
+        increasingly, the way a place is made legible to its community is
+        through digital knowledge systems that foster particular ways of seeing
+        the world, and each other.
+      </p>
+      <p>
+        What happens when these interfaces become extractive surveillance
+        platforms, or bring large-scale data centres into a community to
+        compete for scarce natural resources? Growing conflicts over digital
+        infrastructure in an era of AI point to a breakdown in community trust: in how that
+        infrastructure is governed, and in what it means for a community's
+        wellbeing.
+      </p>
+      <p class="pull">
+        In the context of AI services and systems, governing digital
+        infrastructure well, under democratic conditions, depends on greater
+        legibility and accountability to place-based communities.
+      </p>
+      <p>
+        To this end, Civic Interplay explores what practices and forums
+        promote greater transparency and legibility around how digital and
+        data ecosystems shape places.
+      </p>
+      <div class="q-note q-pair">
+        <p class="q-main">What forms of civic enquiry are possible in an era of AI infrastructure?</p>
+        <p class="q-follow">
+          When digital infrastructure shapes the material and ecological logics
+          of places more explicitly, what forms of democratic accountability do
+          communities expect, and what are they able to access?
+        </p>
+      </div>
+    </section>
+
+    <section class="premise">
+      <p class="premise-line">Information is abundant. Legibility is unevenly distributed.</p>
+      <h2>Why now</h2>
+      <OpenDataShift />
+    </section>
+
+    <p class="back"><a href="/about/">&larr; Back to About</a></p>
+  </article>
+
+  <style>
+    .about {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    .eyebrow {
+      font-family: var(--heading);
+      font-size: var(--fs-label);
+      font-weight: var(--w-medium);
+      letter-spacing: var(--track-label);
+      text-transform: uppercase;
+      color: var(--purple);
+      margin: 0 0 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--heading);
+      font-size: clamp(2rem, 4.5vw, 2.8rem);
+      font-weight: var(--w-bold);
+      line-height: 1.1;
+      letter-spacing: 0;
+      margin: 0 0 1rem;
+    }
+
+    /* The premise, set large: the line the whole practice rests on. */
+    .premise-line {
+      font-family: var(--body);
+      font-style: italic;
+      font-weight: var(--w-light);
+      font-size: clamp(1.25rem, 2.6vw, 1.55rem);
+      line-height: 1.45;
+      margin: 0 0 2rem;
+      padding-left: 1rem;
+      border-left: 3px solid var(--pink);
+    }
+
+    /* Everything after Why now folds away, so the page reads as the
+       argument first and the detail on request. */
+    .fold {
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    .fold + .fold {
+      border-top-width: 1px;
+    }
+
+    .fold details > summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.4rem 0 0.4rem;
+    }
+
+    .fold details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .fold summary h2 {
+      margin: 0;
+    }
+
+    .fold summary::after {
+      content: '+';
+      flex: none;
+      display: grid;
+      place-items: center;
+      width: 2rem;
+      height: 2rem;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      font-family: var(--heading);
+      font-size: 1.2rem;
+      font-weight: var(--w-bold);
+      line-height: 1;
+      color: var(--purple);
+      background: #fff;
+    }
+
+    .fold details[open] > summary::after {
+      content: '\2212';
+    }
+
+    .fold summary:focus-visible {
+      outline: 3px solid var(--purple);
+      outline-offset: 4px;
+    }
+
+    .fold-body {
+      padding: 0.8rem 0 0.5rem;
+    }
+
+    .learn {
+      margin: 1.1rem 0 0;
+    }
+
+    .learn a {
+      font-family: var(--heading);
+      font-weight: var(--w-bold);
+      font-size: var(--fs-lead);
+      color: var(--purple);
+      text-underline-offset: 4px;
+    }
+
+    .about-head + .fold {
+      margin-top: 2.5rem;
+    }
+
+    .eyebrow a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .argument {
+      margin-top: 1.5rem;
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    /* The key proposition, set as the page's pull-quote. */
+    .pull {
+      margin: 2rem 0 !important;
+      padding: 0.2rem 0 0.2rem 1.25rem;
+      border-left: 4px solid var(--purple);
+      font-family: var(--heading) !important;
+      font-size: clamp(1.25rem, 2.4vw, 1.55rem) !important;
+      font-weight: var(--w-bold) !important;
+      line-height: 1.3 !important;
+      color: var(--text);
+    }
+
+    .back {
+      margin-top: 3rem !important;
+      font-family: var(--heading) !important;
+      font-weight: var(--w-bold) !important;
+    }
+
+    .standfirst {
+      font-family: var(--body);
+      font-size: var(--fs-lead);
+      font-weight: var(--w-light);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    section {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 2px solid var(--border);
+    }
+
+    h2 {
+      font-family: var(--heading);
+      font-size: var(--fs-h2);
+      font-weight: var(--w-bold);
+      line-height: 1.2;
+      margin: 0 0 1rem;
+    }
+
+    p {
+      font-family: var(--body);
+      font-weight: var(--w-light);
+      line-height: 1.7;
+      margin: 0 0 1rem;
+    }
+
+    p strong {
+      font-weight: 700;
+    }
+
+    a {
+      color: var(--purple);
+      text-underline-offset: 3px;
+    }
+
+    .more {
+      font-family: var(--heading);
+      font-size: var(--fs-small);
+    }
+
+    .anchors {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .anchors div {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--card-shadow);
+      padding: 1rem 1.1rem;
+    }
+
+    .anchors dt {
+      font-family: var(--heading);
+      font-size: var(--fs-lead);
+      font-weight: var(--w-bold);
+      color: var(--card-kicker);
+      margin-bottom: 0.4rem;
+    }
+
+    .anchors dd {
+      margin: 0;
+      font-family: var(--body);
+      font-weight: var(--w-light);
+      font-size: var(--fs-small);
+      line-height: 1.55;
+    }
+
+    .lead-person {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 130px;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .rmit {
+      width: 130px;
+      height: auto;
+      margin-top: 0.3rem;
+    }
+
+    .lineage {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.5rem 0 1.5rem;
+      font-size: var(--fs-small);
+    }
+
+    .lineage th {
+      text-align: left;
+      font-family: var(--heading);
+      font-size: var(--fs-label);
+      font-weight: var(--w-medium);
+      letter-spacing: var(--track-label);
+      text-transform: uppercase;
+      color: var(--text-faint);
+      padding: 0 0.8rem 0.5rem 0;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .lineage td {
+      vertical-align: top;
+      padding: 0.6rem 0.8rem 0.6rem 0;
+      border-bottom: 1px solid var(--border-light);
+      font-family: var(--body);
+      font-weight: var(--w-light);
+      line-height: 1.5;
+    }
+
+    .lineage td:first-child {
+      font-family: var(--heading);
+      font-weight: var(--w-bold);
+      white-space: nowrap;
+    }
+
+    .lineage td:nth-child(2) {
+      font-family: var(--heading);
+      font-weight: var(--w-medium);
+    }
+
+    .links {
+      font-family: var(--heading);
+      font-size: var(--fs-small);
+    }
+
+    .doors {
+      list-style: none;
+      margin: 0 0 1.5rem;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .doors a {
+      display: block;
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--card-shadow);
+      padding: 0.9rem 1.1rem;
+      font-family: var(--heading);
+      font-weight: var(--w-bold);
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .doors a span {
+      display: block;
+      font-size: var(--fs-label);
+      font-weight: var(--w-medium);
+      letter-spacing: var(--track-label);
+      text-transform: uppercase;
+      color: var(--card-kicker);
+      margin-bottom: 0.3rem;
+    }
+
+    /* Projects, filled. Deep inks so white text clears AA. */
+    /* Brand purple and the drawing-study ink at full strength; pink and
+       terracotta one step deeper so white text clears AA (plum 5.3:1,
+       terracotta 4.9:1). */
+    .filled .fill-purple     { --fill: var(--purple); --ink: var(--ink-purple); }
+    .filled .fill-ink        { --fill: #1f1d24; --ink: #1f1d24; }
+    .filled .fill-plum       { --fill: var(--pink); --ink: var(--ink-pink); }
+    .filled .fill-terracotta { --fill: var(--terracotta); --ink: var(--ink-terracotta); }
+
+    .doors.filled a {
+      background: #fff;
+      color: var(--text);
+      box-shadow: 5px 5px 0 var(--fill);
+    }
+
+    .doors.filled a span {
+      color: var(--ink);
+    }
+
+    .doors.filled a:focus-visible {
+      outline: 3px solid var(--pink);
+      outline-offset: 3px;
+    }
+
+    .contact-button {
+      display: inline-block;
+      padding: 0.55rem 1.2rem;
+      background: var(--purple);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 3px 3px 0 var(--border);
+      font-family: var(--heading);
+      font-size: var(--fs-small);
+      font-weight: var(--w-medium);
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .chain {
+      list-style: none;
+      margin: 1.5rem 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.4rem;
+      counter-reset: none;
+    }
+
+    .chain li {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--card-shadow);
+      padding: 0.9rem 1rem;
+    }
+
+    /* The arrow between steps: inquiry leads to literacy, to translation, to agency. */
+    .chain li + li::before {
+      content: '\2192';
+      position: absolute;
+      left: -1.25rem;
+      top: 0.9rem;
+      font-family: var(--heading);
+      font-weight: var(--w-bold);
+      color: var(--text-faint);
+    }
+
+    .c-name {
+      font-family: var(--heading);
+      font-weight: var(--w-bold);
+      color: var(--card-kicker);
+    }
+
+    .c-body {
+      font-family: var(--body);
+      font-weight: var(--w-light);
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .stances {
+      margin: 1rem 0;
+    }
+
+    .stances div {
+      display: grid;
+      grid-template-columns: 9rem 1fr;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    /* Care is the exception to the three neutralities, so it is set apart. */
+    .stances .care {
+      margin-top: 0.5rem;
+      padding: 0.9rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--pink);
+      background: #fff;
+    }
+
+    .stances .care dt {
+      color: var(--ink-pink);
+    }
+
+    .stances dt {
+      font-family: var(--heading);
+      font-weight: var(--w-bold);
+    }
+
+    .stances dd {
+      margin: 0;
+      font-family: var(--body);
+      font-weight: var(--w-light);
+      line-height: 1.55;
+    }
+
+    .invite {
+      font-style: italic;
+      font-size: var(--fs-lead);
+    }
+
+    @media (max-width: 700px) {
+      .chain { grid-template-columns: minmax(0, 1fr); }
+      .chain li + li::before { content: '\2193'; left: 1rem; top: -1.35rem; }
+      .stances div { grid-template-columns: minmax(0, 1fr); gap: 0.2rem; }
+      .anchors,
+      .doors { grid-template-columns: minmax(0, 1fr); }
+      .lead-person { grid-template-columns: minmax(0, 1fr); }
+    }
+  </style>
+</BaseLayout>

@@ -1,0 +1,294 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// MOCKUP of a method page: the four lines of enquiry, each with its own
+// anchor so the home page cards can link straight to a step.
+const steps = [
+  {
+    id: 'assemble',
+    title: 'Assemble the records',
+    accent: 'accent-purple',
+    lead: 'Gather what is already on the public record about a project or precinct, through time.',
+    body: [
+      'Choose a place with edges: a precinct, a corridor, a project. Then find where its records live: strategies and masterplans, planning approvals, budgets and grant registers, environment effects statements, canopy and other surveys, submissions and media statements.',
+      'This is where civic AI helps. Agents can assemble far more of the public record than one person could, and set it out in date order. Each record keeps a link to its source, so anyone can check it.',
+    ],
+    asks: ['Where do the records for this place live?', 'Who made each one, and whose interests does it serve?', 'What is missing, and since when?'],
+    link: { href: '/gathering-intelligences/assemble/', label: 'Start assembling' },
+  },
+  {
+    id: 'dig',
+    title: 'Begin your dig',
+    accent: 'accent-terracotta',
+    lead: 'What was the core priority for your place twenty years ago? Or ten?',
+    body: [
+      'Start to explore what the key care factors were that have shaped flows of investment over time. Read each priority in the context of its moment: the rules, pressures and promises that produced it.',
+      'Then trace what followed: what was approved, what was funded, what was built, and what quietly lapsed.',
+    ],
+    asks: ['What did the plan say mattered, and when?', 'Where did the money and approvals go after that?', 'Which commitments have no record of what happened next?'],
+    link: { href: '/gathering-intelligences/dig/', label: 'Begin your dig' },
+  },
+  {
+    id: 'making-sense',
+    title: 'Making sense',
+    accent: 'accent-periwinkle',
+    lead: 'What might be the most useful ways to interpret what you have assembled?',
+    body: [
+      'Discuss it with others. Would it read best as a map, a diagram, or a chart? Each shows something different: a map shows where, a diagram shows how things connect, a chart shows change over time.',
+      'Then look across the whole record. Which values are most evident in the data you assembled, and which are hard to find?',
+    ],
+    asks: ['A map, a diagram, or a chart?', 'What values are most evident in the data you assembled?', 'Which values are hardest to see?'],
+    link: { href: '/gathering-intelligences/making-sense/', label: 'See examples' },
+  },
+  {
+    id: 'sense-checking',
+    title: 'Sense checking',
+    accent: 'accent-pink',
+    lead: 'Visit your place, and contribute to the terrain.',
+    body: [
+      'Go for a walk and examine the ground. Some of what matters about a place has never been written down; noticing it is part of the reading.',
+      'Then bring the two together: how does your walk relate to what you assembled?',
+    ],
+    asks: ['How does your walk and your data assembling relate?', 'Can you see connections between the two?', 'What is worth bringing back to your digital resource?'],
+    link: { href: '/gathering-intelligences/sense-checking/', label: 'Walk and add your sightings' },
+  },
+];
+---
+<BaseLayout title="Gathering Intelligences" description="An experimental method for reading how flows of value have shaped a place.">
+
+  <article class="method">
+    <header>
+      <p class="eyebrow">Experimental method</p>
+      <h1>Gathering Intelligences</h1>
+      <p class="standfirst">
+        Four steps for reading how flows of value have shaped a place.
+      </p>
+    </header>
+
+    <section class="journey">
+      <h2 class="journey-h">A journey of enquiry</h2>
+      <ol class="chain">
+        <li class="accent-purple"><span class="c-name">Enquiry</span><span class="c-body">Start with a question, not an answer.</span></li>
+        <li class="accent-terracotta"><span class="c-name">Literacy</span><span class="c-body">Being able to read a place for yourself: who made a record, why, and what it leaves out.</span></li>
+        <li class="accent-periwinkle"><span class="c-name">Legibility</span><span class="c-body">Information that was hidden or unreadable becomes accessible and more legible to others.</span></li>
+        <li class="accent-pink"><span class="c-name">Agency</span><span class="c-body">The journey of enquiry aims to inform communities around how decisions are made, and according to what values.</span></li>
+      </ol>
+    </section>
+
+    <ol class="steps">
+      {steps.map((s, i) => (
+        <li id={s.id} class={s.accent}>
+          <p class="step-n">Step {i + 1}</p>
+          <h2>{s.title}</h2>
+          <p class={s.lead.trim().endsWith('?') ? 'q-note' : 'lead'}>{s.lead}</p>
+          {s.body.map((para) => <p>{para}</p>)}
+          <ul class="asks">
+            {s.asks.map((q) => <li>{q}</li>)}
+          </ul>
+          {s.link && <p class="step-link"><a href={s.link.href}>{s.link.label} <span aria-hidden="true">&rarr;</span></a></p>}
+        </li>
+      ))}
+    </ol>
+  </article>
+
+  <style>
+    .journey {
+      margin-top: 2.25rem;
+    }
+
+    .journey-h {
+      font-family: var(--heading);
+      font-size: var(--fs-h2);
+      font-weight: var(--w-bold);
+      margin: 0 0 0.5rem;
+    }
+
+    .chain {
+      list-style: none;
+      margin: 1.5rem 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.4rem;
+      counter-reset: none;
+    }
+
+    .chain li {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--card-shadow);
+      padding: 0.9rem 1rem;
+    }
+
+    /* The arrow between steps: inquiry leads to literacy, to translation, to agency. */
+    .chain li + li::before {
+      content: '\2192';
+      position: absolute;
+      left: -1.25rem;
+      top: 0.9rem;
+      font-family: var(--heading);
+      font-weight: var(--w-bold);
+      color: var(--text-faint);
+    }
+
+    .c-name {
+      font-family: var(--heading);
+      font-weight: var(--w-bold);
+      color: var(--card-kicker);
+    }
+
+    .c-body {
+      font-family: var(--body);
+      font-weight: var(--w-light);
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+
+    @media (max-width: 700px) {
+      .chain { grid-template-columns: minmax(0, 1fr); }
+      .chain li + li::before { content: '\2193'; left: 1rem; top: -1.35rem; }
+    }
+
+    .method {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    .eyebrow,
+    .step-n {
+      font-family: var(--heading);
+      font-size: var(--fs-label);
+      font-weight: var(--w-medium);
+      letter-spacing: var(--track-label);
+      text-transform: uppercase;
+      color: var(--purple);
+      margin: 0 0 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--heading);
+      font-size: clamp(2rem, 4.5vw, 2.8rem);
+      font-weight: var(--w-bold);
+      line-height: 1.1;
+      margin: 0 0 1rem;
+    }
+
+    .standfirst {
+      font-family: var(--body);
+      font-size: var(--fs-lead);
+      font-weight: var(--w-light);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .steps {
+      list-style: none;
+      margin: 2.5rem 0 0;
+      padding: 0;
+      display: grid;
+      gap: 1.75rem;
+    }
+
+    .steps > li {
+      scroll-margin-top: 1.5rem;
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 6px 6px 0 var(--card-shadow);
+      padding: 1.5rem 1.75rem;
+    }
+
+    .steps .step-n {
+      font-family: var(--heading);
+      font-size: var(--fs-label);
+      font-weight: var(--w-medium);
+      letter-spacing: var(--track-label);
+      line-height: 1.4;
+      margin: 0 0 0.5rem;
+      color: var(--card-kicker);
+    }
+
+    h2 {
+      font-family: var(--heading);
+      font-size: var(--fs-h2);
+      font-weight: var(--w-bold);
+      line-height: 1.15;
+      margin: 0 0 0.75rem;
+    }
+
+    .steps p {
+      font-family: var(--body);
+      font-weight: var(--w-light);
+      line-height: 1.7;
+      margin: 0 0 0.9rem;
+    }
+
+    .steps .lead {
+      font-style: italic;
+      font-size: var(--fs-lead);
+      line-height: 1.5;
+    }
+
+    .asks {
+      margin: 1rem 0 0;
+      padding: 0.9rem 0 0;
+      border-top: 1px solid var(--border-light);
+      list-style: none;
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .asks li {
+      font-family: var(--heading);
+      font-size: var(--fs-small);
+      font-weight: var(--w-medium);
+      color: var(--card-kicker);
+    }
+
+    .asks li::before {
+      content: '?';
+      display: inline-block;
+      width: 1.1rem;
+      font-weight: var(--w-bold);
+    }
+
+    .steps .step-link {
+      margin: 1.4rem 0 0.2rem;
+    }
+
+    /* The way into the next page, so it reads as a button, not a fifth question. */
+    .step-link a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--card-kicker);
+      color: #fff;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 3px 3px 0 var(--border);
+      font-family: var(--heading);
+      font-size: var(--fs-body);
+      font-weight: var(--w-bold);
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .step-link a:hover {
+      transform: translateY(-2px);
+      box-shadow: 5px 5px 0 var(--border);
+    }
+
+    .step-link a:focus-visible {
+      outline: 3px solid var(--purple);
+      outline-offset: 3px;
+    }
+  </style>
+</BaseLayout>

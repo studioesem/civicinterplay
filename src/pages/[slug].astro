@@ -100,7 +100,7 @@ const formattedDate = post.data.publishedAt.toLocaleDateString('en-AU', {
         <img
           src={post.data.featureImage}
           alt={post.data.featureImageAlt ?? ''}
-          class="post-feature-image"
+          class:list={['post-feature-image', post.data.featureImageFit === 'full' && 'post-feature-image--full']}
           loading="eager"
           decoding="async"
         />
