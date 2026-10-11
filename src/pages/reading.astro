@@ -80,7 +80,16 @@ const publications = readingsData.readings;
       <p class="standfirst">The field's work, and ours: publications on civic AI, essays, notes and field notes.</p>
     </header>
 
-    <section>
+    <nav class="pills" aria-label="Reading sections">
+      <ul>
+        <li><a href="#publications">Publications on civic AI <span class="count">{publications.length}</span></a></li>
+        <li><a href="#essays">Essays <span class="count">{essays.length}</span></a></li>
+        <li><a href="#notes">Notes <span class="count">{notes.length}</span></a></li>
+        <li><a href="#field-notes">Field notes <span class="count">{fieldNotes.length}</span></a></li>
+      </ul>
+    </nav>
+
+    <section id="publications" class="rsec">
       <SectionHeading title="Publications on civic AI" />
       <div class="post-grid">
         {publications.map((r) => (
@@ -89,7 +98,7 @@ const publications = readingsData.readings;
       </div>
     </section>
 
-    <section>
+    <section id="essays" class="rsec">
       <SectionHeading title="Essays" />
       <div class="post-grid">
         {essays.map((c) => (
@@ -98,7 +107,7 @@ const publications = readingsData.readings;
       </div>
     </section>
 
-    <section>
+    <section id="notes" class="rsec">
       <SectionHeading title="Notes" />
       <div class="post-grid">
         {notes.map((c) => (
@@ -107,7 +116,7 @@ const publications = readingsData.readings;
       </div>
     </section>
 
-    <section>
+    <section id="field-notes" class="rsec">
       <SectionHeading title="Field notes" />
       <div class="post-grid">
         {fieldNotes.map((c) => (
@@ -154,8 +163,72 @@ const publications = readingsData.readings;
       margin: 0;
     }
 
+    /* Jump links to each kind of reading; they stay in reach while scrolling. */
+    .pills {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      margin: 0 0 2.5rem;
+      padding: 0.75rem 0;
+      background: var(--bg);
+    }
+
+    .pills ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .pills a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.4rem 0.95rem;
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      box-shadow: 2px 2px 0 var(--purple);
+      font-family: var(--heading);
+      font-size: var(--fs-small);
+      font-weight: var(--w-medium);
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .pills a:hover,
+    .pills a:focus-visible {
+      color: var(--purple);
+    }
+
+    .pills .count {
+      font-size: 0.75rem;
+      color: var(--text-faint);
+    }
+
+    .rsec {
+      scroll-margin-top: 4.5rem;
+    }
+
     section {
       margin-bottom: clamp(3rem, 6vw, 4.5rem);
+    }
+
+    /* Same section pattern as the home page: heading over a thin rule. */
+    .reading :global(.section-heading) {
+      border: 0;
+      border-bottom: 1.5px solid var(--border);
+      border-radius: 0;
+      padding: 0 0 0.65rem;
+      margin-bottom: 1.75rem;
+      transition: none;
+    }
+
+    .reading :global(.section-heading:hover) {
+      transform: none;
+      box-shadow: none;
     }
 
     .reading :global(.section-heading h2) {

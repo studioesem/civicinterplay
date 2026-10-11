@@ -76,7 +76,7 @@ content:
             description: Hide the tile until its destination page exists
 
   - name: readings
-    label: Friends of Civic Interplay
+    label: Publications on civic AI
     type: file
     path: src/data/readings.json
     format: json
