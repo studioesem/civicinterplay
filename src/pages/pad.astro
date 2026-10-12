@@ -5,13 +5,49 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="Pad" description="Scratch pad." noindex reflections={false}>
   <main class="container pad">
-    <p class="status" aria-live="polite">Loading…</p>
-    <textarea aria-label="Scratch pad" spellcheck="true" disabled></textarea>
+    <div class="bar">
+      <p class="status" aria-live="polite">Loading…</p>
+      <button type="button" class="hist-toggle" aria-expanded="false" hidden>History</button>
+    </div>
+    <section class="hist" hidden aria-label="Earlier versions">
+      <p class="hist-note">Earlier versions, newest first. A copy is kept when someone else's text is replaced, when a lot is cut, and at most every 10 minutes. The last 50 are kept.</p>
+      <ol class="hist-list"></ol>
+      <div class="hist-view" hidden>
+        <p class="hist-meta"></p>
+        <textarea readonly aria-label="Earlier version"></textarea>
+        <div class="hist-actions">
+          <button type="button" class="hist-restore">Restore this version</button>
+          <button type="button" class="hist-close">Back to the pad</button>
+        </div>
+      </div>
+    </section>
+    <textarea class="main" aria-label="Scratch pad" spellcheck="true" disabled></textarea>
   </main>
 
   <style>
     .pad { padding: 1.5rem 1.5rem 3rem; }
-    .status { font-family: var(--heading); font-size: 0.8rem; color: #777; margin: 0 0 0.6rem; min-height: 1.2em; }
+    .bar { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin: 0 0 0.6rem; }
+    .status { font-family: var(--heading); font-size: 0.8rem; color: #777; margin: 0; min-height: 1.2em; }
+    .bar button, .hist-actions button {
+      appearance: none; border: 1.5px solid var(--ink, #1F1D24); background: #fff; border-radius: 999px;
+      padding: 0.2rem 0.8rem; font-family: var(--heading); font-size: 0.8rem; cursor: pointer;
+    }
+    .hist { margin: 0 0 1rem; padding: 1rem 1.1rem; background: #fff; border: 1.5px dashed var(--pink); border-radius: 8px; }
+    .hist[hidden], .hist-view[hidden] { display: none; }
+    .hist-note { font-family: var(--body); font-weight: 300; font-size: 0.85rem; margin: 0 0 0.8rem; color: #555; }
+    .hist-list { list-style: none; margin: 0; padding: 0; max-height: 14rem; overflow: auto; }
+    .hist-list li + li { border-top: 1px solid #eee; }
+    .hist-list button {
+      appearance: none; border: 0; background: none; width: 100%; text-align: left; padding: 0.45rem 0.2rem;
+      font-family: var(--heading); font-size: 0.85rem; cursor: pointer;
+    }
+    .hist-list button:hover, .hist-list button[aria-current] { background: #f6eefa; }
+    .hist-list .pv { display: block; font-family: var(--body); font-weight: 300; color: #777; font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hist-view { margin-top: 0.8rem; }
+    .hist-meta { font-family: var(--heading); font-size: 0.8rem; margin: 0 0 0.4rem; }
+    .hist-view textarea { min-height: 30vh; background: #fafafa; }
+    .hist-actions { display: flex; gap: 0.6rem; margin-top: 0.6rem; }
+    .hist-restore { border-color: var(--purple) !important; color: var(--purple); }
     .status.warn { color: var(--terracotta, #D16D54); }
     textarea {
       width: 100%; min-height: 70vh; box-sizing: border-box; resize: vertical;
@@ -22,7 +58,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </style>
 
   <script>
-    const ta = document.querySelector('textarea')!;
+    const ta = document.querySelector<HTMLTextAreaElement>('textarea.main')!;
     const status = document.querySelector('.status')!;
     let base: string | null = null;
     let saved = '';
@@ -35,12 +71,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       say(p.updated_by && p.updated_at ? `Saved · last edit by ${p.updated_by}, ${when(p.updated_at)}` : 'Empty pad. Start typing.');
     };
 
-    async function save() {
+    async function save(keep = false) {
       if (ta.value === saved) return;
       say('Saving…');
       const res = await fetch('/api/pad', {
         method: 'PUT', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ body: ta.value, base }),
+        body: JSON.stringify({ body: ta.value, base, keep }),
       });
       if (res.status === 409) {
         const { current } = await res.json();
@@ -58,10 +94,68 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     ta.addEventListener('blur', save);
     window.addEventListener('beforeunload', (e) => { if (ta.value !== saved) { save(); e.preventDefault(); } });
 
+    // History: list kept versions, preview one, restore it. Restoring is an
+    // ordinary save, so the text it replaces is itself kept.
+    const histToggle = document.querySelector<HTMLButtonElement>('.hist-toggle')!;
+    const hist = document.querySelector<HTMLElement>('.hist')!;
+    const list = hist.querySelector('.hist-list')!;
+    const view = hist.querySelector<HTMLElement>('.hist-view')!;
+    const viewMeta = view.querySelector('.hist-meta')!;
+    const viewText = view.querySelector('textarea')!;
+    let picked: { body: string; saved_by: string | null; saved_at: string } | null = null;
+
+    async function loadHistory() {
+      list.textContent = '';
+      view.hidden = true;
+      const res = await fetch('/api/pad/versions');
+      if (!res.ok) { list.textContent = 'Couldn’t load the history.'; return; }
+      const { versions } = await res.json();
+      if (!versions.length) { list.textContent = 'No earlier versions yet.'; return; }
+      for (const v of versions) {
+        const li = document.createElement('li');
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = `${when(v.saved_at)}${v.saved_by ? ` · ${v.saved_by}` : ''} · ${v.chars.toLocaleString()} characters`;
+        const pv = document.createElement('span');
+        pv.className = 'pv';
+        pv.textContent = v.preview;
+        b.append(pv);
+        b.addEventListener('click', async () => {
+          list.querySelectorAll('[aria-current]').forEach((x) => x.removeAttribute('aria-current'));
+          b.setAttribute('aria-current', 'true');
+          const r = await fetch(`/api/pad/versions/${v.id}`);
+          if (!r.ok) return;
+          picked = await r.json();
+          viewMeta.textContent = `Version from ${when(picked!.saved_at)}${picked!.saved_by ? `, by ${picked!.saved_by}` : ''}`;
+          viewText.value = picked!.body;
+          view.hidden = false;
+        });
+        li.append(b);
+        list.append(li);
+      }
+    }
+
+    histToggle.addEventListener('click', () => {
+      const open = hist.hidden;
+      hist.hidden = !open;
+      histToggle.setAttribute('aria-expanded', String(open));
+      histToggle.textContent = open ? 'Close history' : 'History';
+      if (open) loadHistory();
+    });
+    view.querySelector('.hist-close')!.addEventListener('click', () => histToggle.click());
+    view.querySelector('.hist-restore')!.addEventListener('click', async () => {
+      if (!picked) return;
+      if (!confirm('Replace the pad with this version? The current text will be kept in the history.')) return;
+      ta.value = picked.body;
+      await save(true);
+      histToggle.click();
+    });
+
     fetch('/api/pad').then(async (res) => {
       if (res.status === 401) return say('This pad is only for signed-in people.', true);
       const p = await res.json();
       ta.value = p.body; ta.disabled = false; ta.focus(); show(p);
+      histToggle.hidden = false;
     }).catch(() => say('Couldn’t load the pad.', true));
   </script>
 </BaseLayout>

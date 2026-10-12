@@ -1,9 +1,15 @@
 // GET /api/pad  posters only: the shared scratch pad
 // PUT /api/pad  posters only: { body, base } where base is the updated_at the
 //               editor started from; a mismatch means someone else saved first.
+// Before a save replaces the text, the old text is kept in pad_versions when
+// it's someone else's, a large cut, a restore, or 10 minutes since the last
+// kept copy.
+// The last 50 are kept.
 import { currentPoster } from '../../lib-functions/auth.js';
 
 const MAX = 200_000;
+const KEEP = 50;
+const GAP_MS = 10 * 60 * 1000;
 const json = (data, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });
 
@@ -21,10 +27,25 @@ export async function onRequestPut({ request, env }) {
   try { data = await request.json(); } catch { return json({ error: 'Bad request.' }, 400); }
   const body = String(data.body ?? '');
   if (body.length > MAX) return json({ error: 'The pad is full.' }, 400);
+  await keepVersion(env, me, body, data.keep === true);
   const row = await env.NOTES.prepare(
     `UPDATE pad SET body = ?, updated_by = ?, updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
      WHERE id = 1 AND (? IS NULL OR updated_at = ?) RETURNING body, updated_by, updated_at`
   ).bind(body, me.name, data.base ?? null, data.base ?? null).first();
   if (!row) return json({ error: 'conflict', current: await read(env) }, 409);
   return json(row);
+}
+
+async function keepVersion(env, me, next, force) {
+  const cur = await read(env);
+  if (!cur || !cur.body.trim() || cur.body === next) return;
+  const last = await env.NOTES.prepare('SELECT kept_at FROM pad_versions ORDER BY id DESC LIMIT 1').first();
+  const stale = !last || Date.now() - Date.parse(last.kept_at) > GAP_MS;
+  const theirs = cur.updated_by && cur.updated_by !== me.name;
+  const bigCut = next.length < cur.body.length * 0.6;
+  if (!(force || stale || theirs || bigCut)) return;
+  await env.NOTES.batch([
+    env.NOTES.prepare('INSERT INTO pad_versions (body, saved_by, saved_at) VALUES (?, ?, ?)').bind(cur.body, cur.updated_by, cur.updated_at),
+    env.NOTES.prepare('DELETE FROM pad_versions WHERE id NOT IN (SELECT id FROM pad_versions ORDER BY id DESC LIMIT ?)').bind(KEEP),
+  ]);
 }
