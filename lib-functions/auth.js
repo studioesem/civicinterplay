@@ -29,8 +29,14 @@ async function verifyAccessJwt(token, env) {
   const key = await crypto.subtle.importKey('jwk', jwk, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['verify']);
   const ok = await crypto.subtle.verify('RSASSA-PKCS1-v1_5', key, b64urlToBytes(sig), new TextEncoder().encode(`${h}.${p}`));
   if (!ok) return null;
-  const aud = Array.isArray(payload.aud) ? payload.aud : [payload.aud];
-  if (!aud.includes(env.ACCESS_AUD)) return null;
+  // The audience check is optional: if ACCESS_AUD is set, the token must be
+  // for that app. Either way it must be signed by our team's keys, and the
+  // email must be on the POSTERS list.
+  if (env.ACCESS_AUD) {
+    const aud = Array.isArray(payload.aud) ? payload.aud : [payload.aud];
+    if (!aud.includes(env.ACCESS_AUD)) return null;
+  }
+  if (payload.iss && payload.iss !== `https://${env.ACCESS_TEAM_DOMAIN}`) return null;
   if (payload.exp && payload.exp * 1000 < Date.now()) return null;
   return payload;
 }
@@ -38,7 +44,7 @@ async function verifyAccessJwt(token, env) {
 export async function currentPoster(request, env) {
   // Local development only: set DEV_USER to an email in .dev.vars.
   if (env.DEV_USER) return lookup(env.DEV_USER, env);
-  if (!env.ACCESS_TEAM_DOMAIN || !env.ACCESS_AUD || !env.POSTERS) return null;
+  if (!env.ACCESS_TEAM_DOMAIN || !env.POSTERS) return null;
   const cookie = request.headers.get('Cookie') || '';
   const token = request.headers.get('Cf-Access-Jwt-Assertion') || (cookie.match(/CF_Authorization=([^;]+)/) || [])[1];
   if (!token) return null;
