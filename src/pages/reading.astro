@@ -82,7 +82,7 @@ const publications = readingsData.readings;
       <p class="standfirst">
         Publications from the field of Civic AI, Participatory AI, and
         governing infrastructural AI. Essays and Field notes explore ideas and
-        practices out in the open, alongside talks and papers.
+        practices out in the open, alongside presentations.
       </p>
     </header>
 
@@ -92,9 +92,15 @@ const publications = readingsData.readings;
         <li><a href="#essays">Essays <span class="count">{essays.length}</span></a></li>
         <li><a href="#notes">Notes <span class="count">{notes.length}</span></a></li>
         <li><a href="#field-notes">Field notes <span class="count">{fieldNotes.length}</span></a></li>
-        <li><a href="#talks">Talks and papers <span class="count">{talks.length}</span></a></li>
+        <li><a href="#talks">Presentations <span class="count">{talks.length}</span></a></li>
       </ul>
     </nav>
+
+    <p class="tracker">
+      <span class="tracker-label">Tracking the field</span>
+      <a href="/listening/">Listening to an emergent field</a>: live searches of the research
+      literature for participatory AI, civic AI and AI sovereignty.
+    </p>
 
     <section id="publications" class="rsec">
       <SectionHeading title="Publications on civic AI" />
@@ -133,12 +139,13 @@ const publications = readingsData.readings;
     </section>
 
     <section id="talks" class="rsec">
-      <SectionHeading title="Talks and papers" />
+      <SectionHeading title="Presentations" />
       <div class="post-grid">
         {talks.map((t) => (
           <ReadingCard title={t.title} authors={t.authors} publisher={t.publisher} year={t.year} href={t.href} note={t.note} accent={t.accent} />
         ))}
       </div>
+      <p class="more-link"><a href="https://sarahbarns.com/">More talks and presentations at sarahbarns.com <span aria-hidden="true">&rarr;</span></a></p>
     </section>
   </main>
 
@@ -222,6 +229,35 @@ const publications = readingsData.readings;
     .pills .count {
       font-size: 0.75rem;
       color: var(--text-faint);
+    }
+
+    .tracker {
+      margin: -1.5rem 0 2.75rem;
+      font-family: var(--heading);
+      font-size: var(--fs-small);
+      color: var(--text-dim);
+    }
+
+    .tracker-label {
+      margin-right: 0.6rem;
+      font-size: var(--fs-label);
+      font-weight: var(--w-medium);
+      letter-spacing: var(--track-label);
+      text-transform: uppercase;
+      color: var(--purple);
+    }
+
+    .tracker a,
+    .more-link a {
+      color: var(--purple);
+      font-weight: var(--w-medium);
+      text-underline-offset: 3px;
+    }
+
+    .more-link {
+      margin: 1.4rem 0 0;
+      font-family: var(--heading);
+      font-size: var(--fs-small);
     }
 
     .rsec {
