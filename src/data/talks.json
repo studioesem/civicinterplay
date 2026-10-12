@@ -1,6 +1,16 @@
 {
   "talks": [
     {
+      "id": "civic-interplay-introduction-2026",
+      "title": "Civic Interplay: Place-based civic agency with digital and AI methods",
+      "authors": "Sarah Barns",
+      "publisher": "Introductory presentation, RMIT Centre for Urban Research",
+      "year": "2026",
+      "href": "/talks/civic-interplay-introduction-2026.pdf",
+      "accent": "pink",
+      "note": "An introduction to Civic Interplay: the proposition, practices of civic AI today, and the projects. Slides, October 2026."
+    },
+    {
       "id": "data-for-policy-2026",
       "title": "Civic Interplay: Towards New AI Governance Imaginaries",
       "authors": "Sarah Barns",
