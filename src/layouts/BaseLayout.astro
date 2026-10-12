@@ -1,6 +1,7 @@
 ---
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import Reflections from '../components/Reflections.astro';
 import StructuredData from '../components/StructuredData.astro';
 import '../styles/fonts.ts';
 import '../styles/global.css';
@@ -111,6 +112,7 @@ const structuredDataset = dataset ? { ...dataset, url: canonical } : undefined;
   </head>
   <body>
     <SiteHeader />
+    <Reflections />
     <slot />
     <SiteFooter />
 

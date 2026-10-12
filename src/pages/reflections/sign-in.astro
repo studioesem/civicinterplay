@@ -1,0 +1,35 @@
+---
+// Protected by Cloudflare Access: reaching this page means the visitor has
+// signed in. It checks they're on the poster list, then sends them back.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Sign in" description="Sign in to leave a reflection." noindex>
+  <main class="container narrow signin">
+    <h1>Reflections</h1>
+    <p class="msg">Checking your sign-in…</p>
+    <p><a class="back" href="/">Back to the site</a></p>
+  </main>
+
+  <style>
+    .signin { padding: 3rem 1.5rem 4rem; }
+    .signin h1 { font-family: var(--heading); font-weight: 700; margin: 0 0 1rem; }
+    .msg { font-family: var(--body); font-weight: 300; }
+    .back { font-family: var(--heading); color: var(--purple); }
+  </style>
+
+  <script>
+    const ret = new URLSearchParams(location.search).get('return');
+    const safe = ret && /^\/[\w\-\/.%]*$/.test(ret) ? ret : '/';
+    const msg = document.querySelector('.msg')!;
+    const back = document.querySelector<HTMLAnchorElement>('.back')!;
+    back.href = safe;
+    fetch('/api/me').then((r) => r.json()).then(({ name }) => {
+      if (name) {
+        msg.textContent = `Signed in as ${name}. Taking you back…`;
+        setTimeout(() => location.replace(safe), 900);
+      } else {
+        msg.textContent = 'You’re signed in, but this email isn’t on the list of people who can leave reflections yet.';
+      }
+    }).catch(() => { msg.textContent = 'Something went wrong checking your sign-in.'; });
+  </script>
+</BaseLayout>

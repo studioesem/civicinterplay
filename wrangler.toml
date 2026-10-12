@@ -1,0 +1,12 @@
+# Cloudflare Pages config. Bindings for the reflections (field notes) feature.
+# Secrets (not in this file, set in the Cloudflare dashboard or with
+# `wrangler pages secret put`): ACCESS_TEAM_DOMAIN, POSTERS, and optionally ACCESS_AUD.
+name = "civicinterplay"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-10-01"
+
+[[d1_databases]]
+binding = "NOTES"
+database_name = "civicinterplay-notes"
+database_id = "76989fb4-63e0-43fd-b7c7-9fc9f8823958"
+migrations_dir = "migrations"
