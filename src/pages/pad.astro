@@ -1,0 +1,67 @@
+---
+// Shared scratch pad. The page is protected by Cloudflare Access (/pad) and
+// the text lives in D1, served only to signed-in posters via /api/pad.
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Pad" description="Scratch pad." noindex reflections={false}>
+  <main class="container pad">
+    <p class="status" aria-live="polite">Loading…</p>
+    <textarea aria-label="Scratch pad" spellcheck="true" disabled></textarea>
+  </main>
+
+  <style>
+    .pad { padding: 1.5rem 1.5rem 3rem; }
+    .status { font-family: var(--heading); font-size: 0.8rem; color: #777; margin: 0 0 0.6rem; min-height: 1.2em; }
+    .status.warn { color: var(--terracotta, #D16D54); }
+    textarea {
+      width: 100%; min-height: 70vh; box-sizing: border-box; resize: vertical;
+      border: 1.5px solid var(--ink, #1F1D24); border-radius: 6px; background: #fff;
+      padding: 1rem 1.1rem; font-family: var(--body); font-weight: 300; font-size: 1rem; line-height: 1.6;
+    }
+    textarea:focus { outline: 2px solid var(--purple); outline-offset: 2px; }
+  </style>
+
+  <script>
+    const ta = document.querySelector('textarea')!;
+    const status = document.querySelector('.status')!;
+    let base: string | null = null;
+    let saved = '';
+    let timer: number | undefined;
+
+    const when = (iso: string) => new Date(iso).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' });
+    const say = (text: string, warn = false) => { status.textContent = text; status.classList.toggle('warn', warn); };
+    const show = (p: { body: string; updated_by: string | null; updated_at: string | null }) => {
+      base = p.updated_at; saved = p.body;
+      say(p.updated_by && p.updated_at ? `Saved · last edit by ${p.updated_by}, ${when(p.updated_at)}` : 'Empty pad. Start typing.');
+    };
+
+    async function save() {
+      if (ta.value === saved) return;
+      say('Saving…');
+      const res = await fetch('/api/pad', {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ body: ta.value, base }),
+      });
+      if (res.status === 409) {
+        const { current } = await res.json();
+        // Someone else saved meanwhile: keep both rather than lose either.
+        ta.value = `${current.body}\n\n---- your unsaved text ----\n${ta.value}`;
+        base = current.updated_at; saved = current.body;
+        say(`${current.updated_by} saved while you were typing. Both versions are below; tidy up and it will save.`, true);
+        return save();
+      }
+      if (!res.ok) return say('Not saved. Are you still signed in? Reload the page.', true);
+      show(await res.json());
+    }
+
+    ta.addEventListener('input', () => { say('Editing…'); clearTimeout(timer); timer = window.setTimeout(save, 1200); });
+    ta.addEventListener('blur', save);
+    window.addEventListener('beforeunload', (e) => { if (ta.value !== saved) { save(); e.preventDefault(); } });
+
+    fetch('/api/pad').then(async (res) => {
+      if (res.status === 401) return say('This pad is only for signed-in people.', true);
+      const p = await res.json();
+      ta.value = p.body; ta.disabled = false; ta.focus(); show(p);
+    }).catch(() => say('Couldn’t load the pad.', true));
+  </script>
+</BaseLayout>

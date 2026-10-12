@@ -30,6 +30,8 @@ interface Props {
   dataset?: DatasetMeta;
   /** Keeps a page out of search results (mockups, drafts). */
   noindex?: boolean;
+  /** Show the reflections row under the header. */
+  reflections?: boolean;
 }
 
 const {
@@ -39,6 +41,7 @@ const {
   article,
   dataset,
   noindex = false,
+  reflections = true,
 } = Astro.props;
 
 const fullTitle = title === 'Civic Interplay' ? title : `${title} · Civic Interplay`;
@@ -112,7 +115,7 @@ const structuredDataset = dataset ? { ...dataset, url: canonical } : undefined;
   </head>
   <body>
     <SiteHeader />
-    <Reflections />
+    {reflections && <Reflections />}
     <slot />
     <SiteFooter />
 
