@@ -31,6 +31,16 @@
       "note": "A first-of-its-kind charter for responsible data sharing across a city region, which is what it looks like when civic AI stops being a framing and becomes a document people sign."
     },
     {
+      "id": "digital-statecraft-manifesto",
+      "title": "The Digital Statecraft Manifesto v1.0: The art, science, and practice of governance in the algorithmic age",
+      "authors": "Zeynep Engin, David Hand, Stefaan Verhulst, Emily Gardner, Jon Crowcroft, Philip Treleaven & Tim Gordon",
+      "publisher": "Digital Statecraft Academy",
+      "year": "2025",
+      "href": "https://doi.org/10.5281/zenodo.17037682",
+      "accent": "purple",
+      "note": "Algorithmic systems are reshaping governance faster than institutions can adapt. The manifesto makes the case for digital statecraft as a discipline for those who govern with data and AI, through ten principles. Public Value First and Systemic Integration by Design sit close to Civic Interplay's own approach."
+    },
+    {
       "id": "ada-going-public",
       "title": "Going public: the role of public participation approaches in commercial AI labs",
       "authors": "Ada Lovelace Institute",
