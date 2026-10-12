@@ -19,6 +19,9 @@ const posts = defineCollection({
   schema: z.object({
     title: z.string(),
     slug: z.string().optional(),
+    /** Where the post is listed: Reading > Essays, Notes or Experiments;
+        a project (listed on Projects, not Reading); or not listed. */
+    section: z.enum(['essay', 'note', 'experiment', 'project', 'unlisted']).default('unlisted'),
     excerpt: z.string().optional(),
     subtitle: z.string().optional(),
     publishedAt: z.coerce.date(),

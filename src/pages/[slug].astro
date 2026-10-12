@@ -23,19 +23,17 @@ interface Props {
 const { post } = Astro.props;
 const { Content } = await post.render();
 
-const categoryColours: Record<string, string> = {
-  'foundational-docs': 'var(--purple)',
-  'training-grounds': 'var(--terracotta)',
-  'essays-readings': 'var(--periwinkle)',
-  'the-portals': 'var(--pink)',
+// The label and breadcrumb follow the post's Section (set in the CMS), the
+// same one that decides where it is listed.
+const SECTIONS: Record<string, { label: string; colour: string; href: string; parent: string; parentHref: string }> = {
+  essay: { label: 'Essay', colour: 'var(--purple)', href: '/reading/#essays', parent: 'Reading', parentHref: '/reading/' },
+  note: { label: 'Note', colour: 'var(--terracotta)', href: '/reading/#notes', parent: 'Reading', parentHref: '/reading/' },
+  experiment: { label: 'Experiment', colour: 'var(--pink)', href: '/reading/#experiments', parent: 'Reading', parentHref: '/reading/' },
+  project: { label: 'Project', colour: 'var(--purple)', href: '/projects/', parent: 'Projects', parentHref: '/projects/' },
 };
-
-const tagColour = post.data.primaryCategory
-  ? categoryColours[post.data.primaryCategory]
-  : 'var(--text-dim)';
-
-const categoryLabel =
-  post.data.primaryCategory ? CATEGORY_LABEL[post.data.primaryCategory] : '';
+const section = SECTIONS[post.data.section];
+const tagColour = section?.colour ?? 'var(--text-dim)';
+const categoryLabel = section?.label ?? '';
 
 const formattedDate = post.data.publishedAt.toLocaleDateString('en-AU', {
   year: 'numeric',
@@ -60,11 +58,11 @@ const formattedDate = post.data.publishedAt.toLocaleDateString('en-AU', {
       <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="/">Civic Interplay</a>
         <span class="breadcrumb-sep" aria-hidden="true">›</span>
-        <a href="/reading/">Reading</a>
-        {categoryLabel && (
+        <a href={section?.parentHref ?? '/reading/'}>{section?.parent ?? 'Reading'}</a>
+        {section && section.parent === 'Reading' && (
           <>
             <span class="breadcrumb-sep" aria-hidden="true">›</span>
-            <span class="breadcrumb-current">{categoryLabel}</span>
+            <a class="breadcrumb-current" href={section.href}>{section.label}s</a>
           </>
         )}
       </nav>

@@ -75,6 +75,49 @@ content:
             default: false
             description: Hide the tile until its destination page exists
 
+  - name: about
+    label: About page
+    type: file
+    path: src/data/about.md
+    format: yaml-frontmatter
+    fields:
+      - name: title
+        label: Page title
+        type: string
+        required: true
+      - name: description
+        label: Search description
+        type: string
+        description: The one-line summary search engines and link previews show.
+      - name: standfirst
+        label: Opening paragraph
+        type: text
+      - name: question
+        label: Question (dashed pink box)
+        type: string
+      - name: audiences
+        label: Working with Civic Interplay (who it's for)
+        type: object
+        list: true
+        description: Shown inside the "Working with Civic Interplay" fold, above the Get in touch button.
+        fields:
+          - name: name
+            label: Who
+            type: string
+          - name: text
+            label: Text
+            type: text
+          - name: linkLabel
+            label: Link text
+            type: string
+          - name: linkHref
+            label: Link
+            type: string
+      - name: body
+        label: Folds
+        type: rich-text
+        description: 'Each heading (Heading 2) becomes a fold. Keep the headings "Working with Civic Interplay" and "Who''s behind it": the audiences list and the RMIT logo attach to them. The Projects fold is built automatically.'
+
   - name: readings
     label: Publications on civic AI
     type: file
@@ -128,45 +171,161 @@ content:
             required: true
             description: Two or three sentences in your own voice on why this belongs. This commentary is the point; without it the page is only a list of links.
 
-  - name: talks
-    label: Presentations
-    type: file
-    path: src/data/talks.json
-    format: json
+  - name: posts
+    label: Essays, notes & experiments
+    type: collection
+    path: src/content/posts
+    extension: mdx
+    format: yaml-frontmatter
+    filename: "{fields.slug}.mdx"
+    view:
+      fields: [title, section, publishedAt, draft]
+      sort: [publishedAt, title]
+      default:
+        sort: publishedAt
+        order: desc
     fields:
-      - name: talks
-        label: Presentations
-        type: object
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: slug
+        label: Slug
+        type: string
+        description: URL path for the post, e.g. what-is-civic-interplay
+      - name: section
+        label: Section
+        type: select
+        required: true
+        default: essay
+        description: Where it is listed. Essays, Notes and Experiments appear on Reading; Projects belong on the Projects page; Not listed keeps the page live but out of the lists.
+        options:
+          values:
+            - value: essay
+              label: Essay
+            - value: note
+              label: Note
+            - value: experiment
+              label: Experiment
+            - value: project
+              label: Project
+            - value: unlisted
+              label: Not listed
+      - name: subtitle
+        label: Subtitle
+        type: string
+      - name: excerpt
+        label: Excerpt
+        type: text
+      - name: publishedAt
+        label: Published at
+        type: date
+        required: true
+        options:
+          time: true
+          format: yyyy-MM-dd'T'HH:mm:ss.SSSxxx
+      - name: updatedAt
+        label: Updated at
+        type: date
+        options:
+          time: true
+          format: yyyy-MM-dd'T'HH:mm:ss.SSSxxx
+      - name: featureImage
+        label: Feature image
+        type: image
+      - name: featureImageAlt
+        label: Feature image alt text
+        type: string
+      - name: featureImageFit
+        label: Feature image fit
+        type: select
+        description: Banner crops the image to a wide strip. Full shows the whole image; use it for square or portrait artwork, or anything with a face or words in it.
+        options:
+          values: [banner, full]
+      - name: featureVideo
+        label: Feature video (mp4 URL)
+        type: string
+      - name: featureVideoWebm
+        label: Feature video (webm URL)
+        type: string
+      - name: featureAudio
+        label: Feature audio (mp3 URL)
+        type: string
+      - name: featureAudioOgg
+        label: Feature audio (ogg URL)
+        type: string
+      - name: categories
+        label: Old categories (no longer shown)
+        type: select
         list: true
-        fields:
-          - name: id
-            label: ID
-            type: string
-            required: true
-          - name: title
-            label: Title
-            type: string
-            required: true
-          - name: authors
-            label: Speakers / authors
-            type: string
-          - name: publisher
-            label: Event, place
-            type: string
-          - name: year
-            label: Year
-            type: string
-          - name: href
-            label: Link (slides PDF, paper or DOI)
-            type: string
-          - name: accent
-            label: Colour
-            type: select
-            options:
-              values: [purple, terracotta, periwinkle, pink, cream]
-          - name: note
-            label: What it's about
-            type: text
+        options:
+          values:
+            - value: foundational-docs
+              label: Foundational Docs
+            - value: training-grounds
+              label: Training Grounds
+            - value: essays-readings
+              label: Essays & Readings
+            - value: the-portals
+              label: The Portals
+      - name: primaryCategory
+        label: Old primary category (no longer shown)
+        type: select
+        options:
+          values:
+            - value: foundational-docs
+              label: Foundational Docs
+            - value: training-grounds
+              label: Training Grounds
+            - value: essays-readings
+              label: Essays & Readings
+            - value: the-portals
+              label: The Portals
+      - name: author
+        label: Author
+        type: string
+        default: Sarah Barns
+      - name: featured
+        label: Featured
+        type: boolean
+        default: false
+      - name: accent
+        label: Card colour
+        type: select
+        description: Leave blank to use the category colour. Set it when a card should read as what it is rather than where it sits, e.g. cream for a tool.
+        options:
+          values:
+            - value: cream
+              label: Cream (tools)
+            - value: purple
+              label: Purple
+            - value: terracotta
+              label: Terracotta
+            - value: periwinkle
+              label: Periwinkle
+            - value: pink
+              label: Pink
+            - value: plain
+              label: Plain white
+      - name: draft
+        label: Draft
+        type: boolean
+        default: false
+        description: Drafts build locally but are excluded from the live site
+      - name: articleType
+        label: Article type
+        type: select
+        default: BlogPosting
+        options:
+          values: [BlogPosting, Article, ScholarlyArticle, CreativeWork]
+      - name: keywords
+        label: Keywords
+        type: string
+        list: true
+      - name: body
+        label: Body
+        type: rich-text
+
   - name: fieldnotes
     label: Field notes
     type: collection
@@ -294,6 +453,46 @@ content:
         label: Body
         type: rich-text
         description: Prose only. Use a blockquote for a caveat, it renders as the pink note panel.
+
+  - name: talks
+    label: Presentations
+    type: file
+    path: src/data/talks.json
+    format: json
+    fields:
+      - name: talks
+        label: Presentations
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: ID
+            type: string
+            required: true
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: authors
+            label: Speakers / authors
+            type: string
+          - name: publisher
+            label: Event, place
+            type: string
+          - name: year
+            label: Year
+            type: string
+          - name: href
+            label: Link (slides PDF, paper or DOI)
+            type: string
+          - name: accent
+            label: Colour
+            type: select
+            options:
+              values: [purple, terracotta, periwinkle, pink, cream]
+          - name: note
+            label: What it's about
+            type: text
 
   - name: claimcards
     label: Facts and Moments
@@ -432,143 +631,6 @@ content:
             label: Artwork alt text
             type: text
             description: Describe what the photograph shows. This is the only text a screen reader gets for it.
-
-  - name: posts
-    label: Posts
-    type: collection
-    path: src/content/posts
-    extension: mdx
-    format: yaml-frontmatter
-    filename: "{fields.slug}.mdx"
-    view:
-      fields: [title, primaryCategory, publishedAt, draft]
-      sort: [publishedAt, title]
-      default:
-        sort: publishedAt
-        order: desc
-    fields:
-      - name: title
-        label: Title
-        type: string
-        required: true
-      - name: slug
-        label: Slug
-        type: string
-        description: URL path for the post, e.g. what-is-civic-interplay
-      - name: subtitle
-        label: Subtitle
-        type: string
-      - name: excerpt
-        label: Excerpt
-        type: text
-      - name: publishedAt
-        label: Published at
-        type: date
-        required: true
-        options:
-          time: true
-          format: yyyy-MM-dd'T'HH:mm:ss.SSSxxx
-      - name: updatedAt
-        label: Updated at
-        type: date
-        options:
-          time: true
-          format: yyyy-MM-dd'T'HH:mm:ss.SSSxxx
-      - name: featureImage
-        label: Feature image
-        type: image
-      - name: featureImageAlt
-        label: Feature image alt text
-        type: string
-      - name: featureImageFit
-        label: Feature image fit
-        type: select
-        description: Banner crops the image to a wide strip. Full shows the whole image; use it for square or portrait artwork, or anything with a face or words in it.
-        options:
-          values: [banner, full]
-      - name: featureVideo
-        label: Feature video (mp4 URL)
-        type: string
-      - name: featureVideoWebm
-        label: Feature video (webm URL)
-        type: string
-      - name: featureAudio
-        label: Feature audio (mp3 URL)
-        type: string
-      - name: featureAudioOgg
-        label: Feature audio (ogg URL)
-        type: string
-      - name: categories
-        label: Categories
-        type: select
-        list: true
-        options:
-          values:
-            - value: foundational-docs
-              label: Foundational Docs
-            - value: training-grounds
-              label: Training Grounds
-            - value: essays-readings
-              label: Essays & Readings
-            - value: the-portals
-              label: The Portals
-      - name: primaryCategory
-        label: Primary category
-        type: select
-        options:
-          values:
-            - value: foundational-docs
-              label: Foundational Docs
-            - value: training-grounds
-              label: Training Grounds
-            - value: essays-readings
-              label: Essays & Readings
-            - value: the-portals
-              label: The Portals
-      - name: author
-        label: Author
-        type: string
-        default: Sarah Barns
-      - name: featured
-        label: Featured
-        type: boolean
-        default: false
-      - name: accent
-        label: Card colour
-        type: select
-        description: Leave blank to use the category colour. Set it when a card should read as what it is rather than where it sits, e.g. cream for a tool.
-        options:
-          values:
-            - value: cream
-              label: Cream (tools)
-            - value: purple
-              label: Purple
-            - value: terracotta
-              label: Terracotta
-            - value: periwinkle
-              label: Periwinkle
-            - value: pink
-              label: Pink
-            - value: plain
-              label: Plain white
-      - name: draft
-        label: Draft
-        type: boolean
-        default: false
-        description: Drafts build locally but are excluded from the live site
-      - name: articleType
-        label: Article type
-        type: select
-        default: BlogPosting
-        options:
-          values: [BlogPosting, Article, ScholarlyArticle, CreativeWork]
-      - name: keywords
-        label: Keywords
-        type: string
-        list: true
-      - name: body
-        label: Body
-        type: rich-text
 
   - name: embeds
     label: Embeds

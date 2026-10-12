@@ -15,19 +15,6 @@ const posts = (await getCollection('posts'))
   .filter((p) => !p.data.draft)
   .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 
-const ESSAYS = [
-  'can-we-shift-our-mindset',
-  'the-many-afterlives-of-albert-einstein',
-  'mystical-language-loops-with-benjamin',
-  'the-active-interface',
-  'micro-political-imaginaries',
-  'digital-ecological-footprint',
-  'you-me-data-and-the-city',
-  'learning-to-be-planetary-citizens',
-  'what-is-civic-interplay',
-];
-const NOTES = ['anthropic-founders', 'jack-clark-on-ai', 'what-time-are-we-living-in', 'at-de-ceuvel'];
-
 // The old About manifesto becomes an essay under its own name.
 const RETITLE: Record<string, string> = { 'what-is-civic-interplay': 'The macro age' };
 
@@ -46,8 +33,10 @@ const card = (p: (typeof posts)[number], label: string, accent: 'purple' | 'terr
   videoWebm: p.data.featureVideoWebm,
 });
 
-const essays = posts.filter((p) => ESSAYS.includes(p.slug)).map((p) => card(p, 'Essay', 'purple'));
-const notes = posts.filter((p) => NOTES.includes(p.slug)).map((p) => card(p, 'Note', 'terracotta'));
+// Each post's Section (set in the CMS) decides where it is listed.
+const essays = posts.filter((p) => p.data.section === 'essay').map((p) => card(p, 'Essay', 'purple'));
+const notes = posts.filter((p) => p.data.section === 'note').map((p) => card(p, 'Note', 'terracotta'));
+const experiments = posts.filter((p) => p.data.section === 'experiment').map((p) => card(p, 'Experiment', 'cream'));
 
 const fieldNotes = [
   ...(await getCollection('fieldnotes'))
@@ -91,6 +80,7 @@ const publications = readingsData.readings;
         <li><a href="#publications">Publications on civic AI <span class="count">{publications.length}</span></a></li>
         <li><a href="#essays">Essays <span class="count">{essays.length}</span></a></li>
         <li><a href="#notes">Notes <span class="count">{notes.length}</span></a></li>
+        {experiments.length > 0 && <li><a href="#experiments">Experiments <span class="count">{experiments.length}</span></a></li>}
         <li><a href="#field-notes">Field notes <span class="count">{fieldNotes.length}</span></a></li>
         <li><a href="#talks">Presentations <span class="count">{talks.length}</span></a></li>
       </ul>
@@ -128,6 +118,17 @@ const publications = readingsData.readings;
         ))}
       </div>
     </section>
+
+    {experiments.length > 0 && (
+    <section id="experiments" class="rsec">
+      <SectionHeading title="Experiments" />
+      <div class="post-grid">
+        {experiments.map((c) => (
+          <PostCard href={c.href} title={c.title} excerpt={c.excerpt} categoryLabel={c.label} accent={c.accent} image={c.image} imageAlt={c.imageAlt} date={c.date} video={c.video} videoWebm={c.videoWebm} />
+        ))}
+      </div>
+    </section>
+    )}
 
     <section id="field-notes" class="rsec">
       <SectionHeading title="Field notes" />

@@ -1,29 +1,43 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { frontmatter as about, compiledContent } from '../data/about.md';
 
-// MOCKUP of the About page after the copy workshop (docs/copy-workshop.md §7).
-// Matter-of-fact register (SR §3). The manifesto moves to Reading as an essay.
+// The About text lives in src/data/about.md, editable in the CMS. Each "## "
+// heading there becomes a fold. Two folds get extra parts from here: "Working
+// with Civic Interplay" adds the audiences list (from the CMS) and the contact
+// button, and "Who's behind it" sets its first paragraph beside the RMIT logo.
+// The Projects fold is built here from the four projects.
+
+const html = await compiledContent();
+const folds = html
+  .split(/(?=<h2[\s>])/)
+  .filter((part) => part.startsWith('<h2'))
+  .map((part) => {
+    const m = part.match(/^<h2[^>]*>([\s\S]*?)<\/h2>([\s\S]*)$/)!;
+    return { heading: m[1], plain: m[1].replace(/<[^>]+>/g, '').replace(/&#x27;|&#39;|’/g, "'"), body: m[2].trim() };
+  });
+
+const isWorking = (f: { plain: string }) => /^working with/i.test(f.plain);
+const isWho = (f: { plain: string }) => /^who/i.test(f.plain);
+const splitFirst = (body: string) => {
+  const i = body.indexOf('</p>');
+  return i < 0 ? [body, ''] : [body.slice(0, i + 4), body.slice(i + 4)];
+};
 ---
-<BaseLayout title="About" description="Civic Interplay explores how digital and AI methods can support place-based civic enquiry.">
+<BaseLayout title="About" description={about.description}>
 
   <article class="about">
     <header class="about-head">
       <p class="eyebrow">About</p>
-      <h1>About Civic Interplay</h1>
-      <p class="standfirst">
-        Civic Interplay explores how digital and AI methods can support
-        place-based civic enquiry. In the context of AI services and systems,
-        it recognises that governing digital infrastructure well, under
-        democratic conditions, depends on greater legibility and
-        accountability to place-based communities.
-      </p>
-      <div class="q-note q-pair">
-        <p class="q-main">What forms of civic enquiry are possible in an era of AI infrastructure?</p>
-      </div>
+      <h1>{about.title}</h1>
+      <p class="standfirst">{about.standfirst}</p>
+      {about.question && (
+        <div class="q-note q-pair">
+          <p class="q-main">{about.question}</p>
+        </div>
+      )}
       <p class="learn"><a href="/proposition/">Read the proposition <span aria-hidden="true">&rarr;</span></a></p>
     </header>
-
-
 
     <section class="fold">
       <details>
@@ -38,84 +52,39 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
       </details>
     </section>
-    <section class="fold">
-      <details>
-        <summary><h2>Making value more legible to many</h2></summary>
-        <div class="fold-body">
-      <p>
-        This is a methodology that is in development. Experimentation is
-        deliberately open. The purpose is to build a greater sense of agency
-        among people who may feel excluded from decisions about how value is
-        being captured and shared within their communities.
-      </p>
-      <p>
-        While transparency is never an end in itself, the methods here seek to
-        bring attention to the important role that everyday digital
-        capabilities play in shaping civic agency, towards more effective
-        governance.
-      </p>
-        </div>
-      </details>
-    </section>
 
-    <section class="fold">
-      <details>
-        <summary><h2>On the use of AI</h2></summary>
-        <div class="fold-body">
-      <p>
-        Agents and AI workflows are adopted to read and interrogate information
-        records that are publicly available. This includes open government data
-        and other information that is available via the public web. The methods
-        also establish practices of critical enquiry and sense checking to
-        support agents as effective co-enquirers.
-      </p>
-      <p>
-        AI is not supported as a writing tool, wherever possible.
-      </p>
-        </div>
-      </details>
-    </section>
-
-
-    <section class="fold">
-      <details>
-        <summary><h2>Working with Civic Interplay</h2></summary>
-        <div class="fold-body">
-      <dl class="stances">
-        <div><dt>Public administrations</dt><dd>Read your own plans and priorities against what has been funded, approved and recorded since. The method and the space are open to you; your team runs it. <a href="#contact">Ask about a reading</a></dd></div>
-        <div><dt>Community</dt><dd>Records you can check, and tools for asking your own questions of your place. <a href="/sovereignties/">Explore the Data Centres Transparency Project</a></dd></div>
-        <div><dt>Elected representatives</dt><dd>See the investment and approvals in your area, and what the record shows happened next. <a href="/submission/">Read the Senate submission</a></dd></div>
-        <div><dt>Researchers and educators</dt><dd>The method is open and citable, with datasets on Zenodo. <a href="https://zenodo.org/records/21994643">Records and method on Zenodo</a></dd></div>
-      </dl>
-      <p id="contact">
-        <a class="contact-button" href="https://www.rmit.edu.au/profiles/b/sarah-barns2" data-u="sarah" data-d="studioesem.com" rel="nofollow">Get in touch</a>
-      </p>
-        </div>
-      </details>
-    </section>
-    <section class="fold">
-      <details>
-        <summary><h2>Who's behind it</h2></summary>
-        <div class="fold-body">
-      <div class="lead-person">
-        <p>
-          Civic Interplay is being explored by <strong><a href="https://sarahbarns.com/">Dr Sarah Barns</a></strong>
-          and collaborators, through a <a href="https://www.rmit.edu.au/profiles/b/sarah-barns2">Vice-Chancellor's Senior Research
-          Fellowship</a> at RMIT University's
-          <a href="https://www.rmit.edu.au/research/centres-collaborations/centre-for-urban-research">Centre for Urban Research</a>.
-        </p>
-        <img src="/images/partners/rmit-university.png" alt="RMIT University" width="720" height="253" class="rmit" loading="lazy" />
-      </div>
-      <p>
-        Civic Interplay friends and collaborators include the
-        <a href="https://fll.pubpub.org/">Futures + Literacies + Methods Lab</a> at
-        Utrecht University, Irina Panovich (<a href="https://aiio.studio/">aiio studio</a>),
-        Amber Theurer (<a href="https://human-af.com/">HUMAN AF</a>) and <a href="https://www.linkedin.com/in/miguel-mccormick-685a8113/">Miguel
-        McCormick</a> (Facta Living Lab, Mexico).
-      </p>
-        </div>
-      </details>
-    </section>
+    {folds.map((f) => (
+      <section class="fold">
+        <details>
+          <summary><h2 set:html={f.heading} /></summary>
+          <div class="fold-body md">
+            {isWho(f) ? (
+              <>
+                <div class="lead-person">
+                  <div set:html={splitFirst(f.body)[0]} />
+                  <img src="/images/partners/rmit-university.png" alt="RMIT University" width="720" height="253" class="rmit" loading="lazy" />
+                </div>
+                <Fragment set:html={splitFirst(f.body)[1]} />
+              </>
+            ) : (
+              <Fragment set:html={f.body} />
+            )}
+            {isWorking(f) && (
+              <>
+                <dl class="stances">
+                  {(about.audiences ?? []).map((a: { name: string; text: string; linkLabel?: string; linkHref?: string }) => (
+                    <div><dt>{a.name}</dt><dd>{a.text} {a.linkHref && <a href={a.linkHref}>{a.linkLabel || 'More'}</a>}</dd></div>
+                  ))}
+                </dl>
+                <p id="contact">
+                  <a class="contact-button" href="https://www.rmit.edu.au/profiles/b/sarah-barns2" data-u="sarah" data-d="studioesem.com" rel="nofollow">Get in touch</a>
+                </p>
+              </>
+            )}
+          </div>
+        </details>
+      </section>
+    ))}
 
   </article>
 
@@ -272,6 +241,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     p strong {
       font-weight: 700;
     }
+
+    /* Text from about.md arrives as plain HTML, so style it globally here. */
+    .md :global(p) {
+      font-family: var(--body);
+      font-weight: var(--w-light);
+      line-height: 1.7;
+      margin: 0 0 1rem;
+    }
+    .md :global(strong) { font-weight: 700; }
+    .md :global(a) { color: var(--purple); text-underline-offset: 3px; }
+    .md :global(ul), .md :global(ol) { font-family: var(--body); font-weight: var(--w-light); line-height: 1.7; padding-left: 1.2rem; }
 
     a {
       color: var(--purple);
