@@ -1,0 +1,299 @@
+---
+// Reflections: short notes left on a page by invited people (Sarah, Irina,
+// others on the POSTERS list). Anyone can read; only signed-in posters can
+// write. Notes load in the browser from /api/notes, so the static pages don't
+// need rebuilding when one is added. Pages with no notes show nothing.
+---
+<div class="reflections container container-wide" data-reflections hidden>
+  <span class="r-label">Reflections</span>
+  <ul class="r-dots" aria-label="Reflections on this page"></ul>
+  <button type="button" class="r-add" hidden>+ Leave a reflection</button>
+  <form class="r-form" hidden>
+    <label>
+      <span class="r-form-label">Your reflection, a few lines at most</span>
+      <textarea name="body" maxlength="280" rows="4" required></textarea>
+    </label>
+    <div class="r-form-row">
+      <span class="r-count">280</span>
+      <button type="button" class="r-cancel">Cancel</button>
+      <button type="submit" class="r-save">Leave it here</button>
+    </div>
+    <p class="r-error" role="alert"></p>
+  </form>
+</div>
+
+<style is:global>
+  .reflections {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem 0.9rem;
+    margin-top: 0.9rem;
+    font-family: var(--heading);
+    font-size: var(--fs-small);
+  }
+
+  .reflections[hidden] { display: none; }
+
+  .r-label {
+    font-size: var(--fs-label);
+    font-weight: var(--w-medium);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--ink-pink);
+  }
+
+  .r-dots {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.55rem;
+  }
+
+  .r-dot { position: relative; }
+
+  .r-dot > button {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    padding: 0;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background: var(--pink);
+    box-shadow: 0 0 0 1px var(--border);
+    cursor: pointer;
+    animation: r-pulse 2.8s ease-out infinite;
+  }
+
+  .r-dot:nth-child(3n + 2) > button { background: var(--purple); }
+  .r-dot:nth-child(3n + 3) > button { background: var(--terracotta); }
+
+  .r-card {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: -10px;
+    z-index: 30;
+    width: max-content;
+    max-width: min(300px, 80vw);
+    padding: 0.75rem 0.95rem;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 4px 4px 0 var(--border);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease, visibility 0.15s;
+  }
+
+  .r-dot:hover .r-card,
+  .r-dot:focus-within .r-card,
+  .r-dot.open .r-card {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .r-body {
+    margin: 0 0 0.45rem;
+    font-family: var(--body);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text);
+    white-space: pre-line;
+  }
+
+  .r-meta {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--text-faint);
+  }
+
+  .r-meta strong { color: var(--ink-pink); font-weight: var(--w-medium); }
+
+  .r-delete {
+    appearance: none;
+    border: 0;
+    background: none;
+    padding: 0;
+    margin-left: 0.5rem;
+    font: inherit;
+    font-size: 0.72rem;
+    color: var(--text-faint);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .r-add {
+    appearance: none;
+    border: 1.5px dashed var(--pink);
+    background: #fff;
+    border-radius: 999px;
+    padding: 0.2rem 0.75rem;
+    font: inherit;
+    font-size: 0.78rem;
+    color: var(--ink-pink);
+    cursor: pointer;
+  }
+
+  .r-form {
+    flex-basis: 100%;
+    max-width: 520px;
+    padding: 0.8rem 0.9rem;
+    background: #fff;
+    border: 1.5px dashed var(--pink);
+    border-radius: 8px;
+  }
+
+  .r-form[hidden] { display: none; }
+
+  .r-form-label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+  }
+
+  .r-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: var(--body);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding: 0.5rem 0.6rem;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    resize: vertical;
+  }
+
+  .r-form-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+
+  .r-count { margin-right: auto; font-size: 0.75rem; color: var(--text-faint); }
+
+  .r-cancel,
+  .r-save {
+    appearance: none;
+    font: inherit;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .r-save { background: var(--purple); color: #fff; }
+
+  .r-error { margin: 0.4rem 0 0; font-size: 0.78rem; color: var(--ink-terracotta); }
+  .r-error:empty { display: none; }
+
+  @keyframes r-pulse {
+    0%   { box-shadow: 0 0 0 1px var(--border), 0 0 0 0 rgba(224, 118, 219, 0.55); }
+    70%  { box-shadow: 0 0 0 1px var(--border), 0 0 0 9px transparent; }
+    100% { box-shadow: 0 0 0 1px var(--border), 0 0 0 0 transparent; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .r-dot > button { animation: none; }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-reflections]');
+  const page = location.pathname.endsWith('/') ? location.pathname : location.pathname + '/';
+
+  const fmt = (iso: string) =>
+    new Date(iso).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+
+  function dot(n: { id: number; name: string; body: string; created_at: string; mine?: boolean }) {
+    const li = document.createElement('li');
+    li.className = 'r-dot';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.setAttribute('aria-label', `Reflection from ${n.name}`);
+    btn.addEventListener('click', () => li.classList.toggle('open'));
+    const card = document.createElement('div');
+    card.className = 'r-card';
+    const body = document.createElement('p');
+    body.className = 'r-body';
+    body.textContent = n.body;
+    const meta = document.createElement('p');
+    meta.className = 'r-meta';
+    const who = document.createElement('strong');
+    who.textContent = n.name;
+    meta.append(who, ` · ${fmt(n.created_at)}`);
+    if (n.mine) {
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'r-delete';
+      del.textContent = 'remove';
+      del.addEventListener('click', async () => {
+        const res = await fetch(`/api/notes/${n.id}`, { method: 'DELETE' });
+        if (res.ok) { li.remove(); if (!root!.querySelector('.r-dot') && root!.querySelector<HTMLElement>('.r-add')!.hidden) root!.hidden = true; }
+      });
+      meta.append(del);
+    }
+    card.append(body, meta);
+    li.append(btn, card);
+    return li;
+  }
+
+  async function init() {
+    if (!root) return;
+    const list = root.querySelector('.r-dots')!;
+    const add = root.querySelector<HTMLButtonElement>('.r-add')!;
+    const form = root.querySelector<HTMLFormElement>('.r-form')!;
+    const area = form.querySelector('textarea')!;
+    const count = form.querySelector('.r-count')!;
+    const err = form.querySelector('.r-error')!;
+
+    let notes: any[] = [];
+    let me: { name: string | null } = { name: null };
+    try {
+      const [n, m] = await Promise.all([
+        fetch(`/api/notes?page=${encodeURIComponent(page)}`).then((r) => (r.ok ? r.json() : { notes: [] })),
+        fetch('/api/me').then((r) => (r.ok ? r.json() : { name: null })),
+      ]);
+      notes = n.notes || [];
+      me = m;
+    } catch { return; }
+
+    notes.forEach((n) => list.append(dot(n)));
+    if (me.name) add.hidden = false;
+    root.hidden = notes.length === 0 && !me.name;
+
+    add.addEventListener('click', () => { form.hidden = false; add.hidden = true; area.focus(); });
+    form.querySelector('.r-cancel')!.addEventListener('click', () => { form.hidden = true; add.hidden = false; form.reset(); });
+    area.addEventListener('input', () => { count.textContent = String(280 - area.value.length); });
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      err.textContent = '';
+      const res = await fetch('/api/notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ page, body: area.value }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) { err.textContent = data.error || 'That didn’t save. Try again?'; return; }
+      list.append(dot(data.note));
+      form.reset();
+      count.textContent = '280';
+      form.hidden = true;
+      add.hidden = false;
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!(e.target as Element).closest('.r-dot')) list.querySelectorAll('.r-dot.open').forEach((d) => d.classList.remove('open'));
+    });
+  }
+
+  init();
+</script>
