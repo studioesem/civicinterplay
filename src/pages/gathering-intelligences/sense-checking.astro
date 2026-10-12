@@ -51,6 +51,11 @@ const lines = [
     <section slot="after-place">
       <h2><span class="n"></span>Walk, and add your sightings</h2>
       <p class="sub">Sightings is a shared field for what you notice on a walk: something you hear, or see, or feel. These are examples; add your own on Sightings.</p>
+      <p class="example">
+        <span class="example-label">Example</span>
+        <a href="/walk/">Bells for the First Walk</a>: a guided first walk, paying attention
+        to a place before asking a machine anything about it.
+      </p>
 
       <div class="field" id="field" aria-label="Example sightings">
         <div class="field-head">
@@ -183,6 +188,28 @@ const lines = [
     font-size: 0.9rem;
     padding: 0.55rem 1rem;
     cursor: pointer;
+  }
+
+  .step-page .example {
+    margin: -0.4rem 0 1.25rem;
+    font-family: var(--heading);
+    font-size: var(--fs-small);
+    color: var(--text-dim);
+  }
+
+  .step-page .example-label {
+    margin-right: 0.5rem;
+    font-size: var(--fs-label);
+    font-weight: var(--w-medium);
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    color: var(--purple);
+  }
+
+  .step-page .example a {
+    color: var(--purple);
+    font-weight: var(--w-medium);
+    text-underline-offset: 3px;
   }
 
   .step-page .sight-go {
