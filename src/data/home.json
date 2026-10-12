@@ -58,12 +58,12 @@
       "draft": false
     },
     {
-      "id": "listening",
+      "id": "listening-chart",
       "type": "field-note",
       "kicker": "New",
       "cta": "See what the field is writing about civic AI",
       "href": "/listening/",
-      "alt": "Field note card reading: Listening to an emergent field. The vocabulary of civic AI, counted.",
+      "alt": "Field note card: Listening to an emergent field. A bar chart of research mentions, 13 September 2026: AI governance 16,983, algorithmic governance 2,922, sovereign AI 1,615, down to civic AI 50 and data centres plus community benefit 20.",
       "draft": false
     },
     {
