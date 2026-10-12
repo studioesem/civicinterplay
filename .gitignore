@@ -42,3 +42,4 @@ _image-report.json
 talk-source/
 new content /
 .dev.vars
+.wrangler/
