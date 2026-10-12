@@ -1,0 +1,34 @@
+{
+  "talks": [
+    {
+      "id": "data-for-policy-2026",
+      "title": "Civic Interplay: Towards New AI Governance Imaginaries",
+      "authors": "Sarah Barns",
+      "publisher": "Data for Policy 2026, Digital Statecraft track, Barcelona",
+      "year": "2026",
+      "href": "/talks/data-for-policy-2026-barns.pdf",
+      "accent": "purple",
+      "note": "Whose sovereignty, settled where? How civic interplay works as a practice of knowing, saying and asking, with the data centre build-out as its case. Slides, paper version."
+    },
+    {
+      "id": "aag-2026",
+      "title": "From Platform Urbanism to Civic AI",
+      "authors": "Sarah Barns",
+      "publisher": "American Association of Geographers Annual Meeting, San Francisco",
+      "year": "2026",
+      "href": "/aag-barns-2026.pdf",
+      "accent": "terracotta",
+      "note": "Slides from the American Association of Geographers Annual Meeting, April 2026."
+    },
+    {
+      "id": "ai-stack-2026",
+      "title": "Rethinking the AI stack from the ground up, through recursive monitoring methods",
+      "authors": "Sarah Barns",
+      "publisher": "Zenodo",
+      "year": "2026",
+      "href": "https://doi.org/10.5281/zenodo.21980636",
+      "accent": "periwinkle",
+      "note": "Conference paper, 2026. Open access on Zenodo."
+    }
+  ]
+}

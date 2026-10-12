@@ -5,6 +5,7 @@ import PostCard from '../components/PostCard.astro';
 import ReadingCard from '../components/ReadingCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import readingsData from '../data/readings.json';
+import talksData from '../data/talks.json';
 
 // MOCKUP of Reading under the new menu: Publications on civic AI, Essays, Notes,
 // Field notes. Project posts move to Projects; "What can you do here?" is
@@ -69,6 +70,7 @@ const fieldNotes = [
   },
 ];
 
+const talks = talksData.talks;
 const publications = readingsData.readings;
 ---
 <BaseLayout title="Reading" description="Publications from the field of Civic AI, Participatory AI, and governing infrastructural AI. Essays and Field notes explore ideas and practices out in the open.">
@@ -80,7 +82,7 @@ const publications = readingsData.readings;
       <p class="standfirst">
         Publications from the field of Civic AI, Participatory AI, and
         governing infrastructural AI. Essays and Field notes explore ideas and
-        practices out in the open.
+        practices out in the open, alongside talks and papers.
       </p>
     </header>
 
@@ -90,6 +92,7 @@ const publications = readingsData.readings;
         <li><a href="#essays">Essays <span class="count">{essays.length}</span></a></li>
         <li><a href="#notes">Notes <span class="count">{notes.length}</span></a></li>
         <li><a href="#field-notes">Field notes <span class="count">{fieldNotes.length}</span></a></li>
+        <li><a href="#talks">Talks and papers <span class="count">{talks.length}</span></a></li>
       </ul>
     </nav>
 
@@ -125,6 +128,15 @@ const publications = readingsData.readings;
       <div class="post-grid">
         {fieldNotes.map((c) => (
           <PostCard href={c.href} title={c.title} excerpt={c.excerpt} categoryLabel="Field note" accent="cream" image={c.image} imageAlt={c.imageAlt} date={c.date} />
+        ))}
+      </div>
+    </section>
+
+    <section id="talks" class="rsec">
+      <SectionHeading title="Talks and papers" />
+      <div class="post-grid">
+        {talks.map((t) => (
+          <ReadingCard title={t.title} authors={t.authors} publisher={t.publisher} year={t.year} href={t.href} note={t.note} accent={t.accent} />
         ))}
       </div>
     </section>

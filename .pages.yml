@@ -128,6 +128,45 @@ content:
             required: true
             description: Two or three sentences in your own voice on why this belongs. This commentary is the point; without it the page is only a list of links.
 
+  - name: talks
+    label: Talks and papers
+    type: file
+    path: src/data/talks.json
+    format: json
+    fields:
+      - name: talks
+        label: Talks
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: ID
+            type: string
+            required: true
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: authors
+            label: Speakers / authors
+            type: string
+          - name: publisher
+            label: Event, place
+            type: string
+          - name: year
+            label: Year
+            type: string
+          - name: href
+            label: Link (slides PDF, paper or DOI)
+            type: string
+          - name: accent
+            label: Colour
+            type: select
+            options:
+              values: [purple, terracotta, periwinkle, pink, cream]
+          - name: note
+            label: What it's about
+            type: text
   - name: fieldnotes
     label: Field notes
     type: collection
