@@ -12,7 +12,6 @@
         <li><a href="/projects/">Projects</a></li>
         <li><a href="/about/">About</a></li>
       </ul>
-      <p class="footer-signin"><a href="/reflections/sign-in/" data-signin>Sign in to leave a reflection</a></p>
     </nav>
     <p class="footer-credit">
       <a href="https://cur.org.au/">
@@ -34,16 +33,6 @@
 
   .footer-wf .footer-links {
     justify-content: center;
-  }
-
-  .footer-signin {
-    margin: 0.8rem 0 0;
-    text-align: center;
-    font-size: 0.72rem;
-  }
-
-  .footer-signin a {
-    color: var(--text-faint);
   }
 
   .footer-credit {
@@ -81,10 +70,3 @@
     .footer-device { margin: 0 auto 0.6rem; }
   }
 </style>
-
-<script>
-  // Come back to the page you were on after signing in.
-  document.querySelectorAll<HTMLAnchorElement>('a[data-signin]').forEach((a) => {
-    a.href = '/reflections/sign-in/?return=' + encodeURIComponent(location.pathname);
-  });
-</script>

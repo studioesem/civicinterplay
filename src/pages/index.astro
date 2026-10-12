@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Reflections from '../components/Reflections.astro';
 import Hero from '../components/Hero.astro';
 import Tile from '../components/Tile.astro';
 import ReadingCard from '../components/ReadingCard.astro';
@@ -160,6 +161,8 @@ const publications = readingsData.readings.slice(0, 3);
           University's <a href="https://cur.org.au/">Centre for Urban Research</a>.
         </p>
       </div>
+
+      <Reflections bare />
 
       <!-- E. Projects -->
       <section class="sec" aria-labelledby="projects-h">

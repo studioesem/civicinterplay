@@ -1,10 +1,14 @@
 ---
-// Reflections: short notes left on a page by invited people (Sarah, Irina,
-// others on the POSTERS list). Anyone can read; only signed-in posters can
-// write. Notes load in the browser from /api/notes, so the static pages don't
-// need rebuilding when one is added. Pages with no notes show nothing.
+// Reflections: short notes left by invited people (on the POSTERS list).
+// Anyone can read; only signed-in posters can write. Notes load in the
+// browser from /api/notes, so the static pages don't need rebuilding when
+// one is added. With no notes and nobody signed in, it shows nothing.
+// It sits on the homepage above Projects; `bare` drops the page container
+// when it's placed inside a section that already has one.
+interface Props { bare?: boolean }
+const { bare = false } = Astro.props;
 ---
-<div class="reflections container container-wide" data-reflections hidden>
+<div class:list={["reflections", !bare && "container container-wide", bare && "bare"]} data-reflections hidden>
   <span class="r-label">Reflections</span>
   <ul class="r-dots" aria-label="Reflections on this page"></ul>
   <button type="button" class="r-add" hidden>+ Leave a reflection</button>
@@ -34,6 +38,7 @@
   }
 
   .reflections[hidden] { display: none; }
+  .reflections.bare { margin: 0 0 var(--space-m, 1.5rem); }
 
   .r-label {
     font-size: var(--fs-label);

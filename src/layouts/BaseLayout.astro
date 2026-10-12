@@ -30,7 +30,7 @@ interface Props {
   dataset?: DatasetMeta;
   /** Keeps a page out of search results (mockups, drafts). */
   noindex?: boolean;
-  /** Show the reflections row under the header. */
+  /** Show the reflections row under the header. Off by default; the homepage places its own. */
   reflections?: boolean;
 }
 
@@ -41,7 +41,7 @@ const {
   article,
   dataset,
   noindex = false,
-  reflections = true,
+  reflections = false,
 } = Astro.props;
 
 const fullTitle = title === 'Civic Interplay' ? title : `${title} · Civic Interplay`;
