@@ -3,8 +3,8 @@
 // Anyone can read; only signed-in posters can write. Notes load in the
 // browser from /api/notes, so the static pages don't need rebuilding when
 // one is added. With no notes and nobody signed in, it shows nothing.
-// It sits on the homepage above Projects; `bare` drops the page container
-// when it's placed inside a section that already has one.
+// It sits in the footer, below a thin rule, as a notes space for the page;
+// `bare` drops the page container when the parent already has one.
 interface Props { bare?: boolean }
 const { bare = false } = Astro.props;
 ---
@@ -38,7 +38,14 @@ const { bare = false } = Astro.props;
   }
 
   .reflections[hidden] { display: none; }
-  .reflections.bare { margin: 0 0 var(--space-m, 1.5rem); }
+  /* In the footer: a thin rule above, and cards open upwards. */
+  .reflections.bare {
+    margin: 2rem 0 0;
+    padding: 1.4rem 0 0.6rem;
+    border-top: 1px solid #ddd;
+    text-align: left;
+  }
+  .reflections.bare .r-card { top: auto; bottom: calc(100% + 10px); }
 
   .r-label {
     font-size: var(--fs-label);
