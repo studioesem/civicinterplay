@@ -12,7 +12,10 @@ content:
       - name: hotspots
         label: Hero hotspots
         type: object
-        list: true
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.label}"
         description: The provocations that pop up over the header illustration. Positions are a percentage across and down the header box, so 50 / 50 is dead centre. Keep them above about 55 down, or they collide with the title.
         fields:
           - name: label
@@ -31,7 +34,10 @@ content:
       - name: tiles
         label: Tiles
         type: object
-        list: true
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.cta}"
         fields:
           - name: id
             label: Image id
@@ -98,7 +104,10 @@ content:
       - name: audiences
         label: Working with Civic Interplay (who it's for)
         type: object
-        list: true
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.name}"
         description: Shown inside the "Working with Civic Interplay" fold, above the Get in touch button.
         fields:
           - name: name
@@ -128,7 +137,10 @@ content:
       - name: readings
         label: Readings
         type: object
-        list: true
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.title} ({fields.year})"
         fields:
           - name: id
             label: ID
@@ -468,7 +480,10 @@ content:
       - name: talks
         label: Presentations
         type: object
-        list: true
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.title}"
         fields:
           - name: id
             label: ID
@@ -509,7 +524,10 @@ content:
       - name: tools
         label: Items
         type: object
-        list: true
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.title}"
         fields:
           - name: title
             label: Title
