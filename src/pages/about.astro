@@ -51,6 +51,7 @@ const splitFirst = (body: string) => {
         <li class="fill-plum"><a href="/we-care-rmit/"><span>Place</span>WeCare, City North</a></li>
         <li class="fill-terracotta"><a href="/gathering-intelligences/"><span>Method</span>Gathering Intelligences</a></li>
       </ul>
+      <p class="more-tools"><a href="/projects/#tools">Tools &amp; experiments <span aria-hidden="true">&rarr;</span></a></p>
         </div>
       </details>
     </section>
@@ -408,6 +409,10 @@ const splitFirst = (body: string) => {
       outline: 3px solid var(--pink);
       outline-offset: 3px;
     }
+
+    .more-tools { margin: 1.2rem 0 0; font-family: var(--heading); font-weight: var(--w-medium); }
+    .more-tools a { text-decoration: none; }
+    .more-tools a:hover { text-decoration: underline; }
 
     .contact-button {
       display: inline-block;
