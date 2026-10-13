@@ -63,7 +63,28 @@ export default {
   },
 };
 
-const firstUrl = (s) => (s.match(/https?:\/\/[^\s<>"')\]]+/) || [])[0]?.replace(/[.,;:]+$/, '');
+const firstUrl = (s) => {
+  const u = (s.match(/https?:\/\/[^\s<>"')\]]+/) || [])[0]?.replace(/[.,;:]+$/, '');
+  return u && unwrap(u);
+};
+
+// Mail services wrap links in their own redirects (Gmail, Outlook safe links,
+// university filters). Use the real address inside.
+function unwrap(u) {
+  for (let i = 0; i < 3; i++) {
+    let url;
+    try { url = new URL(u); } catch { return u; }
+    const host = url.hostname;
+    const inner =
+      (/(^|\.)google\.[a-z.]+$/.test(host) && url.pathname === '/url' && (url.searchParams.get('q') || url.searchParams.get('url'))) ||
+      (/safelinks\.protection\.outlook\.com$/.test(host) && url.searchParams.get('url')) ||
+      (/^urldefense\.(com|proofpoint\.com)$/.test(host) && (url.pathname.match(/\/v3\/__(.+?)__;/) || [])[1]) ||
+      null;
+    if (!inner || !/^https?:\/\//.test(inner)) return u;
+    u = inner;
+  }
+  return u;
+}
 
 // Your own words: the email text without the link, quoted replies or signature.
 function noteFrom(text, url) {
