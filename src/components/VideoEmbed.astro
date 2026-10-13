@@ -138,6 +138,10 @@ const ratioStyle = useNativeRatio ? '' : `--video-aspect: ${aspectRatio};`;
     background: #f8f8f8;
     padding: 0.85rem 1.25rem;
     border-top: 2px solid var(--border);
+    /* Full width under the video, even inside posts, where figcaptions are
+       otherwise narrow and centred. */
+    max-width: none;
+    margin: 0;
   }
 
   .video-embed-caption-text {
