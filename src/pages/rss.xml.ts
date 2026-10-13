@@ -13,7 +13,7 @@ type Item = { title: string; link: string; description: string; category: string
 
 export async function GET() {
   const items: Item[] = [];
-  const LABEL: Record<string, string> = { essay: 'Essay', note: 'Note', experiment: 'Experiment' };
+  const LABEL: Record<string, string> = { essay: 'Essay', note: 'Field note', experiment: 'Experiment' };
 
   for (const p of await getCollection('posts')) {
     if (p.data.draft || !LABEL[p.data.section]) continue;
@@ -58,7 +58,7 @@ export async function GET() {
 <title>Civic Interplay: Reading</title>
 <link>${SITE}/reading/</link>
 <atom:link href="${SITE}/rss.xml" rel="self" type="application/rss+xml"/>
-<description>Readings on civic AI and surrounds, essays, notes, field notes and presentations from Civic Interplay.</description>
+<description>Readings on civic AI and surrounds, essays, presentations and field notes from Civic Interplay.</description>
 <language>en-au</language>
 ${items
   .map(

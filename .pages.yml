@@ -202,7 +202,7 @@ content:
             description: Links emailed to add@in.civicinterplay.io arrive hidden. Check the details, then untick to publish.
 
   - name: posts
-    label: Essays, notes & experiments
+    label: Essays, field notes & experiments
     type: collection
     path: src/content/posts
     extension: mdx
@@ -228,13 +228,13 @@ content:
         type: select
         required: true
         default: essay
-        description: Where it is listed. Essays, Notes and Experiments appear on Reading; Projects belong on the Projects page; Not listed keeps the page live but out of the lists.
+        description: Where it is listed. Essays, Field notes and Experiments appear on Reading; Projects belong on the Projects page; Not listed keeps the page live but out of the lists.
         options:
           values:
             - value: essay
               label: Essay
             - value: note
-              label: Note
+              label: Field note
             - value: experiment
               label: Experiment
             - value: project
@@ -357,7 +357,7 @@ content:
         type: rich-text
 
   - name: fieldnotes
-    label: Field notes
+    label: Field notes (illustrated pages)
     type: collection
     path: src/content/fieldnotes
     extension: mdx

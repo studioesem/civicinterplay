@@ -27,7 +27,7 @@ const { Content } = await post.render();
 // same one that decides where it is listed.
 const SECTIONS: Record<string, { label: string; colour: string; href: string; parent: string; parentHref: string }> = {
   essay: { label: 'Essay', colour: 'var(--purple)', href: '/reading/#essays', parent: 'Reading', parentHref: '/reading/' },
-  note: { label: 'Note', colour: 'var(--terracotta)', href: '/reading/#notes', parent: 'Reading', parentHref: '/reading/' },
+  note: { label: 'Field note', colour: 'var(--terracotta)', href: '/reading/#field-notes', parent: 'Reading', parentHref: '/reading/' },
   experiment: { label: 'Experiment', colour: 'var(--pink)', href: '/reading/#experiments', parent: 'Reading', parentHref: '/reading/' },
   project: { label: 'Project', colour: 'var(--purple)', href: '/projects/', parent: 'Projects', parentHref: '/projects/' },
 };

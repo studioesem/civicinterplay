@@ -35,10 +35,10 @@ const card = (p: (typeof posts)[number], label: string, accent: 'purple' | 'terr
 
 // Each post's Section (set in the CMS) decides where it is listed.
 const essays = posts.filter((p) => p.data.section === 'essay').map((p) => card(p, 'Essay', 'purple'));
-const notes = posts.filter((p) => p.data.section === 'note').map((p) => card(p, 'Note', 'terracotta'));
+const notes = posts.filter((p) => p.data.section === 'note').map((p) => ({ ...card(p, 'Field note', 'cream'), ts: p.data.publishedAt.valueOf() }));
 const experiments = posts.filter((p) => p.data.section === 'experiment').map((p) => card(p, 'Experiment', 'cream'));
 
-const fieldNotes = [
+const fieldNoteCards = [
   ...(await getCollection('fieldnotes'))
     .filter((n) => !n.data.draft)
     .map((n) => ({
@@ -48,6 +48,7 @@ const fieldNotes = [
       image: `/images/tiles/${n.data.tileId}-560.webp`,
       imageAlt: n.data.imageAlt,
       date: formatDate(n.data.publishedAt),
+      ts: n.data.publishedAt.valueOf(),
     })),
   {
     href: '/listening/',
@@ -56,8 +57,13 @@ const fieldNotes = [
     image: '/images/tiles/listening-chart-560.webp',
     imageAlt: 'Bar chart of research mentions: AI governance dwarfs civic AI and data centres plus community benefit.',
     date: undefined,
+    ts: 0,
   },
 ];
+
+// Field notes: the post notes and the field note pages together, newest
+// first ("Notes" was merged in, 13 Oct 2026).
+const fieldNotes = [...notes, ...fieldNoteCards].sort((a, b) => b.ts - a.ts);
 
 const talks = talksData.talks;
 // Hidden entries (e.g. links emailed to add@in.civicinterplay.io) wait for review in the CMS.
@@ -70,7 +76,7 @@ const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
 <BaseLayout title="Reading" description="Publications from the field of Civic AI, Participatory AI, and governing infrastructural AI. Essays and Field notes explore ideas and practices out in the open.">
 
   <main class="container reading">
-    <header class="reading-header">
+    <header class="reading-header" id="top">
       <p class="eyebrow">Reading</p>
       <h1>Reading</h1>
       <p class="standfirst">
@@ -80,7 +86,7 @@ const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
       </p>
       <p class="contribute">
         Want to share a story here?
-        <a class="contribute-link" href="/about/#contact" data-u="sarah" data-d="studioesem.com" data-subject="Request to contribute to Civic Interplay">Request to be a contributor <span aria-hidden="true">&rarr;</span></a>
+        <a class="contribute-link" href="/about/#contact" data-u="sarah.barns2" data-d="rmit.edu.au" data-subject="Request to contribute to Civic Interplay">Request to be a contributor <span aria-hidden="true">&rarr;</span></a>
       </p>
     </header>
 
@@ -88,16 +94,15 @@ const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
       <ul>
         <li><a href="#publications">Readings on civic AI and surrounds <span class="count">{publications.length}</span></a></li>
         <li><a href="#essays">Essays <span class="count">{essays.length}</span></a></li>
-        <li><a href="#notes">Notes <span class="count">{notes.length}</span></a></li>
         {experiments.length > 0 && <li><a href="#experiments">Experiments <span class="count">{experiments.length}</span></a></li>}
-        <li><a href="#field-notes">Field notes <span class="count">{fieldNotes.length}</span></a></li>
         <li><a href="#talks">Presentations <span class="count">{talks.length}</span></a></li>
+        <li><a href="#field-notes">Field notes <span class="count">{fieldNotes.length}</span></a></li>
       </ul>
     </nav>
 
     <p class="feed">
       <a class="rss" href="/rss.xml" title="Subscribe to Reading by RSS"><svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="3" cy="13" r="2" fill="currentColor"/><path d="M1 7a8 8 0 0 1 8 8M1 2a13 13 0 0 1 13 13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>RSS</a>
-      <span>New readings, essays and notes in your feed reader</span>
+      <span>New readings, essays and field notes in your feed reader</span>
     </p>
 
     <p class="tracker">
@@ -123,20 +128,13 @@ const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
 
     <section id="essays" class="rsec">
       <SectionHeading title="Essays" />
+      <p class="rsec-intro">Exploratory thinking and experience in longer form, narrative prose.</p>
       <div class="post-grid">
         {essays.map((c) => (
           <PostCard href={c.href} title={c.title} excerpt={c.excerpt} categoryLabel={c.label} accent={c.accent} image={c.image} imageAlt={c.imageAlt} date={c.date} video={c.video} videoWebm={c.videoWebm} />
         ))}
       </div>
-    </section>
-
-    <section id="notes" class="rsec">
-      <SectionHeading title="Notes" />
-      <div class="post-grid">
-        {notes.map((c) => (
-          <PostCard href={c.href} title={c.title} excerpt={c.excerpt} categoryLabel={c.label} accent={c.accent} image={c.image} imageAlt={c.imageAlt} date={c.date} video={c.video} videoWebm={c.videoWebm} />
-        ))}
-      </div>
+      <p class="to-top"><a href="#top">Back to top <span aria-hidden="true">&uarr;</span></a></p>
     </section>
 
     {experiments.length > 0 && (
@@ -147,26 +145,32 @@ const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
           <PostCard href={c.href} title={c.title} excerpt={c.excerpt} categoryLabel={c.label} accent={c.accent} image={c.image} imageAlt={c.imageAlt} date={c.date} video={c.video} videoWebm={c.videoWebm} />
         ))}
       </div>
+      <p class="to-top"><a href="#top">Back to top <span aria-hidden="true">&uarr;</span></a></p>
     </section>
     )}
 
-    <section id="field-notes" class="rsec">
-      <SectionHeading title="Field notes" />
-      <div class="post-grid">
-        {fieldNotes.map((c) => (
-          <PostCard href={c.href} title={c.title} excerpt={c.excerpt} categoryLabel="Field note" accent="cream" image={c.image} imageAlt={c.imageAlt} date={c.date} />
-        ))}
-      </div>
-    </section>
 
     <section id="talks" class="rsec">
       <SectionHeading title="Presentations" />
+      <p class="rsec-intro">Recent appearances at conferences and events.</p>
       <div class="post-grid">
         {talks.map((t) => (
           <ReadingCard title={t.title} authors={t.authors} publisher={t.publisher} year={t.year} href={t.href} note={t.note} accent={t.accent} />
         ))}
       </div>
       <p class="more-link"><a href="https://sarahbarns.com/">More talks and presentations at sarahbarns.com <span aria-hidden="true">&rarr;</span></a></p>
+      <p class="to-top"><a href="#top">Back to top <span aria-hidden="true">&uarr;</span></a></p>
+    </section>
+
+    <section id="field-notes" class="rsec">
+      <SectionHeading title="Field notes" />
+      <p class="rsec-intro">Thoughts or reflections in motion. Note: may contain poetry, or AI slop, or test ideas.</p>
+      <div class="post-grid">
+        {fieldNotes.map((c) => (
+          <PostCard href={c.href} title={c.title} excerpt={c.excerpt} categoryLabel="Field note" accent="cream" image={c.image} imageAlt={c.imageAlt} date={c.date} />
+        ))}
+      </div>
+      <p class="to-top"><a href="#top">Back to top <span aria-hidden="true">&uarr;</span></a></p>
     </section>
   </main>
 
@@ -220,6 +224,23 @@ const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
       vertical-align: 1px;
     }
     .rss:hover, .rss:focus-visible { background: var(--terracotta); color: #fff; }
+
+    .rsec-intro {
+      margin: -0.6rem 0 1.4rem;
+      font-family: var(--body);
+      font-style: italic;
+      font-weight: var(--w-light);
+      color: var(--text-dim);
+      max-width: 62ch;
+    }
+    .to-top {
+      margin: 1.2rem 0 0;
+      text-align: right;
+      font-family: var(--heading);
+      font-size: var(--fs-small);
+    }
+    .to-top a { color: var(--text-dim); text-decoration: none; }
+    .to-top a:hover, .to-top a:focus-visible { color: var(--purple); text-decoration: underline; }
 
     .tag-filter { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1.4rem; }
     .tag-btn {
