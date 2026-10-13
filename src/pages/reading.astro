@@ -71,12 +71,16 @@ const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
 
   <main class="container reading">
     <header class="reading-header">
-      <p class="eyebrow">Reading <a class="rss" href="/rss.xml" title="Subscribe to Reading by RSS"><svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="3" cy="13" r="2" fill="currentColor"/><path d="M1 7a8 8 0 0 1 8 8M1 2a13 13 0 0 1 13 13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>RSS</a></p>
+      <p class="eyebrow">Reading</p>
       <h1>Reading</h1>
       <p class="standfirst">
         Publications from the field of Civic AI, Participatory AI, and
         governing infrastructural AI. Essays and Field notes explore ideas and
         practices out in the open, alongside presentations.
+      </p>
+      <p class="contribute">
+        Want to share a story here?
+        <a class="contribute-link" href="/about/#contact" data-u="sarah" data-d="studioesem.com" data-subject="Request to contribute to Civic Interplay">Request to be a contributor <span aria-hidden="true">&rarr;</span></a>
       </p>
     </header>
 
@@ -90,6 +94,11 @@ const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
         <li><a href="#talks">Presentations <span class="count">{talks.length}</span></a></li>
       </ul>
     </nav>
+
+    <p class="feed">
+      <a class="rss" href="/rss.xml" title="Subscribe to Reading by RSS"><svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="3" cy="13" r="2" fill="currentColor"/><path d="M1 7a8 8 0 0 1 8 8M1 2a13 13 0 0 1 13 13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>RSS</a>
+      <span>New readings, essays and notes in your feed reader</span>
+    </p>
 
     <p class="tracker">
       <span class="tracker-label">Tracking the field</span>
@@ -203,7 +212,6 @@ const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;
-      margin-left: 0.8rem;
       padding: 0.1rem 0.55rem;
       border: 1.5px solid currentColor;
       border-radius: 999px;
@@ -271,8 +279,26 @@ const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
       color: var(--text-faint);
     }
 
+    .feed {
+      margin: -1.5rem 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--heading);
+      font-size: var(--fs-small);
+      color: var(--text-dim);
+    }
+
+    .contribute {
+      margin: 1rem 0 0;
+      font-family: var(--heading);
+      font-size: var(--fs-small);
+      color: var(--text-dim);
+    }
+    .contribute-link { color: var(--purple); font-weight: var(--w-medium); margin-left: 0.3rem; }
+
     .tracker {
-      margin: -1.5rem 0 2.75rem;
+      margin: 0 0 2.75rem;
       font-family: var(--heading);
       font-size: var(--fs-small);
       color: var(--text-dim);
@@ -330,6 +356,13 @@ const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
     }
   </style>
   <script>
+    // Contributor link: build the mail address here so it isn't in the page
+    // source for harvesters. Without JavaScript it goes to About's contact.
+    document.querySelectorAll<HTMLAnchorElement>('a.contribute-link[data-u]').forEach((a) => {
+      const subject = encodeURIComponent(a.dataset.subject ?? '');
+      a.href = `mailto:${a.dataset.u}@${a.dataset.d}?subject=${subject}`;
+    });
+
     // Tag filter for the readings: one tag at a time, "All" to reset.
     const btns = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
     const cards = document.querySelectorAll<HTMLElement>('#publications .reading-card');
