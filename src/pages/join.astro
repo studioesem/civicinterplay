@@ -24,9 +24,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </p>
     <p>
       If you&rsquo;re interested in being a part of this journey of
-      experimentation, please get in touch. If you&rsquo;d like to learn more
-      about the project, visit <a href="/proposition/">The Proposition</a>.
+      experimentation, please get in touch.
     </p>
+    <p class="more"><a href="/about/">More about Civic Interplay <span aria-hidden="true">&rarr;</span></a></p>
 
     <h2>What you might share</h2>
     <ul class="kinds">
@@ -88,6 +88,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       margin: 0 0 1.2rem;
     }
     p a:not(.cta-button) { color: var(--purple); }
+    .more a { font-family: var(--heading); font-weight: var(--w-medium); text-decoration: none; }
+    .more a:hover { text-decoration: underline; }
     p {
       font-family: var(--body);
       font-weight: var(--w-light);
