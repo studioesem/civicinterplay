@@ -1,0 +1,14 @@
+# Email worker: links sent to add@in.civicinterplay.io become hidden drafts in
+# src/data/readings.json (Publications on civic AI), for review in the CMS.
+# Secrets (wrangler secret put, never in the repo):
+#   ALLOWED_SENDERS  JSON list of addresses that may add links
+#   GITHUB_TOKEN     fine-grained token: contents read/write on studioesem/civicinterplay
+name = "civicinterplay-inbox"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+REPO = "studioesem/civicinterplay"
+FILE = "src/data/readings.json"
+BRANCH = "main"

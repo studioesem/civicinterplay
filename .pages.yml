@@ -170,6 +170,11 @@ content:
             type: text
             required: true
             description: Two or three sentences in your own voice on why this belongs. This commentary is the point; without it the page is only a list of links.
+          - name: draft
+            label: Hidden (waiting for review)
+            type: boolean
+            default: false
+            description: Links emailed to add@in.civicinterplay.io arrive hidden. Check the details, then untick to publish.
 
   - name: posts
     label: Essays, notes & experiments

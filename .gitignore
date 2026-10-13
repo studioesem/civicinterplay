@@ -43,3 +43,4 @@ talk-source/
 new content /
 .dev.vars
 .wrangler/
+workers/inbox/node_modules/

@@ -66,7 +66,7 @@ const slides = [
   },
 ];
 
-const publications = readingsData.readings.slice(0, 3);
+const publications = readingsData.readings.filter((r) => !('draft' in r && r.draft)).slice(0, 3);
 ---
 <BaseLayout title="Civic Interplay" description="Place-based civic enquiry with digital and AI methods.">
 

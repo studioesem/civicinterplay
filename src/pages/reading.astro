@@ -60,7 +60,8 @@ const fieldNotes = [
 ];
 
 const talks = talksData.talks;
-const publications = readingsData.readings;
+// Hidden entries (e.g. links emailed to add@in.civicinterplay.io) wait for review in the CMS.
+const publications = readingsData.readings.filter((r) => !('draft' in r && r.draft));
 ---
 <BaseLayout title="Reading" description="Publications from the field of Civic AI, Participatory AI, and governing infrastructural AI. Essays and Field notes explore ideas and practices out in the open.">
 

@@ -1,0 +1,9 @@
+{
+  "name": "civicinterplay-inbox",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "mimetext": "^3.0.24",
+    "postal-mime": "^2.4.4"
+  }
+}
