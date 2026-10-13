@@ -12,6 +12,15 @@ import readingsData from '../data/readings.json';
 
 const tiles = home.tiles.filter((t) => !t.draft);
 
+// Why section text (CMS: Home page > Why Civic Interplay). Blank lines start a
+// new paragraph; *asterisks* mark italics.
+const escapeHtml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const whyParas = (home.why?.body ?? '')
+  .split(/\n\s*\n/)
+  .map((p) => p.trim())
+  .filter(Boolean)
+  .map((p) => escapeHtml(p).replace(/\*([^*]+)\*/g, '<em>$1</em>'));
+
 const heroImage = '/images/CivicAI_Visualisation_v2-03_FLAT.jpg';
 const heroAlt =
   'Illustration of a street where civic AI is already at work: air quality, road, soil and tree sensors mounted on light poles, with people walking, cycling and using wheelchairs moving through it, picked out in magenta and purple.';
@@ -125,25 +134,12 @@ const publications = readingsData.readings.filter((r) => !('draft' in r && r.dra
         <div class="sec-head"><h2 id="why-h" class="sec-label">Why Civic Interplay</h2></div>
         <div class="why">
           <div class="why-left">
-            <p class="why-statement">There is more information about our places than ever before.</p>
-            <p class="why-sub">More of each place, its infrastructure and its services, is built through digital intelligence.</p>
-            <p class="why-asks">But who gets to make sense of this? And who gets to act on it?</p>
+            <p class="why-statement">{home.why?.statement}</p>
+            <p class="why-sub">{home.why?.sub}</p>
+            <p class="why-asks">{home.why?.asks}</p>
           </div>
           <div class="why-right">
-            <p class="why-body">
-              Civic Interplay explores how digital and AI methods can support
-              place-based civic enquiry. It looks at how places are assembled
-              as digital objects and governance ecosystems, and examines the
-              forms of accountability and legibility these systems foster.
-            </p>
-            <p class="why-body">
-              As a practice, Civic Interplay seeks <em>locations where digital
-              architectures, sense-making and civic participation can be
-              examined in more collaborative ways</em>. In this way, it aims to
-              bring greater legibility, accountability and trustworthiness to
-              the institutional systems and practices that shape and
-              govern places through time.
-            </p>
+            {whyParas.map((p) => <p class="why-body" set:html={p} />)}
             <p class="text-link"><a href="/proposition/">Learn more <span aria-hidden="true">&rarr;</span></a></p>
           </div>
         </div>

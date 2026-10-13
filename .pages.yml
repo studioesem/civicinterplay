@@ -9,6 +9,24 @@ content:
     path: src/data/home.json
     format: json
     fields:
+      - name: why
+        label: Why Civic Interplay
+        type: object
+        description: The two-column section under the hero.
+        fields:
+          - name: statement
+            label: Opening line (large, left)
+            type: string
+          - name: sub
+            label: Second line (left)
+            type: text
+          - name: asks
+            label: Questions (left)
+            type: string
+          - name: body
+            label: Paragraphs (right)
+            type: text
+            description: Leave a blank line between paragraphs. Put *asterisks* around words to set them in italics.
       - name: hotspots
         label: Hero hotspots
         type: object

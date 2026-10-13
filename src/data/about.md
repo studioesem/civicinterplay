@@ -4,7 +4,7 @@ description: Civic Interplay explores how digital and AI methods can support
   place-based civic enquiry.
 standfirst: >-
   Civic Interplay explores how digital and AI methods can support grounded,
-  place-based civic enquiry. 
+  place-based civic enquiry, towards more care-full and resilient futures.
 
 
   In the context of AI services, it recognises that governing digital

@@ -138,5 +138,11 @@
       "alt": "Field note card reading: Workflows and prompts, forkable.",
       "draft": false
     }
-  ]
+  ],
+  "why": {
+    "statement": "There is more information about our places than ever before.",
+    "sub": "More of each place, its infrastructure and its services, is built through digital intelligence.",
+    "asks": "But who gets to make sense of this? And who gets to act on it?",
+    "body": "Civic Interplay explores how digital and AI methods can support place-based civic enquiry, towards more care-full and resilient futures. It looks at how places are assembled as digital objects and governance ecosystems, and examines the forms of accountability and legibility these systems foster.\n\nAs a practice, Civic Interplay seeks *locations where digital architectures, sense-making and civic participation can be examined in more collaborative ways*. In this way, it aims to bring greater legibility, accountability and trustworthiness to the institutional systems and practices that shape and govern places through time."
+  }
 }
