@@ -79,7 +79,7 @@ const splitFirst = (body: string) => {
                   ))}
                 </dl>
                 <p id="contact">
-                  <a class="contact-button" href="https://www.rmit.edu.au/profiles/b/sarah-barns2" data-u="sarah" data-d="studioesem.com" rel="nofollow">Get in touch</a>
+                  <a class="contact-button" href="/join/">Join Civic Interplay <span aria-hidden="true">&rarr;</span></a>
                 </p>
               </>
             )}
@@ -252,7 +252,7 @@ const splitFirst = (body: string) => {
       margin: 0 0 1rem;
     }
     .md :global(strong) { font-weight: 700; }
-    .md :global(a) { color: var(--purple); text-underline-offset: 3px; }
+    .md :global(a:not(.contact-button)) { color: var(--purple); text-underline-offset: 3px; }
     .md :global(ul), .md :global(ol) { font-family: var(--body); font-weight: var(--w-light); line-height: 1.7; padding-left: 1.2rem; }
 
     a {
@@ -522,9 +522,4 @@ const splitFirst = (body: string) => {
     }
   </style>
 
-  <script>
-    document.querySelectorAll('a.contact-button[data-u]').forEach((a) => {
-      a.setAttribute('href', 'mailto:' + a.getAttribute('data-u') + '@' + a.getAttribute('data-d'));
-    });
-  </script>
 </BaseLayout>

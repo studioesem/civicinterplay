@@ -1,6 +1,6 @@
 // Who is posting? Verifies the Cloudflare Access login cookie (a signed JWT)
 // against the team's public keys, then maps the email to a first name from
-// the POSTERS secret, e.g. {"sarah@studioesem.com":"Sarah"}.
+// the POSTERS secret, e.g. {"name@example.org":"Sarah"}.
 // Only people on that list can post, whatever Access lets through.
 
 let certsCache = null;
