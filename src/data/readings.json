@@ -9,7 +9,13 @@
       "href": "https://journals.sagepub.com/doi/10.1177/23998083241296200",
       "accent": "purple",
       "note": "A core reference for the Civic AI methodology. Sieber and colleagues ask what civic participation in AI actually means, and note that AI's opacity, mutability and resource requirements impede meaningful engagement, particularly in cities. They distinguish institutional transparency, functional empowerment and democratic empowerment.",
-      "draft": false
+      "draft": false,
+      "doi": "10.1177/23998083241296200",
+      "tags": [
+        "participation",
+        "civic AI",
+        "cities"
+      ]
     },
     {
       "id": "buchan-magnificent-humanity",
@@ -20,7 +26,12 @@
       "href": "https://news.liverpool.ac.uk/2026/09/07/professor-iain-buchan-explores-liverpools-opportunity-to-lead-on-civic-ai/",
       "accent": "periwinkle",
       "note": "Liverpool built the world's first civic data cooperative on the back of its public health history. In this piece, Buchan argues for a civic path to AI that serves lives, livelihoods and life chances. Buchan's connected city architecture models civic AI governance and stewardship at the level of the city precinct and is an inspiration for civic interplay.",
-      "draft": false
+      "draft": false,
+      "tags": [
+        "civic AI",
+        "cities",
+        "data stewardship"
+      ]
     },
     {
       "id": "liverpool-ai-charter",
@@ -31,7 +42,12 @@
       "href": "https://news.liverpool.ac.uk/2025/07/04/first-of-its-kind-ai-charter-to-drive-responsible-data-sharing-in-liverpool-city-region/",
       "accent": "periwinkle",
       "note": "A first-of-its-kind charter for responsible data sharing across a city region, which is what it looks like when civic AI stops being a framing and becomes a document people sign.",
-      "draft": false
+      "draft": false,
+      "tags": [
+        "data stewardship",
+        "governance",
+        "cities"
+      ]
     },
     {
       "id": "digital-statecraft-manifesto",
@@ -42,7 +58,11 @@
       "href": "https://digitalstatecraft.academy/the_digital_statecraft_manifesto_v1-0/",
       "accent": "purple",
       "note": "Wonderful work by the Digital Statecraft Academy. “This is not just digital transformation. It is a fundamental reimagining of governance itself—how it works, who it serves, and how it sustains public trust in a world increasingly shaped by algorithms.”",
-      "draft": false
+      "draft": false,
+      "tags": [
+        "governance",
+        "sovereignty"
+      ]
     },
     {
       "id": "ada-going-public",
@@ -53,7 +73,11 @@
       "href": "https://www.adalovelaceinstitute.org/report/going-public-participation-ai/",
       "accent": "terracotta",
       "note": "The Ada Lovelace Institute asked commercial AI labs what public participation they actually do. The answer: belief in it, no consistent methods, and obstacles that are structural rather than technical, being resourcing, siloes, misaligned incentives and commercial sensitivity. Useful for anyone who assumes participation fails for lack of good intentions.",
-      "draft": false
+      "draft": false,
+      "tags": [
+        "participation",
+        "governance"
+      ]
     },
     {
       "id": "ada-public-voices",
@@ -64,7 +88,10 @@
       "href": "https://www.adalovelaceinstitute.org/project/public-voice-in-ai/",
       "accent": "terracotta",
       "note": "The ongoing programme rather than the single report. It works on what the public actually thinks about AI and on the methods for getting those voices into decisions. Crucial because participation is the part everyone endorses and nobody specifies.",
-      "draft": false
+      "draft": false,
+      "tags": [
+        "participation"
+      ]
     },
     {
       "id": "vtaiwan-g0v",
@@ -75,7 +102,11 @@
       "href": "https://www.freiheit.org/taiwan/how-public-participation-can-improve-ai-governance-vtaiwans-initiatives",
       "accent": "forest",
       "note": "A working precedent that shows how a decentralised community can contribute to data governance processes in productive ways.",
-      "draft": false
+      "draft": false,
+      "tags": [
+        "participation",
+        "governance"
+      ]
     },
     {
       "id": "verhulst-anticipatory",
@@ -86,7 +117,11 @@
       "href": "https://arxiv.org/abs/2607.27029",
       "accent": "purple",
       "note": "Seven signals from GovLab forecasting studios. The open data paradigm is under strain, ecosystems are becoming machine-centric, and data infrastructure is getting harder to sustain. Anticipatory AI governance is core to the civic interplay imaginary.",
-      "draft": false
+      "draft": false,
+      "doi": "10.48550/arXiv.2607.27029",
+      "tags": [
+        "governance"
+      ]
     },
     {
       "id": "eurostack",
@@ -97,7 +132,11 @@
       "href": "https://www.ucl.ac.uk/bartlett/publications/2025/feb/eurostack-european-alternative-digital-sovereignty",
       "accent": "periwinkle",
       "note": "Bria is advancing the EuroStack initiative, building on data sovereignty efforts to reclaim European digital sovereignty, now in an era of AI.",
-      "draft": false
+      "draft": false,
+      "tags": [
+        "sovereignty",
+        "infrastructure"
+      ]
     },
     {
       "id": "reframetech",
@@ -108,7 +147,10 @@
       "href": "https://www.bertelsmann-stiftung.de/en/our-projects/reframetech-algorithmen-fuers-gemeinwohl/",
       "accent": "periwinkle",
       "note": "The programme that commissioned EuroStack, establishing algorithms for the common good. Seeking partnerships for global AI governance.",
-      "draft": false
+      "draft": false,
+      "tags": [
+        "public interest"
+      ]
     },
     {
       "id": "jrc-enabled",
@@ -119,7 +161,11 @@
       "href": "https://joint-research-centre.ec.europa.eu/scientific-activities/enabled-project-innovation-data-ecosystems-and-sovereignty_en",
       "accent": "forest",
       "note": "The European Commission's own science service doing digital sovereignty as a research programme. Run out of the JRC's Digital and Data Sovereignty Unit in Ispra, it feeds the European Data Union Strategy and is standing up a Data Sharing and Digital Sovereignty Innovation Lab that uses regulatory sandboxing to test governance before it is legislated. Where EuroStack makes the argument from outside, this is the institution building the evidence from within.",
-      "draft": false
+      "draft": false,
+      "tags": [
+        "sovereignty",
+        "data stewardship"
+      ]
     },
     {
       "id": "bridle-ways-of-being",
@@ -130,7 +176,10 @@
       "href": "https://www.jamesbridle.com/books/ways-of-being",
       "accent": "cream",
       "note": "Bridle cautions against treating human intelligence as the only kind worth designing AI systems for. Bridle argues that \"human-centred design\" is a legacy model in a more-than-human world facing ecological collapse.",
-      "draft": false
+      "draft": false,
+      "tags": [
+        "more-than-human"
+      ]
     },
     {
       "id": "lovelock-novacene",
@@ -141,7 +190,11 @@
       "href": "https://en.wikipedia.org/wiki/Novacene",
       "accent": "cream",
       "note": "Near the end of his life Lovelock imagined AI as essential to Earth's self-regulation, with humans as enablers of a more intelligent life form. Lovelock's vision avoids the political economy of hyperscale AI, but it does bring a hopeful imagination to human-AI collaboration as a kind of hospicing of modernity, to another form of intelligence that may well outlive humanity. It helps set the frame: What kind of civic practices are agents trained in?",
-      "draft": false
+      "draft": false,
+      "tags": [
+        "more-than-human",
+        "planetary"
+      ]
     },
     {
       "id": "participatory-data-stewardship",
@@ -152,7 +205,11 @@
       "href": "https://www.adalovelaceinstitute.org/report/participatory-data-stewardship/",
       "accent": "periwinkle",
       "note": "The Ada Lovelace Institute introduced a framework for participatory data stewardship.  This framework from 2021 states that it \"rejects practices of data collection, storage, sharing and use in ways that are opaque or seek to manipulate people, in favour of practices that empower people to help inform, shape and – in some instances – govern their own data.\" The work is an early attempt to combine data stewardship with participatory AI practices by the Institute. ",
-      "draft": false
+      "draft": false,
+      "tags": [
+        "participation",
+        "data stewardship"
+      ]
     }
   ]
 }

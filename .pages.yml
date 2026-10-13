@@ -128,7 +128,7 @@ content:
         description: 'Each heading (Heading 2) becomes a fold. Keep the headings "Working with Civic Interplay" and "Who''s behind it": the audiences list and the RMIT logo attach to them. The Projects fold is built automatically.'
 
   - name: readings
-    label: Publications on civic AI
+    label: Readings on civic AI and surrounds
     type: file
     path: src/data/readings.json
     format: json
@@ -171,6 +171,19 @@ content:
             type: string
             required: true
             description: The full URL, starting https://. Opens in a new tab.
+          - name: doi
+            label: DOI
+            type: string
+            description: Optional, e.g. 10.1177/23998083241296200. Shown as a doi.org link under the card.
+          - name: tags
+            label: Tags
+            type: string
+            list: true
+            description: Short topic labels, lower case, e.g. participation, sovereignty, data centres. Readers can filter the Reading page by them, so reuse existing tags where you can.
+          - name: added
+            label: Date added
+            type: date
+            description: Optional. Used to date the entry in the RSS feed. The email inbox fills it in.
           - name: accent
             label: Colour
             type: select

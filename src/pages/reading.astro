@@ -7,7 +7,7 @@ import SectionHeading from '../components/SectionHeading.astro';
 import readingsData from '../data/readings.json';
 import talksData from '../data/talks.json';
 
-// MOCKUP of Reading under the new menu: Publications on civic AI, Essays, Notes,
+// Reading: Readings on civic AI and surrounds, Essays, Notes,
 // Field notes. Project posts move to Projects; "What can you do here?" is
 // retired from the listings (its page still exists).
 
@@ -62,12 +62,16 @@ const fieldNotes = [
 const talks = talksData.talks;
 // Hidden entries (e.g. links emailed to add@in.civicinterplay.io) wait for review in the CMS.
 const publications = readingsData.readings.filter((r) => !('draft' in r && r.draft));
+// Tags across all visible readings, most used first, for the filter row.
+const tagCounts = new Map<string, number>();
+for (const r of publications) for (const t of ('tags' in r ? (r.tags as string[]) : [])) tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1);
+const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([t]) => t);
 ---
 <BaseLayout title="Reading" description="Publications from the field of Civic AI, Participatory AI, and governing infrastructural AI. Essays and Field notes explore ideas and practices out in the open.">
 
   <main class="container reading">
     <header class="reading-header">
-      <p class="eyebrow">Reading</p>
+      <p class="eyebrow">Reading <a class="rss" href="/rss.xml" title="Subscribe to Reading by RSS"><svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><circle cx="3" cy="13" r="2" fill="currentColor"/><path d="M1 7a8 8 0 0 1 8 8M1 2a13 13 0 0 1 13 13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>RSS</a></p>
       <h1>Reading</h1>
       <p class="standfirst">
         Publications from the field of Civic AI, Participatory AI, and
@@ -78,7 +82,7 @@ const publications = readingsData.readings.filter((r) => !('draft' in r && r.dra
 
     <nav class="pills" aria-label="Reading sections">
       <ul>
-        <li><a href="#publications">Publications on civic AI <span class="count">{publications.length}</span></a></li>
+        <li><a href="#publications">Readings on civic AI and surrounds <span class="count">{publications.length}</span></a></li>
         <li><a href="#essays">Essays <span class="count">{essays.length}</span></a></li>
         <li><a href="#notes">Notes <span class="count">{notes.length}</span></a></li>
         {experiments.length > 0 && <li><a href="#experiments">Experiments <span class="count">{experiments.length}</span></a></li>}
@@ -94,10 +98,16 @@ const publications = readingsData.readings.filter((r) => !('draft' in r && r.dra
     </p>
 
     <section id="publications" class="rsec">
-      <SectionHeading title="Publications on civic AI" />
+      <SectionHeading title="Readings on civic AI and surrounds" />
+      {allTags.length > 0 && (
+        <div class="tag-filter" role="group" aria-label="Filter readings by tag">
+          <button type="button" class="tag-btn" aria-pressed="true" data-tag="">All</button>
+          {allTags.map((t) => <button type="button" class="tag-btn" aria-pressed="false" data-tag={t}>{t}</button>)}
+        </div>
+      )}
       <div class="post-grid">
         {publications.map((r) => (
-          <ReadingCard title={r.title} authors={r.authors} publisher={r.publisher} year={r.year} href={r.href} note={r.note} accent={r.accent} />
+          <ReadingCard title={r.title} authors={r.authors} publisher={r.publisher} year={r.year} href={r.href} note={r.note} accent={r.accent} doi={'doi' in r ? (r.doi as string) : undefined} tags={'tags' in r ? (r.tags as string[]) : []} />
         ))}
       </div>
     </section>
@@ -189,6 +199,34 @@ const publications = readingsData.readings.filter((r) => !('draft' in r && r.dra
     }
 
     /* Jump links to each kind of reading; they stay in reach while scrolling. */
+    .rss {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-left: 0.8rem;
+      padding: 0.1rem 0.55rem;
+      border: 1.5px solid currentColor;
+      border-radius: 999px;
+      color: var(--terracotta);
+      text-decoration: none;
+      vertical-align: 1px;
+    }
+    .rss:hover, .rss:focus-visible { background: var(--terracotta); color: #fff; }
+
+    .tag-filter { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1.4rem; }
+    .tag-btn {
+      appearance: none;
+      cursor: pointer;
+      font-family: var(--heading);
+      font-size: 0.78rem;
+      padding: 0.2rem 0.75rem;
+      border: 1.5px solid var(--border);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--text);
+    }
+    .tag-btn[aria-pressed="true"] { background: var(--ink, #1f1d24); color: #fff; }
+
     .pills {
       position: sticky;
       top: 0;
@@ -291,4 +329,19 @@ const publications = readingsData.readings.filter((r) => !('draft' in r && r.dra
       letter-spacing: 0;
     }
   </style>
+  <script>
+    // Tag filter for the readings: one tag at a time, "All" to reset.
+    const btns = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
+    const cards = document.querySelectorAll<HTMLElement>('#publications .reading-card');
+    btns.forEach((b) =>
+      b.addEventListener('click', () => {
+        const tag = b.dataset.tag ?? '';
+        btns.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        cards.forEach((c) => {
+          const tags = (c.dataset.tags ?? '').split('|');
+          c.hidden = !!tag && !tags.includes(tag);
+        });
+      })
+    );
+  </script>
 </BaseLayout>

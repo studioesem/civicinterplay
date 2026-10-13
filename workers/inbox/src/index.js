@@ -1,5 +1,5 @@
 // add@in.civicinterplay.io: email a link (with an optional note above it) and
-// it lands in Publications on civic AI as a hidden draft. The page's title,
+// it lands in Readings on civic AI and surrounds as a hidden draft. The page's title,
 // authors, publisher and year are read from its metadata; whatever you wrote
 // in the email becomes "Why it matters". Publish it by unticking Hidden in
 // the CMS. (Cloudflare doesn't allow replies from a subdomain address, so
@@ -36,6 +36,8 @@ export default {
         publisher: meta.publisher || new URL(url).hostname.replace(/^www\./, ''),
         year: meta.year || String(new Date().getFullYear()),
         href: url,
+        ...(meta.doi ? { doi: meta.doi } : {}),
+        added: new Date().toISOString().slice(0, 10),
         accent: 'periwinkle',
         note,
         draft: true,
@@ -91,10 +93,13 @@ async function readMeta(url) {
   const doi = (decodeURIComponent(url).match(/\b(10\.\d{4,9}\/[^\s?#]+)/) || [])[1];
   if (doi) {
     const cr = await crossref(doi).catch(() => null);
-    if (cr) return cr;
+    if (cr) return { ...cr, doi };
   }
   const page = await readPage(url).catch(() => null);
-  if (page && !/^(just a moment|attention required|access denied|403|404)/i.test(page.title)) return page;
+  const arxiv = (url.match(/arxiv\.org\/(?:abs|pdf)\/(\d{4}\.\d{4,5})/) || [])[1];
+  if (page && !/^(just a moment|attention required|access denied|403|404)/i.test(page.title)) {
+    return { ...page, doi: page.doi || (arxiv ? `10.48550/arXiv.${arxiv}` : '') };
+  }
   return { title: '', authors: '', publisher: '', year: '', description: '' };
 }
 
@@ -135,6 +140,7 @@ async function readPage(url) {
     publisher: get('citation_journal_title')[0] || get('citation_publisher')[0] || site,
     year: (date.match(/\b(19|20)\d{2}\b/) || [])[0] || '',
     description: get('og:description')[0] || get('description')[0] || '',
+    doi: (get('citation_doi')[0] || get('dc.identifier').find((v) => /^(doi:)?10\./i.test(v)) || '').replace(/^doi:\s*/i, ''),
   };
 }
 

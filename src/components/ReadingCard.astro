@@ -17,9 +17,13 @@ interface Props {
   href: string;
   note: string;
   accent?: string;
+  /** e.g. 10.1177/23998083241296200. Shown as a doi.org link when present. */
+  doi?: string;
+  tags?: string[];
 }
 
-const { title, authors, publisher, year, href, note, accent = 'purple' } = Astro.props;
+const { title, authors, publisher, year, href, note, accent = 'purple', doi, tags = [] } = Astro.props;
+const doiClean = doi?.trim().replace(/^https?:\/\/(dx\.)?doi\.org\//i, '').replace(/^doi:\s*/i, '');
 
 // The host, shown so the destination is legible before the click.
 let host = '';
@@ -29,7 +33,7 @@ try {
   host = '';
 }
 ---
-<article class:list={['reading-card', `accent-${accent}`]}>
+<article class:list={['reading-card', `accent-${accent}`]} data-tags={tags.join('|')}>
   <p class="reading-card-meta">
     <span class="reading-card-publisher">{publisher}</span>
     <span aria-hidden="true">&middot;</span>
@@ -44,9 +48,18 @@ try {
 
   <p class="reading-card-note">{note}</p>
 
-  {host && (
+  {tags.length > 0 && (
+    <ul class="reading-card-tags" aria-label="Tags">
+      {tags.map((t) => <li>{t}</li>)}
+    </ul>
+  )}
+
+  {(host || doiClean) && (
     <p class="reading-card-host">
-      <span aria-hidden="true">&rarr;</span> {host}
+      {host && <span><span aria-hidden="true">&rarr;</span> {host}</span>}
+      {doiClean && (
+        <a class="reading-card-doi" href={`https://doi.org/${doiClean}`} target="_blank" rel="noopener external">DOI {doiClean}</a>
+      )}
     </p>
   )}
 </article>
@@ -134,4 +147,17 @@ try {
     color: var(--text-faint);
     margin: auto 0 0;
   }
+  .reading-card[hidden] { display: none; }
+  .reading-card-tags { list-style: none; margin: 0 0 0.9rem; padding: 0; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .reading-card-tags li {
+    font-family: var(--heading);
+    font-size: 0.7rem;
+    padding: 0.1rem 0.55rem;
+    border: 1px solid var(--border-light, #ccc);
+    border-radius: 999px;
+    color: var(--text-dim);
+  }
+  .reading-card-host { display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; }
+  .reading-card-doi { color: var(--purple); text-decoration: none; word-break: break-all; }
+  .reading-card-doi:hover { text-decoration: underline; }
 </style>

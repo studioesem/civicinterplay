@@ -202,12 +202,12 @@ const publications = readingsData.readings.filter((r) => !('draft' in r && r.dra
       <!-- F. Publications -->
       <section class="sec" aria-labelledby="pubs-h">
         <div class="sec-head">
-          <h2 id="pubs-h" class="sec-label">Publications on civic AI</h2>
-          <a class="sec-link" href="/reading/">Read more publications <span aria-hidden="true">&rarr;</span></a>
+          <h2 id="pubs-h" class="sec-label">Readings on civic AI and surrounds</h2>
+          <a class="sec-link" href="/reading/">More readings <span aria-hidden="true">&rarr;</span></a>
         </div>
         <div class="pubs">
           {publications.map((r) => (
-            <ReadingCard title={r.title} authors={r.authors} publisher={r.publisher} year={r.year} href={r.href} note={r.note} accent={r.accent} />
+            <ReadingCard title={r.title} authors={r.authors} publisher={r.publisher} year={r.year} href={r.href} note={r.note} accent={r.accent} doi={'doi' in r ? (r.doi as string) : undefined} tags={'tags' in r ? (r.tags as string[]) : []} />
           ))}
         </div>
       </section>
