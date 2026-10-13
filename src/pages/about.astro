@@ -30,7 +30,9 @@ const splitFirst = (body: string) => {
     <header class="about-head">
       <p class="eyebrow">About</p>
       <h1>{about.title}</h1>
-      <p class="standfirst">{about.standfirst}</p>
+      {String(about.standfirst ?? '').split(/\n\s*\n/).map((para) => para.trim()).filter(Boolean).map((para) => (
+        <p class="standfirst">{para}</p>
+      ))}
       {about.question && (
         <div class="q-note q-pair">
           <p class="q-main">{about.question}</p>
