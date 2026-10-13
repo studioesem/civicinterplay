@@ -18,9 +18,13 @@ interface Props {
 
 const { item } = Astro.props;
 const d = item.data;
-const watchHref = d.sourcePostSlug
-  ? `https://civicinterplay.io/${d.sourcePostSlug}/`
-  : 'https://civicinterplay.io/';
+// Top right: "Go to story" when the clip belongs to a post (otherwise a plain
+// link home), and "Embed", which opens the iframe code to copy.
+const storyHref = d.sourcePostSlug ? `https://civicinterplay.io/${d.sourcePostSlug}/` : null;
+const watchHref = storyHref ?? 'https://civicinterplay.io/';
+const watchLabel = storyHref ? 'Go to story' : d.mediaType === 'audio' ? 'Listen on Civic Interplay' : 'Watch on Civic Interplay';
+const ratio = d.mediaType === 'audio' ? null : /^\d+(\.\d+)?\s*\/\s*\d+(\.\d+)?$/.test(d.aspectRatio ?? '') ? d.aspectRatio : '16/9';
+const embedCode = `<iframe src="https://civicinterplay.io/embed/${item.id}" title="${d.title.replace(/"/g, '&quot;')}" style="width:100%; border:0;${ratio ? ` aspect-ratio:${ratio};` : ' height:220px;'}" loading="lazy" allowfullscreen></iframe>`;
 ---
 <!doctype html>
 <html lang="en">
@@ -61,11 +65,18 @@ const watchHref = d.sourcePostSlug
     .embed-shell .video-embed {
       margin: 0;
     }
-    .embed-watch-link {
+    .embed-actions {
       position: absolute;
       top: 0.75rem;
       right: 0.75rem;
       z-index: 2;
+      display: flex;
+      gap: 0.4rem;
+    }
+    .embed-pill {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
@@ -82,15 +93,60 @@ const watchHref = d.sourcePostSlug
       border-radius: 999px;
       transition: background 0.2s ease;
     }
-    .embed-watch-link:hover { background: var(--purple); }
+    .embed-pill:hover, .embed-pill:focus-visible, .embed-pill[aria-expanded="true"] { background: var(--purple); }
     .embed-watch-link::after { content: '\2197'; font-size: 0.78rem; line-height: 1; }
+    .embed-code {
+      position: absolute;
+      top: 3rem;
+      right: 0.75rem;
+      z-index: 3;
+      width: min(420px, calc(100% - 2rem));
+      padding: 0.8rem 0.9rem;
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 4px 4px 0 var(--purple);
+    }
+    .embed-code[hidden] { display: none; }
+    .embed-code p { margin: 0 0 0.5rem; font-size: 0.8rem; font-weight: 600; }
+    .embed-code textarea {
+      width: 100%;
+      resize: none;
+      font: 0.72rem/1.45 ui-monospace, SFMono-Regular, Menlo, monospace;
+      padding: 0.5rem;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      background: #f8f8f8;
+      color: var(--text);
+    }
+    .embed-code-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+    .embed-code-actions button {
+      appearance: none;
+      cursor: pointer;
+      font: 600 0.75rem var(--heading);
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      color: var(--text);
+    }
+    .embed-code-actions .embed-copy { background: var(--purple); border-color: var(--purple); color: #fff; }
   </style>
 </head>
 <body>
   <div class="embed-shell" id="embed-shell">
-    <a class="embed-watch-link" href={watchHref} target="_top" rel="noopener">
-      {d.mediaType === 'audio' ? 'Listen on Civic Interplay' : 'Watch on Civic Interplay'}
-    </a>
+    <div class="embed-actions">
+      <a class="embed-pill embed-watch-link" href={watchHref} target="_top" rel="noopener">{watchLabel}</a>
+      <button type="button" class="embed-pill embed-code-toggle" aria-expanded="false" aria-controls="embed-code">Embed <span aria-hidden="true">&lt;/&gt;</span></button>
+    </div>
+    <div class="embed-code" id="embed-code" hidden>
+      <p>Embed this on your site</p>
+      <textarea readonly rows="3" aria-label="Embed code">{embedCode}</textarea>
+      <div class="embed-code-actions">
+        <button type="button" class="embed-copy">Copy code</button>
+        <button type="button" class="embed-close">Close</button>
+      </div>
+    </div>
     {d.mediaType === 'audio' ? (
       <AudioEmbed
         src={d.audio ?? ''}
@@ -112,6 +168,30 @@ const watchHref = d.sourcePostSlug
     )}
   </div>
   <script>
+    // Embed panel: show the iframe code; copy it, or select it for Cmd+C where
+    // the host page blocks clipboard access.
+    const toggle = document.querySelector<HTMLButtonElement>('.embed-code-toggle');
+    const panel = document.getElementById('embed-code');
+    const code = panel?.querySelector('textarea');
+    const copy = panel?.querySelector<HTMLButtonElement>('.embed-copy');
+    const setOpen = (open: boolean) => {
+      if (!toggle || !panel) return;
+      panel.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+      if (open) code?.select();
+    };
+    toggle?.addEventListener('click', () => setOpen(!!panel?.hidden));
+    panel?.querySelector('.embed-close')?.addEventListener('click', () => setOpen(false));
+    copy?.addEventListener('click', async () => {
+      if (!code) return;
+      code.select();
+      let ok = false;
+      try { await navigator.clipboard.writeText(code.value); ok = true; } catch { ok = document.execCommand('copy'); }
+      copy.textContent = ok ? 'Copied' : 'Press Cmd+C to copy';
+      setTimeout(() => (copy.textContent = 'Copy code'), 2000);
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+
     // Report our rendered height to the parent page so a host iframe can size
     // itself to the content. This keeps any aspect ratio (16/9, square, audio)
     // from letterboxing or clipping the caption, at any iframe width.
