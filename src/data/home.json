@@ -1,52 +1,57 @@
 {
+  "why": {
+    "statement": "There is more information about our places than ever before.",
+    "sub": "More of each place, its infrastructure and its services, is built through digital intelligence.",
+    "asks": "But who gets to make sense of this? And who gets to act on it? ",
+    "body": "Civic Interplay explores how digital and AI methods can support place-based civic enquiry, towards more care-full and resilient futures. \n\nIt pays attention to how places are assembled as digital objects and governance ecosystems, and examines the different forms of accountability and legibility these systems foster. In doing so it asks: *Does this place invite open enquiry and participation in how it is shaped, or are its systems, including digital systems, closed to outsiders?* \n\nAs a practice, Civic Interplay seeks out *locations where digital architectures, sense-making and civic participation* are possible. To such places it hopes to offer a sense of possibility, with open questions exploring how digital and human collaboration can make more legible and accountable the many ways in places are valued and cared for, through time.  "
+  },
   "hotspots": [
     {
+      "label": "Who owns the reading?",
       "x": 13,
-      "y": 20,
-      "label": "Who owns the reading?"
+      "y": 20
     },
     {
+      "label": "Who agreed to be sensed?",
       "x": 34,
-      "y": 38,
-      "label": "Who agreed to be sensed?"
+      "y": 38
     },
     {
+      "label": "What kind of interface are you?",
       "x": 50,
-      "y": 15,
-      "label": "What kind of interface are you?"
+      "y": 15
     },
     {
+      "label": "Where is the value flowing here?",
       "x": 68,
-      "y": 33,
-      "label": "Where is the value flowing here?"
+      "y": 33
     },
     {
+      "label": "What beneficiaries are being counted, and by whom?",
       "x": 87,
-      "y": 18,
-      "label": "What beneficiaries are being counted, and by whom?"
+      "y": 18
     },
     {
+      "label": "How can I re-route my data for good here?",
       "x": 22,
-      "y": 50,
-      "label": "How can I re-route my data for good here?"
+      "y": 50
     },
     {
+      "label": "Who else cares about bird habitats here?",
       "x": 58,
-      "y": 52,
-      "label": "Who else cares about bird habitats here?"
+      "y": 52
     },
     {
+      "label": "Who resourced my compute today?",
       "x": 80,
-      "y": 46,
-      "label": "Who resourced my compute today?"
+      "y": 46
     },
     {
+      "label": "Could we do this differently?",
       "x": 50,
-      "y": 40,
-      "label": "Could we do this differently?"
+      "y": 40
     }
   ],
-  "titleDot": true,
   "tiles": [
     {
       "id": "submission",
@@ -138,11 +143,5 @@
       "alt": "Field note card reading: Workflows and prompts, forkable.",
       "draft": false
     }
-  ],
-  "why": {
-    "statement": "There is more information about our places than ever before.",
-    "sub": "More of each place, its infrastructure and its services, is built through digital intelligence.",
-    "asks": "But who gets to make sense of this? And who gets to act on it?",
-    "body": "Civic Interplay explores how digital and AI methods can support place-based civic enquiry, towards more care-full and resilient futures. It looks at how places are assembled as digital objects and governance ecosystems, and examines the forms of accountability and legibility these systems foster.\n\nAs a practice, Civic Interplay seeks *locations where digital architectures, sense-making and civic participation can be examined in more collaborative ways*. In this way, it aims to bring greater legibility, accountability and trustworthiness to the institutional systems and practices that shape and govern places through time."
-  }
+  ]
 }
