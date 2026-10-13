@@ -1,0 +1,85 @@
+{
+  "tools": [
+    {
+      "title": "Data Centres Transparency Project",
+      "category": "tool",
+      "line": "A live map of data centre sites in Australia: who owns them, what they draw, how they were approved.",
+      "href": "/sovereignties/",
+      "image": "/images/tiles/map-560.webp",
+      "imageAlt": "Card for the data centres map.",
+      "draft": false
+    },
+    {
+      "title": "Familiar Terrain",
+      "category": "tool",
+      "line": "A walkable semantic terrain. Texts, noticings and ideas cluster into regions by the patterns embeddings find in them.",
+      "href": "/terrain/",
+      "image": "/images/tiles/terrain-560.webp",
+      "imageAlt": "Card reading: A walkable semantic terrain.",
+      "draft": false
+    },
+    {
+      "title": "Facts and Moments",
+      "category": "tool",
+      "line": "Cards from a close reading of state Transmission Planning Reports, each with the time of observation captured.",
+      "href": "/facts-and-moments/",
+      "image": "/images/tiles/facts-560.webp",
+      "imageAlt": "Card for Facts and Moments.",
+      "draft": false
+    },
+    {
+      "title": "Video player",
+      "category": "tool",
+      "line": "A small video player with no third-party scripts and no cookies. Self-hosted, captioned, embeddable.",
+      "href": "/player/",
+      "image": "/images/tiles/player-560.webp",
+      "imageAlt": "Card for the Civic Interplay video player.",
+      "draft": false
+    },
+    {
+      "title": "A side angle on place flows",
+      "category": "experiment",
+      "line": "An exploded axonometric view of a place: promised targets, approvals and spending, and the canopy on the ground.",
+      "href": "/experiments/side-angle-on-place-flows.html",
+      "image": "/images/side-angle-plate.jpg",
+      "imageAlt": "Experimental drawing: one precinct pulled apart into three stacked sheets.",
+      "draft": false
+    },
+    {
+      "title": "A side angle on the Western Parkland City",
+      "category": "experiment",
+      "line": "In 2018 Western Sydney was promised a parkland city. One precinct, pulled apart to read that promise.",
+      "href": "/experiments/side-angle-on-the-western-parkland-city.html",
+      "image": "",
+      "imageAlt": "",
+      "draft": false
+    },
+    {
+      "title": "Listening to an emergent field",
+      "category": "experiment",
+      "line": "Live searches across the research literature for the vocabulary of civic AI: a dated snapshot of how the field is talking.",
+      "href": "/listening/",
+      "image": "/images/tiles/listening-chart-560.webp",
+      "imageAlt": "Bar chart of research mentions.",
+      "draft": false
+    },
+    {
+      "title": "Bells for the First Walk",
+      "category": "experiment",
+      "line": "A walking exercise from steward onboarding in Copenhagen, September 2026: bringing enquiry back to the ground.",
+      "href": "/walk/",
+      "image": "",
+      "imageAlt": "",
+      "draft": false
+    },
+    {
+      "title": "Gathering Intelligences skills",
+      "category": "skills",
+      "line": "Agent skills for each step of a place enquiry: assemble the record, dig, chart, map, take a side angle, bring it back.",
+      "href": "/gathering-intelligences/",
+      "image": "/images/tiles/toolkit-560.webp",
+      "imageAlt": "Card reading: Workflows and prompts, forkable.",
+      "draft": false
+    }
+  ]
+}

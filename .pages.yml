@@ -499,6 +499,57 @@ content:
             label: What it's about
             type: text
 
+  - name: tools
+    label: Tools & experiments
+    type: file
+    path: src/data/tools.json
+    format: json
+    description: The Tools & experiments section at the bottom of the Projects page. Order here is the order on the page.
+    fields:
+      - name: tools
+        label: Items
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: Title
+            type: string
+            required: true
+          - name: category
+            label: Category
+            type: select
+            required: true
+            default: tool
+            options:
+              values:
+                - value: tool
+                  label: Tool
+                - value: experiment
+                  label: Experiment
+                - value: skills
+                  label: Agent skills
+          - name: line
+            label: One line
+            type: text
+            required: true
+            description: One sentence on what it is or does.
+          - name: href
+            label: Link
+            type: string
+            required: true
+            description: A page on this site (e.g. /terrain/) or a full https:// address.
+          - name: image
+            label: Image
+            type: image
+            description: Optional. Without one, the card is text only.
+          - name: imageAlt
+            label: Image description
+            type: string
+          - name: draft
+            label: Hidden
+            type: boolean
+            default: false
+
   - name: claimcards
     label: Facts and Moments
     type: collection
