@@ -7,6 +7,8 @@ name = "civicinterplay-inbox"
 main = "src/index.js"
 compatibility_date = "2026-10-01"
 compatibility_flags = ["nodejs_compat"]
+# Email only: no public web address.
+workers_dev = false
 
 [vars]
 REPO = "studioesem/civicinterplay"
