@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// /join: the address for email signatures. Draft copy, for Sarah to edit.
+---
+<BaseLayout title="Contribute" description="Share a story, a reading or a field note on Civic Interplay: place-based civic enquiry with digital and AI methods.">
+  <main class="join">
+    <p class="eyebrow">Join</p>
+    <h1>Contribute to Civic Interplay</h1>
+    <p class="standfirst">
+      Civic Interplay is a shared space for place-based civic enquiry.
+      Contributors share stories, readings and field notes from the places
+      and fields they know.
+    </p>
+
+    <h2>What you can share</h2>
+    <ul class="kinds">
+      <li style="--edge: var(--purple)"><strong>A reading</strong> A publication from the field worth pointing at, with a few lines on why it matters.</li>
+      <li style="--edge: var(--pink)"><strong>A field note</strong> A thought or reflection in motion, from a walk, a meeting or a test.</li>
+      <li style="--edge: var(--terracotta)"><strong>A story from a place</strong> How value, data or infrastructure is shaping somewhere you know.</li>
+    </ul>
+
+    <h2>How it works</h2>
+    <p>
+      Send a short note about who you are and what you would like to share.
+      If it fits, you will be added as a contributor and shown how to post.
+      Everything here is a draft, and contributions are read before they go live.
+    </p>
+
+    <p class="cta">
+      <a class="cta-button" href="/about/#contact" data-u="sarah.barns2" data-d="rmit.edu.au" data-subject="Request to contribute to Civic Interplay">Request to be a contributor <span aria-hidden="true">&rarr;</span></a>
+    </p>
+
+    <p class="follow">
+      Or follow along: browse <a href="/reading/">Reading</a>, or subscribe by <a href="/rss.xml">RSS</a>.
+    </p>
+  </main>
+
+  <style>
+    .join {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+    .eyebrow {
+      font-family: var(--heading);
+      font-size: var(--fs-label);
+      font-weight: var(--w-medium);
+      letter-spacing: var(--track-label);
+      text-transform: uppercase;
+      color: var(--purple);
+      margin: 0 0 0.5rem;
+    }
+    h1 {
+      font-family: var(--heading);
+      font-size: clamp(2rem, 4.5vw, 2.8rem);
+      font-weight: var(--w-bold);
+      line-height: 1.1;
+      margin: 0 0 1rem;
+    }
+    h2 {
+      font-family: var(--heading);
+      font-weight: var(--w-bold);
+      font-size: 1.3rem;
+      margin: 2.4rem 0 0.8rem;
+    }
+    .standfirst {
+      font-family: var(--body);
+      font-size: var(--fs-lead);
+      font-weight: var(--w-light);
+      line-height: 1.6;
+      margin: 0;
+    }
+    p {
+      font-family: var(--body);
+      font-weight: var(--w-light);
+      line-height: 1.7;
+    }
+    .kinds {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.9rem;
+    }
+    .kinds li {
+      padding: 0.9rem 1.1rem;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 5px 5px 0 var(--edge);
+      font-family: var(--body);
+      font-weight: var(--w-light);
+      line-height: 1.6;
+    }
+    .kinds strong {
+      display: block;
+      font-family: var(--heading);
+      font-weight: var(--w-bold);
+      margin-bottom: 0.2rem;
+    }
+    .cta { margin: 2rem 0 1.5rem; }
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.7rem 1.3rem;
+      background: var(--purple);
+      color: #fff;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      box-shadow: 4px 4px 0 var(--border);
+      font-family: var(--heading);
+      font-weight: var(--w-bold);
+      text-decoration: none;
+    }
+    .cta-button:hover, .cta-button:focus-visible { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--border); }
+    .follow { font-size: 0.95rem; color: var(--text-dim); }
+    .follow a { color: var(--purple); }
+  </style>
+
+  <script>
+    // Build the address here so it isn't in the page source for harvesters.
+    document.querySelectorAll<HTMLAnchorElement>('a.cta-button[data-u]').forEach((a) => {
+      a.href = `mailto:${a.dataset.u}@${a.dataset.d}?subject=${encodeURIComponent(a.dataset.subject ?? '')}`;
+    });
+  </script>
+</BaseLayout>
