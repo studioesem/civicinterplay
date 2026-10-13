@@ -2,10 +2,9 @@
 // it lands in Publications on civic AI as a hidden draft. The page's title,
 // authors, publisher and year are read from its metadata; whatever you wrote
 // in the email becomes "Why it matters". Publish it by unticking Hidden in
-// the CMS. Replies to the sender either way.
+// the CMS. (Cloudflare doesn't allow replies from a subdomain address, so
+// there is no confirmation email: check the CMS, or the repo's history.)
 import PostalMime from 'postal-mime';
-import { createMimeMessage } from 'mimetext';
-import { EmailMessage } from 'cloudflare:email';
 
 export default {
   async email(message, env) {
@@ -25,7 +24,7 @@ export default {
     const mail = await PostalMime.parse(message.raw);
     const text = mail.text || (mail.html || '').replace(/<[^>]+>/g, ' ');
     const url = firstUrl(text) || firstUrl(mail.subject || '');
-    if (!url) return reply(message, mail, 'No link found', "I couldn't find a link in your email, so nothing was added.");
+    if (!url) return console.log('no link found');
 
     try {
       const meta = await readMeta(url);
@@ -42,23 +41,10 @@ export default {
         draft: true,
       };
       const result = await addEntry(env, entry, mail.from?.name || sender);
-      if (result === 'exists') {
-        return reply(message, mail, 'Already on the list', `${url} is already in Publications on civic AI, so nothing was added.`);
-      }
-      const gaps = ['authors', 'note'].filter((k) => !entry[k]);
-      return reply(message, mail, `Added as a draft: ${entry.title}`, [
-        `"${entry.title}" is now a hidden draft in Publications on civic AI.`,
-        '',
-        `Authors: ${entry.authors || '(not found)'}`,
-        `Publisher: ${entry.publisher}`,
-        `Year: ${entry.year}`,
-        `Why it matters: ${entry.note || '(empty)'}`,
-        '',
-        gaps.length ? `Please fill in: ${gaps.join(', ')}. ` : '',
-        'To publish it, open the CMS (app.pagescms.org), go to Publications on civic AI, check the details and untick "Hidden (waiting for review)".',
-      ].join('\n'));
+      if (result === 'exists') return console.log('already listed', url);
+      console.log('added draft', entry.title);
     } catch (err) {
-      return reply(message, mail, 'Not added', `Something went wrong adding ${url}:\n\n${err.message}\n\nNothing was changed.`);
+      console.log('not added', url, err.message);
     }
   },
 };
@@ -190,15 +176,4 @@ async function addEntry(env, entry, who) {
   });
   if (!put.ok) throw new Error(`GitHub save failed (${put.status}): ${(await put.text()).slice(0, 200)}`);
   return 'added';
-}
-
-async function reply(message, mail, subject, body) {
-  const msg = createMimeMessage();
-  msg.setSender({ name: 'Civic Interplay inbox', addr: message.to });
-  msg.setRecipient(message.from);
-  msg.setSubject(subject);
-  const id = message.headers.get('Message-ID');
-  if (id) msg.setHeader('In-Reply-To', id);
-  msg.addMessage({ contentType: 'text/plain', data: body });
-  await message.reply(new EmailMessage(message.to, message.from, msg.asRaw()));
 }
