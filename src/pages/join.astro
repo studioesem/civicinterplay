@@ -1,38 +1,34 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// /join: the address for email signatures. Draft copy, for Sarah to edit.
+// /join: the address for email signatures. Text is Sarah's (13 Oct 2026).
 ---
-<BaseLayout title="Contribute" description="Share a story, a reading or a field note on Civic Interplay: place-based civic enquiry with digital and AI methods.">
+<BaseLayout title="Join" description="Civic Interplay explores how creative, curious and collaborative people can work together-at-a-distance to bring more lively forms of thinking and experimentation into a digital workspace.">
   <main class="join">
     <p class="eyebrow">Join</p>
-    <h1>Contribute to Civic Interplay</h1>
+    <h1>Join Civic Interplay</h1>
     <p class="standfirst">
-      Civic Interplay is a shared space for place-based civic enquiry.
-      Contributors share stories, readings and field notes from the places
-      and fields they know.
+      Civic Interplay explores how creative, curious and collaborative people
+      can work together-at-a-distance to bring more lively forms of thinking
+      and experimentation into a digital workspace.
     </p>
-
-    <h2>What you can share</h2>
-    <ul class="kinds">
-      <li style="--edge: var(--purple)"><strong>A reading</strong> A publication from the field worth pointing at, with a few lines on why it matters.</li>
-      <li style="--edge: var(--pink)"><strong>A field note</strong> A thought or reflection in motion, from a walk, a meeting or a test.</li>
-      <li style="--edge: var(--terracotta)"><strong>A story from a place</strong> How value, data or infrastructure is shaping somewhere you know.</li>
-    </ul>
-
-    <h2>How it works</h2>
     <p>
-      Send a short note about who you are and what you would like to share.
-      If it fits, you will be added as a contributor and shown how to post.
-      Everything here is a draft, and contributions are read before they go live.
+      This work, like everything here, uses methods of experimentation that
+      look beyond current forms of algorithmic and extractive media towards
+      different kinds of digital collaboration spaces.
+    </p>
+    <p>
+      This is mostly designed for people who care for places and habitats, and
+      those interested in &lsquo;what comes after social media&rsquo; more generally.
+    </p>
+    <p>
+      If you&rsquo;re interested in being a part of this journey of
+      experimentation, please get in touch. If you&rsquo;d like to learn more
+      about the project, visit <a href="/proposition/">The Proposition</a>.
     </p>
 
     <p class="cta">
-      <a class="cta-button" href="/about/#contact" data-u="sarah.barns2" data-d="rmit.edu.au" data-subject="Request to contribute to Civic Interplay">Request to be a contributor <span aria-hidden="true">&rarr;</span></a>
-    </p>
-
-    <p class="follow">
-      Or follow along: browse <a href="/reading/">Reading</a>, or subscribe by <a href="/rss.xml">RSS</a>.
+      <a class="cta-button" href="/about/#contact" data-u="sarah.barns2" data-d="rmit.edu.au" data-subject="Joining Civic Interplay">Get in touch <span aria-hidden="true">&rarr;</span></a>
     </p>
   </main>
 
@@ -71,33 +67,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       line-height: 1.6;
       margin: 0;
     }
+    p a { color: var(--purple); }
     p {
       font-family: var(--body);
       font-weight: var(--w-light);
       line-height: 1.7;
-    }
-    .kinds {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 0.9rem;
-    }
-    .kinds li {
-      padding: 0.9rem 1.1rem;
-      background: #fff;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      box-shadow: 5px 5px 0 var(--edge);
-      font-family: var(--body);
-      font-weight: var(--w-light);
-      line-height: 1.6;
-    }
-    .kinds strong {
-      display: block;
-      font-family: var(--heading);
-      font-weight: var(--w-bold);
-      margin-bottom: 0.2rem;
     }
     .cta { margin: 2rem 0 1.5rem; }
     .cta-button {
@@ -115,8 +89,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       text-decoration: none;
     }
     .cta-button:hover, .cta-button:focus-visible { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--border); }
-    .follow { font-size: 0.95rem; color: var(--text-dim); }
-    .follow a { color: var(--purple); }
   </style>
 
   <script>
