@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Side Angle on the Western Parkland City</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+/* Layout: one hand-drawn axonometric plate on paper, a timeline, then key, sources and an invitation.
+   Treatment: ink line drawing with loose watercolour washes, in the Civic Interplay palette.
+   Single paper look by choice: light in both themes. */
+*,*::before,*::after{box-sizing:border-box}
+:root{color-scheme:light;--paper:#f6f2ea;--sheet:#fbf8f2;--ink:#2a2622;--ink2:#5b544c;--line:#8a8178;--faint:#cfc5b6;
+--purple:#7D50BD;--purple-soft:#d9c9ef;--pink:#E076DB;--pink-ink:#B03FAC;--forest:#454E41;--leaf:#7e9a6b;--water:#8E9BDD;--terracotta:#D16D54;--sand:#DACCBA;
+--display:"Fira Sans",system-ui,sans-serif;--body:Merriweather,Georgia,serif}
+body{margin:0;background:var(--paper);color:var(--ink);font:300 16px/1.7 var(--body)}
+.wrap{max-width:1200px;margin:0 auto;padding-block:2.5rem 3rem;padding-inline:max(16px,3vw)}
+.eyebrow{font:500 .75rem var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--purple);margin:0 0 .4rem}
+h1{font:700 clamp(1.8rem,4.5vw,2.8rem)/1.1 var(--display);margin:0 0 .8rem;text-wrap:balance}
+.lede{max-width:64ch;margin:0 0 1.6rem}
+.plate{margin:0;background:var(--sheet);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--purple);overflow-x:auto;position:relative}
+.plate svg{display:block;width:100%;min-width:780px;height:auto}
+.platebar{display:flex;justify-content:space-between;gap:.4rem 1rem;flex-wrap:wrap;font:400 .72rem var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--line);padding:.6rem 1rem;border-top:1px solid var(--faint)}
+/* svg drawing */
+svg .wash{filter:url(#wash);mix-blend-mode:multiply}
+svg .plane{fill:var(--sheet);fill-opacity:.55;stroke:none}
+svg .ink,svg .ink-line{fill:none;stroke:var(--ink);stroke-width:1.3;filter:url(#sketch)}
+svg .edge{fill:none;stroke:var(--ink);stroke-width:1.3;filter:url(#sketch)}
+svg .sheet-old{fill:none;stroke:var(--ink2);stroke-width:1;stroke-dasharray:7 5;filter:url(#sketch)}
+svg .inst-name{font:500 11px var(--display);letter-spacing:.06em;fill:var(--ink2)}
+svg .inst-end{font:italic 300 10.5px var(--body);fill:var(--line)}
+svg .inst.expired{opacity:.35}
+svg .inst.expired .sheet-old{stroke-dasharray:2 7}
+svg .lot{fill:none;stroke:var(--ink2);stroke-width:.8;filter:url(#sketch)}
+svg .shed{fill:url(#hatch-ground);stroke:var(--ink);stroke-width:1;filter:url(#sketch)}
+svg .heat{fill:var(--terracotta);opacity:.18}
+svg .road{stroke:var(--ink2);stroke-width:1.2;stroke-dasharray:10 6;filter:url(#sketch)}
+svg .creek-wash{fill:none;stroke:var(--water);stroke-width:14;stroke-linecap:round;stroke-linejoin:round;opacity:.55}
+svg .creek-ink{fill:none;stroke:#3d4a8a;stroke-width:1.2;filter:url(#sketch)}
+svg .tree{fill:var(--leaf);opacity:.6}
+svg .tree-future{fill:none;stroke:var(--leaf);stroke-width:1.1;stroke-dasharray:2 2}
+svg .permit{fill:url(#hatch-purple);stroke:var(--purple);stroke-width:1.3;filter:url(#sketch)}
+svg .permit-top{fill:var(--purple-soft);stroke:var(--purple);stroke-width:1.3;filter:url(#sketch)}
+svg .spend{fill:var(--purple)}
+svg .corridor{fill:none;stroke:var(--leaf);stroke-width:62;stroke-linecap:round;stroke-linejoin:round;opacity:.42}
+svg .corridor-ink{fill:none;stroke:var(--forest);stroke-width:1;stroke-dasharray:3 5;filter:url(#sketch)}
+svg .heatval{fill:var(--pink);opacity:.16}
+svg .heatval-ink{fill:none;stroke:var(--pink);stroke-width:1.3;filter:url(#sketch)}
+svg .empty{fill:none;stroke:var(--ink);stroke-width:1.4;stroke-dasharray:8 6;filter:url(#sketch)}
+svg .empty-lbl{font:italic 400 13px var(--body);fill:var(--ink2)}
+svg .empty-sm{font:italic 300 10.5px var(--body);fill:var(--line)}
+svg .layer{font:700 13px var(--display);letter-spacing:.16em;fill:var(--ink)}
+svg .cap{font:300 12px var(--body);fill:var(--line)}
+svg .tiny{font:400 10.5px var(--display);fill:var(--ink2);letter-spacing:.04em}
+svg .vsub{font:500 13.5px var(--display);fill:var(--pink-ink);paint-order:stroke;stroke:var(--sheet);stroke-width:5px;stroke-linejoin:round}
+svg .vsub-g{font:500 13.5px var(--display);fill:var(--forest);paint-order:stroke;stroke:var(--sheet);stroke-width:5px;stroke-linejoin:round}
+svg .plumb{stroke:var(--ink);stroke-width:1}
+svg .gapline{stroke:var(--purple);stroke-width:1.5;stroke-dasharray:4 4}
+svg .faint{stroke:var(--line);stroke-width:1;stroke-dasharray:2 4}
+svg .node{fill:var(--ink)}
+svg .node-open{fill:var(--sheet);stroke:var(--purple);stroke-width:1.6}
+svg .q{font:700 22px var(--display);fill:var(--purple)}
+svg .q-sm{font:italic 400 12px var(--body);fill:var(--purple)}
+svg .lead{stroke:var(--purple);stroke-width:1}
+svg .badge{fill:var(--purple)}
+svg .badge-t{font:700 12px var(--display);fill:#fff}
+svg .hl-k{font:500 11px var(--display);letter-spacing:.14em;fill:var(--line)}
+svg .hl-v{font:700 38px var(--display);fill:var(--ink);paint-order:stroke;stroke:var(--sheet);stroke-width:6px;stroke-linejoin:round}
+svg .hl-s{font:400 15px var(--display);fill:var(--ink2)}
+svg .now-v{font:700 28px var(--display);fill:var(--forest)}
+svg .now-s{font:400 13px var(--body);fill:var(--line)}
+svg .areawide{fill:url(#hatch-pink);opacity:.55}
+svg .aw-swatch{fill:url(#hatch-pink);stroke:var(--pink);stroke-width:.8}
+svg .aw-h{font:500 10.5px var(--display);letter-spacing:.12em;fill:var(--pink-ink)}
+svg .aw-t{font:500 13px var(--display);fill:var(--ink)}
+svg .aw-s{font:300 10.5px var(--body);fill:var(--line)}
+svg .aw-n{font:italic 300 10.5px var(--body);fill:var(--line)}
+svg .country{fill:none;stroke:var(--ink2);stroke-width:1.2;stroke-dasharray:10 7;filter:url(#sketch)}
+svg .country-lbl{font:italic 400 12px var(--body);fill:var(--ink2)}
+svg a.badge-link{cursor:pointer}
+svg a.badge-link:hover .badge,svg a.badge-link:focus .badge{fill:var(--ink)}
+.stations{display:grid;gap:1rem;margin-top:1rem}
+.station{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.4rem 1rem;background:var(--sheet);border:1.5px solid var(--ink);padding:1.1rem 1.2rem;scroll-margin-top:1rem}
+.station:target{box-shadow:5px 5px 0 var(--purple)}
+.station .n{grid-row:span 3;margin-top:.15rem}
+.station h3{font:700 1.05rem var(--display);margin:0}
+.station dl{display:grid;grid-template-columns:7.5rem minmax(0,1fr);gap:.25rem .8rem;margin:.2rem 0 0;font-size:.9rem}
+.station dt{font:500 .7rem var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--line);padding-top:.2rem}
+.station dd{margin:0}
+.station .back{font:500 .78rem var(--display);color:var(--purple)}
+@media (max-width:560px){.station dl{grid-template-columns:1fr}.station dt{padding-top:.5rem}}
+svg [data-y]{transition:opacity .35s ease}
+svg .is-off{opacity:0}
+.paper{pointer-events:none}
+/* timeline */
+.when{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:1.6rem 0 .4rem}
+.when output{font:700 clamp(2.2rem,6vw,3.4rem)/1 var(--display);font-variant-numeric:tabular-nums}
+.when .state{font:500 .8rem var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--line)}
+.when .state.ahead{color:var(--purple)}
+.track{position:relative;padding-top:3.6rem}
+.track input{width:100%;margin:0;accent-color:var(--purple);height:1.6rem;cursor:pointer}
+.ticks{position:relative;height:1.4rem;font:400 .7rem var(--display);color:var(--line);font-variant-numeric:tabular-nums}
+.ticks span{position:absolute;transform:translateX(-50%)}
+.beyond{position:absolute;top:3.6rem;height:1.6rem;right:0;background:repeating-linear-gradient(135deg,transparent 0 5px,var(--faint) 5px 6px);opacity:.7;pointer-events:none;border-left:2px solid var(--purple)}
+.ev{position:absolute;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:2px}
+.ev.low{top:1.5rem}.ev.end{transform:translateX(-100%);align-items:flex-end}.ev.start{transform:none;align-items:flex-start}
+.ev button{font:500 .68rem var(--display);letter-spacing:.04em;background:var(--sheet);color:var(--ink);border:1px solid var(--faint);padding:2px 6px;cursor:pointer;white-space:nowrap}
+.ev button:hover,.ev button:focus-visible{border-color:var(--purple);outline:none;color:var(--purple)}
+.ev.now button{border-color:var(--purple);color:var(--purple)}
+.ev::after{content:"";width:1px;background:var(--line)}.ev:not(.low)::after{height:2.1rem}.ev.low::after{height:.6rem}
+.evnote{min-height:3.4em;margin:.8rem 0 0;max-width:72ch;font-size:.95rem}
+.evnote b{font-family:var(--display);font-weight:500}
+@media (max-width:640px){.ev.minor{display:none}}
+/* key */
+.key{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.4rem;margin-top:2.2rem}
+.key div{min-width:0}
+.key h2{font:500 1.02rem var(--display);margin:0 0 .3rem;display:flex;align-items:center;gap:.55rem}
+.n{display:inline-grid;place-items:center;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--purple);color:#fff;font:700 .8rem var(--display);flex:none}
+.key p{margin:0;font-size:.9rem}
+.sec-h{font:700 .8rem var(--display);letter-spacing:.14em;text-transform:uppercase;margin:3rem 0 0}
+.layers{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:.8rem;border-top:1.5px solid var(--ink);padding-top:1.2rem}
+.layers>div{min-width:0}.layers h3{font:700 .78rem var(--display);letter-spacing:.14em;text-transform:uppercase;margin:0 0 .5rem}
+.layers ul{list-style:none;margin:0;padding:0;display:grid;gap:.5rem;font-size:.88rem}
+.layers li{padding-left:1rem;position:relative}.layers li::before{content:"";position:absolute;left:0;top:.75em;width:.45rem;height:1px;background:var(--line)}
+.layers a{color:var(--ink)}
+.walk{margin-top:2.6rem;padding:1.6rem 1.6rem 1.8rem;background:var(--sheet);border:1.5px solid var(--forest);box-shadow:5px 5px 0 var(--forest);display:grid;gap:.6rem;max-width:760px}
+.walk h2{font:700 .8rem var(--display);letter-spacing:.14em;text-transform:uppercase;margin:0;color:var(--forest)}
+.walk p{margin:0}.walk .big{font:700 clamp(1.4rem,3.4vw,2rem)/1.2 var(--display);text-wrap:balance}
+.walk .share{display:inline-block;font:500 .9rem var(--display);color:#fff;background:var(--forest);padding:.55rem 1rem;text-decoration:none}
+.walk .share:hover,.walk .share:focus-visible{background:var(--ink);outline:none}
+.note{margin-top:2rem;font-size:.85rem;color:var(--line);max-width:72ch}
+@media (prefers-reduced-motion:no-preference){.plate svg .gapline{animation:dash 6s linear infinite}@keyframes dash{to{stroke-dashoffset:-48}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="eyebrow">Civic Interplay · Promised Lands · experimental</p>
+<h1>A side angle on the Western Parkland City</h1>
+<p class="lede">In 2018 Western Sydney was promised a parkland city. This drawing pulls one precinct apart to read that promise: what was said for the place on top, the approvals and spending in the middle, and the ground below. Click a numbered gap to go to its station on the walk. Drag the timeline to watch the record build from 2018, and past today to the targets the plans point to.</p>
+<figure class="plate" id="top-plate">
+<svg viewBox="120 -60 1180 1110" role="img" aria-label="Hand-drawn isometric drawing of a Western Sydney precinct pulled apart into three layers: value with a creek corridor and heat strategy, flows with data centre approvals, and the ground with the creek, sheds and patchy trees. Faded sheets behind the top layer are the institutions that held the promise.">
+<defs>
+<filter id="sketch" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="wash" x="-15%" y="-15%" width="130%" height="130%"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="3" seed="9" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="16" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="1.6"/></filter>
+<filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="2" result="t"/><feColorMatrix in="t" type="matrix" values="0 0 0 0 0.45  0 0 0 0 0.38  0 0 0 0 0.3  0 0 0 0.09 0"/></filter>
+<pattern id="hatch-purple" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-30)"><rect width="6" height="6" fill="#efe6f8"/><line x1="0" y1="0" x2="0" y2="6" stroke="#7D50BD" stroke-width="0.9" opacity=".7"/></pattern>
+<pattern id="hatch-pink" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="#E076DB" stroke-width="1" opacity=".5"/></pattern><pattern id="hatch-ground" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><rect width="7" height="7" fill="#efe8dc"/><line x1="0" y1="0" x2="0" y2="7" stroke="#8a8178" stroke-width="0.6" opacity=".6"/></pattern>
+</defs>
+<rect class="paper" x="120" y="-60" width="1180" height="1110" filter="url(#grain)"/>
+<g class="inst" data-y="2018" data-end="2024">
+<polygon class="sheet-old" points="582.5,23.6 963.6,243.6 686.4,403.6 305.4,183.6" />
+<text class="inst-name" x="973.6" y="245.6" text-anchor="start" >Western Parkland City Authority</text>
+<text class="inst-end" x="973.6" y="258.6" text-anchor="start" >renamed 2024, remit narrowed</text>
+</g>
+<g class="inst" data-y="2018" data-end="2023">
+<polygon class="sheet-old" points="605.0,-12.8 986.1,207.2 709.0,367.2 327.9,147.2" />
+<text class="inst-name" x="996.1" y="209.2" text-anchor="start" >Greater Sydney Commission</text>
+<text class="inst-end" x="996.1" y="222.2" text-anchor="start" >folded into Planning, 2023</text>
+</g>
+<g data-y="2016">
+<polygon class="plane wash-paper " points="560.0,520.0 941.1,740.0 663.9,900.0 282.9,680.0" />
+<polygon class="ink edge" points="560.0,520.0 941.1,740.0 663.9,900.0 282.9,680.0" />
+<text class="layer" x="957.1" y="736.0" text-anchor="start" >GROUND</text>
+<text class="cap" x="957.1" y="752.0" text-anchor="start" >what the record and a walk would show</text>
+<polygon class="lot" points="561.7,533.0 584.2,546.0 549.6,566.0 527.1,553.0" />
+<polygon class="lot" points="518.4,558.0 540.9,571.0 506.3,591.0 483.8,578.0" />
+<polygon class="lot" points="475.1,583.0 497.6,596.0 463.0,616.0 440.5,603.0" />
+<polygon class="lot" points="431.8,608.0 454.3,621.0 419.7,641.0 397.2,628.0" />
+<polygon class="lot" points="388.5,633.0 411.0,646.0 376.4,666.0 353.9,653.0" />
+<polygon class="lot" points="345.2,658.0 367.7,671.0 333.1,691.0 310.6,678.0" />
+<polygon class="lot" points="591.2,550.0 613.7,563.0 579.1,583.0 556.5,570.0" />
+<polygon class="lot" points="547.9,575.0 570.4,588.0 535.8,608.0 513.2,595.0" />
+<polygon class="lot" points="504.6,600.0 527.1,613.0 492.5,633.0 469.9,620.0" />
+<polygon class="lot" points="461.3,625.0 483.8,638.0 449.1,658.0 426.6,645.0" />
+<polygon class="lot" points="418.0,650.0 440.5,663.0 405.8,683.0 383.3,670.0" />
+<polygon class="lot" points="374.7,675.0 397.2,688.0 362.5,708.0 340.0,695.0" />
+<polygon class="lot" points="620.6,567.0 643.1,580.0 608.5,600.0 586.0,587.0" />
+<polygon class="lot" points="577.3,592.0 599.8,605.0 565.2,625.0 542.7,612.0" />
+<polygon class="lot" points="534.0,617.0 556.5,630.0 521.9,650.0 499.4,637.0" />
+<polygon class="lot" points="490.7,642.0 513.2,655.0 478.6,675.0 456.1,662.0" />
+<polygon class="lot" points="447.4,667.0 469.9,680.0 435.3,700.0 412.8,687.0" />
+<polygon class="lot" points="404.1,692.0 426.6,705.0 392.0,725.0 369.5,712.0" />
+<polygon class="shed" points="747.1,644.0 902.9,734.0 838.9,771.0 683.0,681.0" />
+<polygon class="shed" points="667.4,690.0 837.1,788.0 757.5,834.0 587.7,736.0" />
+<polygon class="shed" points="572.1,745.0 719.3,830.0 643.1,874.0 495.9,789.0" />
+<polygon class="heat wash" points="747.1,634.0 932.4,741.0 665.7,895.0 480.3,788.0" />
+<line class="road" x1="745.3" y1="627.0" x2="468.2" y2="787.0"/>
+<text class="tiny" x="438.2" y="803.0" text-anchor="middle" >Mamre Road (illustrative)</text>
+<polyline class="creek-wash wash" points="689.9,595.0 689.3,601.0 688.3,606.7 686.4,612.0 683.7,616.7 680.1,621.0 676.0,625.0 665.9,627.5 655.4,629.7 644.0,631.5 631.7,632.7 618.6,633.5 605.0,634.0 605.0,642.3 604.6,650.4 603.3,658.0 601.1,665.1 598.1,671.7 594.6,678.0 585.4,680.7 575.7,683.1 565.2,685.0 553.8,686.4 541.5,687.3 528.8,688.0 528.8,696.3 528.4,704.4 527.1,712.0 524.9,719.1 521.9,725.7 518.4,732.0 509.2,734.7 499.5,737.1 489.0,739.0 477.6,740.4 465.3,741.3 452.6,742.0 452.9,748.2 452.7,754.1 451.7,759.5 449.8,764.4 447.1,768.8 444.0,773.0" />
+<polyline class="creek-ink" points="689.9,595.0 689.3,601.0 688.3,606.7 686.4,612.0 683.7,616.7 680.1,621.0 676.0,625.0 665.9,627.5 655.4,629.7 644.0,631.5 631.7,632.7 618.6,633.5 605.0,634.0 605.0,642.3 604.6,650.4 603.3,658.0 601.1,665.1 598.1,671.7 594.6,678.0 585.4,680.7 575.7,683.1 565.2,685.0 553.8,686.4 541.5,687.3 528.8,688.0 528.8,696.3 528.4,704.4 527.1,712.0 524.9,719.1 521.9,725.7 518.4,732.0 509.2,734.7 499.5,737.1 489.0,739.0 477.6,740.4 465.3,741.3 452.6,742.0 452.9,748.2 452.7,754.1 451.7,759.5 449.8,764.4 447.1,768.8 444.0,773.0" />
+<polygon class="country" points="556.5,488.0 993.0,740.0 660.5,932.0 224.0,680.0" />
+<text class="country-lbl" x="660.5" y="956.0" text-anchor="middle" >Country: beneath and beyond the sheet. Not ours to record.</text>
+</g>
+<ellipse class="tree wash" cx="686.9" cy="594.2" rx="7.8" ry="4.8" data-y="2016"/>
+<ellipse class="tree wash" cx="688.2" cy="594.2" rx="6.8" ry="4.2" data-y="2016"/>
+<ellipse class="tree wash" cx="675.5" cy="586.9" rx="6.9" ry="4.3" data-y="2016"/>
+<ellipse class="tree wash" cx="708.7" cy="599.4" rx="5.9" ry="3.7" data-y="2016"/>
+<ellipse class="tree wash" cx="667.2" cy="586.8" rx="7.1" ry="4.4" data-y="2016"/>
+<ellipse class="tree wash" cx="661.0" cy="598.7" rx="7.9" ry="4.9" data-y="2016"/>
+<ellipse class="tree wash" cx="693.6" cy="611.7" rx="5.5" ry="3.4" data-y="2016"/>
+<ellipse class="tree wash" cx="666.1" cy="594.3" rx="5.2" ry="3.2" data-y="2016"/>
+<ellipse class="tree wash" cx="677.9" cy="596.6" rx="5.1" ry="3.2" data-y="2016"/>
+<ellipse class="tree wash" cx="687.5" cy="605.3" rx="7.5" ry="4.7" data-y="2016"/>
+<ellipse class="tree wash" cx="682.6" cy="618.4" rx="6.5" ry="4.0" data-y="2016"/>
+<ellipse class="tree wash" cx="691.6" cy="620.6" rx="5.8" ry="3.6" data-y="2016"/>
+<ellipse class="tree wash" cx="699.2" cy="633.6" rx="7.5" ry="4.7" data-y="2016"/>
+<ellipse class="tree wash" cx="695.6" cy="620.7" rx="5.7" ry="3.5" data-y="2016"/>
+<ellipse class="tree wash" cx="680.1" cy="607.8" rx="7.3" ry="4.5" data-y="2016"/>
+<ellipse class="tree wash" cx="666.8" cy="625.2" rx="6.2" ry="3.8" data-y="2016"/>
+<ellipse class="tree wash" cx="691.9" cy="639.7" rx="5.0" ry="3.1" data-y="2016"/>
+<ellipse class="tree wash" cx="657.3" cy="620.7" rx="6.4" ry="4.0" data-y="2016"/>
+<ellipse class="tree wash" cx="699.1" cy="636.7" rx="5.2" ry="3.2" data-y="2016"/>
+<ellipse class="tree wash" cx="678.0" cy="630.6" rx="5.8" ry="3.6" data-y="2016"/>
+<ellipse class="tree wash" cx="639.1" cy="617.7" rx="7.9" ry="4.9" data-y="2016"/>
+<ellipse class="tree wash" cx="672.3" cy="633.4" rx="5.7" ry="3.6" data-y="2016"/>
+<ellipse class="tree wash" cx="643.5" cy="615.8" rx="7.4" ry="4.6" data-y="2016"/>
+<ellipse class="tree wash" cx="640.0" cy="621.8" rx="6.3" ry="3.9" data-y="2016"/>
+<ellipse class="tree wash" cx="638.2" cy="623.5" rx="5.4" ry="3.3" data-y="2016"/>
+<ellipse class="tree wash" cx="643.5" cy="633.4" rx="6.3" ry="3.9" data-y="2016"/>
+<ellipse class="tree wash" cx="622.0" cy="623.4" rx="7.9" ry="4.9" data-y="2016"/>
+<ellipse class="tree wash" cx="648.1" cy="639.1" rx="7.7" ry="4.7" data-y="2016"/>
+<ellipse class="tree wash" cx="620.1" cy="624.4" rx="7.6" ry="4.7" data-y="2016"/>
+<ellipse class="tree wash" cx="643.6" cy="633.2" rx="8.0" ry="4.9" data-y="2016"/>
+<ellipse class="tree wash" cx="595.5" cy="624.6" rx="7.3" ry="4.5" data-y="2016"/>
+<ellipse class="tree wash" cx="600.2" cy="627.9" rx="5.2" ry="3.2" data-y="2016"/>
+<ellipse class="tree wash" cx="585.4" cy="624.0" rx="5.7" ry="3.6" data-y="2016"/>
+<ellipse class="tree wash" cx="611.4" cy="635.6" rx="6.4" ry="3.9" data-y="2016"/>
+<ellipse class="tree wash" cx="625.9" cy="645.8" rx="6.7" ry="4.2" data-y="2016"/>
+<ellipse class="tree wash" cx="625.5" cy="657.4" rx="5.5" ry="3.4" data-y="2016"/>
+<ellipse class="tree wash" cx="618.6" cy="663.6" rx="5.7" ry="3.6" data-y="2016"/>
+<ellipse class="tree wash" cx="587.3" cy="644.2" rx="7.8" ry="4.8" data-y="2016"/>
+<ellipse class="tree wash" cx="584.7" cy="646.1" rx="7.6" ry="4.7" data-y="2016"/>
+<ellipse class="tree wash" cx="610.3" cy="652.5" rx="5.3" ry="3.3" data-y="2016"/>
+<ellipse class="tree wash" cx="491.2" cy="723.7" rx="5.7" ry="3.5" data-y="2016"/>
+<ellipse class="tree wash" cx="531.0" cy="735.4" rx="7.5" ry="4.6" data-y="2016"/>
+<ellipse class="tree wash" cx="525.6" cy="732.9" rx="5.5" ry="3.4" data-y="2016"/>
+<ellipse class="tree wash" cx="534.3" cy="734.3" rx="5.7" ry="3.5" data-y="2016"/>
+<ellipse class="tree wash" cx="516.2" cy="736.4" rx="6.8" ry="4.2" data-y="2016"/>
+<ellipse class="tree wash" cx="483.8" cy="734.7" rx="5.6" ry="3.5" data-y="2016"/>
+<ellipse class="tree wash" cx="480.9" cy="722.6" rx="6.3" ry="3.9" data-y="2016"/>
+<ellipse class="tree wash" cx="484.2" cy="723.0" rx="6.1" ry="3.8" data-y="2016"/>
+<ellipse class="tree wash" cx="507.8" cy="736.0" rx="6.1" ry="3.8" data-y="2016"/>
+<ellipse class="tree wash" cx="510.4" cy="751.1" rx="7.0" ry="4.3" data-y="2016"/>
+<ellipse class="tree wash" cx="485.0" cy="746.0" rx="5.4" ry="3.4" data-y="2016"/>
+<ellipse class="tree wash" cx="463.3" cy="724.5" rx="7.7" ry="4.8" data-y="2016"/>
+<ellipse class="tree wash" cx="480.2" cy="749.3" rx="5.1" ry="3.1" data-y="2016"/>
+<ellipse class="tree wash" cx="483.9" cy="743.8" rx="7.2" ry="4.5" data-y="2016"/>
+<ellipse class="tree wash" cx="462.5" cy="739.7" rx="5.2" ry="3.2" data-y="2016"/>
+<ellipse class="tree wash" cx="451.4" cy="745.1" rx="7.7" ry="4.8" data-y="2016"/>
+<ellipse class="tree wash" cx="460.5" cy="749.8" rx="7.4" ry="4.6" data-y="2016"/>
+<ellipse class="tree wash" cx="473.4" cy="751.6" rx="7.1" ry="4.4" data-y="2016"/>
+<ellipse class="tree wash" cx="465.5" cy="755.4" rx="6.3" ry="3.9" data-y="2016"/>
+<ellipse class="tree wash" cx="460.7" cy="752.5" rx="6.7" ry="4.2" data-y="2016"/>
+<ellipse class="tree wash" cx="460.0" cy="756.4" rx="6.7" ry="4.2" data-y="2016"/>
+<ellipse class="tree wash" cx="463.4" cy="753.5" rx="6.9" ry="4.3" data-y="2016"/>
+<ellipse class="tree wash" cx="469.7" cy="769.9" rx="7.2" ry="4.5" data-y="2016"/>
+<ellipse class="tree wash" cx="444.4" cy="753.0" rx="6.7" ry="4.2" data-y="2016"/>
+<ellipse class="tree wash" cx="445.4" cy="755.2" rx="5.3" ry="3.3" data-y="2016"/>
+<ellipse class="tree wash" cx="467.6" cy="767.1" rx="6.8" ry="4.2" data-y="2016"/>
+<ellipse class="tree wash" cx="452.7" cy="761.7" rx="7.1" ry="4.4" data-y="2016"/>
+<ellipse class="tree wash" cx="448.1" cy="765.2" rx="7.8" ry="4.8" data-y="2016"/>
+<ellipse class="tree wash" cx="445.6" cy="754.1" rx="5.9" ry="3.7" data-y="2016"/>
+<ellipse class="tree wash" cx="462.0" cy="766.7" rx="5.5" ry="3.4" data-y="2016"/>
+<ellipse class="tree wash" cx="460.0" cy="784.8" rx="6.3" ry="3.9" data-y="2016"/>
+<ellipse class="tree wash" cx="464.0" cy="781.8" rx="7.0" ry="4.3" data-y="2016"/>
+<ellipse class="tree wash" cx="431.3" cy="764.6" rx="7.4" ry="4.6" data-y="2016"/>
+<ellipse class="tree wash" cx="457.3" cy="786.8" rx="6.2" ry="3.8" data-y="2016"/>
+<ellipse class="tree wash" cx="450.2" cy="773.7" rx="5.4" ry="3.4" data-y="2016"/>
+<ellipse class="tree wash" cx="385.5" cy="680.4" rx="5.7" ry="3.5" data-y="2016"/>
+<ellipse class="tree wash" cx="374.8" cy="708.1" rx="4.6" ry="2.8" data-y="2016"/>
+<ellipse class="tree wash" cx="457.6" cy="606.1" rx="4.6" ry="2.8" data-y="2016"/>
+<ellipse class="tree wash" cx="471.0" cy="602.8" rx="5.3" ry="3.3" data-y="2016"/>
+<ellipse class="tree wash" cx="520.8" cy="602.0" rx="5.7" ry="3.5" data-y="2016"/>
+<ellipse class="tree wash" cx="527.5" cy="647.0" rx="4.1" ry="2.6" data-y="2016"/>
+<ellipse class="tree wash" cx="336.0" cy="662.5" rx="4.1" ry="2.5" data-y="2016"/>
+<ellipse class="tree wash" cx="473.1" cy="651.0" rx="4.6" ry="2.9" data-y="2016"/>
+<ellipse class="tree wash" cx="623.6" cy="572.4" rx="4.3" ry="2.6" data-y="2016"/>
+<ellipse class="tree wash" cx="593.0" cy="556.5" rx="5.7" ry="3.5" data-y="2016"/>
+<ellipse class="tree wash" cx="544.0" cy="563.0" rx="4.1" ry="2.5" data-y="2016"/>
+<ellipse class="tree wash" cx="498.5" cy="628.4" rx="5.3" ry="3.3" data-y="2016"/>
+<ellipse class="tree wash" cx="407.0" cy="683.9" rx="5.9" ry="3.7" data-y="2016"/>
+<ellipse class="tree wash" cx="567.5" cy="594.1" rx="5.0" ry="3.1" data-y="2016"/>
+<ellipse class="tree wash" cx="629.7" cy="639.9" rx="5.5" ry="3.4" data-y="2019"/>
+<ellipse class="tree wash" cx="604.4" cy="625.3" rx="5.6" ry="3.4" data-y="2021"/>
+<ellipse class="tree wash" cx="546.9" cy="706.8" rx="5.4" ry="3.3" data-y="2022"/>
+<ellipse class="tree wash" cx="675.4" cy="618.3" rx="5.8" ry="3.6" data-y="2025"/>
+<ellipse class="tree wash" cx="652.8" cy="628.2" rx="4.4" ry="2.7" data-y="2019"/>
+<ellipse class="tree wash" cx="531.4" cy="689.5" rx="5.3" ry="3.3" data-y="2024"/>
+<ellipse class="tree wash" cx="512.9" cy="720.5" rx="6.0" ry="3.7" data-y="2020"/>
+<ellipse class="tree wash" cx="469.2" cy="781.6" rx="4.2" ry="2.6" data-y="2022"/>
+<ellipse class="tree wash" cx="553.8" cy="702.4" rx="6.0" ry="3.7" data-y="2024"/>
+<ellipse class="tree wash" cx="622.4" cy="677.4" rx="5.7" ry="3.5" data-y="2024"/>
+<ellipse class="tree-future" cx="475.5" cy="722.5" rx="5.5" ry="3.4" data-y="2030"/>
+<ellipse class="tree-future" cx="602.3" cy="668.4" rx="5.5" ry="3.4" data-y="2027"/>
+<ellipse class="tree-future" cx="548.1" cy="720.2" rx="5.5" ry="3.4" data-y="2029"/>
+<ellipse class="tree-future" cx="648.4" cy="631.7" rx="5.5" ry="3.4" data-y="2030"/>
+<ellipse class="tree-future" cx="511.9" cy="738.5" rx="5.5" ry="3.4" data-y="2028"/>
+<ellipse class="tree-future" cx="528.6" cy="718.7" rx="5.5" ry="3.4" data-y="2028"/>
+<ellipse class="tree-future" cx="485.6" cy="741.9" rx="5.5" ry="3.4" data-y="2029"/>
+<ellipse class="tree-future" cx="590.8" cy="689.2" rx="5.5" ry="3.4" data-y="2028"/>
+<ellipse class="tree-future" cx="601.2" cy="695.4" rx="5.5" ry="3.4" data-y="2029"/>
+<ellipse class="tree-future" cx="453.4" cy="741.4" rx="5.5" ry="3.4" data-y="2027"/>
+<ellipse class="tree-future" cx="471.6" cy="719.5" rx="5.5" ry="3.4" data-y="2027"/>
+<ellipse class="tree-future" cx="513.1" cy="753.5" rx="5.5" ry="3.4" data-y="2027"/>
+<ellipse class="tree-future" cx="488.7" cy="718.8" rx="5.5" ry="3.4" data-y="2030"/>
+<ellipse class="tree-future" cx="550.0" cy="720.5" rx="5.5" ry="3.4" data-y="2030"/>
+<ellipse class="tree-future" cx="583.2" cy="663.0" rx="5.5" ry="3.4" data-y="2029"/>
+<ellipse class="tree-future" cx="546.2" cy="728.2" rx="5.5" ry="3.4" data-y="2030"/>
+<g data-y="2016">
+<polygon class="plane wash-paper " points="560.0,290.0 941.1,510.0 663.9,670.0 282.9,450.0" />
+<polygon class="ink edge" points="560.0,290.0 941.1,510.0 663.9,670.0 282.9,450.0" />
+<text class="layer" x="957.1" y="506.0" text-anchor="start" >FLOWS</text>
+<text class="cap" x="957.1" y="522.0" text-anchor="start" >approvals as volumes, spending as dots</text>
+</g>
+<g data-y="2021">
+<polygon class="permit hatch-a" points="698.6,450.0 837.1,530.0 837.1,508.0 698.6,428.0"/>
+<polygon class="permit hatch-b" points="885.6,502.0 837.1,530.0 837.1,508.0 885.6,480.0"/>
+<polygon class="permit-top" points="747.1,400.0 885.6,480.0 837.1,508.0 698.6,428.0" />
+</g>
+<g data-y="2024">
+<polygon class="permit hatch-a" points="606.8,507.0 762.6,597.0 762.6,567.0 606.8,477.0"/>
+<polygon class="permit hatch-b" points="826.7,560.0 762.6,597.0 762.6,567.0 826.7,530.0"/>
+<polygon class="permit-top" points="670.9,440.0 826.7,530.0 762.6,567.0 606.8,477.0" />
+</g>
+<g data-y="2026">
+<polygon class="permit hatch-a" points="508.0,556.0 637.9,631.0 637.9,605.0 508.0,530.0"/>
+<polygon class="permit hatch-b" points="698.6,596.0 637.9,631.0 637.9,605.0 698.6,570.0"/>
+<polygon class="permit-top" points="568.7,495.0 698.6,570.0 637.9,605.0 508.0,530.0" />
+</g>
+<circle class="spend" data-y="2019" cx="577.3" cy="340.0" r="3.4"/>
+<circle class="spend" data-y="2020" cx="525.4" cy="390.0" r="3.4"/>
+<circle class="spend" data-y="2021" cx="421.4" cy="410.0" r="3.4"/>
+<circle class="spend" data-y="2022" cx="404.1" cy="470.0" r="3.4"/>
+<circle class="spend" data-y="2023" cx="637.9" cy="395.0" r="3.4"/>
+<circle class="spend" data-y="2024" cx="490.7" cy="500.0" r="3.4"/>
+<g data-y="2018">
+<polygon class="plane wash-paper " points="560.0,60.0 941.1,280.0 663.9,440.0 282.9,220.0" />
+<polygon class="ink edge" points="560.0,60.0 941.1,280.0 663.9,440.0 282.9,220.0" />
+<text class="layer" x="957.1" y="276.0" text-anchor="start" >VALUE</text>
+<text class="cap" x="957.1" y="292.0" text-anchor="start" >established for the place, or said by people in it</text>
+</g>
+<g data-y="2020">
+<polyline class="corridor wash" points="689.9,135.0 689.3,141.0 688.3,146.7 686.4,152.0 683.7,156.7 680.1,161.0 676.0,165.0 665.9,167.5 655.4,169.7 644.0,171.5 631.7,172.7 618.6,173.5 605.0,174.0 605.0,182.3 604.6,190.4 603.3,198.0 601.1,205.1 598.1,211.7 594.6,218.0 585.4,220.7 575.7,223.1 565.2,225.0 553.8,226.4 541.5,227.3 528.8,228.0 528.8,236.3 528.4,244.4 527.1,252.0 524.9,259.1 521.9,265.7 518.4,272.0 509.2,274.7 499.5,277.1 489.0,279.0 477.6,280.4 465.3,281.3 452.6,282.0 452.9,288.2 452.7,294.1 451.7,299.5 449.8,304.4 447.1,308.8 444.0,313.0" />
+<polyline class="corridor-ink" points="689.9,135.0 689.3,141.0 688.3,146.7 686.4,152.0 683.7,156.7 680.1,161.0 676.0,165.0 665.9,167.5 655.4,169.7 644.0,171.5 631.7,172.7 618.6,173.5 605.0,174.0 605.0,182.3 604.6,190.4 603.3,198.0 601.1,205.1 598.1,211.7 594.6,218.0 585.4,220.7 575.7,223.1 565.2,225.0 553.8,226.4 541.5,227.3 528.8,228.0 528.8,236.3 528.4,244.4 527.1,252.0 524.9,259.1 521.9,265.7 518.4,272.0 509.2,274.7 499.5,277.1 489.0,279.0 477.6,280.4 465.3,281.3 452.6,282.0 452.9,288.2 452.7,294.1 451.7,299.5 449.8,304.4 447.1,308.8 444.0,313.0" />
+<text class="vsub-g" x="689.9" y="119.0" text-anchor="middle" >Wianamatta–South Creek: an 80 km blue-green corridor (2020)</text>
+</g>
+<g data-y="2018">
+<polygon class="areawide" points="560.0,66.0 930.7,280.0 663.9,434.0 293.3,220.0" />
+</g>
+<g data-y="2020">
+<line class="plumb gapline" x1="584.2" y1="224.0" x2="584.2" y2="684.0"/>
+<circle class="node" cx="584.2" cy="224.0" r="4"/>
+<circle class="node-open" cx="584.2" cy="454.0" r="4"/>
+<circle class="node-open" cx="584.2" cy="684.0" r="4"/>
+</g>
+<g data-y="2024">
+<line class="plumb gapline" x1="741.9" y1="515.0" x2="741.9" y2="395.0"/>
+<text class="q-sm" x="741.9" y="407.0" text-anchor="middle" >no plan for this place asked for it</text>
+</g>
+<g data-y="2023">
+<line class="plumb gapline" x1="792.1" y1="476.0" x2="792.1" y2="586.0"/>
+<text class="q" x="792.1" y="606.0" text-anchor="middle" >?</text>
+</g>
+<g class="aw" data-y="2018"><rect class="aw-swatch" x="140" y="132" width="14" height="10"/><text class="aw-h" x="162" y="141">AREA-WIDE PROMISES · NO LOCATION</text>
+<text class="aw-t" x="140" y="166">40% canopy across Greater Sydney</text><text class="aw-s" x="140" y="180">Region Plan, 2018</text>
+<text class="aw-t" x="140" y="200">Turn Down the Heat</text><text class="aw-s" x="140" y="214">WSROC regional strategy, 2018</text>
+<text class="aw-t" x="140" y="234">200,000 jobs</text><text class="aw-s" x="140" y="248">Western Sydney City Deal, 2018</text>
+<text class="aw-t" x="140" y="268">184,500 homes by 2036</text><text class="aw-s" x="140" y="282">Western City District Plan</text>
+<text class="aw-n" x="140" y="306">Tinted across the whole top sheet:</text><text class="aw-n" x="140" y="320">they apply everywhere, so nowhere</text><text class="aw-n" x="140" y="334">in particular.</text></g>
+<g class="hl"><text class="hl-k" x="150" y="-20">DESIGNATED · GREATER SYDNEY REGION PLAN, MARCH 2018</text><text class="hl-v" x="148" y="20">A parkland city</text><text class="hl-s" x="150" y="46">and 40% tree canopy across Greater Sydney, up from 23%</text></g>
+<g class="now"><text class="hl-k" x="150" y="930" id="now-k">TODAY · ON THE GROUND</text><text class="now-v" x="148" y="964" id="now-v">Not yet read</text><text class="now-s" x="150" y="988" id="now-s">Canopy, heat and the creek edge: first walk along Mamre Road and South Creek</text></g>
+<a href="#station-1" class="badge-link"><g data-y="2020"><line class="lead" x1="584.2" y1="454.0" x2="284.2" y2="394.0"/><circle class="badge" cx="284.2" cy="394.0" r="11"/><text class="badge-t" x="284.2" y="398.0" text-anchor="middle">1</text></g></a>
+<a href="#station-2" class="badge-link"><g data-y="2024"><line class="lead" x1="741.9" y1="435.0" x2="891.9" y2="405.0"/><circle class="badge" cx="891.9" cy="405.0" r="11"/><text class="badge-t" x="891.9" y="409.0" text-anchor="middle">2</text></g></a>
+<a href="#station-3" class="badge-link"><g data-y="2023"><line class="lead" x1="792.1" y1="546.0" x2="982.1" y2="556.0"/><circle class="badge" cx="982.1" cy="556.0" r="11"/><text class="badge-t" x="982.1" y="560.0" text-anchor="middle">3</text></g></a>
+<a href="#station-4" class="badge-link"><g data-y="2018"><line class="lead" x1="224.0" y1="680.0" x2="164.0" y2="720.0"/><circle class="badge" cx="164.0" cy="720.0" r="11"/><text class="badge-t" x="164.0" y="724.0" text-anchor="middle">4</text></g></a>
+<a href="#station-5" class="badge-link"><g data-y="2023"><line class="lead" x1="605.0" y1="-13.0" x2="515.0" y2="-43.0"/><circle class="badge" cx="515.0" cy="-43.0" r="11"/><text class="badge-t" x="515.0" y="-39.0" text-anchor="middle">5</text></g></a>
+</svg>
+<figcaption class="platebar"><span>Promises and dates from the public record</span><span>Layout, volumes and tree positions illustrative</span><span>Drag the timeline below</span></figcaption>
+</figure>
+<section class="scrub" aria-label="Timeline">
+<div class="when"><output id="yr" for="year">2026</output><span class="state" id="state">The record to date</span></div>
+<div class="track" id="track"><div class="beyond" id="beyond" aria-hidden="true"></div>
+<input type="range" id="year" min="2016" max="2036" step="1" value="2026" aria-label="Year"></div>
+<div class="ticks" id="ticks" aria-hidden="true"></div>
+<p class="evnote" id="evnote"></p>
+</section>
+<section class="key" aria-label="Key">
+<div><h2><span class="n">1</span>Mirage</h2><p>The creek corridor is the one promise drawn on a map. The middle layer beneath it is empty here: no corridor or planting money shows, and the creek edge has few trees.</p></div>
+<div><h2><span class="n">2</span>Stray</h2><p>Data centres sit loosely under the area-wide jobs and investment promises. No plan for this catchment asked for gigawatt-scale demand for power and water. The line rises and finds nothing drawn above it.</p></div>
+<div><h2><span class="n">3</span>Shadow</h2><p>Approvals carry conditions on water, emissions and landscaping. The line drops from the permit and stops where the public record does.</p></div>
+<div><h2><span class="n">4</span>Unheld</h2><p>Country is beneath and beyond the sheet, so it is drawn outside the frame. Its values are not ours to record without a First Nations partner and their terms.</p></div>
+<div><h2><span class="n">5</span>Quiet expiry</h2><p>The two bodies set up to hold the parkland city promise fade behind the top sheet: the Commission folded into the Planning department in 2023, the Authority renamed and narrowed in 2024.</p></div>
+</section>
+
+<h2 class="sec-h" id="walk">The walk: five stations</h2>
+<p class="lede" style="margin-top:.6rem">The drawing is the view from above. The walk is the view from the ground. Each numbered gap above is a place you can stand. Positions are fixed on a first visit; the questions are set now so the walk can't drift to fit what turns up.</p>
+<div class="stations">
+<section class="station" id="station-1"><span class="n">1</span><h3>The creek edge</h3>
+<dl><dt>Promised here</dt><dd>Wianamatta–South Creek as a blue-green corridor (Aerotropolis plans, 2020)</dd>
+<dt>Approved or paid</dt><dd>Corridor land secured, planting grants, riparian works: to be found in the record</dd>
+<dt>Notice</dt><dd>Shade or none, how hot the ground feels, whether you can reach the water, birdsong</dd>
+<dt>Record</dt><dd>A photo looking along the creek, a short sound recording, one line on Sightings</dd></dl>
+<a class="back" href="#top-plate">Back to the drawing</a></section>
+<section class="station" id="station-2"><span class="n">2</span><h3>The data hall frontage</h3>
+<dl><dt>Promised here</dt><dd>Jobs and investment across the region (City Deal); nothing specific to this site</dd>
+<dt>Approved or paid</dt><dd>The development consent and its stated capacity, jobs and water use</dd>
+<dt>Notice</dt><dd>Scale against the street, the hum, who comes and goes, where the shade falls</dd>
+<dt>Record</dt><dd>A photo of the frontage from the footpath, a sound recording, one line on Sightings</dd></dl>
+<a class="back" href="#top-plate">Back to the drawing</a></section>
+<section class="station" id="station-3"><span class="n">3</span><h3>The fence line</h3>
+<dl><dt>Promised here</dt><dd>Conditions of consent: landscaping, setbacks, noise and air limits</dd>
+<dt>Approved or paid</dt><dd>Bring the consent conditions. Check each one you can see from public land</dd>
+<dt>Notice</dt><dd>Planting against what was required, generators and fuel storage, any public notice of compliance</dd>
+<dt>Record</dt><dd>Each condition checked, with a photo, or marked "can't be seen from public land"</dd></dl>
+<a class="back" href="#top-plate">Back to the drawing</a></section>
+<section class="station" id="station-4"><span class="n">4</span><h3>A pause for Country</h3>
+<dl><dt>Promised here</dt><dd>Acknowledgement in the plans, without measures</dd>
+<dt>Approved or paid</dt><dd>Not ours to trace without a First Nations partner</dd>
+<dt>Notice</dt><dd>This station is a pause, not a recording task, unless a First Nations partner sets it otherwise</dd>
+<dt>Record</dt><dd>Nothing, by design</dd></dl>
+<a class="back" href="#top-plate">Back to the drawing</a></section>
+<section class="station" id="station-5"><span class="n">5</span><h3>Where the promise is held now</h3>
+<dl><dt>Promised here</dt><dd>The parkland city, held in 2018 by a Commission and an Authority</dd>
+<dt>Approved or paid</dt><dd>The Commission folded in 2023; the Authority renamed and narrowed in 2024</dd>
+<dt>Notice</dt><dd>Whoever now reports against the 2018 promises, if anyone. This station is a desk, not a street</dd>
+<dt>Record</dt><dd>The search you ran and what it found, or didn't</dd></dl>
+<a class="back" href="#top-plate">Back to the drawing</a></section>
+</div>
+<h2 class="sec-h">Where each layer comes from</h2>
+<section class="layers" aria-label="Sources">
+<div><h3>Value</h3><ul>
+<li><a href="https://www.greatercities.au/metropolis-of-three-cities/sustainability/city-its-landscape/urban-tree-canopy-cover-increased">Greater Sydney Region Plan</a>, March 2018: the parkland city, 40% canopy from 23%</li>
+<li><a href="https://www.planning.nsw.gov.au/sites/default/files/2024-04/western-city-district-plan.pdf">Western City District Plan</a>: 184,500 homes by 2036, South Creek, canopy, heat</li>
+<li><a href="https://owsa.nsw.gov.au/wp-content/uploads/2024/05/Aerotropolis-Core-Badgerys-Creek-Wianamatta-South-Creek-plan-overview.pdf">Aerotropolis plans</a>, 2020: Wianamatta–South Creek corridor</li>
+<li><a href="https://wsroc.com.au/projects/project-turn-down-the-heat/turn-down-the-heat-strategy">Turn Down the Heat</a>, WSROC 2018: co-designed by more than 55 stakeholders</li>
+</ul></div>
+<div><h3>Flows</h3><ul>
+<li><a href="https://treasury.gov.au/sites/default/files/2025-07/western-sydney-progress-report-2021.pdf">Western Sydney City Deal progress reports</a>: 38 commitments, 11 complete by 2021</li>
+<li><a href="https://www.planningportal.nsw.gov.au/major-projects/projects/mamre-road-data-centre-campus">NSW Major Projects</a>: data centre applications and submissions, including SSD-92743706</li>
+<li>Data Centres Transparency Project register; NSW budget papers; Greening our City grants</li>
+</ul></div>
+<div><h3>Ground</h3><ul>
+<li><a href="https://www.nsw.gov.au/nsw-government/premiers-priorities/greening-our-city">Greening our City</a>: 1 million trees by November 2022, 5 million by 2030</li>
+<li>Canopy and heat mapping by LGA; dwelling completions; employment data</li>
+<li>Place-based readings: walks along the creek edge and Mamre Road, recorded on Sightings</li>
+</ul></div>
+</section>
+<aside class="walk" aria-label="Invitation">
+<h2>An invitation</h2>
+<p class="big">Walk the creek where the parkland city was promised. Feel for the shade, and notice where it gives out.</p>
+<p>You might even record your own reading of the terrain.</p>
+<p><a class="share" href="https://sightings.civicinterplay.io/">Share your reading on Sightings</a></p>
+</aside>
+<p class="note">Purple marks what was permitted or paid for. Green is the canopy and the promised corridor, blue the creek, and the terracotta wash is the heat held by hardstand. Pink hatching marks promises with no location: they apply across a whole region, so the drawing tints the whole sheet and lists them in the margin. Only the corridor is drawn as a place. Data centre volumes and their dates are placed to show the form, not to locate real projects. The reading itself is still to be done: see the Western Parkland City reading plan.</p>
+</div>
+<script>
+(function(){
+const EV=[
+ {y:2018,t:"Region Plan and City Deal",n:"<b>March 2018.</b> The Region Plan names the Western Parkland City and sets a 40% canopy goal for Greater Sydney. The City Deal signs 38 commitments. WSROC publishes Turn Down the Heat. Two bodies are set up to hold the promise."},
+ {y:2020,t:"Aerotropolis plan",minor:1,n:"<b>2020.</b> The Aerotropolis plans draw Wianamatta–South Creek as an 80 km blue-green corridor. The corridor appears on the value layer."},
+ {y:2022,t:"1 million trees",minor:1,n:"<b>5 November 2022.</b> Greening our City plants its millionth tree. The next target is 5 million by 2030."},
+ {y:2023,t:"Commission folded",n:"<b>June 2023.</b> The Government announces the Greater Cities Commission, successor to the body that wrote the Region Plan, will be folded into the Planning department."},
+ {y:2024,t:"Authority renamed",minor:1,n:"<b>1 July 2024.</b> The Western Parkland City Authority becomes the Bradfield Development Authority, with its remit narrowed to Bradfield and the Aerotropolis."},
+ {y:2026,t:"Today",now:1,n:"<b>Today.</b> Data centre applications on Mamre Road draw mostly objecting submissions over water, diesel generators near schools and cumulative impact. The ground layer has not yet been read."},
+ {y:2030,t:"5 million trees",n:"<b>2030.</b> The Greening our City target. Outlined trees show what the promise implies for this creek edge."},
+ {y:2036,t:"184,500 homes",n:"<b>2036.</b> The district plan's horizon for 184,500 new homes in the Western City."}
+];
+const NOW=2026,MIN=2016,MAX=2036;
+const input=document.getElementById('year'),out=document.getElementById('yr'),state=document.getElementById('state'),note=document.getElementById('evnote'),track=document.getElementById('track'),ticks=document.getElementById('ticks');
+const pct=y=>((y-MIN)/(MAX-MIN))*100;
+document.getElementById('beyond').style.left=pct(NOW)+'%';
+[2016,2020,2024,2028,2032,2036].forEach(y=>{const s=document.createElement('span');s.style.left=pct(y)+'%';s.textContent=y;ticks.appendChild(s)});
+EV.forEach((e,i)=>{const d=document.createElement('div');d.className='ev'+(i%2?' low':'')+(e.minor?' minor':'')+(e.now?' now':'')+(e.y===MAX?' end':'');d.style.left=pct(e.y)+'%';const b=document.createElement('button');b.type='button';b.textContent=e.t;b.addEventListener('click',()=>{input.value=e.y;render()});d.appendChild(b);track.appendChild(d)});
+const els=[...document.querySelectorAll('.plate svg [data-y]')];
+const nk=document.getElementById('now-k'),nv=document.getElementById('now-v'),ns=document.getElementById('now-s');
+function render(){
+ const y=+input.value; out.textContent=y;
+ els.forEach(el=>{el.classList.toggle('is-off',+el.dataset.y>y); if(el.dataset.end) el.classList.toggle('expired',y>=+el.dataset.end)});
+ const ahead=y>NOW; state.textContent=ahead?'What the promises imply':(y===NOW?'The record to date':'The record as it stood'); state.classList.toggle('ahead',ahead);
+ if(ahead){nk.textContent='IN '+y+' · WHAT WAS PROMISED';nv.textContent=y>=2030?'5 million trees across Sydney':'Planting toward 2030';ns.textContent='Outlined trees: the promise, not a forecast';}
+ else if(y===NOW){nk.textContent='TODAY · ON THE GROUND';nv.textContent='Not yet read';ns.textContent='Canopy, heat and the creek edge: first walk along Mamre Road and South Creek';}
+ else{nk.textContent='IN '+y+' · ON THE GROUND';nv.textContent='Record to be gathered';ns.textContent='Canopy and heat by year, from mapping and walks';}
+ let ev=null;EV.forEach(e=>{if(e.y<=y)ev=e});
+ note.innerHTML=ev?ev.n:'<b>Before 2018.</b> Paddocks, sheds and a creek. No parkland city promise yet to read the place against.';
+}
+input.addEventListener('input',render);render();
+})();
+</script>
+</body>
+</html>
