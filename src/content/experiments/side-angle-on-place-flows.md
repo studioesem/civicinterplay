@@ -8,8 +8,7 @@ plateCaption:
   - "Study: urban forest under densification"
   - Illustrative layout and figures, not real data
   - Drag the timeline below to move through the record
-timelineBefore: "**Before 2012.** Trees, streets and blocks, with no stated
-  target yet. Nothing to read the place against."
+timelineBefore: "**Before 2012.** Trees, streets and blocks. No stated target defined.  "
 timeline:
   - year: 2012
     label: Strategy
@@ -113,15 +112,18 @@ howto:
       and canopy agree. That is what alignment looks like."
     - "**Drag the timeline** to watch the record build, from the 2012 strategy
       to today and on to 2040."
+    - >
+      **Reflection** What would happen if the flows of value and investment were
+      made more legible in this way? Would more community members be interested
+      in contributing their own data on local habitat care to a visualisation or
+      tool like this? 
 publishedAt: 2026-10-13
 draft: false
 ---
-This project is entirely speculative, using indicative data only. The point is to visualise how the value of a precinct over time might start to be visualised through its historical public registers of investment flows, considered against its named priorities and targets.  
+This project is entirely speculative, using indicative data only. 
 
-In this instance, the visualisation considers a 20-year time span of public commitments to increased tree canopy targets. It is designed to show where proposed versus actual spending landed at a localised level, demonstrating how identified targets can be measured and traced using public reports (open data, annual or statutory reports, local ecology maps). 
+The point is to visualise how the value of a precinct over time might start to be visualised through its historical public registers of investment flows, considered against its named priorities and targets.  
 
-With so much historical information now available, the visualisation asks: how might informed citizens reassemble these records in ways that make sense to them? How to they see themselves contributing to this picture? 
+In this instance, the visualisation considers a 20-year time span of public commitments to increased tree canopy targets. It points to the idea that proposed versus actual spending can be mapped at localised level, using easily-accessible tools and prompts using openly available data (government open data, annual or statutory reports, local ecology maps). 
 
-What would happen if the flows of value and investment were made more legible in this way? 
-
-Above all, the visualisation asks: what does it mean to reassemble public records in ways that make flows of value shaping a place more intentionally traceable through time, opening up spaces of conversation with different beneficiaries of investment? 
+If making a tool like this is no longer hard, what kinds of uses might records like this have? For example, could different beneficiaries of investment in street trees contribute over time, helping to annotate and share the value they receive? How might be these less traditional sources of 'data', expressed as nature regeneration or care, be made more visible alongside public records? 
