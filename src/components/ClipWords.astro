@@ -1,0 +1,40 @@
+---
+// The words spoken in a video clip, folded away under it. Pass the time the
+// clip starts in the full recording so readers can find it there.
+interface Props {
+  /** Where the clip starts in the full recording, e.g. "16:50". */
+  time?: string;
+}
+const { time } = Astro.props;
+---
+<details class="clip-words">
+  <summary>Read along{time && <span class="clip-time"> · from {time} in the full recording</span>}</summary>
+  <div class="clip-words-body"><slot /></div>
+</details>
+
+<style>
+  .clip-words {
+    margin: -0.6rem 0 2.2rem;
+    font-size: 0.95rem;
+  }
+  .clip-words summary {
+    cursor: pointer;
+    font-family: var(--font-display, "Fira Sans", system-ui, sans-serif);
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--purple, #7D50BD);
+    width: fit-content;
+  }
+  .clip-time {
+    color: #6f6a76;
+    font-weight: 400;
+  }
+  .clip-words-body {
+    margin-top: 0.6rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--pink, #E076DB);
+  }
+  .clip-words-body :global(p) {
+    margin: 0 0 0.8rem;
+  }
+</style>
