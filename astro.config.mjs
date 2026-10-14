@@ -5,7 +5,7 @@ import remarkBreaks from 'remark-breaks';
 
 export default defineConfig({
   site: 'https://civicinterplay.io',
-  integrations: [mdx({ remarkPlugins: [remarkBreaks] }), sitemap({ filter: (page) => !page.includes('/mockup/') && !page.includes('/pad/') && !page.includes('/reflections/') })],
+  integrations: [mdx({ remarkPlugins: [remarkBreaks] }), sitemap({ filter: (page) => !page.includes('/mockup/') && !page.includes('/pad/') && !page.includes('/reflections/') && !page.includes('/experiments/side-angle-on-the-western-parkland-city/') })],
   build: {
     format: 'directory',
   },

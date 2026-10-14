@@ -545,6 +545,173 @@ content:
             label: What it's about
             type: text
 
+  - name: experiments
+    label: Experiments
+    type: collection
+    path: src/content/experiments
+    extension: md
+    format: yaml-frontmatter
+    description: "The words on each experiment page (the drawings themselves are code). Add a new one by asking for it: a new experiment needs its drawing built first. Text fields take **bold**, *italics* and [links](https://...)."
+    view:
+      fields: [title, draft]
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description (for search engines and link previews)
+        type: text
+      - name: eyebrow
+        label: Small line above the title
+        type: string
+      - name: body
+        label: Introduction
+        type: rich-text
+      - name: plateCaption
+        label: Caption bar under the drawing
+        type: string
+        list: true
+      - name: timelineBefore
+        label: Timeline note before the first event
+        type: text
+      - name: timeline
+        label: Timeline events
+        type: object
+        description: Each year must match something in the drawing. Edit the label and note freely; ask before changing a year.
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.year} · {fields.label}"
+        fields:
+          - name: year
+            label: Year
+            type: number
+          - name: label
+            label: Button label
+            type: string
+          - name: note
+            label: Note
+            type: text
+          - name: minor
+            label: Minor event (smaller marker)
+            type: boolean
+            default: false
+      - name: key
+        label: Key to the numbered gaps
+        type: object
+        description: In order, so the first item explains gap 1 in the drawing.
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.heading}"
+        fields:
+          - name: heading
+            label: Heading
+            type: string
+          - name: text
+            label: Text
+            type: text
+      - name: walk
+        label: The walk (optional)
+        type: object
+        fields:
+          - name: heading
+            label: Heading
+            type: string
+          - name: intro
+            label: Introduction
+            type: text
+          - name: stations
+            label: Stations
+            type: object
+            description: In order, so the first station matches gap 1.
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{fields.title}"
+            fields:
+              - name: title
+                label: Title
+                type: string
+              - name: promised
+                label: Promised here
+                type: text
+              - name: approved
+                label: Approved or paid
+                type: text
+              - name: notice
+                label: Notice
+                type: text
+              - name: record
+                label: Record
+                type: text
+      - name: sourcesHeading
+        label: Sources heading
+        type: string
+      - name: sources
+        label: Sources, by layer
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.layer}"
+        fields:
+          - name: layer
+            label: Layer
+            type: string
+          - name: items
+            label: Sources
+            type: object
+            list: true
+            fields:
+              - name: kind
+                label: Kind (optional small label)
+                type: string
+              - name: text
+                label: Text
+                type: text
+      - name: invitation
+        label: Invitation box
+        type: object
+        fields:
+          - name: heading
+            label: Heading
+            type: string
+          - name: big
+            label: Large line
+            type: text
+          - name: text
+            label: Smaller line
+            type: text
+          - name: linkLabel
+            label: Button label
+            type: string
+          - name: linkUrl
+            label: Button link
+            type: string
+      - name: howto
+        label: How to read the drawing (optional)
+        type: object
+        fields:
+          - name: heading
+            label: Heading
+            type: string
+          - name: items
+            label: Points
+            type: text
+            list: true
+      - name: closing
+        label: Closing note (small print)
+        type: text
+      - name: publishedAt
+        label: Published
+        type: date
+      - name: draft
+        label: Draft (live at its address, but hidden from search engines)
+        type: boolean
+        default: false
+
   - name: tools
     label: Tools & experiments
     type: file

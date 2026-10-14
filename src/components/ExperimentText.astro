@@ -1,0 +1,68 @@
+---
+// The written sections under an experiment's drawing, in page order: key to
+// the numbered gaps, the walk (if any), sources, invitation, how to read it,
+// closing note. Styled by each experiment page's own stylesheet.
+import { inlineMd } from '../lib/inline-md';
+const { data } = Astro.props;
+const { key, walk, sources, sourcesHeading, invitation, howto, closing } = data;
+---
+{key.length > 0 && (
+  <section class="key" aria-label="Key">
+    {key.map((k, i) => (
+      <div><h2><span class="n">{i + 1}</span>{k.heading}</h2><p set:html={inlineMd(k.text)} /></div>
+    ))}
+  </section>
+)}
+
+{walk && (
+  <>
+    <h2 class="sec-h" id="walk">{walk.heading}</h2>
+    {walk.intro && <p class="lede" style="margin-top:.6rem" set:html={inlineMd(walk.intro)} />}
+    <div class="stations">
+      {walk.stations.map((s, i) => (
+        <section class="station" id={`station-${i + 1}`}><span class="n">{i + 1}</span><h3>{s.title}</h3>
+          <dl>
+            <dt>Promised here</dt><dd set:html={inlineMd(s.promised)} />
+            <dt>Approved or paid</dt><dd set:html={inlineMd(s.approved)} />
+            <dt>Notice</dt><dd set:html={inlineMd(s.notice)} />
+            <dt>Record</dt><dd set:html={inlineMd(s.record)} />
+          </dl>
+          <a class="back" href="#top-plate">Back to the drawing</a>
+        </section>
+      ))}
+    </div>
+  </>
+)}
+
+{sources.length > 0 && (
+  <>
+    <h2 class="sec-h">{sourcesHeading}</h2>
+    <section class="layers" aria-label="Sources for each layer">
+      {sources.map((l) => (
+        <div><h3>{l.layer}</h3><ul>
+          {l.items.map((it) => (
+            <li>{it.kind && <span class="kind">{it.kind}</span>}<Fragment set:html={inlineMd(it.text)} /></li>
+          ))}
+        </ul></div>
+      ))}
+    </section>
+  </>
+)}
+
+{invitation && (
+  <aside class="walk" aria-label="Invitation">
+    <h2>{invitation.heading}</h2>
+    <p class="big" set:html={inlineMd(invitation.big)} />
+    {invitation.text && <p set:html={inlineMd(invitation.text)} />}
+    {invitation.linkUrl && <p><a class="share" href={invitation.linkUrl}>{invitation.linkLabel || 'Share your reading'}</a></p>}
+  </aside>
+)}
+
+{howto && howto.items.length > 0 && (
+  <section class="howto" aria-label="How to read the drawing">
+    <h2 class="sec-h">{howto.heading}</h2>
+    <ul>{howto.items.map((it) => <li set:html={inlineMd(it)} />)}</ul>
+  </section>
+)}
+
+{closing && <p class="note" set:html={inlineMd(closing)} />}

@@ -205,4 +205,70 @@ const claimcards = defineCollection({
   }),
 });
 
-export const collections = { posts, embeds, fieldnotes, claimcards };
+
+// Experiments: drawings with their own code (SVG, styles, script) in
+// src/pages/experiments/, and all their words here so they can be edited in
+// Pages CMS. The body is the introduction. Timeline years must match the
+// drawing, so change a year only when the drawing changes too.
+const experiments = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    eyebrow: z.string().default('Civic Interplay · experimental'),
+    plateCaption: z.array(z.string()).default([]),
+    timelineBefore: z.string().default(''),
+    timeline: z
+      .array(
+        z.object({
+          year: z.number(),
+          label: z.string(),
+          note: z.string(),
+          minor: z.boolean().default(false),
+        })
+      )
+      .default([]),
+    key: z.array(z.object({ heading: z.string(), text: z.string() })).default([]),
+    walk: z
+      .object({
+        heading: z.string(),
+        intro: z.string().optional(),
+        stations: z
+          .array(
+            z.object({
+              title: z.string(),
+              promised: z.string(),
+              approved: z.string(),
+              notice: z.string(),
+              record: z.string(),
+            })
+          )
+          .default([]),
+      })
+      .optional(),
+    sourcesHeading: z.string().default('Where each layer comes from'),
+    sources: z
+      .array(
+        z.object({
+          layer: z.string(),
+          items: z.array(z.object({ kind: z.string().optional(), text: z.string() })).default([]),
+        })
+      )
+      .default([]),
+    invitation: z
+      .object({
+        heading: z.string().default('An invitation'),
+        big: z.string(),
+        text: z.string().optional(),
+        linkLabel: z.string().optional(),
+        linkUrl: z.string().optional(),
+      })
+      .optional(),
+    howto: z.object({ heading: z.string(), items: z.array(z.string()).default([]) }).optional(),
+    closing: z.string().optional(),
+    publishedAt: z.coerce.date(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { posts, embeds, fieldnotes, claimcards, experiments };

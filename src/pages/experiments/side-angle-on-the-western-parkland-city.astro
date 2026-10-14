@@ -1,11 +1,34 @@
+---
+// The words on this page come from src/content/experiments/side-angle-on-the-western-parkland-city.md,
+// editable in the CMS under Experiments. The drawing, its styles and the
+// timeline script stay here.
+import { getEntry } from 'astro:content';
+import ExperimentCrumb from '../../components/ExperimentCrumb.astro';
+import ExperimentText from '../../components/ExperimentText.astro';
+import { inlineMd } from '../../lib/inline-md';
+
+const e = (await getEntry('experiments', 'side-angle-on-the-western-parkland-city'))!;
+const { Content } = await e.render();
+const events = e.data.timeline.map((t) => ({
+  y: t.year,
+  t: t.label,
+  n: inlineMd(t.note),
+  minor: t.minor ? 1 : 0,
+  now: t.label.toLowerCase() === 'today' ? 1 : 0,
+}));
+const before = inlineMd(e.data.timelineBefore);
+---
 <!doctype html>
 <html lang="en-AU">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A Side Angle on the Western Parkland City</title>
+<title>{e.data.title}</title>
+<meta name="description" content={e.data.description}>
+{e.data.draft && <meta name="robots" content="noindex">}
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
-<style>
+<style is:global>
 /* Layout: one hand-drawn axonometric plate on paper, a timeline, then key, sources and an invitation.
    Treatment: ink line drawing with loose watercolour washes, in the Civic Interplay palette.
    Single paper look by choice: light in both themes. */
@@ -17,7 +40,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font:300 16px/1.7 var(--b
 .wrap{max-width:1200px;margin:0 auto;padding-block:2.5rem 3rem;padding-inline:max(16px,3vw)}
 .eyebrow{font:500 .75rem var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--purple);margin:0 0 .4rem}
 h1{font:700 clamp(1.8rem,4.5vw,2.8rem)/1.1 var(--display);margin:0 0 .8rem;text-wrap:balance}
-.lede{max-width:64ch;margin:0 0 1.6rem}
+.lede,.intro>p{max-width:64ch;margin:0 0 1.6rem}
 .plate{margin:0;background:var(--sheet);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--purple);overflow-x:auto;position:relative}
 .plate svg{display:block;width:100%;min-width:780px;height:auto}
 .platebar{display:flex;justify-content:space-between;gap:.4rem 1rem;flex-wrap:wrap;font:400 .72rem var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--line);padding:.6rem 1rem;border-top:1px solid var(--faint)}
@@ -134,9 +157,10 @@ svg .is-off{opacity:0}
 </head>
 <body>
 <div class="wrap">
-<p class="eyebrow">Civic Interplay · Promised Lands · experimental</p>
-<h1>A side angle on the Western Parkland City</h1>
-<p class="lede">In 2018 Western Sydney was promised a parkland city. This drawing pulls one precinct apart to read that promise: what was said for the place on top, the approvals and spending in the middle, and the ground below. Click a numbered gap to go to its station on the walk. Drag the timeline to watch the record build from 2018, and past today to the targets the plans point to.</p>
+<ExperimentCrumb />
+<p class="eyebrow">{e.data.eyebrow}</p>
+<h1>{e.data.title}</h1>
+<div class="intro"><Content /></div>
 <figure class="plate" id="top-plate">
 <svg viewBox="120 -60 1180 1110" role="img" aria-label="Hand-drawn isometric drawing of a Western Sydney precinct pulled apart into three layers: value with a creek corridor and heat strategy, flows with data centre approvals, and the ground with the creek, sheds and patchy trees. Faded sheets behind the top layer are the institutions that held the promise.">
 <defs>
@@ -375,7 +399,7 @@ svg .is-off{opacity:0}
 <a href="#station-4" class="badge-link"><g data-y="2018"><line class="lead" x1="224.0" y1="680.0" x2="164.0" y2="720.0"/><circle class="badge" cx="164.0" cy="720.0" r="11"/><text class="badge-t" x="164.0" y="724.0" text-anchor="middle">4</text></g></a>
 <a href="#station-5" class="badge-link"><g data-y="2023"><line class="lead" x1="605.0" y1="-13.0" x2="515.0" y2="-43.0"/><circle class="badge" cx="515.0" cy="-43.0" r="11"/><text class="badge-t" x="515.0" y="-39.0" text-anchor="middle">5</text></g></a>
 </svg>
-<figcaption class="platebar"><span>Promises and dates from the public record</span><span>Layout, volumes and tree positions illustrative</span><span>Drag the timeline below</span></figcaption>
+<figcaption class="platebar">{e.data.plateCaption.map((c) => <span>{c}</span>)}</figcaption>
 </figure>
 <section class="scrub" aria-label="Timeline">
 <div class="when"><output id="yr" for="year">2026</output><span class="state" id="state">The record to date</span></div>
@@ -384,87 +408,11 @@ svg .is-off{opacity:0}
 <div class="ticks" id="ticks" aria-hidden="true"></div>
 <p class="evnote" id="evnote"></p>
 </section>
-<section class="key" aria-label="Key">
-<div><h2><span class="n">1</span>Mirage</h2><p>The creek corridor is the one promise drawn on a map. The middle layer beneath it is empty here: no corridor or planting money shows, and the creek edge has few trees.</p></div>
-<div><h2><span class="n">2</span>Stray</h2><p>Data centres sit loosely under the area-wide jobs and investment promises. No plan for this catchment asked for gigawatt-scale demand for power and water. The line rises and finds nothing drawn above it.</p></div>
-<div><h2><span class="n">3</span>Shadow</h2><p>Approvals carry conditions on water, emissions and landscaping. The line drops from the permit and stops where the public record does.</p></div>
-<div><h2><span class="n">4</span>Unheld</h2><p>Country is beneath and beyond the sheet, so it is drawn outside the frame. Its values are not ours to record without a First Nations partner and their terms.</p></div>
-<div><h2><span class="n">5</span>Quiet expiry</h2><p>The two bodies set up to hold the parkland city promise fade behind the top sheet: the Commission folded into the Planning department in 2023, the Authority renamed and narrowed in 2024.</p></div>
-</section>
-
-<h2 class="sec-h" id="walk">The walk: five stations</h2>
-<p class="lede" style="margin-top:.6rem">The drawing is the view from above. The walk is the view from the ground. Each numbered gap above is a place you can stand. Positions are fixed on a first visit; the questions are set now so the walk can't drift to fit what turns up.</p>
-<div class="stations">
-<section class="station" id="station-1"><span class="n">1</span><h3>The creek edge</h3>
-<dl><dt>Promised here</dt><dd>Wianamatta–South Creek as a blue-green corridor (Aerotropolis plans, 2020)</dd>
-<dt>Approved or paid</dt><dd>Corridor land secured, planting grants, riparian works: to be found in the record</dd>
-<dt>Notice</dt><dd>Shade or none, how hot the ground feels, whether you can reach the water, birdsong</dd>
-<dt>Record</dt><dd>A photo looking along the creek, a short sound recording, one line on Sightings</dd></dl>
-<a class="back" href="#top-plate">Back to the drawing</a></section>
-<section class="station" id="station-2"><span class="n">2</span><h3>The data hall frontage</h3>
-<dl><dt>Promised here</dt><dd>Jobs and investment across the region (City Deal); nothing specific to this site</dd>
-<dt>Approved or paid</dt><dd>The development consent and its stated capacity, jobs and water use</dd>
-<dt>Notice</dt><dd>Scale against the street, the hum, who comes and goes, where the shade falls</dd>
-<dt>Record</dt><dd>A photo of the frontage from the footpath, a sound recording, one line on Sightings</dd></dl>
-<a class="back" href="#top-plate">Back to the drawing</a></section>
-<section class="station" id="station-3"><span class="n">3</span><h3>The fence line</h3>
-<dl><dt>Promised here</dt><dd>Conditions of consent: landscaping, setbacks, noise and air limits</dd>
-<dt>Approved or paid</dt><dd>Bring the consent conditions. Check each one you can see from public land</dd>
-<dt>Notice</dt><dd>Planting against what was required, generators and fuel storage, any public notice of compliance</dd>
-<dt>Record</dt><dd>Each condition checked, with a photo, or marked "can't be seen from public land"</dd></dl>
-<a class="back" href="#top-plate">Back to the drawing</a></section>
-<section class="station" id="station-4"><span class="n">4</span><h3>A pause for Country</h3>
-<dl><dt>Promised here</dt><dd>Acknowledgement in the plans, without measures</dd>
-<dt>Approved or paid</dt><dd>Not ours to trace without a First Nations partner</dd>
-<dt>Notice</dt><dd>This station is a pause, not a recording task, unless a First Nations partner sets it otherwise</dd>
-<dt>Record</dt><dd>Nothing, by design</dd></dl>
-<a class="back" href="#top-plate">Back to the drawing</a></section>
-<section class="station" id="station-5"><span class="n">5</span><h3>Where the promise is held now</h3>
-<dl><dt>Promised here</dt><dd>The parkland city, held in 2018 by a Commission and an Authority</dd>
-<dt>Approved or paid</dt><dd>The Commission folded in 2023; the Authority renamed and narrowed in 2024</dd>
-<dt>Notice</dt><dd>Whoever now reports against the 2018 promises, if anyone. This station is a desk, not a street</dd>
-<dt>Record</dt><dd>The search you ran and what it found, or didn't</dd></dl>
-<a class="back" href="#top-plate">Back to the drawing</a></section>
+<ExperimentText data={e.data} />
 </div>
-<h2 class="sec-h">Where each layer comes from</h2>
-<section class="layers" aria-label="Sources">
-<div><h3>Value</h3><ul>
-<li><a href="https://www.greatercities.au/metropolis-of-three-cities/sustainability/city-its-landscape/urban-tree-canopy-cover-increased">Greater Sydney Region Plan</a>, March 2018: the parkland city, 40% canopy from 23%</li>
-<li><a href="https://www.planning.nsw.gov.au/sites/default/files/2024-04/western-city-district-plan.pdf">Western City District Plan</a>: 184,500 homes by 2036, South Creek, canopy, heat</li>
-<li><a href="https://owsa.nsw.gov.au/wp-content/uploads/2024/05/Aerotropolis-Core-Badgerys-Creek-Wianamatta-South-Creek-plan-overview.pdf">Aerotropolis plans</a>, 2020: Wianamatta–South Creek corridor</li>
-<li><a href="https://wsroc.com.au/projects/project-turn-down-the-heat/turn-down-the-heat-strategy">Turn Down the Heat</a>, WSROC 2018: co-designed by more than 55 stakeholders</li>
-</ul></div>
-<div><h3>Flows</h3><ul>
-<li><a href="https://treasury.gov.au/sites/default/files/2025-07/western-sydney-progress-report-2021.pdf">Western Sydney City Deal progress reports</a>: 38 commitments, 11 complete by 2021</li>
-<li><a href="https://www.planningportal.nsw.gov.au/major-projects/projects/mamre-road-data-centre-campus">NSW Major Projects</a>: data centre applications and submissions, including SSD-92743706</li>
-<li>Data Centres Transparency Project register; NSW budget papers; Greening our City grants</li>
-</ul></div>
-<div><h3>Ground</h3><ul>
-<li><a href="https://www.nsw.gov.au/nsw-government/premiers-priorities/greening-our-city">Greening our City</a>: 1 million trees by November 2022, 5 million by 2030</li>
-<li>Canopy and heat mapping by LGA; dwelling completions; employment data</li>
-<li>Place-based readings: walks along the creek edge and Mamre Road, recorded on Sightings</li>
-</ul></div>
-</section>
-<aside class="walk" aria-label="Invitation">
-<h2>An invitation</h2>
-<p class="big">Walk the creek where the parkland city was promised. Feel for the shade, and notice where it gives out.</p>
-<p>You might even record your own reading of the terrain.</p>
-<p><a class="share" href="https://sightings.civicinterplay.io/">Share your reading on Sightings</a></p>
-</aside>
-<p class="note">Purple marks what was permitted or paid for. Green is the canopy and the promised corridor, blue the creek, and the terracotta wash is the heat held by hardstand. Pink hatching marks promises with no location: they apply across a whole region, so the drawing tints the whole sheet and lists them in the margin. Only the corridor is drawn as a place. Data centre volumes and their dates are placed to show the form, not to locate real projects. The reading itself is still to be done: see the Western Parkland City reading plan.</p>
-</div>
-<script>
+<script is:inline define:vars={{ events, before }}>
 (function(){
-const EV=[
- {y:2018,t:"Region Plan and City Deal",n:"<b>March 2018.</b> The Region Plan names the Western Parkland City and sets a 40% canopy goal for Greater Sydney. The City Deal signs 38 commitments. WSROC publishes Turn Down the Heat. Two bodies are set up to hold the promise."},
- {y:2020,t:"Aerotropolis plan",minor:1,n:"<b>2020.</b> The Aerotropolis plans draw Wianamatta–South Creek as an 80 km blue-green corridor. The corridor appears on the value layer."},
- {y:2022,t:"1 million trees",minor:1,n:"<b>5 November 2022.</b> Greening our City plants its millionth tree. The next target is 5 million by 2030."},
- {y:2023,t:"Commission folded",n:"<b>June 2023.</b> The Government announces the Greater Cities Commission, successor to the body that wrote the Region Plan, will be folded into the Planning department."},
- {y:2024,t:"Authority renamed",minor:1,n:"<b>1 July 2024.</b> The Western Parkland City Authority becomes the Bradfield Development Authority, with its remit narrowed to Bradfield and the Aerotropolis."},
- {y:2026,t:"Today",now:1,n:"<b>Today.</b> Data centre applications on Mamre Road draw mostly objecting submissions over water, diesel generators near schools and cumulative impact. The ground layer has not yet been read."},
- {y:2030,t:"5 million trees",n:"<b>2030.</b> The Greening our City target. Outlined trees show what the promise implies for this creek edge."},
- {y:2036,t:"184,500 homes",n:"<b>2036.</b> The district plan's horizon for 184,500 new homes in the Western City."}
-];
+const EV=events;
 const NOW=2026,MIN=2016,MAX=2036;
 const input=document.getElementById('year'),out=document.getElementById('yr'),state=document.getElementById('state'),note=document.getElementById('evnote'),track=document.getElementById('track'),ticks=document.getElementById('ticks');
 const pct=y=>((y-MIN)/(MAX-MIN))*100;
@@ -481,7 +429,7 @@ function render(){
  else if(y===NOW){nk.textContent='TODAY · ON THE GROUND';nv.textContent='Not yet read';ns.textContent='Canopy, heat and the creek edge: first walk along Mamre Road and South Creek';}
  else{nk.textContent='IN '+y+' · ON THE GROUND';nv.textContent='Record to be gathered';ns.textContent='Canopy and heat by year, from mapping and walks';}
  let ev=null;EV.forEach(e=>{if(e.y<=y)ev=e});
- note.innerHTML=ev?ev.n:'<b>Before 2018.</b> Paddocks, sheds and a creek. No parkland city promise yet to read the place against.';
+ note.innerHTML=ev?ev.n:before;
 }
 input.addEventListener('input',render);render();
 })();

@@ -1,11 +1,34 @@
+---
+// The words on this page come from src/content/experiments/side-angle-on-place-flows.md,
+// editable in the CMS under Experiments. The drawing, its styles and the
+// timeline script stay here.
+import { getEntry } from 'astro:content';
+import ExperimentCrumb from '../../components/ExperimentCrumb.astro';
+import ExperimentText from '../../components/ExperimentText.astro';
+import { inlineMd } from '../../lib/inline-md';
+
+const e = (await getEntry('experiments', 'side-angle-on-place-flows'))!;
+const { Content } = await e.render();
+const events = e.data.timeline.map((t) => ({
+  y: t.year,
+  t: t.label,
+  n: inlineMd(t.note),
+  minor: t.minor ? 1 : 0,
+  now: t.label.toLowerCase() === 'today' ? 1 : 0,
+}));
+const before = inlineMd(e.data.timelineBefore);
+---
 <!doctype html>
 <html lang="en-AU">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A Side Angle on Place Flows</title>
+<title>{e.data.title}</title>
+<meta name="description" content={e.data.description}>
+{e.data.draft && <meta name="robots" content="noindex">}
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
-<style>
+<style is:global>
 *,*::before,*::after{box-sizing:border-box}img{max-width:100%}
 
 /* Layout: a drawing sheet. One axonometric plate, a timeline, then key, sources and invitation. Civic Interplay palette: purple marks what was permitted or paid for, pink the co-designed value, forest the canopy. */
@@ -17,7 +40,7 @@ body{background:var(--paper);color:var(--ink);font:300 16px/1.7 var(--body);marg
 .wrap{max-width:1180px;margin:0 auto;padding-block:2.5rem 3rem;padding-inline:max(16px,3vw)}
 .eyebrow{font:500 .75rem var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--permit);margin:0 0 .4rem}
 h1{font:700 clamp(1.8rem,4.5vw,2.8rem)/1.1 var(--display);margin:0 0 .8rem;text-wrap:balance}
-.lede{max-width:62ch;margin:0 0 1.6rem}
+.lede,.intro>p{max-width:62ch;margin:0 0 1.6rem}
 .plate{background:var(--sheet);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--permit);overflow-x:auto}
 .plate svg{display:block;width:100%;min-width:760px;height:auto}
 .platebar{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font:400 .75rem var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--line);padding:.6rem 1rem;border-top:1px solid var(--faint)}
@@ -83,7 +106,7 @@ svg .now-v{font:700 30px var(--display);fill:var(--tree)}
 svg .now-s{font:400 13px var(--body);fill:var(--line)}
 .layers{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:2.6rem;border-top:1.5px solid var(--ink);padding-top:1.4rem}
 .layers>div{min-width:0}
-.layers h2,.walk h2,.sec-h{font:700 .8rem var(--display);letter-spacing:.14em;text-transform:uppercase;margin:0 0 .5rem}
+.layers h2,.layers h3,.walk h2,.sec-h{font:700 .8rem var(--display);letter-spacing:.14em;text-transform:uppercase;margin:0 0 .5rem}
 .sec-h{margin-top:3rem}
 .layers ul{list-style:none;margin:0;padding:0;display:grid;gap:.45rem;font-size:.9rem}
 .layers li{padding-left:1rem;position:relative}
@@ -99,11 +122,10 @@ svg .now-s{font:400 13px var(--body);fill:var(--line)}
 </head>
 <body>
 <div class="wrap">
-<p class="eyebrow">Civic Interplay · experimental</p>
-<h1>A side angle on place flows</h1>
-<p class="lede">This project is entirely speculative, and the information presented here is highly indicative. The diagram below presents a way of constructing an exploded axonometric view of a place through its historical public registers of investment, set against named priorities and targets.</p>
-<p class="lede">What would happen if the flows of value and investment were made more legible in this way? The example below shows a city government's investment in tree canopy, and where misalignments between proposed and actual spending and infrastructure were evidenced.</p>
-<p class="lede">Above all, the visualisation asks: what does it mean to reassemble public records in ways that make flows of value more intentionally explicit?</p>
+<ExperimentCrumb />
+<p class="eyebrow">{e.data.eyebrow}</p>
+<h1>{e.data.title}</h1>
+<div class="intro"><Content /></div>
 <figure class="plate" style="margin:0">
 <svg viewBox="150 -20 1130 900" role="img" aria-label="Isometric drawing of a city precinct separated into three stacked layers: value at top, flows in the middle, impact on the ground, with vertical lines showing where they align and three numbered gaps.">
 <g data-y="2020">
@@ -384,7 +406,7 @@ svg .now-s{font:400 13px var(--body);fill:var(--line)}
 <g class="hl"><text class="hl-k" x="176" y="-2">TARGET · DESIGNATED 2012</text><text class="hl-v" x="174" y="36">40% canopy by 2040</text></g>
 <g class="now"><text class="hl-k" x="196" y="792" id="now-k">NOW · ON THE GROUND</text><text class="now-v" x="194" y="830" id="now-v">27% canopy</text><text class="now-s" x="196" y="856" id="now-s">13 points short of the target</text></g>
 </svg>
-<figcaption class="platebar"><span>Study: urban forest under densification</span><span>Illustrative layout and figures, not real data</span><span>Drag the timeline below to move through the record</span></figcaption>
+<figcaption class="platebar">{e.data.plateCaption.map((c) => <span>{c}</span>)}</figcaption>
 </figure>
 <section class="scrub" aria-label="Timeline">
 <div class="when"><output id="yr" for="year">2026</output><span class="state" id="state">The record to date</span></div>
@@ -395,18 +417,11 @@ svg .now-s{font:400 13px var(--body);fill:var(--line)}
 <div class="ticks" id="ticks" aria-hidden="true"></div>
 <p class="evnote" id="evnote"></p>
 </section>
-<script>
+<ExperimentText data={e.data} />
+</div>
+<script is:inline define:vars={{ events, before }}>
 (function(){
-const EV=[
- {y:2012,t:"Strategy",n:"<b>2012.</b> The urban forest strategy is adopted with a target of 40% canopy by 2040. The value layer appears, and the first dated sheet starts."},
- {y:2014,t:"Letters",n:"<b>2014.</b> People write to individual trees. The attachment is real, and no record has a field for it. The empty outline appears."},
- {y:2017,t:"Approval A",minor:1,n:"<b>2017.</b> A development approval is granted with conditions about trees. A gridded volume appears on the flows layer."},
- {y:2019,t:"A built",minor:1,n:"<b>2019.</b> Approval A is built. Nothing in the public record says whether its tree conditions were met. The accountability line drops and stops."},
- {y:2021,t:"Approval B",minor:1,n:"<b>2021.</b> A larger approval lands in the south-west, where planting spend has never gone."},
- {y:2025,t:"Residents speak",n:"<b>2025.</b> People in the precinct ask for shade on the walk to school. The co-designed value sits directly above the approvals. Misalignment becomes visible."},
- {y:2026,t:"Today",now:1,n:"<b>Today.</b> The record to date. Canopy has grown in the north-east, where target, spend and trees line up, and barely at all in the south-west."},
- {y:2040,t:"2040 target",n:"<b>2040.</b> Beyond today the drawing shows what the target implies, drawn as outlines. It is a projection to test against, not a forecast."}
-];
+const EV=events;
 const NOW=2026, MIN=2010, MAX=2040;
 const input=document.getElementById('year'), out=document.getElementById('yr'), state=document.getElementById('state'),
  note=document.getElementById('evnote'), plate=document.querySelector('.plate'), track=document.getElementById('track'), ticks=document.getElementById('ticks');
@@ -427,50 +442,10 @@ function render(){
  if(!ahead){const c=Math.round(meas(y)); nk.textContent=(y===NOW?'NOW':'IN '+y)+' · ON THE GROUND'; nv.textContent=c+'% canopy'; ns.textContent=(40-c)+' points short of the target';}
  else {const need=Math.round(27+(y-NOW)*(13/14)); nk.textContent='IN '+y+' · NEEDED TO STAY ON TRACK'; nv.textContent=need+'% canopy'; ns.textContent='today 27%, so about one point a year from here';}
  let ev=null; EV.forEach(e=>{if(e.y<=y) ev=e}); 
- note.innerHTML= ev? ev.n : '<b>Before 2012.</b> Trees, streets and blocks, with no stated target yet. Nothing to read the place against.';
+ note.innerHTML= ev? ev.n : before;
 }
 input.addEventListener('input',render); render();
 })();
 </script>
-<section class="key" aria-label="Key">
-<div><h2><span class="n">1</span>Misalignment</h2><p>Value and flows. People asked for shade on the walk to school. In that part of the precinct the flows are development approvals, and the planting money went elsewhere. The ground shows it: sparse canopy where shade was asked for.</p></div>
-<div><h2><span class="n">2</span>Accountability</h2><p>Flows and impact. An approval was granted on conditions about trees. The line drops from the permit and stops, because nothing in the public record says whether the conditions were met.</p></div>
-<div><h2><span class="n">3</span>Illegibility</h2><p>Value and impact. People wrote letters to trees. That attachment is real and it matters, but there is no field anywhere to hold it, so the line never reaches the ground. The empty outline is drawn on purpose.</p></div>
-</section>
-
-<h2 class="sec-h">Where each layer comes from</h2>
-<section class="layers" aria-label="Sources for each layer">
-<div><h2>Value</h2><ul>
-<li><span class="kind">Designated</span><a href="https://www.melbourne.vic.gov.au/urban-forest-strategy">Urban Forest Strategy</a>, council plans, precinct masterplans, planning scheme overlays</li>
-<li><span class="kind">Co-designed</span>Co-design workshops, community vision statements, submissions and letters</li>
-</ul></div>
-<div><h2>Flows</h2><ul>
-<li><span class="kind">Money</span>Council budgets and annual reports, capital works programs, state grant registers</li>
-<li><span class="kind">Permission</span>Planning permit registers, development approvals and their conditions, environment effects statements</li>
-<li><span class="kind">Open data</span>Government data portals, including <a href="https://data.melbourne.vic.gov.au">City of Melbourne Open Data</a></li>
-</ul></div>
-<div><h2>Impact</h2><ul>
-<li><span class="kind">Measured</span>Canopy cover from aerial and LiDAR surveys, the city's tree inventory</li>
-<li><span class="kind">Reported</span>Annual progress reports, compliance and audit reports</li>
-<li><span class="kind">Place-based readings</span>Walks, Sightings, field notes: what people notice on the ground</li>
-</ul></div>
-</section>
-<aside class="walk" aria-label="Invitation">
-<h2>An invitation</h2>
-<p class="big">Go for a walk, feel the shade of the canopy, listen for the birdsong.</p>
-<p>You might even record your own reading of the terrain.</p>
-<p><a class="share" href="https://sightings.civicinterplay.io/">Share your reading on Sightings</a></p>
-</aside>
-<section class="howto" aria-label="How to read the drawing">
-<h2 class="sec-h">How to read the drawing</h2>
-<ul>
-<li><b>Purple</b> is what was permitted or paid for.</li>
-<li><b>Gridded blocks</b> are approvals, drawn as envelopes of permission.</li>
-<li><b>Faint dashed sheets</b> behind the top layer are earlier versions of the targets, read as dated snapshots.</li>
-<li><b>In the north-east corner</b> the three layers line up: target, spending and canopy agree. That is what alignment looks like.</li>
-<li><b>Drag the timeline</b> to watch the record build, from the 2012 strategy to today and on to 2040.</li>
-</ul>
-</section>
-</div>
 </body>
 </html>
