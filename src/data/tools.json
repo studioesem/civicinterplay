@@ -39,10 +39,10 @@
     {
       "title": "A side angle on place flows",
       "category": "experiment",
-      "line": "An exploded axonometric view of a place: promised targets, approvals and spending, and the canopy on the ground.",
+      "line": "Visualising an exploded axonometric view of a place through time, mapping how promised targets, approvals and actual spending each shape the urban canopy that cools the street. ",
       "href": "/experiments/side-angle-on-place-flows.html",
       "image": "/images/side-angle-plate.jpg",
-      "imageAlt": "Experimental drawing: one precinct pulled apart into three stacked sheets.",
+      "imageAlt": "Experimental drawing: a precinct pulled apart into three stacked views, to be traversed through time",
       "draft": false
     },
     {
@@ -50,9 +50,7 @@
       "category": "experiment",
       "line": "In 2018 Western Sydney was promised a parkland city. One precinct, pulled apart to read that promise.",
       "href": "/experiments/side-angle-on-the-western-parkland-city.html",
-      "image": "",
-      "imageAlt": "",
-      "draft": false
+      "draft": true
     },
     {
       "title": "Listening to an emergent field",
@@ -68,8 +66,6 @@
       "category": "experiment",
       "line": "A walking exercise from steward onboarding in Copenhagen, September 2026: bringing enquiry back to the ground.",
       "href": "/walk/",
-      "image": "",
-      "imageAlt": "",
       "draft": false
     },
     {
