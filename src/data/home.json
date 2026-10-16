@@ -54,6 +54,15 @@
   ],
   "tiles": [
     {
+      "id": "towards-civic-ai",
+      "type": "field-note",
+      "kicker": "New",
+      "cta": "Read the position paper: Towards Civic AI?",
+      "href": "/towards-civic-ai/",
+      "alt": "Cover of the position paper Towards Civic AI? Examining the potentials for civic learning systems for healthier communities, by Dr Sarah Barns, January 2025, over an illustration of a street with civic sensors.",
+      "draft": false
+    },
+    {
       "id": "submission",
       "type": "field-note",
       "kicker": "New",
