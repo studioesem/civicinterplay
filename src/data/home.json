@@ -54,15 +54,6 @@
   ],
   "tiles": [
     {
-      "id": "towards-civic-ai",
-      "type": "field-note",
-      "kicker": "New",
-      "cta": "Read the position paper: Towards Civic AI?",
-      "href": "/towards-civic-ai/",
-      "alt": "Cover of the position paper Towards Civic AI? Examining the potentials for civic learning systems for healthier communities, by Dr Sarah Barns, January 2025, over an illustration of a street with civic sensors.",
-      "draft": false
-    },
-    {
       "id": "submission",
       "type": "field-note",
       "kicker": "New",
@@ -105,6 +96,15 @@
       "cta": "See who is building AI infrastructure in Australia",
       "href": "/sovereignties/",
       "alt": "Field note card reading: Tracking the super cycle. Energy, water and land, site by site.",
+      "draft": false
+    },
+    {
+      "id": "towards-civic-ai",
+      "type": "field-note",
+      "kicker": "Paper, 2025",
+      "cta": "Read the position paper: Towards Civic AI?",
+      "href": "/towards-civic-ai/",
+      "alt": "Cover of the position paper Towards Civic AI? Examining the potentials for civic learning systems for healthier communities, by Dr Sarah Barns, January 2025, over an illustration of a street with civic sensors.",
       "draft": false
     },
     {
