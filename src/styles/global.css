@@ -21,14 +21,15 @@
   --forest: #454E41;
   --periwinkle: #8E9BDD;
 
-  --heading: 'Fira Sans', system-ui, sans-serif;
-  --body: 'Merriweather', Georgia, serif;
+  --heading: 'Literata', Georgia, serif;
+  --body: 'Literata', Georgia, serif;
+  --mono: 'Fragment Mono', ui-monospace, monospace;
   --radius: 12px;
 
   /* Type scale, after the drawing studies (a-side-angle-on-place-flows).
-     Fira Sans names and labels things; Merriweather is anything read as a
-     sentence. Headings are Fira bold, sentence case. Reading text is
-     Merriweather light. See docs/type-system.md. */
+     Literata for headings and anything read as a sentence; Fragment Mono for
+     small uppercase labels, dates and page references. Black and white first.
+     (Changed from Fira Sans + Merriweather, Nov 2026.) */
   --fs-label: 0.7rem;    /* uppercase, tracked --track-label, weight 500 */
   --fs-small: 0.875rem;  /* meta, fine print, card excerpts, buttons */
   --fs-body: 1rem;       /* UI copy, card text */
@@ -36,10 +37,10 @@
   --fs-h2: clamp(1.35rem, 2.4vw, 1.7rem);
   --fs-display: clamp(2.1rem, 4.4vw, 3.6rem);
 
-  --w-light: 300;    /* Merriweather reading text */
-  --w-regular: 400;  /* Fira UI copy */
-  --w-medium: 500;   /* Fira labels, card titles */
-  --w-bold: 700;     /* Fira headings */
+  --w-light: 400;    /* reading text */
+  --w-regular: 400;  /* UI copy */
+  --w-medium: 500;   /* card titles */
+  --w-bold: 600;     /* headings */
 
   --track-label: 0.12em;
 
@@ -89,7 +90,7 @@ html {
 
 body {
   font-family: var(--body);
-  font-weight: 300;
+  font-weight: 400;
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
@@ -227,7 +228,7 @@ section:nth-child(4) { animation-delay: 0.60s; }
 }
 
 .site-logo span {
-  font-family: var(--heading);
+  font-family: var(--mono);
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--text);
@@ -301,7 +302,7 @@ section:nth-child(4) { animation-delay: 0.60s; }
 }
 
 .hero-overlay h1 {
-  font-family: var(--heading);
+  font-family: var(--mono);
   font-size: 2.6rem;
   font-weight: 300;
   color: #fff;
@@ -517,7 +518,7 @@ section:nth-child(4) { animation-delay: 0.60s; }
 }
 
 .breadcrumb {
-  font-family: var(--heading);
+  font-family: var(--mono);
   font-size: 0.7rem;
   font-weight: 400;
   letter-spacing: 0.08em;
@@ -561,7 +562,7 @@ section:nth-child(4) { animation-delay: 0.60s; }
 }
 
 .post-header .post-tag {
-  font-family: var(--heading);
+  font-family: var(--mono);
   font-size: 0.7rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -580,7 +581,7 @@ section:nth-child(4) { animation-delay: 0.60s; }
 }
 
 .post-header .post-meta {
-  font-family: var(--heading);
+  font-family: var(--mono);
   font-size: 0.78rem;
   font-weight: 300;
   color: var(--text-faint);
@@ -732,7 +733,7 @@ section:nth-child(4) { animation-delay: 0.60s; }
 }
 
 .footer-title {
-  font-family: var(--heading);
+  font-family: var(--mono);
   font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -805,7 +806,7 @@ section:nth-child(4) { animation-delay: 0.60s; }
 }
 
 .about-author h2 {
-  font-family: var(--heading);
+  font-family: var(--mono);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.14em;
