@@ -1,4 +1,5 @@
 ---
+import { inlineMd, italiciseName } from '../lib/inline-md';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import home from '../data/home.json';
@@ -10,7 +11,7 @@ import { frontmatter as about, compiledContent } from '../data/about.md';
 // button, and "Who's behind it" sets its first paragraph beside the RMIT logo.
 // The Projects fold is built here from the four projects.
 
-const html = await compiledContent();
+const html = italiciseName(await compiledContent());
 const folds = html
   .split(/(?=<h2[\s>])/)
   .filter((part) => part.startsWith('<h2'))
@@ -33,7 +34,7 @@ const splitFirst = (body: string) => {
       <p class="eyebrow">About</p>
       <h1>{about.title}</h1>
       {String(about.standfirst ?? '').split(/\n\s*\n/).map((para) => para.trim()).filter(Boolean).map((para) => (
-        <p class="standfirst">{para}</p>
+        <p class="standfirst" set:html={italiciseName(inlineMd(para))} />
       ))}
       {about.question && (
         <div class="q-note q-pair">

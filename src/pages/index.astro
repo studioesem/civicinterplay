@@ -1,4 +1,5 @@
 ---
+import { inlineMd, italiciseName } from '../lib/inline-md';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import Tile from '../components/Tile.astro';
@@ -13,13 +14,12 @@ import readingsData from '../data/readings.json';
 const tiles = home.tiles.filter((t) => !t.draft);
 
 // Why section text (CMS: Home page > Why Civic Interplay). Blank lines start a
-// new paragraph; *asterisks* mark italics.
-const escapeHtml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+// new paragraph; *asterisks* mark italics, **double** mark bold.
 const whyParas = (home.why?.body ?? '')
   .split(/\n\s*\n/)
   .map((p) => p.trim())
   .filter(Boolean)
-  .map((p) => escapeHtml(p).replace(/\*([^*]+)\*/g, '<em>$1</em>'));
+  .map((p) => italiciseName(inlineMd(p)));
 
 // DEV-only test of a people-and-photographs direction: localhost:4399/?people
 // Off in production builds whatever the URL says.
@@ -147,7 +147,7 @@ const publications = readingsData.readings.filter((r) => !('draft' in r && r.dra
         <img src="/images/partners/rmit-university.png" alt="RMIT University" width="720" height="253" loading="lazy" />
       </a>
       <p>
-        Civic Interplay is being explored by Dr Sarah Barns and collaborators,
+        <em>Civic Interplay</em> is being explored by Dr Sarah Barns and collaborators,
         through a Vice-Chancellor's Senior Research Fellowship at RMIT
         University's <a href="https://www.rmit.edu.au/research/centres-collaborations/centre-for-urban-research">Centre for Urban Research</a>.
       </p>
@@ -203,7 +203,7 @@ const publications = readingsData.readings.filter((r) => !('draft' in r && r.dra
           <img src="/images/partners/rmit-university.png" alt="RMIT University" width="720" height="253" loading="lazy" />
         </a>
         <p>
-          Civic Interplay is being explored by Dr Sarah Barns and collaborators,
+          <em>Civic Interplay</em> is being explored by Dr Sarah Barns and collaborators,
           through a Vice-Chancellor's Senior Research Fellowship at RMIT
           University's <a href="https://www.rmit.edu.au/research/centres-collaborations/centre-for-urban-research">Centre for Urban Research</a>.
         </p>
