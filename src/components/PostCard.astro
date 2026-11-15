@@ -34,6 +34,9 @@ const {
   date,
 } = Astro.props;
 
+import { postSig } from '../data/signature-images';
+const sigImg = postSig[href];
+
 const catClass = category ? `cat-${category}` : '';
 
 // Category sets the default accent; `accent` overrides it per card.
@@ -72,7 +75,17 @@ const cardImageAlt = image ? imageAlt : FALLBACK_ALT;
   ) : fallbackGradient && !image ? (
     <div class="img-placeholder" style={`background: ${fallbackGradient};`}></div>
   ) : (
+    sigImg ? (
+      <span class="pc-sig-wrap">
+        <img src={cardImage} alt={cardImageAlt} class="post-card-image" loading="lazy" decoding="async" />
+        <span class="pc-sig" aria-hidden="true">
+          <img src={sigImg.src} alt="" loading="lazy" style={`object-position:${sigImg.pos ?? '50% 50%'}`} />
+          {sigImg.dots.map(([c, x, y]) => <span class="pc-sig-dot" style={`background:${c};left:${x}%;top:${y}%`}></span>)}
+        </span>
+      </span>
+    ) : (
     <img src={cardImage} alt={cardImageAlt} class="post-card-image" loading="lazy" decoding="async" />
+    )
   )}
   {(categoryLabel || date) && (
     <div class="post-card-tag">
@@ -167,6 +180,12 @@ const cardImageAlt = image ? imageAlt : FALLBACK_ALT;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  /* Signature photo over the card image. */
+  .pc-sig-wrap { position: relative; display: block; }
+  .pc-sig { display: block; position: absolute; inset: 0; overflow: hidden; }
+  .pc-sig img { display: block; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.05); }
+  .pc-sig-dot { position: absolute; width: 18%; aspect-ratio: 1; border-radius: 50%; transform: translate(-50%, -50%); opacity: 0.92; }
 </style>
 
 <script>

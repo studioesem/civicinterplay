@@ -19,6 +19,8 @@ interface Props {
       reads as "Civic ICould we do this differently?nterplay" to anything
       parsing the page. */
   titleDot?: boolean;
+  /** false = image and hotspots only, no title block (used on About). */
+  overlay?: boolean;
 }
 
 const {
@@ -30,6 +32,7 @@ const {
   tagline,
   hotspots = [],
   titleDot = false,
+  overlay = true,
 } = Astro.props;
 
 // Labels near an edge would overflow if they all centred on their dot, so the
@@ -68,7 +71,7 @@ const rest = glitchWord?.slice(1) ?? '';
     </div>
   )}
 
-  <div class="hero-overlay">
+  {overlay && <div class="hero-overlay">
     <h1>
       {beforeGlitch}
       {glitchWord && (
@@ -80,7 +83,7 @@ const rest = glitchWord?.slice(1) ?? '';
     </h1>
     {tagline && <p class="tagline">{tagline}</p>}
     <slot />
-  </div>
+  </div>}
 </div>
 
 <style>

@@ -23,6 +23,8 @@ interface Props {
 
 const { id, kicker, cta, href, alt, type = 'field-note' } = Astro.props;
 const base = `/images/tiles/${id}`;
+import { tileSig } from '../data/signature-images';
+const sigImg = tileSig[id];
 
 // Shares the accent system with PostCard, so the top row and the grids below
 // read as one set. A tool is cream, matching the Field Notes ground.
@@ -33,7 +35,13 @@ const accentByType: Record<TileType, string> = {
 };
 ---
 <a class:list={['tile', `is-${type}`, accentByType[type]]} href={href}>
-  <span class="tile-shot">
+  <span class:list={['tile-shot', sigImg && 'has-sig']}>
+    {sigImg && (
+      <span class="sig" aria-hidden="true">
+        <img src={sigImg.src} alt="" loading="lazy" style={`object-position:${sigImg.pos ?? '50% 50%'}`} />
+        {sigImg.dots.map(([c, x, y]) => <span class="sig-dot" style={`background:${c};left:${x}%;top:${y}%`}></span>)}
+      </span>
+    )}
     <img
       src={`${base}-560.webp`}
       srcset={`${base}-560.webp 560w, ${base}-1120.webp 1120w`}
@@ -168,4 +176,10 @@ const accentByType: Record<TileType, string> = {
       animation: none;
     }
   }
+
+  /* Signature photo in place of the text graphic. */
+  .tile-shot { position: relative; }
+  .has-sig .sig { display: block; position: absolute; inset: 0; z-index: 1; }
+  .sig img { filter: grayscale(1) contrast(1.05); }
+  .sig-dot { position: absolute; width: 22%; aspect-ratio: 1; border-radius: 50%; transform: translate(-50%, -50%); opacity: 0.92; }
 </style>

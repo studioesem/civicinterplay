@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import home from '../data/home.json';
 import { frontmatter as about, compiledContent } from '../data/about.md';
 
 // The About text lives in src/data/about.md, editable in the CMS. Each "## "
@@ -40,6 +42,15 @@ const splitFirst = (body: string) => {
       )}
       <p class="learn"><a href="/proposition/">Read the proposition <span aria-hidden="true">&rarr;</span></a></p>
     </header>
+
+    <div class="about-hero">
+      <Hero
+        image="/images/CivicAI_Visualisation_v2-03_FLAT.jpg"
+        imageAlt="Illustration of a street where civic AI is already at work: air quality, road, soil and tree sensors mounted on light poles, with people walking, cycling and using wheelchairs moving through it, picked out in magenta and purple."
+        hotspots={home.hotspots}
+        overlay={false}
+      />
+    </div>
 
     <section class="fold">
       <details>
@@ -525,6 +536,15 @@ const splitFirst = (body: string) => {
       .doors { grid-template-columns: minmax(0, 1fr); }
       .lead-person { grid-template-columns: minmax(0, 1fr); }
     }
-  </style>
+  
+  .about-hero { margin: 2.5rem 0 3rem; }
+  .about-hero :global(.hero) {
+    position: relative;
+    overflow: hidden;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .about-hero :global(.hero-image) { display: block; width: 100%; height: clamp(320px, 42vw, 560px); object-fit: cover; }
+</style>
 
 </BaseLayout>
