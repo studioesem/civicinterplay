@@ -1,0 +1,154 @@
+---
+section: note
+title: "Comparing Jack Clark's 2023 speech with Anthropic's 2026 S1"
+slug: "clark-and-the-s1"
+subtitle: "What the 2023 speech on corporate power asked for, and what the 2026 prospectus sets out"
+excerpt: "Eleven passages from Jack Clark's 2023 UN Security Council remarks, set next to Anthropic's S-1/A."
+publishedAt: 2026-11-16T00:00:00.000Z
+categories: ["training-grounds"]
+primaryCategory: "training-grounds"
+featured: false
+draft: false
+featureImage: "/images/noise-abatement-ny-1930s.jpg"
+articleType: "CreativeWork"
+---
+
+import SideBySide from '../../components/SideBySide.astro';
+
+{/* Generated from the working note by tools/mdx_page.py in the Anthopic Dropbox folder. Edit the note, then regenerate. Published 16 Nov 2026 with Sarah's method text. */}
+
+On 18 July 2023 Jack Clark, an Anthropic co-founder, addressed the UN Security Council. When he posted his remarks, he named "the significant political power which AI development creates and how this leverage is currently accruing to private sector actors" as one of the "two central issues of AI in the 21st century". In November 2026 Anthropic filed Amendment No. 1 to its S-1 registration statement for its initial public offering. This page sets eleven passages from the speech next to passages from the filing.
+
+**Sources.** Jack Clark, "AI Safety and Corporate Power – remarks given at the United Nations Security Council", jack-clark.net, 18 July 2023. Anthropic, PBC, Form S-1/A (Amendment No. 1), filed with the US Securities and Exchange Commission on 2 November 2026; page numbers are prospectus pages.
+
+**Method.** Passages were selected by Sarah Barns, who shared with Claude to identify the extent to which the 'civic spirit' and concerns in Clark's speech had been upheld as the company sought to expand its corporate power. Each pairing was checked against both texts by independent AI skeptic agents on 7 November 2026: 10 of 11 confirmed, one page reference corrected. Claude is a model made by the company discussed here.
+
+**Civic Spirit rating.** Each row asks whether the 2026 arrangement keeps the purpose behind the 2023 statement. The ratings were proposed by Sarah and then implemented by Claude, but not yet cross-checked by Sarah. What the ratings mean is summarised below.
+
+<ul className="rating-key" aria-label="What the ratings mean">
+  <li><span className="rk-chip">4</span><span className="rk-text"><strong>Keeps the spirit.</strong> The 2026 arrangement serves the purpose behind the 2023 statement.</span></li>
+  <li><span className="rk-chip">3</span><span className="rk-text"><strong>Partly keeps the spirit.</strong> It serves the purpose, with stated limits.</span></li>
+  <li><span className="rk-chip">2</span><span className="rk-text"><strong>Form kept, purpose weakened.</strong> A mechanism with the right name exists, but it works differently. For example, accountability run internally instead of by outside parties.</span></li>
+  <li><span className="rk-chip">1</span><span className="rk-text"><strong>Departs.</strong> The arrangement works against the purpose.</span></li>
+  <li><span className="rk-chip">0</span><span className="rk-text"><strong>Not addressed.</strong> The S-1/A passage says nothing relevant.</span></li>
+  <li><span className="rk-chip">n/a</span><span className="rk-text">The 2023 statement is a prediction, not a commitment.</span></li>
+</ul>
+
+<SideBySide
+  leftLabel="Jack Clark, UN Security Council, 18 July 2023"
+  rightLabel="Anthropic S-1/A, filed 2 Nov 2026 (prospectus page)"
+  readingLabel="Reading"
+  ratingLabel="Civic Spirit rating (proposed)"
+  rows={[
+ {
+  "n": "1",
+  "title": "Political power accruing to private actors",
+  "leftPre": "From Clark's introduction to the posted remarks (not the speech itself):",
+  "left": "\"In writing and giving these remarks, I hope to impress upon people the two central issues of AI in the 21st century as I see it: i – The inherent safety challenges of the technology. ii – The significant political power which AI development creates and how this leverage is currently accruing to private sector actors.\"",
+  "leftPost": "",
+  "right": "\"This structure will allow the Founder LLC to determine the outcome of matters submitted to a vote of our stockholders generally, including the election of those directors not elected by the LTBT, certain amendments to our organizational documents, and the approval by our stockholders of any merger …\" (p. 252)",
+  "reading": "Clark is one of the seven members of the Founder LLC (p. 251).",
+  "rating": "1 Departs. Clark named the accrual of political power to private actors as one of two central issues. The S-1/A gives seven founders, including Clark, an undilutable majority of the stockholder vote."
+ },
+ {
+  "n": "2",
+  "title": "Safety and the centralisation of power",
+  "leftPre": "From Clark's introduction to the posted remarks (not the speech itself), giving his",
+  "left": "\"basic view\": \"Even if you fully 'solved' safety but didn't 'solve' the problem of power centralization with AI development, you'll suffer from such societal instability that the fact you solved safety may not mean much.\"",
+  "leftPost": "",
+  "right": "\"We also believe that our seven co-founders are distinctly equipped to be stewards of our mission.\" (p. 247)",
+  "reading": "The filing places stewardship of the mission with the founders as a group.",
+  "rating": "2 Form kept, purpose weakened. The S-1/A pairs safety with checks on power (the Trust, PBC duties), but the checks sit inside the company and its founders."
+ },
+ {
+  "n": "3",
+  "title": "State capacity",
+  "leftPre": "",
+  "left": "\"We cannot leave the development of artificial intelligence solely to private sector actors. The governments of the world must come together, develop state capacity …\"",
+  "leftPost": "",
+  "right": "\"In February 2026, in response to our publicly stated position that our technology should not be used for mass domestic surveillance or fully autonomous weapons, the President of the United States stated that he had directed that all federal executive agencies cease using our technology.\" (p. 73)",
+  "reading": "The filing's main account of government is a dispute in which the government acted against the company over limits the company set. The case is unresolved.",
+  "rating": "0 Not addressed. The S-1/A says nothing about state capacity for AI. Its account of government is a dispute."
+ },
+ {
+  "n": "4",
+  "title": "A small number of competing firms",
+  "leftPre": "",
+  "left": "\"… rather than one dictated solely by a small number of firms competing with one another in the marketplace.\"",
+  "leftPost": "",
+  "right": "\"In our highly competitive industry, success requires visionary leadership, strong direction, and the kind of decisiveness necessary to make bold investments, pursue transformative opportunities, and compete effectively against formidable competitors …\" (p. 251)",
+  "reading": "The filing gives competition as a reason for concentrated founder control.",
+  "rating": "1 Departs. Clark warned against development \"dictated solely by a small number of firms competing\". The S-1/A gives competition as the reason for concentrated founder control."
+ },
+ {
+  "n": "5",
+  "title": "AI as labour that can be sold",
+  "leftPre": "",
+  "left": "\"If you can create a substitute or augmentation for human labor and sell it into the world, you are going to become more influential over time.\"",
+  "leftPost": "",
+  "right": "Revenue grew \"from $0 at commercial launch in the first quarter of 2023 to $17.0 billion for the three months ended September 30, 2026.\" (p. 5). Virtual Collaborators are aimed at \"knowledge workers globally, a population that is estimated to exceed one billion in 2028.\" (p. 8; also pp. 193–194)",
+  "reading": "Clark's speech came a few months after Claude's commercial launch, which the S-1/A puts in the first quarter of 2023.",
+  "rating": "n/a. This is a prediction, not a commitment. The S-1/A revenue and market figures are consistent with it."
+ },
+ {
+  "n": "6",
+  "title": "Making developers accountable",
+  "leftPre": "",
+  "left": "\"We should think very carefully about how to make the developers of these systems accountable …\"",
+  "leftPost": "",
+  "right": "\"Neither our amended and restated certificate of incorporation nor our amended and restated bylaws will require that we measure our public benefit performance against an objective third-party standard, and our board of directors will be responsible for establishing and overseeing the standards …\" (p. 247)",
+  "reading": "Public-benefit accountability is set and measured by the board. The legal minimum is a statement every two years (p. 247).",
+  "rating": "2 Form kept, purpose weakened. A public-benefit report exists, but the board sets the standard and measures itself against it, with no third-party standard."
+ },
+ {
+  "n": "7",
+  "title": "Who should have access to this power",
+  "leftPre": "",
+  "left": "\"Who should have access to this power? How should governments regulate this power?\"",
+  "leftPost": "",
+  "right": "\"Collectively, the LTBT and the Founder LLC will have the ability to elect all members of our board of directors.\" (p. 254). Trustees appoint their own successors, and \"the Trustees and company executives have collaborated closely on sourcing, interviewing, and selecting Trustees.\" (p. 249)",
+  "reading": "The board is elected by two bodies. Neither is elected by, or reports to, anyone outside the company and its stockholders.",
+  "rating": "2 Form kept, purpose weakened. The Trust is an attempt to answer \"who should have access\", but it is self-appointing and answers to no one outside the company."
+ },
+ {
+  "n": "8",
+  "title": "The information advantage",
+  "leftPre": "",
+  "left": "\"Private sector actors enjoy an information advantage when dealing with governments.\"",
+  "leftPost": "",
+  "right": "Exhibits are redacted where \"the registrant customarily and actually treats that information as private or confidential and the omitted information is not material.\" (II-7). Australian capacity: \"We have also entered into leases for data center capacity in Australia and Canada\" (p. 244), with no site, operator or capacity given.",
+  "reading": "The S-1/A contains no megawatt, gigawatt or emissions figure (full-text search, §3.1). Clark's point was about model evaluations. The same gap applies to the physical infrastructure.",
+  "rating": "1 Departs (within the S-1/A). Redaction and the absence of physical figures keep an information advantage over infrastructure. Clark's point was about model evaluations, which Anthropic publishes elsewhere. This rating covers only the filing."
+ },
+ {
+  "n": "9",
+  "title": "Evaluation as the basis of accountability",
+  "leftPre": "From the closing of the speech:",
+  "left": "\"In closing, any sensible approach to regulation will start with having the ability to evaluate an AI system for a given capability or flaw, and any failed approach to regulation will start with grand policy ideas that are not supported by effective measurements and evaluations. It is through the development of robust and reliable evaluation systems that governments can keep companies accountable, and companies can earn the trust of the world that they want to deploy their AI systems into.\"",
+  "leftPost": "",
+  "right": "Listed as a regulatory risk: \"mandated safety, risk-management, or evaluation frameworks, certifications, or approvals, including requirements for independent, third-party review or approval prior to model development, training, or release\" (p. 71)",
+  "reading": "Securities disclosure requires risks to investors to be listed. The kind of evaluation regime Clark called for appears in the S-1/A as one of those risks.",
+  "rating": "2 Form kept, purpose weakened. Securities law requires listing mandated third-party evaluation as a risk, so its place in the list is not opposition. The filing does not describe support for such a regime either. (The Responsible Scaling Policy, p. 29, is internal.)"
+ },
+ {
+  "n": "10",
+  "title": "Regulatory capture",
+  "leftPre": "",
+  "left": "\"If we do not invest in this, then we run the risk of regulatory capture, compromising global security, and handing over the future to a narrow set of private sector actors.\"",
+  "leftPost": "",
+  "right": "\"We have participated in, and will likely continue to participate in, political processes, including through contributions, advocacy, or support of political organizations.\" (p. 45)",
+  "reading": "The filing discloses political participation but not its scale or recipients in this passage. Worth checking elsewhere in the filing.",
+  "rating": "0 Not addressed in this passage. Political participation is disclosed without scale or recipients. Check elsewhere in the filing before rating."
+ },
+ {
+  "n": "11",
+  "title": "A balance of power with citizens",
+  "leftPre": "The last sentences of the speech, following row 10:",
+  "left": "\"If we can rise to this challenge, however, I believe we can reap the benefits of AI as a global community, and ensure there is a balance of power between the developers of AI and the citizens of the world. Thank you.\" \"This challenge\"",
+  "leftPost": "is investing in evaluation systems (row 9).",
+  "right": "\"Our board of directors will determine the allocations and distributions from the Anthropic Public Benefit Fund until it approves a specific governance structure for the entity … The initial managers are Dario Amodei, Daniela Amodei, Jack Clark, and Dr. Neil 'Buddy' Shah.\" (p. 239)",
+  "reading": "The public-benefit vehicle is a wholly owned subsidiary. Clark is one of its four initial managers.",
+  "rating": "2 Form kept, purpose weakened. The Fund commits 5% of shares to public benefit, but the company and three founders control it, and citizens have no stated role."
+ }
+]}
+/>

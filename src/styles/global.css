@@ -896,3 +896,37 @@ section:nth-child(4) { animation-delay: 0.60s; }
 .q-note p + p {
   margin-top: 0.6rem;
 }
+
+/* Rating key: a legend set apart from paragraph text (Clark/S-1 page). */
+.rating-key {
+  list-style: none;
+  margin: 1.5rem 0 2rem;
+  padding: 0.4rem 0;
+  border-top: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+.rating-key li {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 0.9rem;
+  align-items: baseline;
+  padding: 0.55rem 0;
+  margin: 0;
+  border-top: 1px solid #d4d4d4;
+}
+.rating-key li:first-child { border-top: 0; }
+.rating-key li::before { content: none; }
+.post-body .rating-key, .rating-key { padding-left: 0 !important; margin-left: 0 !important; }
+.rating-key .rk-chip {
+  display: inline-block;
+  min-width: 2.1em;
+  padding: 0.1em 0.35em;
+  border: 1.5px solid var(--text);
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-align: center;
+  justify-self: start;
+}

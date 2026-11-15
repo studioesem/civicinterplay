@@ -1,0 +1,165 @@
+---
+// A wide comparison table for posts: two sources side by side, with a
+// reading and a rating. It breaks out of the post's reading width on wide
+// screens and scrolls sideways on narrow ones, so no column is squeezed.
+//
+// Quotes from the left-hand source are set in italics; any framing text
+// before or after a quote (pre/post) stays roman, so the reader can tell the
+// source's words from ours.
+
+interface Row {
+  n: string;
+  title: string;
+  leftPre?: string;
+  left: string;
+  leftPost?: string;
+  right: string;
+  reading: string;
+  rating: string;
+}
+
+interface Props {
+  leftLabel: string;
+  rightLabel: string;
+  readingLabel?: string;
+  ratingLabel?: string;
+  rows: Row[];
+}
+
+const {
+  leftLabel, rightLabel, readingLabel = 'Reading', ratingLabel = 'Rating', rows,
+} = Astro.props;
+
+// Ratings are written as "<score> <label>. <explanation>", e.g.
+// "2 Form kept, purpose weakened. The S-1/A pairs ...". Split them so the
+// score and label can be set apart from the explanation.
+function splitRating(text: string) {
+  const m = text.match(/^(n\/a|\d)\s*([^.]*)\.\s*([\s\S]*)$/);
+  if (!m) return { score: '', label: '', note: text };
+  return { score: m[1], label: m[2].trim(), note: m[3] };
+}
+---
+<div class="sbs-wrap" role="region" aria-label={`${leftLabel} and ${rightLabel}, side by side`} tabindex="0">
+  <table class="sbs">
+    <thead>
+      <tr>
+        <th scope="col" class="sbs-n">#</th>
+        <th scope="col" class="sbs-left">{leftLabel}</th>
+        <th scope="col" class="sbs-right">{rightLabel}</th>
+        <th scope="col" class="sbs-reading">{readingLabel}</th>
+        <th scope="col" class="sbs-rating">{ratingLabel}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr id={`row-${r.n}`}>
+          <th scope="row" class="sbs-n">
+            <span class="sbs-num">{r.n}</span>
+            <span class="sbs-title">{r.title}</span>
+          </th>
+          <td class="sbs-left">
+            {r.leftPre && <p class="sbs-frame">{r.leftPre}</p>}
+            <p><em>{r.left}</em></p>
+            {r.leftPost && <p class="sbs-frame">{r.leftPost}</p>}
+          </td>
+          <td class="sbs-right"><p>{r.right}</p></td>
+          <td class="sbs-reading"><p>{r.reading}</p></td>
+          <td class="sbs-rating">
+            {(() => {
+              const { score, label, note } = splitRating(r.rating);
+              return (
+                <>
+                  {score && (
+                    <p class="sbs-score">
+                      <span class="sbs-chip">{score}</span>
+                      {label && <span class="sbs-score-label">{label}</span>}
+                    </p>
+                  )}
+                  <p>{note}</p>
+                </>
+              );
+            })()}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  /* Black and white only. Colour is not used to carry meaning here. */
+  .sbs-wrap {
+    /* Break out of the post's reading column, centred on it, without
+       widening the page on small screens. */
+    --sbs-w: min(1320px, calc(100vw - 2rem));
+    width: var(--sbs-w);
+    margin: 2.5rem 0 2.5rem calc(50% - var(--sbs-w) / 2);
+    overflow-x: auto;
+    border-top: 2px solid var(--text);
+    border-bottom: 2px solid var(--text);
+    background: #fff;
+  }
+  .sbs-wrap:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
+
+  .sbs {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 1000px;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .sbs p { margin: 0 0 0.5em; }
+  .sbs p:last-child { margin-bottom: 0; }
+
+  .sbs thead th {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    color: var(--text);
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.8rem 0.9rem 0.7rem;
+    vertical-align: bottom;
+    border-bottom: 1px solid var(--text);
+  }
+  .sbs td, .sbs tbody th {
+    vertical-align: top;
+    text-align: left;
+    padding: 1rem 0.9rem;
+    border-top: 1px solid #d4d4d4;
+  }
+  .sbs tbody tr:first-child td, .sbs tbody tr:first-child th { border-top: 0; }
+  .sbs td + td, .sbs th + td { border-left: 1px solid #ececec; }
+
+  .sbs-n { width: 9rem; }
+  .sbs tbody th.sbs-n { font-weight: 400; }
+  .sbs-num { display: block; font-family: var(--mono, var(--heading)); font-weight: 500; font-size: 0.9rem; margin-bottom: 0.3rem; }
+  .sbs-title { display: block; font-family: var(--heading); font-weight: 600; font-size: 0.88rem; line-height: 1.3; }
+
+  td.sbs-left { width: 27%; }
+  td.sbs-left em { font-style: italic; }
+  td.sbs-right { width: 29%; }
+  td.sbs-reading { width: 19%; color: #333; }
+  td.sbs-rating { width: 17%; font-size: 0.86rem; color: #333; }
+
+  .sbs-frame { font-size: 0.8rem; color: #666; }
+
+  .sbs-score { display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.6em !important; }
+  .sbs-chip {
+    display: inline-block;
+    min-width: 2.1em;
+    padding: 0.1em 0.35em;
+    border: 1.5px solid var(--text);
+    font-family: var(--mono, var(--heading));
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-align: center;
+    color: var(--text);
+  }
+  .sbs-score-label { font-family: var(--heading); font-weight: 600; font-size: 0.85rem; color: var(--text); line-height: 1.25; }
+</style>
