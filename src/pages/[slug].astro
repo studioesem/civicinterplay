@@ -94,7 +94,7 @@ const formattedDate = post.data.publishedAt.toLocaleDateString('en-AU', {
           posterAlt={post.data.featureImageAlt}
           title={post.data.featureImageAlt}
         />
-      ) : post.data.featureImage && (
+      ) : post.data.featureImage && post.data.featureImageFit !== 'card' && (
         <img
           src={post.data.featureImage}
           alt={post.data.featureImageAlt ?? ''}
