@@ -37,7 +37,8 @@ const peoplePhotos = [
   { src: '/images/people/amazon-1992.webp', alt: '', caption: 'Miyawaki Tree Planting Festival, Brazil, 1992.',
     pos: '50% 50%',
     dots: [['#9BA557', 80, 8], ['#B47DB5', 20, 62], ['#E1EADD', 66, 90]] },
-  { src: '/images/people/digging.webp', alt: '', caption: 'Absolutes and Intermediates, Agnes Denes.',
+  { src: '/images/people/digging.webp', alt: '', caption: 'Agnes Denes: Rice/Tree/Burial in Artpark, Lewiston, New York, 1977-79, gelatin silver prints; at the Shed.',
+    source: ['Source: Featured in Walker Downey\'s 2020 review of Denes published by ', 'Art in America', 'https://www.artnews.com/art-in-america/aia-reviews/agnes-denes-shed-absolutes-and-intermediates-1202674487/'],
     pos: '50% 50%',
     link: ['/sovereignties/', 'Data Centres Transparency Project'],
     dots: [['#A8C1CE', 14, 14], ['#A27C4E', 30, 52], ['#AB5A6D', 22, 88]] },
@@ -172,7 +173,7 @@ const publications = readingsData.readings.filter((r) => !('draft' in r && r.dra
                 <span class="people-dot" aria-hidden="true" style={`background:${c};left:${x}%;top:${y}%`}></span>
               ))}
             </div>
-            <figcaption>{ph.caption}{ph.link && <a class="people-link" href={ph.link[0]}><span aria-hidden="true">&#8627;</span> {ph.link[1]}</a>}</figcaption>
+            <figcaption>{ph.caption}{ph.source && <span class="people-source"> {ph.source[0]}<a href={ph.source[2]} rel="noopener external">{ph.source[1]}</a>.</span>}{ph.link && <a class="people-link" href={ph.link[0]}><span aria-hidden="true">&#8627;</span> {ph.link[1]}</a>}</figcaption>
           </figure>
         ))}
         </div>
@@ -867,6 +868,8 @@ const publications = readingsData.readings.filter((r) => !('draft' in r && r.dra
       border-top: 1px solid var(--text);
       margin-top: 0.6rem;
     }
+    .people-source { display: block; margin-top: 0.3rem; }
+    .people-source a { color: var(--text); text-decoration: underline; text-underline-offset: 2px; }
     .people-link { display: block; margin-top: 0.3rem; color: var(--text); text-decoration: underline; text-underline-offset: 2px; }
     @media (max-width: 760px) {
       .people-fig { flex-basis: calc((100% - 1rem) / 2); }
