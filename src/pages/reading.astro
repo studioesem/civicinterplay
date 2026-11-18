@@ -257,13 +257,37 @@ const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
     }
     .tag-btn[aria-pressed="true"] { background: var(--ink, #1f1d24); color: #fff; }
 
+    /* Sits directly under the site header, which is sticky too: --header-h is
+       measured in the script below, so the pills never slide beneath it. */
     .pills {
       position: sticky;
-      top: 0;
-      z-index: 5;
+      top: var(--header-h, 4.4rem);
+      z-index: 50;
       margin: 0 0 2.5rem;
       padding: 0.75rem 0;
       background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pills a[aria-current="true"] {
+      background: var(--purple);
+      border-color: var(--purple);
+      box-shadow: 2px 2px 0 var(--border);
+      color: #fff;
+    }
+    .pills a[aria-current="true"] .count { color: #fff; }
+
+    /* On phones the pills run in one row that scrolls sideways, so the bar
+       stays one line tall. */
+    @media (max-width: 720px) {
+      .pills ul {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 0 2px 4px 0;
+        scrollbar-width: none;
+      }
+      .pills ul::-webkit-scrollbar { display: none; }
+      .pills a { white-space: nowrap; }
     }
 
     .pills ul {
@@ -349,7 +373,7 @@ const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
     }
 
     .rsec {
-      scroll-margin-top: 4.5rem;
+      scroll-margin-top: calc(var(--header-h, 4.4rem) + var(--pills-h, 4rem) + 1rem);
     }
 
     section {
@@ -384,6 +408,41 @@ const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].loca
       const subject = encodeURIComponent(a.dataset.subject ?? '');
       a.href = `mailto:${a.dataset.u}@${a.dataset.d}?subject=${subject}`;
     });
+
+    // Section pills: hold them under the sticky site header, and mark the
+    // section being read.
+    const header = document.querySelector<HTMLElement>('.site-header');
+    const pills = document.querySelector<HTMLElement>('.pills');
+    const root = document.documentElement;
+    const measure = () => {
+      if (header) root.style.setProperty('--header-h', `${header.offsetHeight}px`);
+      if (pills) root.style.setProperty('--pills-h', `${pills.offsetHeight}px`);
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    document.fonts?.ready.then(measure);
+
+    const pillLinks = [...document.querySelectorAll<HTMLAnchorElement>('.pills a')];
+    const secs = pillLinks
+      .map((a) => document.getElementById(a.hash.slice(1)))
+      .filter((el): el is HTMLElement => !!el);
+    let ticking = false;
+    const mark = () => {
+      ticking = false;
+      const line = (header?.offsetHeight ?? 0) + (pills?.offsetHeight ?? 0) + 24;
+      let current = '';
+      for (const sec of secs) if (sec.getBoundingClientRect().top <= line) current = sec.id;
+      pillLinks.forEach((a) => {
+        const on = a.hash === `#${current}`;
+        if (on && a.getAttribute('aria-current') !== 'true') {
+          a.setAttribute('aria-current', 'true');
+          const list = a.closest('ul');
+          if (list && list.scrollWidth > list.clientWidth) list.scrollTo({ left: a.offsetLeft - 16, behavior: 'smooth' });
+        } else if (!on) a.removeAttribute('aria-current');
+      });
+    };
+    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(mark); } }, { passive: true });
+    mark();
 
     // Tag filter for the readings: one tag at a time, "All" to reset.
     const btns = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
