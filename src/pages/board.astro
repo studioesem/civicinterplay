@@ -1,0 +1,49 @@
+---
+// Shared team whiteboard. The page is protected by Cloudflare Access (/board)
+// and the board lives in D1, served only to signed-in posters via /api/board.
+// Drawing is tldraw (src/scripts/board.ts). Production needs
+// PUBLIC_TLDRAW_LICENSE_KEY set at build time, or the board goes blank.
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Board" description="Team whiteboard." noindex reflections={false}>
+  <main class="board-page">
+    <div class="bar">
+      <p class="board-status" aria-live="polite">Loading…</p>
+      <button type="button" class="hist-toggle" aria-expanded="false" hidden>History</button>
+    </div>
+    <section class="hist" hidden aria-label="Earlier versions">
+      <p class="hist-note">Earlier versions, newest first. A copy is kept when someone else's board is replaced, when a lot is deleted, and at most every 10 minutes. The last 50 are kept. Pick one to restore it.</p>
+      <ol class="hist-list"></ol>
+    </section>
+    <div id="board" class="board"></div>
+  </main>
+
+  <style>
+    .board-page { padding: 1rem 1.5rem 1.5rem; }
+    .bar { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin: 0 0 0.6rem; }
+    .board-status { font-family: var(--heading); font-size: 0.8rem; color: #777; margin: 0; min-height: 1.2em; }
+    .board-status.warn { color: var(--terracotta, #D16D54); }
+    .bar button {
+      appearance: none; border: 1.5px solid var(--ink, #1F1D24); background: #fff; border-radius: 999px;
+      padding: 0.2rem 0.8rem; font-family: var(--heading); font-size: 0.8rem; cursor: pointer;
+    }
+    .hist { margin: 0 0 1rem; padding: 1rem 1.1rem; background: #fff; border: 1.5px dashed var(--pink); border-radius: 8px; }
+    .hist[hidden] { display: none; }
+    .hist-note { font-family: var(--body); font-weight: 300; font-size: 0.85rem; margin: 0 0 0.8rem; color: #555; }
+    .hist-list { list-style: none; margin: 0; padding: 0; max-height: 14rem; overflow: auto; }
+    .hist-list li + li { border-top: 1px solid #eee; }
+    .hist-list button {
+      appearance: none; border: 0; background: none; width: 100%; text-align: left; padding: 0.45rem 0.2rem;
+      font-family: var(--heading); font-size: 0.85rem; cursor: pointer;
+    }
+    .hist-list button:hover { background: #f6eefa; }
+    .board {
+      position: relative; height: calc(100vh - 11rem); min-height: 480px;
+      border: 1.5px solid var(--ink, #1F1D24); border-radius: 6px; overflow: hidden; background: #fff;
+    }
+  </style>
+
+  <script>
+    import '../scripts/board.ts';
+  </script>
+</BaseLayout>
