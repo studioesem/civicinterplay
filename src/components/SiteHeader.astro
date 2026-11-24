@@ -2,6 +2,9 @@
 const path = Astro.url.pathname;
 const starts = (...prefixes: string[]) => prefixes.some((p) => path.startsWith(p));
 
+// DEV-only test of the logo from FINAL LOGO SUITE: add ?logo to any local URL.
+const logoTest = import.meta.env.DEV;
+
 const nav = [
   { href: '/', label: 'Home', on: path === '/' || path === '' },
   { href: '/reading/', label: 'Reading', on: starts('/reading', '/field-notes', '/listening') },
@@ -14,11 +17,25 @@ const nav = [
   { href: '/about/', label: 'About', on: starts('/about', '/proposition') },
 ];
 ---
+{logoTest && (
+  <script is:inline>
+    // Test flags stay on across pages until ?off is used.
+    (function () {
+      var q = new URLSearchParams(location.search), h = document.documentElement;
+      if (q.has('off')) { localStorage.removeItem('ci-test-people'); localStorage.removeItem('ci-test-logo'); }
+      ['people', 'logo'].forEach(function (k) {
+        if (q.has(k)) localStorage.setItem('ci-test-' + k, '1');
+        if (localStorage.getItem('ci-test-' + k)) h.classList.add(k);
+      });
+    })();
+  </script>
+)}
 <header class="site-header">
   <div class="container container-wide">
     <div class="header-inner">
       <a href="/" class="site-logo" aria-label="Civic Interplay home">
-        <span>Civic Interplay</span>
+        <span class="site-logo-text">Civic Interplay</span>
+        {logoTest && <img class="site-logo-img" src="/images/logo-test/constellation.png" alt="Civic Interplay" width="1888" height="925" />}
       </a>
       <nav aria-label="Primary">
         <ul class="nav-links">
@@ -32,6 +49,10 @@ const nav = [
 </header>
 
 <style>
+  .site-logo .site-logo-img { display: none; height: 84px; width: auto; border-radius: 0; margin: -6px 0; }
+  :global(html.logo) .site-logo .site-logo-img { display: block; }
+  :global(html.logo) .site-logo .site-logo-text { display: none !important; }
+
   /* Chromatic-aberration hover on the wordmark, reusing the site-wide `glitch`
      keyframes from global.css. Same move as the hero, at nav scale. */
   .site-logo span {
