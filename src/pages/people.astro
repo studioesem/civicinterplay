@@ -1,0 +1,127 @@
+---
+// Who can post reflections, edit the pad and use the board. Protected by
+// Cloudflare Access (/people); the list itself is served only to admins
+// (the ADMINS secret) via /api/people. Changes apply on the next request,
+// with no redeploy.
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="People" description="Who can sign in." noindex reflections={false}>
+  <main class="container narrow people">
+    <h1>People</h1>
+    <p class="status" aria-live="polite">Loading…</p>
+
+    <div class="admin" hidden>
+      <form class="add">
+        <label>Email <input name="email" type="email" required autocomplete="off" /></label>
+        <label>First name <input name="name" required maxlength="60" autocomplete="off" /></label>
+        <button type="submit">Add</button>
+      </form>
+      <p class="hint">After adding someone, send them the link to civicinterplay.io/pad or /board. They sign in with a code emailed to that address.</p>
+
+      <ul class="list"></ul>
+    </div>
+  </main>
+
+  <style>
+    .people { padding: 2rem 1.5rem 4rem; }
+    .people h1 { font-family: var(--heading); font-weight: 700; margin: 0 0 0.6rem; }
+    .status { font-family: var(--heading); font-size: 0.85rem; color: #777; min-height: 1.2em; }
+    .status.warn { color: var(--terracotta, #D16D54); }
+    .admin[hidden] { display: none; }
+    .add { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: flex-end; margin: 0.5rem 0; }
+    .add label { display: flex; flex-direction: column; font-family: var(--heading); font-size: 0.8rem; gap: 0.2rem; }
+    .add input {
+      font: inherit; font-family: var(--body); font-size: 0.95rem; padding: 0.35rem 0.5rem;
+      border: 1.5px solid var(--ink, #1F1D24); border-radius: 6px; min-width: 14rem; height: 2.4rem; box-sizing: border-box;
+    }
+    .add input[name='name'] { min-width: 8rem; }
+    button {
+      appearance: none; border: 1.5px solid var(--ink, #1F1D24); background: #fff; border-radius: 999px;
+      padding: 0.25rem 0.9rem; font-family: var(--heading); font-size: 0.8rem; cursor: pointer;
+    }
+    .add button { border-color: var(--purple); color: var(--purple); }
+    .hint { font-family: var(--body); font-weight: 300; font-size: 0.85rem; color: #555; margin: 0 0 1.5rem; }
+    /* Rows are built by the script, so these need :global to apply. */
+    .people :global(.list) { list-style: none; margin: 0; padding: 0; }
+    .people :global(.list li) { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.6rem 0; border-top: 1px solid #e4e4e4; }
+    .people :global(.list li:last-child) { border-bottom: 1px solid #e4e4e4; }
+    .people :global(.who) { font-family: var(--heading); font-size: 1rem; }
+    .people :global(.who small) { display: block; font-family: var(--body); font-weight: 300; color: #666; font-size: 0.8rem; margin-top: 0.1rem; }
+    .people :global(.tag) { font-family: var(--heading); font-size: 0.75rem; color: #777; border: 1px solid #ccc; border-radius: 999px; padding: 0.1rem 0.6rem; }
+    .people :global(.list button) {
+      appearance: none; border: 1.5px solid var(--ink, #1F1D24); background: #fff; border-radius: 999px;
+      padding: 0.2rem 0.8rem; font-family: var(--heading); font-size: 0.8rem; cursor: pointer;
+    }
+  </style>
+
+  <script>
+    type Person = { email: string; name: string; added_by: string | null; added_at: string | null; admin: boolean };
+
+    const status = document.querySelector('.status')!;
+    const admin = document.querySelector<HTMLElement>('.admin')!;
+    const form = document.querySelector<HTMLFormElement>('form.add')!;
+    const list = document.querySelector('.list')!;
+
+    const say = (text: string, warn = false) => { status.textContent = text; status.classList.toggle('warn', warn); };
+    const when = (iso: string) => new Date(iso).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' });
+    const el = (tag: string, text = '') => { const e = document.createElement(tag); e.textContent = text; return e; };
+
+    function render({ people }: { people: Person[] }) {
+      list.replaceChildren(...people.map((p) => {
+        const li = el('li');
+        const who = el('span', p.name);
+        who.className = 'who';
+        who.append(el('small', p.email));
+        li.append(who);
+        if (p.admin) {
+          const t = el('span', 'Admin');
+          t.className = 'tag';
+          li.append(t);
+        } else {
+          const b = el('button', 'Remove');
+          b.addEventListener('click', async () => {
+            if (!confirm(`Remove ${p.name} (${p.email})? They won't be able to post, or see the pad or board.`)) return;
+            await send(fetch(`/api/people?email=${encodeURIComponent(p.email)}`, { method: 'DELETE' }), `${p.name} removed.`);
+          });
+          li.append(b);
+        }
+        return li;
+      }));
+      say(`${people.length} ${people.length === 1 ? 'person' : 'people'} can sign in.`);
+    }
+
+    async function send(req: Promise<Response>, done: string) {
+      try {
+        const res = await req;
+        const data = await res.json();
+        if (!res.ok) return say(data.error || 'That didn’t work.', true);
+        render(data);
+        say(done);
+      } catch {
+        say('That didn’t work. Check your connection.', true);
+      }
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const f = new FormData(form);
+      const name = String(f.get('name'));
+      send(fetch('/api/people', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: f.get('email'), name }),
+      }), `${name} added.`).then(() => { if (!status.classList.contains('warn')) form.reset(); });
+    });
+
+    (async () => {
+      const me = await fetch('/api/me').then((r) => r.json()).catch(() => null);
+      if (!me?.admin) {
+        say(me?.signedIn ? 'Only Sarah and Amber can manage people.' : 'Sign in to manage people.', true);
+        return;
+      }
+      const res = await fetch('/api/people');
+      if (!res.ok) return say('Couldn’t load the list.', true);
+      admin.hidden = false;
+      render(await res.json());
+    })();
+  </script>
+</BaseLayout>

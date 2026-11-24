@@ -1,11 +1,12 @@
 ---
-// Protected by Cloudflare Access: reaching this page means the visitor has
-// signed in. It checks they're on the poster list, then sends them back.
-import BaseLayout from '../../layouts/BaseLayout.astro';
+// /login. Protected by Cloudflare Access: reaching this page means the visitor
+// has signed in. It checks they're on the people list, then sends them back
+// (?return=/path) or to the home page. Was /reflections/sign-in until Nov 2026.
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-<BaseLayout title="Sign in" description="Sign in to leave a reflection." noindex>
+<BaseLayout title="Log in" description="Log in to Civic Interplay." noindex>
   <main class="container narrow signin">
-    <h1>Reflections</h1>
+    <h1>Log in</h1>
     <p class="msg">Checking your sign-in…</p>
     <p><a class="back" href="/">Back to the site</a></p>
   </main>
@@ -28,7 +29,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         msg.textContent = `Signed in as ${name}. Taking you back…`;
         setTimeout(() => location.replace(safe), 900);
       } else {
-        msg.textContent = 'You’re signed in, but this email isn’t on the list of people who can leave reflections yet.';
+        msg.textContent = 'You’re signed in, but this email isn’t on the list yet. Ask Sarah or Amber to add you.';
       }
     }).catch(() => { msg.textContent = 'Something went wrong checking your sign-in.'; });
   </script>

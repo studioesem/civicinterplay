@@ -152,7 +152,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     });
 
     fetch('/api/pad').then(async (res) => {
-      if (res.status === 401) return say('This pad is only for signed-in people.', true);
+      if (res.status === 401) {
+        const me = await fetch('/api/me').then((r) => r.json()).catch(() => null);
+        return say(me?.signedIn ? 'You’re signed in, but not on the list yet. Ask Sarah or Amber to add you.' : 'This pad is only for signed-in people.', true);
+      }
       const p = await res.json();
       ta.value = p.body; ta.disabled = false; ta.focus(); show(p);
       histToggle.hidden = false;
